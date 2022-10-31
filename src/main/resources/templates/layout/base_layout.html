@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultrap.net.nz/thymeleaf/layout"
+	> 
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 베이스 레이아웃이 열리는곳은 부트스트랩이 적용된다  -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<link href="/css/common.css" rel="stylesheet"> <!-- 스태틱 폴더가 기준이 되면 앞에 / 넣어야한다  -->
+<!-- htmml을 찾아가는 템플레이트가 기준이면 /를 안붙이는데 스태틱이 기준이 되면 / 를 보고 찾아간다 . -->
+
+<!--  9/27-->
+<!--  통상적으로 링크 css 파일들을 다 로딩을하면 부트스트랩 링크와 코드를 적어준다 -->
+<!-- 원래 맨 아랫줄이였는데 코드의 진행이 위에서 부터 되기 때문에 제일 위로 올려주었다 -->
+<!-- 아래 두줄을 넣어줘야 부트스트랩을 사용가능하다  -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+ <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+</head>
+<body >
+
+<!-- 베이스 레이아웃 기준으로 나온다 
+크게 div 3개의 영역으로 나눠 주었다  -->
+
+<!-- 부트의 모든 내용은 콘테이너에 담겨야한다 클래스  -->
+<div class="container">
+
+	<div class="row"> <!-- 하나의 행을 만들었다  -->
+		<div class="col"> <!-- 여기 영역은 이파일 기준으로 하겠다   th:replace="fragment/top::top  // 템플레이트 기준 플래그먼트으로 탑을 찾아간다 . -->
+		<!-- top::top top을 호출할때 ragment/top: 경로를 써주지않고 가명을줘서 간단히 부르겠다   -->
+			<div th:replace="fragment/top::top"></div> <!-- 여기는 내가 원하는 페이지로 보이게 할거에요  fragment 폴터 밑에 /top 을 띄우겠다  --> <!-- 탑이랑 푸터 불러주겠다 . -->
+		</div> <!-- top은 항상 고정으로 보이기 때문에  --> 
+<!-- 이곳에서 부트스트랩을 열면 윗줄부터 코드가 차례대로 해석되기때문에 위에서의 부트스트랩이 열리지않는다  먼저 파일이 읽히고 나서 로딩시키기 때문이다  9/27 -->
+		
+	
+	</div>
+<!-- 아이템리스트를 포함하는 베이스 레이아웃이 열리면서 위는 탑이 열리게 해놓은것이다  -->
+	<div class="row"> <!-- 하나의 행을 만들었다  -->
+		<div class="col">
+			<div layout:fragment="content"></div> <!-- 우리가 리스트 화면을 런시키면  베이스레이아웃의 있는게 같이 실행되는데  <div layout:fragment="content"> 이 리스트에 있는 부분에 대체되어 보여줄거다 
+			컨트롤러에서 실제로 열리는건 레이아웃인데 보이는건 리스트가 열린다 대체되어서  .-->
+		</div> <!-- 매번 바뀌는 페이지를 여기 띄워준다  content폴더에 모두 만들어 준다  --> <!-- 그렇기 때문에 열리는 페이지명으로 들어가지 않는다  -->
+	</div>
+<!-- 
+	<div class="row"> 하나의 행을 만들었다 
+		<div class="col">
+			<div th:replace="fragment/footer::footer"></div>
+		
+		</div> 여기는 눈에 보이는 곳이 아닌다  항상 화면 제일 마지막에 있던걸 넣어주었다 푸터의 있는 스크립트 소스가 우리가 적은 모든 내용 다음에 나온다 
+	</div>
+ -->
+</div>
+
+
+<!-- 일반회원 -->
+</body>
+</html>
+
+
