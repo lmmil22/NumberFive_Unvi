@@ -10,6 +10,6 @@ public class StudentController {
 
 	@GetMapping("/main")
 	public String stuMain() {
-		return "content/student/stumain";
+		return "content/student/stuMain";
 	}
 }
