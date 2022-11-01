@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"	
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/base_layout}"> 
+
+<!-- board_list껄 가져왔는데 복붙해서 가져왔다 계속 갈아 끼워주기때문  -->
+<th:block layout:fragment="css"> <!-- css 정의된 부분이 바뀌면서가져올것이다  -->
+<!-- 타임 리프의 문법중 하나로  블럭하나를 생성-->
+<link rel="stylesheet"  th:href="@{}"> <!-- 외부 css 파일 불러오겠다  rel은 고정 -->
+
+</th:block>
+
+<!-- 고정 페이지와 변동페이지는 다르다  -->
+<div layout:fragment="content"> 
+	테스트 중입니다 
+</div>
+
+</html>
