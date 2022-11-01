@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout ="http://www.ultrap.net.nz/thymeleaf/layout"	
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/base_layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div layout:fragment ="content">
+<th:block layout:fragment ="css">
+	<link rel ="stylesheet" th:href="@{/css/cartList.css}">
+</th:block>
+<!--by수경 학생의 전공학과 변경(전과), 휴학신청, 복학신청, 복수전공(전공 하나 더) 신청 현황을 모아 둔 페이지입니다.-->
+	
+	<div class="row justify-content-center">
+		<table class="table table-bordered">
+			<colgroup>
+				<col width="15%">
+				<col width="15%">
+				<col width="15%">
+				<col width="15%">
+				<col width="15%">
+				<col width="15%">
+			</colgroup>
+		   <tr>
+			  <td></td>
+		      <td></td>
+		    </tr>
+			<tr>
+	    	  <th>전공대학</th> 
+		      <td></td>
+	    	  <th>전공학과</th> 
+		      <td></td>
+	    	  <th>복수전공</th> 
+		      <td></td>
+			  </tr>
+			<tr> 
+		      <th>성별</th> 
+		      <td></td> 
+		      <th>생일</th> 
+		      <td></td> 
+		      <th>학적상태</th> 
+		      <td></td> 
+			</tr> 
+			
+		</table>
+		
+		<table class="table table-bordered">
+			<colgroup>
+				<col width="15%">
+				<col width="15%">
+				<col width="15%">
+				<col width="15%">
+			
+			</colgroup>
+		   <tr>
+			  <th>현재전공대학</th>
+			   <td></td>
+			    <th>현재전공학과</th>
+		    	<td></td>
+		    	 
+		    </tr>
+			<tr>
+	    	  <th>변경전공대학</th> 
+		      <td></td>
+	    	  <th>변경전공학과</th> 
+		      <td></td>
+			</tr>
+			<tr> 
+		      <th>전과 사유</th> 
+		       <td colspan="3"></td> 
+			</tr> 
+			
+		</table>
+	</div>
+	<input type="button" value="신청하기">
+
+</div>
+
+
+</body>
+</html>
