@@ -13,8 +13,8 @@ public class StudentVO {
 	String collNo;
 	String majorCode;
 	String doubleCode;
-	String stuYear;
-	String stuSem;
+	int stuYear;
+	int stuSem;
 	String stuStatus;
 	String memNo ;
 
