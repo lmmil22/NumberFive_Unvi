@@ -8,6 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class LectureVO {
+	//by지아 LectureVO table로 만든 VO
 	private String lecNo;
 	private String lecName;
 	private int lecScore;

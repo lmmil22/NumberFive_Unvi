@@ -1,0 +1,125 @@
+<!--  9/15-->
+<!DOCTYPE html>
+<!-- th : if 문 등등 타임리프문법 사용을 위해  -->
+<!-- 계속 보이는건  layout:decorate 이거에 따라 다른것 -->
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/base_layout}">
+<!--  베이스 레이아웃에 포함되어 열린다  콘텐츠 부분의 내용이 여기 부분으로 교체되어 보여진다 -->
+
+<!-- board_list껄 가져왔는데 복붙해서 가져왔다 계속 갈아 끼워주기때문  -->
+<th:block layout:fragment="css">
+	<!-- css 정의된 부분이 바뀌면서가져올것이다  -->
+	<!-- 타임 리프의 문법중 하나로  블럭하나를 생성-->
+	<link rel="stylesheet" th:href="@{}">
+	<!-- 외부 css 파일 불러오겠다  rel은 고정 -->
+
+</th:block>
+
+<!-- 고정 페이지와 변동페이지는 다르다  -->
+<div layout:fragment="content">
+
+<style>
+	.reg{
+		text-align:  center;
+		
+	}
+
+</style>
+
+	<div class="reg">
+
+		<div class="mb-3 row">
+			<label for="lecName" class="col-sm-2 col-form-label">강의명</label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" id="lecName" name="lecName" >
+			</div>
+		</div>
+
+		<div class="mb-3 row">
+			<label for="lecScore" class="col-sm-2 col-form-label">강의 학점</label>
+			<div class="col-sm-4">
+				<input type="number" class="form-control" id="lecScore" value="2" name="lecScore"
+					max="4">
+			</div>
+		</div>
+
+		<div class="mb-3 row">
+			<label for="collNo" class="col-sm-2 col-form-label">단과대학</label>
+			<div class="col-sm-4">
+				<select class="">
+					<option >1</option>
+					<option>2</option>
+					<option>3</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="mb-3 row">
+			<label for="deptNo" class="col-sm-2 col-form-label">소속학과</label>
+			<div class="col-sm-4">
+						<select class="">
+					<option >1</option>
+					<option>2</option>
+					<option>3</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="mb-3 row">
+			<label for="empNo" class="col-sm-2 col-form-label">담당교수</label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" id="empNo" name="empNo">
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<label for="maxNum" class="col-sm-2 col-form-label">최대 수강 신청 인원</label>
+			<div class="col-sm-4">
+				<input type="number" class="form-control" id="maxNum" name="maxNum"
+					max="20">
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<label for="nowNum" class="col-sm-2 col-form-label">현재 수강 신청 인원</label>
+			<div class="col-sm-4">
+				<input type="number" class="form-control" id="nowNum" name="nowNum">
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<label for="originPdfName" class="col-sm-2 col-form-label">강의 자료 등록 </label>
+			<div class="col-sm-4">
+				<input type="file" class="form-control"  id="originPdfName" name="originPdfName">
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<label for="lecDay" class="col-sm-2 col-form-label">강의 날짜 </label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" id="lecDay" name="lecDay">
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<label for="firstTime" class="col-sm-2 col-form-label">강의 시작시간</label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" id="firstTime" name="firstTime">
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<label for="lastTime" class="col-sm-2 col-form-label">강의 마치는 시간 </label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" id="lastTime" name="lastTime">
+			</div>
+		</div>
+		
+		<div>
+			<input type="submit" value="강의 등록">
+		</div>
+		
+	</div>
+
+
+
+
+</div>
+
+</html>
