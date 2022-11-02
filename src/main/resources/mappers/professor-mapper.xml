@@ -11,15 +11,7 @@
 	
 	</resultMap>
 	
-	<resultMap type="" id="">
-		<id column="" property=""/>
-	
-	
-	
-	</resultMap>
-	
-	
-	
+
 	<!--강의 등록-->
 	<insert id="proFLecInsert">
 		INSERT INTO TABLE LECTURE (
