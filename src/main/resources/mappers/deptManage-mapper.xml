@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<!--by수경 학생의 휴학, 복학, 전과 복수전공 신청 및 관리자 승인을 위한 mapper입니다.-->
+<!--by수경 deptManage mapper입니다.  -->
+<mapper namespace="deptManage">
+<resultMap type="kh.study.NF.emp.vo.DeptManageVO" id="deptManage">
+<id column="APPLY_NO" property="applyNo"/>
+<result column="STU_NO" property="stuNo"/>
+<result column="APPLY_CODE" property="applyCode"/>
+<result column="APPLY_DATE" property="applyDate"/>
+<result column="APPLY_REASON" property="applyReason"/>
+<result column="APPROVAL_DATE" property="approvalDate"/>
+<result column="PROCESS_STATUS" property="processStatus"/>
+<result column="FROM_COLL" property="fromColl"/>
+<result column="FROM_DEPT" property="fromDept"/>
+<result column="TO_COLL" property="toColl"/>
+<result column="TO_DEPT" property="toDept"/>
+<result column="DOUBLE_MAJOR_COLL" property="doubleMajorColl"/>
+<result column="DOUBLE_MAJOR_DEPT" property="doubleMajorDept"/>
+
+<association property=""></association>
+
+
+</resultMap>
+
+<!-- by수경 STU테이블의 mapper입니다.  -->
+<resultMap type="kh.study.NF.student.vo" id="student">
+<id column="STU_NO" property="stuNo"/>
+<result column="COLL_NO" property="collNo"/>
+<result column="MAJOR_CODE" property="majorCode"/>
+<result column="DOUBLE_CODE" property="doubleCode"/>
+<result column="STU_YEAR" property="stuYear"/>
+<result column="STU_SEM" property="stuSem"/>
+<result column="STU_STATUS" property="stuStatus"/>
+<result column="MEM_NO" property="memNo"/>
+
+</resultMap>
+
+
+<select id="takeOffUniv" resultMap="">
+
+
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

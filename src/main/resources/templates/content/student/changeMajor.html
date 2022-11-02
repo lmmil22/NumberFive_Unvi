@@ -17,69 +17,89 @@
 	<!--by수경 학생이 전공학과 변경(전과) 신청하는 페이지입니다.-->
 	
 	<div class="row justify-content-center">
-		<table class="table table-bordered">
-			<colgroup>
-				<col width="15%">
-				<col width="15%">
-				<col width="15%">
-				<col width="15%">
-				<col width="15%">
-				<col width="15%">
-			</colgroup>
-		   <tr>
-			  <th>이름</th>
-			  <td></td>
-			  <th>학번</th>
-		      <td></td>
-		      <th>학년</th>
-		      <td></td>
-		    </tr>
-			<tr>
-	    	  <th>전공대학</th> 
-		      <td></td>
-	    	  <th>전공학과</th> 
-		      <td></td>
-	    	  <th>복수전공</th> 
-		      <td></td>
-			  </tr>
-			<tr> 
-		      <th>성별</th> 
-		      <td></td> 
-		      <th>생년월일</th> 
-		      <td></td> 
-		      <th>학적상태</th> 
-		      <td></td> 
-			</tr> 
+		<div class="col mt-5">
+			<table class="table table-bordered">
+				<colgroup>
+					<col width="15%">
+					<col width="15%">
+					<col width="15%">
+					<col width="15%">
+					<col width="15%">
+					<col width="15%">
+				</colgroup>
+			   <tr>
+				  <th>이름</th>
+				  <td></td>
+				  <th>학번</th>
+			      <td></td>
+			      <th>학년</th>
+			      <td></td>
+			    </tr>
+				<tr>
+		    	  <th>전공대학</th> 
+			      <td></td>
+		    	  <th>전공학과</th> 
+			      <td></td>
+		    	  <th>복수전공</th> 
+			      <td></td>
+				  </tr>
+				<tr> 
+			      <th>성별</th> 
+			      <td></td> 
+			      <th>생년월일</th> 
+			      <td></td> 
+			      <th>학적상태</th> 
+			      <td></td> 
+				</tr> 
+				
+			</table>
 			
-		</table>
-		
-		<table class="table table-bordered">
-			<colgroup>
-				<col width="15%">
-				<col width="15%">
-				<col width="15%">
-				<col width="15%">
-			
-			</colgroup>
-		   <tr>
-			  <th>현재전공대학</th>
-			   <td></td>
-			    <th>현재전공학과</th>
-		    	<td></td>
-		    	 
-		    </tr>
-			<tr>
-	    	  <th>변경전공대학</th> 
-		      <td></td>
-	    	  <th>변경전공학과</th> 
-		      <td></td>
-			</tr>
-			<tr> 
-		      <th>전과 사유</th> 
-		       <td colspan="3"></td> 
-			</tr> 
-			
-		</table>
+			<table class="table table-bordered">
+				<colgroup>
+					<col width="15%">
+					<col width="15%">
+					<col width="15%">
+					<col width="15%">
+				
+				</colgroup>
+			   <tr>
+				  <th>현재전공대학</th>
+				   <td></td>
+				    <th>현재전공학과</th>
+			    	<td></td>
+			    	 
+			    </tr>
+				<tr>
+		    	  <th>변경전공대학</th> 
+			      <td>
+					<select class="form-select" aria-label="Default select example">
+					  <option selected>전체</option>
+					  <option value="1">사회과학대학</option>
+					  <option value="2">자연대학</option>
+					  <option value="3">예술대학</option>
+					  <option value="4">사범대학</option>
+					  <option value="5">공과대학</option>
+					</select>
+			      </td>
+		    	  <th>변경전공학과</th> 
+			      <td>
+					<select class="form-select" aria-label="Default select example" name="">
+					  <option selected>전체</option>
+					  <option value="1">경영학과</option>
+					  <option value="2">디자인학과</option>
+					  <option value="3">간호학과</option>
+					  <option value="4">컴퓨터공학과</option>
+					</select>
+			      </td>
+				</tr>
+				<tr> 
+			      <th>전과 사유</th> 
+			       <td colspan="3">
+			       		<textarea rows="3" cols="100" name="applyReason"></textarea>
+			       </td> 
+				</tr> 
+			</table>
+		</div>
 	</div>
 	<input type="button" value="신청하기">
 	
