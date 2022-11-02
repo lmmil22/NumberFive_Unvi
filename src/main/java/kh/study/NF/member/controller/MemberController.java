@@ -40,10 +40,15 @@ public class MemberController {
 		}
 		else {
 			System.out.println("로그인실패!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			
 			return "redirect:/member/home_login";// by 유 : 로그인 실패시, 다시 로그인 첫 홈화면으로 돌아갑니다.
 
 		}
-		return "content/common/main"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
+		return "content/common/afterLogin"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
+	}
+	
+	@GetMapping("/test")
+	public String test() {
+		
+		return "content/common/index"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
 	}
 }

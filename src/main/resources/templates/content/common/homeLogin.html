@@ -1,4 +1,4 @@
-
+<!-- by 유빈 -->
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org"	
@@ -11,20 +11,22 @@
 </th:block>
 
 <div layout:fragment="content"> 
-	<div class="form-floating mb-3">
-	  <input type="email" class="form-control" id="floatingInput" placeholder="학번 혹은 교직원 번호를 입력하세요">
-	  <label for="floatingInput">학번 / 교직원 번호</label>
-	</div>
-	<div class="form-floating">
-	  <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-	  <label for="floatingPassword"> Password </label>
-	</div>
-	<div class="row mt-3 mb-2">
-		<div class="col">
-			<div align="center">
-	    		<button type="button" class="btn btn-outline-primary">로그인</button>
+	<form method="post" th:action="@{/member/loginProcess}">
+		<div class="form-floating mb-3">
+		  <input th:name="memNo" type="text" class="form-control" id="floatingInput" placeholder="학번 혹은 교직원 번호를 입력하세요">
+		  <label for="floatingInput"> 학번 / 교직원 번호 </label>
+		</div>
+		<div class="form-floating">
+		  <input th:name="memPw" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+		  <label for="floatingPassword"> Password </label>
+		</div>
+		<div class="row mt-3 mb-2">
+			<div class="col">
+				<div align="center">
+		    		<button type="submit" class="btn btn-outline-primary"> 로그인 </button>
+				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 </div>
 </html>

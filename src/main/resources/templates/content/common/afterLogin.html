@@ -1,0 +1,17 @@
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"	
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/base_layout}"> 
+
+<th:block layout:fragment="css"> <!-- css 정의된 부분이 바뀌면서가져올것이다  -->
+<!-- <link rel="stylesheet"  th:href="@{}"> 외부 css 파일 불러오겠다  rel은 고정-->
+</th:block>
+
+<div layout:fragment="content"> 
+	누군가 로그인 이후 첫 화면 페이지입니다.
+
+</div>
+</html>
