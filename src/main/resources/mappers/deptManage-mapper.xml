@@ -19,10 +19,6 @@
 <result column="TO_DEPT" property="toDept"/>
 <result column="DOUBLE_MAJOR_COLL" property="doubleMajorColl"/>
 <result column="DOUBLE_MAJOR_DEPT" property="doubleMajorDept"/>
-
-<association property=""></association>
-
-
 </resultMap>
 
 <!-- by수경 STU테이블의 mapper입니다.  -->
@@ -35,31 +31,49 @@
 <result column="STU_SEM" property="stuSem"/>
 <result column="STU_STATUS" property="stuStatus"/>
 <result column="MEM_NO" property="memNo"/>
+</resultMap>
 
+<!--by수경 member테이블의 mapper입니다. -->
+<resultMap type="kh.study.NF.member.vo.MemberVO" id="member">
+<id column="MEM_NO" property="memNo"/>
+<result column="MEM_PW" property="memPw"/>
+<result column="MEM_NAME" property="memName"/>
+<result column="MEM_EMAIL" property="memEmail"/>
+<result column="MEM_ADDR" property="memAddr"/>
+<result column="MEM_ADDR_DETAIL" property="memAddrDetail"/>
+<result column="MEM_TELL" property="memTell"/>
+<result column="MEM_IMAGE" property="memImage"/>
+<result column="MEM_GENDER" property="memGender"/>
+<result column="MEM_BIRTH" property="memBirth"/>
+<result column="MEM_ROLE" property="memRole"/>
+</resultMap>
+
+<!--by수경 colleage테이블의 mapper입니다. -->
+<resultMap type="" id="">
+<id column="COLL_NO" property=""/>
+<result column="COLL_NAME" property=""/>
 </resultMap>
 
 
-<select id="takeOffUniv" resultMap="">
 
-
-</select>
-
-
-
-
-
-
+<!--by수경 dept 테이블의 mapper입니다. -->
+<resultMap type="" id="">
+<id column="DEPT_NO" property=""/>
+<result column="DEPT_NAME" property=""/>
+<result column="COLL_NO" property=""/>
+</resultMap>
 
 
 
 
 
+<!-- by수경 학생의 휴학신청 페이지  -->
+<!-- <select id="takeOffUniv" resultMap="">
+	SELECT 
+
+</select> -->
 
 
-
-
-
-	
 </mapper>
 
 
