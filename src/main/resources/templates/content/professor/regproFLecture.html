@@ -46,18 +46,18 @@
 					<div class="mb-3 row">
 						<label for="collNo" class="col-sm-3 col-form-label">단과대학</label>
 						<div class="col-sm-5">
-							<select class="">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
+						<select onchange="changeDept();">
+
+								<option th:each="coll: ${collList}" th:value=${coll.collNo} th:text="${coll.collName}"></option>
+
 							</select>
 						</div>
 					</div>
 
-					<div class="mb-3 row">
+					<div class="mb-3 row" >
 						<label for="deptNo" class="col-sm-3 col-form-label">소속학과</label>
 						<div class="col-sm-5">
-							<select >
+							<select class="changeDeptList">
 
 								<option th:each="dept: ${deptList}" th:value=${dept.deptNo} th:text="${dept.deptName}"></option>
 
@@ -79,7 +79,7 @@
 								name="maxNum" max="20">
 						</div>
 					</div>
-					<div class="mb-3 row">
+					<div class="mb-3 row" >
 						<label for="nowNum" class="col-sm-3 col-form-label">현재 수강
 							신청 인원</label>
 						<div class="col-sm-5">
@@ -157,6 +157,6 @@
 <!-- 인터넷에 있는 jquery 문법 로딩 이 먼저되어야한다 순서 중요-->
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <!-- 파일을 받아오겠습니다~  -->
-<script type="text/javascript" th:src="@{/js/reg_item.js}"></script>
+<script type="text/javascript" th:src="@{/js/regproFLecture.js}"></script>
 </div>
 </html>

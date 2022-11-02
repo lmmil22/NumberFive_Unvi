@@ -2,12 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
-<mapper namespace="professor">
+<mapper namespace="professorMapper">
 	
 	<resultMap type="kh.study.NF.dept.vo.DeptVO" id="dept">
 		<id column="DEPT_NO" property="deptNo"/>
 		<result column="DEPT_NAME" property="deptName"/>
 		<result column="COLL_NO" property="collNo"/>
+	
+	</resultMap>
+	
+	<resultMap type="kh.study.NF.dept.vo.ColleageVO" id="coll">
+		<id column="COLL_NO" property="collNo"/>
+		<result column="COLL_NAME" property="collName"/>
 	
 	</resultMap>
 	
@@ -67,7 +73,29 @@ semNo;
     FROM  DEPT
 	
 	</select>
+	<select id="selectColl" resultMap="coll">
+	SELECT 
+	 	COLL_NO 
+    	, COLL_NAME
+    FROM  COLLEAGE
 	
+	</select>
+	
+	<select id="getDeptList" resultMap="dept">
+	SELECT 
+	 	D.DEPT_NO 
+    	, DEPT_NAME
+   		, C.COLL_NO
+   		, COLL_NAME
+   		
+    FROM  DEPT D , COLLEAGE C
+    WHERE D.COLL_NO = C.COLL_NO
+    <if test="_parameter != null">
+    AND D.COLL_NO = #{collNo}
+    </if>
+	ORDER BY COLL_NO
+	
+	</select>
 
 	
 </mapper>
