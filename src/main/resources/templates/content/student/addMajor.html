@@ -14,7 +14,7 @@
 <th:block layout:fragment ="css">
 	<link rel ="stylesheet" th:href="@{/css/cartList.css}">
 </th:block>
-	<!--by수경 학생이 전공학과 변경(전과) 신청하는 페이지입니다.-->
+	<!--by수경 학생이 복수전공(전공 하나 더 추가)신청하는 페이지입니다.-->
 	
 	<div class="row justify-content-center">
 		<div class="col mt-5">
@@ -69,7 +69,7 @@
 			    	 
 			    </tr>
 				<tr>
-		    	  <th>변경전공대학</th> 
+		    	  <th>복수전공대학</th> 
 			      <td>
 					<select class="form-select" onchange="changeColl();">
 					  <th:block th:each="coll: ${collList}">
@@ -78,7 +78,7 @@
 					</select>
 				
 			      </td>
-		    	  <th>변경전공학과</th> 
+		    	  <th>복수전공학과</th> 
 			      <td>
 			      <select class="form-select deptList">
 					  <th:block th:each="dept: ${deptList}">
@@ -88,7 +88,7 @@
 			      </td>
 				</tr>
 				<tr> 
-			      <th>전과 사유</th> 
+			      <th>복수전공 신청사유</th> 
 			       <td colspan="3">
 			       		<textarea rows="3" cols="100" name="applyReason"></textarea>
 			       </td> 
@@ -100,6 +100,7 @@
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
 <script type="text/javascript" th:src="@{/js/changeMajor.js}"></script>	
 </div>
+
 
 
 </body>

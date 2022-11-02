@@ -1,15 +1,19 @@
 package kh.study.NF.student.controller;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import kh.study.NF.member.vo.MemberVO;
+import kh.study.NF.dept.service.DeptService;
+import kh.study.NF.dept.vo.DeptVO;
 import kh.study.NF.student.service.StudentService;
 
 @Controller
@@ -18,6 +22,9 @@ public class StudentController {
 
 	@Resource(name = "studentService")
 	private StudentService studentService;
+	
+	@Resource(name = "deptService")
+	private DeptService deptService;
 	
 	
 	//by수경 학생정보시스템의 첫페이지 로그인 페이지입니다.
@@ -28,16 +35,42 @@ public class StudentController {
 	
 	//by수경 학생이 전공학과를 변경(전과)하는 페이지로 이동 메소드(테스트 용)
 	@GetMapping("/changeMajor")
-	public String changeMajor() {
+	public String changeMajor(Model model) {
+		//by수경 학생정보 쿼리문
+		model.addAttribute("stuInfo", studentService.studentInfo());
+		
+		//by수경 변경할 전공대학, 전공학과 선택 쿼리문
+		 model.addAttribute("deptList",deptService.selectDeptList());
+		 model.addAttribute("collList",deptService.selectCollList());
+		
 		return "content/student/changeMajor";
+	}
+	
+	//by수경 학생이 전공학과를 변경(전과)하는 페이지로 이동 메소드(테스트 용)
+	@GetMapping("/addMajor")
+	public String addMajor(Model model) {
+		//by수경 학생정보 쿼리문
+		model.addAttribute("stuInfo", studentService.studentInfo());
+		
+		//by수경 변경할 전공대학, 전공학과 선택 쿼리문
+		model.addAttribute("deptList",deptService.selectDeptList());
+		model.addAttribute("collList",deptService.selectCollList());
+		
+		return "content/student/addMajor";
+	}
+	
+	//by수경 변경할 전공대학 선택 시, 전공학과 선택 ajax
+	@ResponseBody
+	@PostMapping("/getMajorAjax")
+	public List<DeptVO> getMajorAjax(String collNo) {
+		
+		return deptService.getDeptList(collNo);
 	}
 	
 	//by수경 학생이 학교를 휴학신청하는 페이지로 이동
 	@GetMapping("/takeOffUniv")
-	public String takeOffUniv(Model model, MemberVO memberVO) {
-		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY년 MM월 dd일");
-		//memberVO.getMemBirth().format(formatter);
-		
+	public String takeOffUniv(Model model) {
+		//by수경 학생정보 쿼리문
 		model.addAttribute("stuInfo", studentService.studentInfo());
 		return  "content/student/takeOffUniv";
 	}
@@ -45,7 +78,7 @@ public class StudentController {
 	//by수경 학생이 학교를 복학신청하는 페이지로 이동
 	@GetMapping("/returnUniv")
 	public String returnUniv(Model model) {
-	
+		//by수경 학생정보 쿼리문
 		model.addAttribute("stuInfo", studentService.studentInfo());
 		
 		return  "content/student/returnUniv";
