@@ -1,8 +1,15 @@
 @charset "UTF-8";
 /* by지아 CSS폴더 등 만들었어요  */
 
-body{
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
+.nanumgothic * {
+ font-family: 'Nanum Gothic', sans-serif;
+}
+
+body{
+ font-family: 'Nanum Gothic', sans-serif;
+ font-weight: bold;
 }
 a{
 color: black;/* 글자색 */

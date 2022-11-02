@@ -4,7 +4,7 @@
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <!--by수경 학생의 휴학, 복학, 전과 복수전공 신청 및 관리자 승인을 위한 mapper입니다.-->
 <!--by수경 deptManage mapper입니다.  -->
-<mapper namespace="deptManage">
+<mapper namespace="deptManageMapper">
 <resultMap type="kh.study.NF.dept.vo.DeptManageVO" id="deptManage">
 <id column="APPLY_NO" property="applyNo"/>
 <result column="STU_NO" property="stuNo"/>
@@ -31,10 +31,10 @@
 <result column="STU_SEM" property="stuSem"/>
 <result column="STU_STATUS" property="stuStatus"/>
 <result column="MEM_NO" property="memNo"/>
-
+<!--by수경 1:1관계 전공대학, 전공학과-->
 <association property="memberVO" resultMap="member"/>
-<!-- by수경 전공대학 전공학과 1:N 관계(복수전공 있을 수 있으니)-->
-
+<association property="deptVO" resultMap="professorMapper.dept"/>
+<association property="collVO" resultMap="professorMapper.coll"/>
 </resultMap>
 
 <!--by수경 member테이블의 mapper입니다. -->
@@ -54,18 +54,19 @@
 
 <!-- by수경 학생의 휴학/복학/전과신청 시 학생정보를 나타내는 테이블 데이터 -->
 <select id="studentInfo" resultMap="student">
-	<!-- SELECT M.MEM_NO
+	SELECT M.MEM_NO
 		, MEM_NAME
 		, MEM_GENDER
-		, MEM_BIRTH
+		, TO_CHAR(MEM_BIRTH, 'YYYY-MM-DD')AS MEM_BIRTH
 		, STU_NO
 		, STU_YEAR
 		, STU_STATUS
-		, DEPT_NO
+		, (SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO = S.DEPT_NO)AS DEPT_NAME
 		, DOUBLE_NO
+		, (SELECT COLL_NAME FROM COLLEAGE WHERE COLL_NO = S.COLL_NO)AS COLL_NAME
 	FROM STU S, MEMBER M
 	WHERE S.MEM_NO = M.MEM_NO
-	AND STU_NO = 'STU_001' -->
+	AND STU_NO = 'STU_001'
 </select>
 
 

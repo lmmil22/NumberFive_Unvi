@@ -26,29 +26,29 @@
 					<col width="15%">
 					<col width="15%">
 				</colgroup>
-				  <tr>
-				  <th>이름</th>
-				  <td></td>
-				  <th>학번</th>
-				     <td></td>
-				     <th>학년</th>
-				     <td></td>
-				   </tr>
 				<tr>
-				  	  <th>전공대학</th> 
-				     <td></td>
-				  	  <th>전공학과</th> 
-				     <td></td>
-				  	  <th>복수전공</th> 
-				     <td></td>
+				  <th>이름</th>
+				  <td th:text="${stuInfo.memberVO.memName}"></td>
+				  <th>학번</th>
+			      <td th:text="${stuInfo.stuNo}"></td>
+			      <th>학년</th>
+			      <td th:text="${stuInfo.stuYear}"></td>
+				</tr>
+				<tr>
+			  	  <th>전공대학</th> 
+				  <td th:text="${stuInfo.collVO.collName}"></td>
+			   	  <th>전공학과</th> 
+			   	  <td th:text="${stuInfo.deptVO.deptName}"></td>
+			  	  <th>복수전공</th> 
+			      <td></td>
 				</tr>
 				<tr> 
-				     <th>성별</th> 
-				     <td></td> 
-				     <th>생년월일</th> 
-				     <td></td> 
-				     <th>학적상태</th> 
-				     <td></td> 
+			     <th>성별</th> 
+			     <td th:text="${stuInfo.memberVO.memGender}"></td> 
+			     <th>생년월일</th> 
+			     <td th:text="${stuInfo.memberVO.memBirth}"></td> 
+			     <th>학적상태</th> 
+			     <td th:text="${stuInfo.stuStatus}"></td> 
 				</tr> 
 			</table>
 		</div>

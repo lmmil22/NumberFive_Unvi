@@ -1,5 +1,7 @@
 package kh.study.NF.student.controller;
 
+import java.time.format.DateTimeFormatter;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -7,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kh.study.NF.member.vo.MemberVO;
 import kh.study.NF.student.service.StudentService;
 
 @Controller
@@ -31,8 +34,10 @@ public class StudentController {
 	
 	//by수경 학생이 학교를 휴학신청하는 페이지로 이동
 	@GetMapping("/takeOffUniv")
-	public String takeOffUniv(Model model) {
-
+	public String takeOffUniv(Model model, MemberVO memberVO) {
+		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY년 MM월 dd일");
+		//memberVO.getMemBirth().format(formatter);
+		
 		model.addAttribute("stuInfo", studentService.studentInfo());
 		return  "content/student/takeOffUniv";
 	}
