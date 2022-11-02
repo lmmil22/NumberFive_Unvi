@@ -13,6 +13,7 @@ public class ProfessorController {
 	public String regProfLecture() {
 		//by지아
 		
-		return "content/professor/professorRegLecture";
+		//return "content/professor/professorRegLecture";
+		return "content/professor/regproFLecture";
 	}
 }
