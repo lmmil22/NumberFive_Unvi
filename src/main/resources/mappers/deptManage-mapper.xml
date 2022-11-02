@@ -22,7 +22,7 @@
 </resultMap>
 
 <!-- by수경 STU테이블의 mapper입니다.  -->
-<resultMap type="kh.study.NF.student.vo" id="student">
+<resultMap type="kh.study.NF.student.vo.StudentVO" id="student">
 <id column="STU_NO" property="stuNo"/>
 <result column="COLL_NO" property="collNo"/>
 <result column="MAJOR_CODE" property="majorCode"/>
@@ -49,19 +49,19 @@
 </resultMap>
 
 <!--by수경 colleage테이블의 mapper입니다. -->
-<resultMap type="" id="">
+<!-- <resultMap type="" id="">
 <id column="COLL_NO" property=""/>
 <result column="COLL_NAME" property=""/>
 </resultMap>
-
+ -->
 
 
 <!--by수경 dept 테이블의 mapper입니다. -->
-<resultMap type="" id="">
+<!-- <resultMap type="" id="">
 <id column="DEPT_NO" property=""/>
 <result column="DEPT_NAME" property=""/>
 <result column="COLL_NO" property=""/>
-</resultMap>
+</resultMap> -->
 
 
 
