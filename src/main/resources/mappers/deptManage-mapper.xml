@@ -21,16 +21,20 @@
 <result column="DOUBLE_MAJOR_DEPT" property="doubleMajorDept"/>
 </resultMap>
 
-<!-- by수경 STU테이블의 mapper입니다.  -->
+<!-- by수경 STU테이블의 mapper입니다. -->
 <resultMap type="kh.study.NF.student.vo.StudentVO" id="student">
 <id column="STU_NO" property="stuNo"/>
 <result column="COLL_NO" property="collNo"/>
-<result column="MAJOR_CODE" property="majorCode"/>
-<result column="DOUBLE_CODE" property="doubleCode"/>
+<result column="DEPT_NO" property="deptNo"/>
+<result column="DOUBLE_NO" property="doubleNo"/>
 <result column="STU_YEAR" property="stuYear"/>
 <result column="STU_SEM" property="stuSem"/>
 <result column="STU_STATUS" property="stuStatus"/>
 <result column="MEM_NO" property="memNo"/>
+
+<association property="memberVO" resultMap="member"/>
+<!-- by수경 전공대학 전공학과 1:N 관계(복수전공 있을 수 있으니)-->
+
 </resultMap>
 
 <!--by수경 member테이블의 mapper입니다. -->
@@ -48,30 +52,23 @@
 <result column="MEM_ROLE" property="memRole"/>
 </resultMap>
 
-<!--by수경 colleage테이블의 mapper입니다. -->
-<!-- <resultMap type="" id="">
-<id column="COLL_NO" property=""/>
-<result column="COLL_NAME" property=""/>
-</resultMap>
- -->
+<!-- by수경 학생의 휴학/복학/전과신청 시 학생정보를 나타내는 테이블 데이터 -->
+<select id="studentInfo" resultMap="student">
+	<!-- SELECT M.MEM_NO
+		, MEM_NAME
+		, MEM_GENDER
+		, MEM_BIRTH
+		, STU_NO
+		, STU_YEAR
+		, STU_STATUS
+		, DEPT_NO
+		, DOUBLE_NO
+	FROM STU S, MEMBER M
+	WHERE S.MEM_NO = M.MEM_NO
+	AND STU_NO = 'STU_001' -->
+</select>
 
 
-<!--by수경 dept 테이블의 mapper입니다. -->
-<!-- <resultMap type="" id="">
-<id column="DEPT_NO" property=""/>
-<result column="DEPT_NAME" property=""/>
-<result column="COLL_NO" property=""/>
-</resultMap> -->
-
-
-
-
-
-<!-- by수경 학생의 휴학신청 페이지  -->
-<!-- <select id="takeOffUniv" resultMap="">
-	SELECT 
-
-</select> -->
 
 
 </mapper>
