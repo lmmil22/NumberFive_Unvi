@@ -18,7 +18,7 @@
 	}
 
 </style>
-	<div class="row">
+	<div class="row" >
 		<!-- <div class="col mb-3" style="height: 50px; text-align:left ;">강의 등록</div> -->
 	</div>
 			<h4  style="text-align:left ;"> 강의 등록</h4>
@@ -57,10 +57,10 @@
 					<div class="mb-3 row">
 						<label for="deptNo" class="col-sm-3 col-form-label">소속학과</label>
 						<div class="col-sm-5">
-							<select class="">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
+							<select >
+
+								<option th:each="dept: ${deptList}" th:value=${dept.deptNo} th:text="${dept.deptName}"></option>
+
 							</select>
 						</div>
 					</div>

@@ -4,14 +4,78 @@
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="professor">
 	
+	<resultMap type="kh.study.NF.dept.vo.DeptVO" id="dept">
+		<id column="DEPT_NO" property="deptNo"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		<result column="COLL_NO" property="collNo"/>
+	
+	</resultMap>
+	
+	<resultMap type="" id="">
+		<id column="" property=""/>
+	
+	
+	
+	</resultMap>
+	
+	
+	
 	<!--강의 등록-->
 	<insert id="proFLecInsert">
-		
-	
-	
-	
-	
+		INSERT INTO TABLE LECTURE (
+			LEC_NO
+			, LEC_NAME
+			, LEC_SCORE
+			, COLL_NO
+			, DEPT_NO
+			, EMP_NO
+			, MAX_NUM 
+			, NOW_NUM 
+			, SEM_NO
+			, LEC_STATUS
+
+		) VALUES (
+			(SELECT 'LEC_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(LEC_NO, 5))),0)+1,3,0) FROM LECTURE)
+			, #{lecName}
+			, #{lecScore}
+			, #{collNo}
+			, #{deptNo}
+			, #{empNo}
+			, #{maxNum}
+			, #{nowNum}
+			, #{semNo}
+			, #{lecStatus}
+
+		)
+
 	</insert>
+
+<!-- 
+
+	lecNo;
+	 lecName;
+	 lecScore;
+	 collNo;
+	deptNo;
+	empNo;
+	 createDate;
+	 maxNum;
+ nowNum;
+semNo;
+ lecStatus;
+
+ -->
+
+
+	<select id="selectDept" resultMap="dept">
+	SELECT 
+	 	DEPT_NO 
+    	, DEPT_NAME
+   		, COLL_NO
+    FROM  DEPT
+	
+	</select>
+	
 
 	
 </mapper>

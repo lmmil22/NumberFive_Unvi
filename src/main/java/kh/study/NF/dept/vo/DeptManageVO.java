@@ -1,4 +1,4 @@
-package kh.study.NF.emp.vo;
+package kh.study.NF.dept.vo;
 
 import groovy.transform.ToString;
 import lombok.Getter;
