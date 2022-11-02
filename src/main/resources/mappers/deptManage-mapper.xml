@@ -5,7 +5,7 @@
 <!--by수경 학생의 휴학, 복학, 전과 복수전공 신청 및 관리자 승인을 위한 mapper입니다.-->
 <!--by수경 deptManage mapper입니다.  -->
 <mapper namespace="deptManage">
-<resultMap type="kh.study.NF.emp.vo.DeptManageVO" id="deptManage">
+<resultMap type="kh.study.NF.dept.vo.DeptManageVO" id="deptManage">
 <id column="APPLY_NO" property="applyNo"/>
 <result column="STU_NO" property="stuNo"/>
 <result column="APPLY_CODE" property="applyCode"/>
