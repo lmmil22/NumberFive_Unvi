@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/stu")
 public class StudentController {
 	//by수경 학생정보시스템의 첫페이지 로그인 페이지입니다.
-	@GetMapping("/main")
-	public String stuMain() {
-		return "content/student/stuMain";
-	}
+	// ->by 유빈 : 첫화면은 교직원교수학생모두 로그인가능하니까 헷갈리지않게  member로 할게요!
+	/*
+	 * @GetMapping("/main") public String stuMain() { return
+	 * "content/student/stuMain"; }
+	 */
 	
 	//by수경 학생이 전공학과를 변경(전과)하는 페이지로 이동 메소드(테스트 용)
 	@GetMapping("/changeMajor")

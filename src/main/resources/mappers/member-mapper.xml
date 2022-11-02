@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="memberMapper">
+	<!-- 패키지명 클래스명 -->
+ 	<resultMap type="kh.study.NF.member.vo.MemberVO" id="member">
+		<id column="MEM_NO" 				property="memNo"/>
+		<result column="MEM_PW" 			property="memPw"/>
+		<result column="MEM_NAME" 			property="memName"/>
+		<result column="MEM_EMAIL" 			property="memEmail"/>
+		<result column="MEM_ADDR" 			property="memAddr"/>
+		<result column="MEM_ADDR_DETAIL"	property="memAddrDetail"/>
+		<result column="MEM_TELL" 			property="memTell"/>
+		<result column="MEM_IMAGE" 			property="memImage"/>
+		<result column="MEM_GENDER" 		property="memGender"/>
+		<result column="MEM_BIRTH"			property="memBirth"/>
+		<result column="MEM_ROLE" 			property="memRole"/>
+	</resultMap>  
+
+<!-- 로그인 -->
+  <select id="login" resultMap="member">
+	SELECT MEM_NO
+			,MEM_NAME
+			,MEM_ROLE
+	FROM  MEMBER
+	WHERE MEM_NO = #{memNo}
+	AND   MEM_PW = #{memPw}
+</select>  
+
+
+<!--  목록조회-->
+<select id="selectMemberList" resultMap="member">
+   SELECT 
+       MEM_NO
+      ,MEM_NAME
+      ,DECODE(MEM_ROLE,'STU','학생','ADMIN','교직원','PROFESSOR','교수') AS MEM_ROLE
+   FROM MEMBER
+   ORDER BY MEM_NAME
+</select> 
+
+<!-- 상세조회 -->
+<select id="selectMemberDetail" resultMap="member">
+   SELECT 
+       MEM_NO
+      ,MEM_NAME
+      ,MEM_ADDR||''||MEM_ADDR_DETAIL as MEM_ADDR
+      ,MEM_EMAIL
+      ,DECODE(MEM_ROLE,'STU','학생','ADMIN','교직원','PROFESSOR','교수') AS MEM_ROLE
+   FROM MEMBER
+   WHERE MEM_NO = #{memNo}
+</select>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+</mapper> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
