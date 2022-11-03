@@ -71,7 +71,7 @@
 				<tr>
 		    	  <th>변경전공대학</th> 
 			      <td>
-					<select class="form-select" onchange="changeColl();">
+					<select class="form-select" onchange="changeColl();" name="collNo">
 					  <th:block th:each="coll: ${collList}">
 					 	<option th:value=${coll.collNo} th:text="${coll.collName}"></option>
 					  </th:block>
@@ -80,7 +80,7 @@
 			      </td>
 		    	  <th>변경전공학과</th> 
 			      <td>
-			      <select class="form-select deptList">
+			      <select class="form-select deptList" name="deptNo">
 					  <th:block th:each="dept: ${deptList}">
 						<option th:value=${dept.deptNo} th:text="${dept.deptName}"></option>
 					  </th:block>
@@ -90,10 +90,11 @@
 				<tr> 
 			      <th>전과 사유</th> 
 			       <td colspan="3">
-			       		<textarea rows="3" cols="100" name="applyReason"></textarea>
+			       		<textarea rows="3" name="applyReason"></textarea>
 			       </td> 
 				</tr> 
 			</table>
+			<input type="hidden" name="applyCode" value="전과">
 		</div>
 	</div>
 	<input type="button" value="신청하기">

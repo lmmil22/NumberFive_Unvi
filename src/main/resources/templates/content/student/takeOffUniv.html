@@ -30,7 +30,7 @@
 				  <th>이름</th>
 				  <td th:text="${stuInfo.memberVO.memName}"></td>
 				  <th>학번</th>
-			      <td th:text="${stuInfo.stuNo}"></td>
+			      <td th:text="${stuInfo.stuNo}" name="stuNo"></td>
 			      <th>학년</th>
 			      <td th:text="${stuInfo.stuYear}"></td>
 				</tr>
@@ -59,13 +59,17 @@
 				<tr> 
 			      <th>휴학 사유</th> 
 			       <td>
-			       		<textarea rows="3" cols="100" name="applyReason"></textarea>
+			       		<textarea rows="3" name="applyReason"></textarea>
 			       </td> 
-				</tr> 
+				</tr>
 			</table>
+			<input type="hidden" name="applyCode" value="휴학">
 		</div>
 	</div>
+	
 	<input type="button" value="신청하기">
+
+
 </div>
 
 </body>

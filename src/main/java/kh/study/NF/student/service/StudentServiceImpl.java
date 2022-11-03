@@ -17,7 +17,7 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public StudentVO studentInfo() {
 		
-		return sqlSession.selectOne("deptManageMapper.studentInfo");
+		return sqlSession.selectOne("studentMapper.studentInfo");
 	}
 
 }

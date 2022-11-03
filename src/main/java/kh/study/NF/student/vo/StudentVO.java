@@ -18,7 +18,7 @@ public class StudentVO {
 	private String collNo;
 	private String deptNo;
 	private String doubleNo;
-	private int stuYear;
+	private String stuYear;
 	private int stuSem;
 	private String stuStatus;
 	private String memNo ;
