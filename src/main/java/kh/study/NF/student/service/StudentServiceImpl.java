@@ -49,7 +49,7 @@ public class StudentServiceImpl implements StudentService {
 	
 	//by 수경 학생의 복학, 휴학, 전과, 복수전공 신청 내역 목록조회
 	//매개변수 String stuNo 추후에 넣을 것
-	@Override
+	@Override 
 	public List<DeptManageVO> stuApplyList() {
 		
 		return sqlSession.selectList("deptManageMapper.stuApplyList");
@@ -58,9 +58,9 @@ public class StudentServiceImpl implements StudentService {
 	//by수경 전공대학 전공학과 선택 시 재학중인 학과 제외
 	//추후 매개변수 DeptVO deptVO
 	@Override
-	public List<DeptVO> DeptList() {
+	public List<DeptVO> DeptList(String collNo) {
 		
-		return sqlSession.selectList("studentMapper.DeptList");
+		return sqlSession.selectList("studentMapper.DeptList", collNo);
 	}
 
 

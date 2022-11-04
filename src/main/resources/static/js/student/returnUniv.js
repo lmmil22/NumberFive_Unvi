@@ -7,7 +7,10 @@
 
 function applyReturnUniv(){
 
-	
+	//모달창 소스
+	const modal = new bootstrap.Modal('#returnUnivModal');
+	//모달 보여주기
+	modal.show();
 	
 }
 

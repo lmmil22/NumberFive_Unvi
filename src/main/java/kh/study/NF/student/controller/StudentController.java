@@ -63,9 +63,9 @@ public class StudentController {
 	//추후 매개변수 DeptVO deptVO(collNo, stuNo)
 	@ResponseBody
 	@PostMapping("/getMajorAjax")
-	public List<DeptVO> getMajorAjax() {
+	public List<DeptVO> getMajorAjax(String collNo) {
 		
-		return studentService.DeptList();
+		return studentService.DeptList(collNo);
 	}
 	
 	//by수경 학생이 학교를 휴학신청하는 페이지로 이동
@@ -116,7 +116,7 @@ public class StudentController {
 		return  "redirect:/stu/stuApplyList";
 	}
 	
-	//by수경 학생의 전공학과 변경(전과), 휴학신청, 복학신청, 복수전공(전공 하나 더) 신청 현황을 모아 둔 페이지
+	//by수경 학생의 전공학과 변경(전과), 휴학신청, 복학신청, 복수전공(전공 하나 더) 신청 현황
 	//추후 매개변수로 stuNo 추가할 것
 	@GetMapping("/stuApplyList")
 	public String stuApplyList(Model model) {

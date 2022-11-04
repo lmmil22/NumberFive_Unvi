@@ -69,6 +69,37 @@
 	</th:block>
 	</form>
 
+	<!-- by수경 복학신청 버튼 클릭 시 유의사항 모달 -->
+	<div class="modal fade" id="returnUnivModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<div class="row mb-3" >
+		      	<div class="col text-center">
+		      	  복학신청 유의사항
+		      	  1. 귀하는 
+		      	</div>
+	      	</div>
+	      	
+	       <div class="row">
+	       	<div class="col text-center">
+	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
+	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       		th:onclick="changeCnt();" data-cart-code="" data-cart-amount="" id="updateAmountBtn">확인</button>
+	       
+	       		<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" th:onclick="rollbackAmount();"
+	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;" data-origin-amount="" id="cancelBtn">취소</button>
+	       	</div>
+	       </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>		
+			
+
+
+
+
 </div>
 
 </body>

@@ -30,7 +30,7 @@ public interface StudentService {
 	
 	//by수경 전공대학 전공학과 선택 시 재학중인 학과 제외
 	//추후 매개변수 DeptVO deptVO
-	List<DeptVO> DeptList();
+	List<DeptVO> DeptList(String collNo);
 	
 
 }

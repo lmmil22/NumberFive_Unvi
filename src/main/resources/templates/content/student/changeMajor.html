@@ -31,7 +31,7 @@
 				  <th>이름</th>
 				  <td th:text="${stuInfo.memberVO.memName}"></td>
 				  <th>학번</th>
-			      <td th:text="${stuInfo.stuNo}"></td>
+			      <td th:text="${stuInfo.stuNo}" id="stuNo"></td>
 			      <th>학년</th>
 			      <td th:text="${stuInfo.stuYear}"></td>
 				</tr>
@@ -65,7 +65,7 @@
 				  <th>현재전공대학</th>
 				   <td th:text="${stuInfo.collVO.collName}"></td>
 				    <th>현재전공학과</th>
-			    	<td th:text="${stuInfo.deptVO.deptName}" id="nowDept"></td>
+			    	<td th:text="${stuInfo.deptVO.deptName}"></td>
 			    	 
 			    </tr>
 				<tr>

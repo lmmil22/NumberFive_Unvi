@@ -4,17 +4,20 @@
 function changeColl(){
 	
 	const collNo = document.querySelector('select').value;
-	const deptNo = document.querySelector('#nowDept');
+	//by수경 제외하기 위해서 매개변수로 stuNo 필요 
+	//const stuNo = document.querySelector('#stuNo');
 	
 	$.ajax({
 	   url: '/stu/getMajorAjax', //요청경로
 	    type: 'post',
-	    data: {'collNo':collNo, 'deptNo':deptNo}, //필요한 데이터
+	    // 추후 stuNo 추가하기
+	    data: {'collNo':collNo}, //필요한 데이터
 	    success: function(result) {
-	   
+	   		//by수경 학과 select박스 선택
 	   		const deptSelect = document.querySelector('.deptList');
-	   		
+	   		//by수경 학과 select박스 안에 option 태그 선택
 	   		const optionTags = deptSelect.querySelectorAll('option');
+			//by수경 태그를 비우자
 			$('.deptList').empty(); 
 		
 			let str ='';
