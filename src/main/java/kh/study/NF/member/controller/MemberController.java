@@ -20,10 +20,10 @@ public class MemberController {
 	private MemberService memberService;
 
 	// by 유 : 학생정보시스템의 첫 화면 로그인 페이지입니다.
-	// --> stu컨트롤러에서 학생,교수,교직원 모두 로그인해야해서 여기로 옮겼어!!)
-	// 첫 화면 경로 : http://localhost:8081/member/login
+	// --> stu컨트롤러에서 학생,교수,교직원 모두 로그인해야해서 공통사항은 (common폴더)여기로 옮겼어!!)
+	// 첫 화면 경로 : http://localhost:8081/member/homeLogin
 	@GetMapping("/homeLogin")
-	public String homeLogin(MemberVO  memberVO , Model model ) {
+	public String homeLogin( ) {
 		
 		return "content/common/homeLogin"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
 	}

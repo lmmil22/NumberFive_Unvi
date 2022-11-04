@@ -101,6 +101,18 @@
 		    <version>3.0.4.RELEASE</version>
 		</dependency> -->
 		
+		<!-- by 유빈 : 메일 기능 추가  -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<!-- by 유빈 : 메일 임시 비밀번호 발급 기능 추가  -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-email</artifactId>
+		    <version>1.5</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
