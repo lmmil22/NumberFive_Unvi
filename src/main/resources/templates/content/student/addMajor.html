@@ -9,13 +9,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!--by수경 학생이 복수전공(전공 하나 더 추가)신청하는 페이지입니다.-->
 
 <div layout:fragment ="content">
 <th:block layout:fragment ="css">
 	<link rel ="stylesheet" th:href="@{/css/cartList.css}">
 </th:block>
-	<!--by수경 학생이 복수전공(전공 하나 더 추가)신청하는 페이지입니다.-->
-	
+	<form th:action="@{/stu/applyAddMajor}" method="post">
 	<div class="row justify-content-center">
 		<div class="col mt-5">
 			<table class="table table-bordered">
@@ -90,16 +90,23 @@
 				<tr> 
 			      <th>복수전공 신청사유</th> 
 			       <td colspan="3">
-			       		<textarea rows="3" name="applyReason"></textarea>
+			       		<textarea rows="3" name="applyReason"  required placeholder="복수전공 신청 사유를 작성하세요."></textarea>
 			       </td> 
 				</tr> 
 			</table>
 			<input type="hidden" name="applyCode" value="복수전공">
 		</div>
 	</div>
-	<input type="button" value="신청하기">
+	
+	<div class="row">
+		<div class="col mt-4 text-center">
+			<input type="button" value="복수전공신청">
+		</div>
+	</div>	
+	</form>
+
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
-<script type="text/javascript" th:src="@{/js/changeMajor.js}"></script>	
+<script type="text/javascript" th:src="@{/js/student/changeMajor.js}"></script>	
 </div>
 
 

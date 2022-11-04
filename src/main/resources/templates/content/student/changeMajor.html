@@ -15,7 +15,7 @@
 	<link rel ="stylesheet" th:href="@{/css/cartList.css}">
 </th:block>
 	<!--by수경 학생이 전공학과 변경(전과) 신청하는 페이지입니다.-->
-	
+	<form th:action="@{/stu/applyChangeMajor}">
 	<div class="row justify-content-center">
 		<div class="col mt-5">
 			<table class="table table-bordered">
@@ -65,13 +65,14 @@
 				  <th>현재전공대학</th>
 				   <td th:text="${stuInfo.collVO.collName}"></td>
 				    <th>현재전공학과</th>
-			    	<td th:text="${stuInfo.deptVO.deptName}"></td>
+			    	<td th:text="${stuInfo.deptVO.deptName}" id="nowDept"></td>
 			    	 
 			    </tr>
 				<tr>
 		    	  <th>변경전공대학</th> 
 			      <td>
 					<select class="form-select" onchange="changeColl();" name="collNo">
+					  <option>전체</option>
 					  <th:block th:each="coll: ${collList}">
 					 	<option th:value=${coll.collNo} th:text="${coll.collName}"></option>
 					  </th:block>
@@ -81,6 +82,7 @@
 		    	  <th>변경전공학과</th> 
 			      <td>
 			      <select class="form-select deptList" name="deptNo">
+			      		<option>전체</option>
 					  <th:block th:each="dept: ${deptList}">
 						<option th:value=${dept.deptNo} th:text="${dept.deptName}"></option>
 					  </th:block>
@@ -90,16 +92,24 @@
 				<tr> 
 			      <th>전과 사유</th> 
 			       <td colspan="3">
-			       		<textarea rows="3" name="applyReason"></textarea>
+			       		<textarea rows="3" name="applyReason"  required placeholder="전과 사유를 작성하세요."></textarea>
 			       </td> 
 				</tr> 
 			</table>
 			<input type="hidden" name="applyCode" value="전과">
 		</div>
 	</div>
-	<input type="button" value="신청하기">
+	
+	<div class="row">
+		<div class="col mt-4 text-center">
+			<input type="button" value="전과신청">
+		</div>
+	</div>	
+	</form>
+
+
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
-<script type="text/javascript" th:src="@{/js/changeMajor.js}"></script>	
+<script type="text/javascript" th:src="@{/js/student/changeMajor.js}"></script>	
 </div>
 
 

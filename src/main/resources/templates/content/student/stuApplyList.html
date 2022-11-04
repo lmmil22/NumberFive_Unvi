@@ -31,6 +31,16 @@
 					  <th>승인일</th>
 					  <th>승인여부</th>
 				    </tr>
+					
+					<th:block th:if="${#lists.size(applyList) == 0}">
+				    <tr>
+				      <td colspan="6">
+				      	<span>신청한 내역이 없습니다.</span>
+				      </td>
+				    </tr>  
+					</th:block>
+					
+					<th:block th:unless="${#lists.size(applyList) == 0}">
 					<tr>
 				      <td></td>
 				      <td></td>
@@ -39,6 +49,7 @@
 				      <td></td>
 				      <td></td>
 					</tr>
+					</th:block>
 				</table>
 			</div>		
 		</div>		
@@ -58,6 +69,14 @@
 					  <th>승인일</th>
 					  <th>승인여부</th>
 				    </tr>
+				    <th:block th:if="${#lists.size(applyList) == 0}">
+				    <tr>
+				      <td colspan="6">
+				      	<span>신청한 내역이 없습니다.</span>
+				      </td>
+				    </tr>  
+					</th:block>
+				    <th:block th:unless="${#lists.size(applyList) == 0}">
 					<tr>
 				      <td></td>
 				      <td></td>
@@ -66,6 +85,7 @@
 				      <td></td>
 				      <td></td>
 					</tr>
+					</th:block>
 				</table>
 			</div>		
 		</div>	
@@ -85,6 +105,15 @@
 					  <th>승인일</th>
 					  <th>승인여부</th>
 				    </tr>
+				   
+				    <th:block th:if="${#lists.size(applyList) == 0}">
+				    <tr>
+				      <td colspan="6">
+				      	<span>신청한 내역이 없습니다.</span>
+				      </td>
+				    </tr>  
+					</th:block>
+					<th:block th:unless="${#lists.size(applyList) == 0}">
 					<tr>
 				      <td></td>
 				      <td></td>
@@ -95,6 +124,7 @@
 				      <td></td>
 				      <td></td>
 					</tr>
+					</th:block>
 				</table>
 			</div>		
 		</div>
@@ -116,6 +146,15 @@
 					  <th>승인일</th>
 					  <th>승인여부</th>
 				    </tr>
+				    
+				    <th:block th:if="${#lists.size(applyList) == 0}">
+				    <tr>
+				      <td colspan="6">
+				      	<span>신청한 내역이 없습니다.</span>
+				      </td>
+				    </tr>  
+					</th:block>
+				    <th:block th:unless="${#lists.size(applyList) == 0}">
 					<tr>
 				      <td></td>
 				      <td></td>
@@ -126,6 +165,7 @@
 				      <td></td>
 				      <td></td>
 					</tr>
+					</th:block>
 				</table>
 			</div>		
 		</div>		

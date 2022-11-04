@@ -9,12 +9,14 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!--by수경 학생이 복학신청하는 페이지입니다. -->
 
 <div layout:fragment ="content">
 <th:block layout:fragment ="css">
 	<link rel ="stylesheet" th:href="@{/css/cartList.css}">
 </th:block>
-<!--by수경 학생이 복학신청하는 페이지입니다. -->
+
+	<form th:action="@{/stu/applyReturnUniv}" method="post">
 	<div class="row justify-content-center">
 		<div class="col mt-5">
 			<table class="table table-bordered">
@@ -48,15 +50,26 @@
 			     <th>생년월일</th> 
 			     <td th:text="${stuInfo.memberVO.memBirth}"></td> 
 			     <th>학적상태</th> 
-			     <td th:text="${stuInfo.stuStatus}"></td> 
+			     <td th:text="${stuInfo.stuStatus}" id="stuStatus"></td> 
 				</tr> 
 			</table>
 			<input type="hidden" name="applyCode" value="복학">
 		</div>
 	</div>
 	
-	<input type="button" value="복학신청">
-	</div>
+<!--by.수경 복학신청 버튼이 재학중인 학생에게는 복학신청 버튼이 보이지 않도록 하고,
+		 	휴학생이면 복학신청 버튼이 보이도록 구현 -->
+	
+	<th:block th:if="${stuInfo.stuStatus == '휴학'}">
+	<div class="row">
+		<div class="col mt-4 text-center">
+			<input type="button" value="복학신청" th:onclick="applyReturnUniv();">
+		</div>
+	</div>	
+	</th:block>
+	</form>
+
+</div>
 
 </body>
 </html>

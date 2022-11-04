@@ -6,8 +6,6 @@
 <!--by수경 student mapper입니다.  -->
 <mapper namespace="studentMapper">
 
-
-
 <!-- by수경 STU테이블의 mapper입니다. -->
 <resultMap type="kh.study.NF.student.vo.StudentVO" id="student">
 <id column="STU_NO" property="stuNo"/>
@@ -39,23 +37,32 @@
 <result column="MEM_ROLE" property="memRole"/>
 </resultMap>
 
-<!-- by수경 학생의 휴학/복학/전과신청 시 학생정보를 나타내는 테이블 데이터 -->
+<!-- by수경 학생의 휴학/복학/전과신청 시 학생정보를 나타내는 테이블 데이터/ 복수전공 추가 -->
 <select id="studentInfo" resultMap="student">
 	SELECT M.MEM_NO
 		, MEM_NAME
 		, MEM_GENDER
 		, TO_CHAR(MEM_BIRTH, 'YYYY"년"MM"월"DD"일"')AS MEM_BIRTH
 		, STU_NO
-		, (SELECT TO_CHAR(STU_YEAR)||'학년'||' '||TO_CHAR(STU_SEM)||'학기'FROM STU)AS STU_YEAR 
+		, (SELECT TO_CHAR(STU_YEAR)||'학년'||' '||TO_CHAR(STU_SEM)||'학기'FROM STU WHERE STU_NO = 'STU_001')AS STU_YEAR 
 		, STU_STATUS
 		, (SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO = S.DEPT_NO)AS DEPT_NAME
-<!-- 		, (SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO 
-						= (SELECT DOUBLE_DEPT FROM DOUBLE_MAJOR WHERE DOUBLE_NO = DOUBLE_NO) 
-		)-->
 		, (SELECT COLL_NAME FROM COLLEAGE WHERE COLL_NO = S.COLL_NO)AS COLL_NAME
 	FROM STU S, MEMBER M
 	WHERE S.MEM_NO = M.MEM_NO
 	AND STU_NO = 'STU_001'
+</select>
+
+<!--by수경 전공대학 전공학과 선택 시 재학중인 학과 제외  --> 
+<select id="DeptList" resultMap="professorMapper.dept">
+	SELECT DEPT_NO, DEPT_NAME
+	FROM DEPT D
+	WHERE COLL_NO = 'COLL_001'
+	AND DEPT_NO NOT IN (SELECT DEPT_NO
+                    	FROM STU
+                    	WHERE DEPT_NO = D.DEPT_NO
+                    	AND STU_NO = 'STU_001');
+
 </select>
 
 </mapper>

@@ -22,29 +22,102 @@
 <result column="DOUBLE_MAJOR_DEPT" property="doubleMajorDept"/>
 </resultMap>
 
+<!--by수경 학생의 복학신청 접수하기 STU_NO는 추후 수정 예정-->
+<insert id="applyReturnUniv">
+INSERT INTO DEPT_MANAGE(APPLY_NO
+						, STU_NO
+						, APPLY_CODE
+						, FROM_COLL
+						, FROM_DEPT
+				)VALUES((SELECT 'APPLY_'|| LPAD(MAX(TO_NUMBER(SUBSTR(APPLY_CODE,7))), 0)+1, 3, 0) FROM DEPT_MANAGE)
+						, 'STU_001'  
+						, #{applyCode}
+						, #{fromColl}
+						, #{fromDept}
+)
+</insert>
+
+
+<!--by수경 학생의 휴학신청 접수하기 STU_NO는 추후 수정 예정-->
+<insert id="applyTakeOffUniv">
+INSERT INTO DEPT_MANAGE(APPLY_NO
+						, STU_NO
+						, APPLY_CODE
+						, APPLY_REASON
+						, FROM_COLL
+						, FROM_DEPT
+									
+				)VALUES((SELECT 'APPLY_'|| LPAD(MAX(TO_NUMBER(SUBSTR(APPLY_CODE,7))), 0)+1, 3, 0) FROM DEPT_MANAGE)
+						, 'STU_001'  
+						, #{applyCode}
+						, #{applyReason}
+						, #{fromColl}
+						, #{fromDept}
+)
+</insert>
+
+
+<!--by수경 학생의 전과신청 접수하기 STU_NO는 추후 수정 예정-->
+<insert id="applyChangeMajor">
+INSERT INTO DEPT_MANAGE(APPLY_NO
+						, STU_NO
+						, APPLY_CODE
+						, APPLY_REASON
+						, FROM_COLL
+						, FROM_DEPT
+						, TO_COLL
+						, TO_DEPT
+				)VALUES((SELECT 'APPLY_'|| LPAD(MAX(TO_NUMBER(SUBSTR(APPLY_CODE,7))), 0)+1, 3, 0) FROM DEPT_MANAGE)
+						, 'STU_001'  
+						, #{applyCode}
+						, #{applyReason}
+						, #{fromColl}
+						, #{fromDept}
+						, #{toColl}
+						, #{toDept}
+)
+</insert>
+
+
+<!--by수경 학생의 복수전공 신청 접수하기 STU_NO는 추후 수정 예정-->
+<insert id="applyAddMajor">
+INSERT INTO DEPT_MANAGE(APPLY_NO
+						, STU_NO
+						, APPLY_CODE
+						, APPLY_REASON
+						, FROM_COLL
+						, FROM_DEPT
+						, DOUBLE_MAJOR_COLL
+						, DOUBLE_MAJOR_DEPT
+				)VALUES((SELECT 'APPLY_'|| LPAD(MAX(TO_NUMBER(SUBSTR(APPLY_CODE,7))), 0)+1, 3, 0) FROM DEPT_MANAGE)
+						, 'STU_001'  
+						, #{applyCode}
+						, #{applyReason}
+						, #{fromColl}
+						, #{fromDept}
+						, #{doubleMajorColl}
+						, #{doubleMajorDept}
+)
+</insert>
+
+
+<!--by수경 학생의 복학, 휴학, 전과, 복수전공 신청 내역을 보여주는 페이지 목록조회 -->
+<select id="stuApplyList" resultMap="deptManage">
+SELECT APPLY_NO
+	 , FROM_COLL
+	 , FROM_DEPT
+	 , TO_COLL
+	 , TO_DEPT
+	 , DOUBLE_MAJOR_COLL
+	 , DOUBLE_MAJOR_DEPT
+	 , APPLY_CODE
+	 , APPLY_DATE
+	 , APPROVAL_DATE
+	 , PROCESS_STATUS
+FROM DEPT_MANAGE
+WHERE STU_NO = 'STU_001'
+	 
+
+</select>
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

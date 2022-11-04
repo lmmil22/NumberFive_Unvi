@@ -10,11 +10,12 @@
 </head>
 <body>
 
+<!--by수경 학생이 학교를 휴학신청하는 페이지입니다. -->
 <div layout:fragment ="content">
 <th:block layout:fragment ="css">
 	<link rel ="stylesheet" th:href="@{/css/cartList.css}">
 </th:block>
-<!--by수경 학생이 학교를 휴학신청하는 페이지입니다. -->
+	<form th:action="@{/stu/applyTakeOffUniv}" method="post">
 	<div class="row justify-content-center">
 			<div class="col mt-5">
 			<table class="table table-bordered">
@@ -30,7 +31,7 @@
 				  <th>이름</th>
 				  <td th:text="${stuInfo.memberVO.memName}"></td>
 				  <th>학번</th>
-			      <td th:text="${stuInfo.stuNo}" name="stuNo"></td>
+			      <td th:text="${stuInfo.stuNo}"></td>
 			      <th>학년</th>
 			      <td th:text="${stuInfo.stuYear}"></td>
 				</tr>
@@ -59,16 +60,25 @@
 				<tr> 
 			      <th>휴학 사유</th> 
 			       <td>
-			       		<textarea rows="3" name="applyReason"></textarea>
+			       		<textarea rows="3" name="applyReason" required placeholder="휴학 사유를 작성하세요."></textarea>
 			       </td> 
 				</tr>
 			</table>
 			<input type="hidden" name="applyCode" value="휴학">
 		</div>
 	</div>
+		
+<!--by.수경 휴학신청 버튼이 휴학중이 학생에게는 휴학신청 버튼이 보이지 않도록 하고,
+		 	재학생이면 휴학신청 버튼이 보이도록 구현 -->
 	
-	<input type="button" value="신청하기">
-
+	<th:block th:if="${stuInfo.stuStatus == '재학'}">
+	<div class="row">
+		<div class="col mt-4 text-center">
+			<input type="button" value="휴학신청" >
+		</div>
+	</div>	
+	</th:block>
+	</form>
 
 </div>
 
