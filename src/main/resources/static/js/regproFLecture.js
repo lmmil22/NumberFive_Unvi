@@ -2,9 +2,9 @@
 
 function changeDept(){
 	//colleageNo 값 
- 	const collNo = document.querySelector('select').value;
+ 	const collNo = document.querySelector('.changeDept').value;
 			
- 	alert(collNo);
+ 	//alert(collNo);
 	 //ajax start
 	 $.ajax({
 		 url: '/proF/getDeptListAjax', 

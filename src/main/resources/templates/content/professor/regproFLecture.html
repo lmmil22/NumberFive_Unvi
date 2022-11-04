@@ -13,150 +13,139 @@
 
 <!-- 고정 페이지와 변동페이지는 다르다  -->
 <div layout:fragment="content">
-<style>
-	div{ text-align:  center;
-	}
 
+	<style>
+div {
+	text-align: center;
+}
 </style>
-	<div class="row" >
+
+	<div class="row">
 		<!-- <div class="col mb-3" style="height: 50px; text-align:left ;">강의 등록</div> -->
 	</div>
-			<h4  style="text-align:left ;"> 강의 등록</h4>
-		<div class="row">
+	<h4 style="text-align: left;">강의 등록</h4>
+
+	<div class="row">
+		<form th:action="@{/proF/regProfLecForm}" method="post" enctype="multipart/form-data">
 			<div class="col">
 				<div class="row">
-					<form action="">
+
 					<div class="mb-3 row">
 						<label for="lecName" class="col-sm-3 col-form-label">강의명</label>
 						<div class="col-sm-5">
-							<input type="text" class="form-control" id="lecName"
-								name="lecName">
+							<input type="text" class="form-control" id="lecName" name="lecName">
 						</div>
 					</div>
-
+					
 					<div class="mb-3 row">
 						<label for="lecScore" class="col-sm-3 col-form-label">강의
 							학점</label>
 						<div class="col-sm-5">
-							<input type="number" class="form-control" id="lecScore" value="2"
-								name="lecScore" max="4">
+							<input type="number" class="form-control" id="lecScore" value="2" name="lecScore" max="4">
 						</div>
 					</div>
-
+					<div class="mb-3 row">
+						<label for="semNo" class="col-sm-3 col-form-label">강의 학기 </label>
+						<div class="col-sm-5">
+							<select name="semNo" id="semNo">
+								<option th:each="semester: ${semesterList}" th:value=${semester.semNo}
+									th:text="${semester.semName}" >  </option>
+							</select>
+						</div>
+					</div>
+					
 					<div class="mb-3 row">
 						<label for="collNo" class="col-sm-3 col-form-label">단과대학</label>
 						<div class="col-sm-5">
-						<select onchange="changeDept();">
+							<select onchange="changeDept();" class="changeDept" name="collNo" id="collNo">
 
-								<option th:each="coll: ${collList}" th:value=${coll.collNo} th:text="${coll.collName}"></option>
-
+								<option th:each="coll: ${collList}" th:value=${coll.collNo}
+									th:text="${coll.collName}"></option>
 							</select>
 						</div>
 					</div>
-
-					<div class="mb-3 row" >
+					<div class="mb-3 row">
 						<label for="deptNo" class="col-sm-3 col-form-label">소속학과</label>
 						<div class="col-sm-5">
-							<select class="changeDeptList">
-
-								<option th:each="dept: ${deptList}" th:value=${dept.deptNo} th:text="${dept.deptName}"></option>
-
+							<select class="changeDeptList" name="deptNo" id="deptNo">
+								<option th:each="dept: ${deptList}" th:value=${dept.deptNo}
+									th:text="${dept.deptName}"></option>
 							</select>
 						</div>
 					</div>
 
-					<div class="mb-3 row">
+	<!-- 				<div class="mb-3 row">
 						<label for="empNo" class="col-sm-3 col-form-label">담당교수</label>
 						<div class="col-sm-5">
 							<input type="text" class="form-control" id="empNo" name="empNo">
 						</div>
+					</div> -->
+					
+							<div class="mb-3 row">
+						<label for="empNo" class="col-sm-3 col-form-label">담당교수 </label>
+						<div class="col-sm-5">
+							<select name="empNo" id="empNo">
+								<option th:each="emp: ${empList}" th:value=${emp.empNo}
+									th:text="${emp.memNo}" >  </option>
+							</select>
+						</div>
 					</div>
+					
 					<div class="mb-3 row">
-						<label for="maxNum" class="col-sm-3 col-form-label">최대 수강
-							신청 인원</label>
+						<label for="maxNum" class="col-sm-3 col-form-label">최대 수강 신청 인원</label>
 						<div class="col-sm-5">
-							<input type="number" class="form-control" id="maxNum"
-								name="maxNum" max="20">
+							<input type="number" class="form-control" id="maxNum" name="maxNum" max="20">
 						</div>
 					</div>
-					<div class="mb-3 row" >
-						<label for="nowNum" class="col-sm-3 col-form-label">현재 수강
-							신청 인원</label>
+					<!-- <div class="mb-3 row">
+						<label for="nowNum" class="col-sm-3 col-form-label">현재 수강 신청 인원</label>
 						<div class="col-sm-5">
-							<input type="number" class="form-control" id="nowNum"
-								name="nowNum">
+							<input type="number" class="form-control" id="nowNum" name="nowNum">
 						</div>
-					</div>
-					<div>
-						<input type="submit" class=" form-control" style="width:  400px;"  value="등록">
+					</div> -->
+				</div>
+			</div>
+			<div class=" col" style="text-align: left;">
+				<h4 style="text-align: left;">강의 상세 등록</h4>
 
+				<div class="mb-5 row">
+					<label for="originPdfName" class="col-sm-4 col-form-label">강의
+						자료 등록 </label>
+					<div class="col-sm-5">
+						<input type="file" class="form-control" id="originPdfName" name="PdfName">
 					</div>
-				</form>
-
 				</div>
 
+				<div class="mb-5 row">
+					<label for="lecDay" class="col-sm-4 col-form-label">강의 날짜 </label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="lecDay" name="lecDay">
+					</div>
+				</div>
+				<div class="mb-5 row">
+					<label for="firstTime" class="col-sm-4 col-form-label">강의 시작시간</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="firstTime" name="firstTime">
+					</div>
+				</div>
+				<div class="mb-5 row">
+					<label for="lastTime" class="col-sm-4 col-form-label">강의
+						마치는 시간 </label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="lastTime" name="lastTime">
+					</div>
+				</div>
 
-</div>
-<div class=" col" style="text-align: left;">
-		<h4  style="text-align:left ;"> 강의 상세 등록</h4>
-
-	<form th:action="@{/item/regItemForm}" method="post"
-		enctype="multipart/form-data">
-
-
-
-
-		<div class="mb-5 row">
-			<label for="originPdfName" class="col-sm-4 col-form-label">강의 자료 등록 </label>
-			<div class="col-sm-5">
-				<input type="file" class="form-control"  id="originPdfName" name="originPdfName">
-			<!-- 파일 속성에 멀티플을 multiple 넣어주면 동시에 넣을수 있다 여러개 파일 명이 아니라 여러개가 뜨기 때문에 파일 2개 이런식으로 된다 
-							이걸 jsp에서 하면 어려운데 스프링은 간편하게 되어있다 비교적?  -->
 			</div>
-		</div>
-
-		<div class="mb-5 row">
-			<label for="lecDay" class="col-sm-4 col-form-label">강의 날짜 </label>
-			<div class="col-sm-5">
-				<input type="text" class="form-control" id="lecDay" name="lecDay">
+			<div>
+				<input type="submit" class="form-control" style="width: 500px;"value="등록">
 			</div>
-		</div>
-		<div class="mb-5 row">
-			<label for="firstTime" class="col-sm-4 col-form-label">강의 시작시간</label>
-			<div class="col-sm-5">
-				<input type="text" class="form-control" id="firstTime" name="firstTime">
-			</div>
-		</div>
-		<div class="mb-5 row">
-			<label for="lastTime" class="col-sm-4 col-form-label">강의 마치는 시간 </label>
-			<div class="col-sm-5">
-				<input type="text" class="form-control" id="lastTime" name="lastTime">
-			</div>
-		</div>
-		
-		<div>
-		<input type="submit" class="form-control"  style="width:  400px;" value="등록">
-			
-		</div>
+		</form>
+	</div>
 
-	</form>
-
-
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-<!-- 인터넷에 있는 jquery 문법 로딩 이 먼저되어야한다 순서 중요-->
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<!-- 파일을 받아오겠습니다~  -->
-<script type="text/javascript" th:src="@{/js/regproFLecture.js}"></script>
+	<!-- 인터넷에 있는 jquery 문법 로딩 이 먼저되어야한다 순서 중요-->
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- 파일을 받아오겠습니다~  -->
+	<script type="text/javascript" th:src="@{/js/regproFLecture.js}"></script>
 </div>
 </html>

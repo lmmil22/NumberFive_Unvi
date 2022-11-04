@@ -2,25 +2,79 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
+<!--  By 지아-->
 <mapper namespace="professorMapper">
 	
 	<resultMap type="kh.study.NF.dept.vo.DeptVO" id="dept">
 		<id column="DEPT_NO" property="deptNo"/>
 		<result column="DEPT_NAME" property="deptName"/>
 		<result column="COLL_NO" property="collNo"/>
-	
 	</resultMap>
 	
 	<resultMap type="kh.study.NF.dept.vo.ColleageVO" id="coll">
 		<id column="COLL_NO" property="collNo"/>
 		<result column="COLL_NAME" property="collName"/>
-	
+	</resultMap>
+
+	<!-- 강의등록  -->
+	<resultMap type="kh.study.NF.professor.vo.LectureVO" id="lecture">
+		<id column="LEC_NO" property="lecNo"/>
+		<result column="LEC_NAME" property="lecName"/>
+		<result column="LEC_SCORE" property="lecScore"/>
+		<result column="COLL_NO" property="collNo"/>
+		<result column="DEPT_NO" property="deptNo"/>
+		<result column="EMP_NO" property="empNo"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="MAX_NUM" property="maxNum"/>
+		<result column="NOW_NUM" property="nowNum"/>
+		<result column="SEM_NO" property="semNo"/>
+		<result column="LEC_STATUS" property="lecStatus"/>
 	</resultMap>
 	
+	<!--강의pdf  -->
+	<resultMap type="kh.study.NF.professor.vo.LecturePdfVO" id="lecturePdf">
+		<id column="PDF_NO" property="pdfNo"/>
+		<result column="ORIGIN_PDF_NAME" property="originPdfName"/>
+		<result column="ATTACHED_PDF_NAME" property="attachedPdfName"/>
+		<result column="LEC_NO" property="lecNo"/>
+	</resultMap>
+
+
+	<!--강의시간  -->
+	<resultMap type="kh.study.NF.professor.vo.LectureTimeVO" id="lectureTime">
+		<id column="TIME_NO" property="timeNo"/>
+		<result column="LEC_DAY" property="lecDay"/>
+		<result column="FIRST_TIME" property="firstTime"/>
+		<result column="LAST_TIME" property="lastTime"/>
+		<result column="LEC_NO" property="lecNo"/>
+	</resultMap>
+	<!-- 학기 -->
+	<resultMap type="kh.study.NF.professor.vo.SemesterVO" id="semester">
+		<id column="SEM_NO" property="semNo"/>
+		<result column="SEM_YEAR" property="semYear"/>
+		<result column="SEMESTER" property="semester"/>
+		<result column="SEM_NAME" property="semName"/>
+	</resultMap>
+	<!-- emp -->
+	<resultMap type="kh.study.NF.emp.vo.EmpVO" id="emp">
+		<id column="EMP_NO" property="empNo"/>
+		<result column="EMP_TYPE" property="empType"/>
+		<result column="DEPT_NO" property="deptNo"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="COLL_NO" property="collNo"/>
+	
+	
+	</resultMap>
+
+<!-- 다음 강의에서 사용되는 No -->
+	<select id="getNextLecNo" resultType="String">
+		SELECT 'LEC_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(LEC_NO, 5))),0) +1, 3,0)
+		FROM LECTURE
+	</select>
 
 	<!--강의 등록-->
-	<insert id="proFLecInsert">
-		INSERT INTO TABLE LECTURE (
+	<insert id="insertProLec">
+		INSERT INTO LECTURE (
 			LEC_NO
 			, LEC_NAME
 			, LEC_SCORE
@@ -30,10 +84,9 @@
 			, MAX_NUM 
 			, NOW_NUM 
 			, SEM_NO
-			, LEC_STATUS
 
 		) VALUES (
-			(SELECT 'LEC_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(LEC_NO, 5))),0)+1,3,0) FROM LECTURE)
+			#{lecNo}
 			, #{lecName}
 			, #{lecScore}
 			, #{collNo}
@@ -42,45 +95,59 @@
 			, #{maxNum}
 			, #{nowNum}
 			, #{semNo}
-			, #{lecStatus}
 
 		)
-
 	</insert>
 
-<!-- 
+	<insert id="insertLecPpf">
+		INSERT INTO LECTURE_PDF(
+			PDF_NO
+			, ORIGIN_PDF_NAME
+			, ATTACHED_PDF_NAME
+			, LEC_NO
+		) VALUES (
+		(SELECT 'PDF_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(PDF_NO, 5))),0)+1,3,0) FROM LECTURE_PDF)			
+		, #{originPdfName}
+		, #{attachedPdfName}
+		, #{lecNo}
+		)
+	
+	</insert>
+	
+	<insert id="insertLecTime">
+		INSERT INTO LECTURE_TIME(
+			TIME_NO
+			, LEC_DAY
+			, FIRST_TIME
+			, LAST_TIME
+			, LEC_NO
+		) VALUES (
+		(SELECT 'TIME_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(TIME_NO, 6))),0)+1,3,0) FROM LECTURE_TIME)			
+		, #{lecDay}
+		, #{firstTime}
+		, #{lastTime}
+		, #{lecNo}
+		)
+	</insert>
 
-	lecNo;
-	 lecName;
-	 lecScore;
-	 collNo;
-	deptNo;
-	empNo;
-	 createDate;
-	 maxNum;
- nowNum;
-semNo;
- lecStatus;
-
- -->
-
-
+	<!-- dept목록조회 -->	
 	<select id="selectDept" resultMap="dept">
 	SELECT 
 	 	DEPT_NO 
     	, DEPT_NAME
    		, COLL_NO
     FROM  DEPT
-	
 	</select>
+
+	<!-- coll목록조회 -->	
 	<select id="selectColl" resultMap="coll">
 	SELECT 
 	 	COLL_NO 
     	, COLL_NAME
     FROM  COLLEAGE
-	
 	</select>
 	
+	<!-- coll의 dept리스트조회 -->
 	<select id="getDeptList" resultMap="dept">
 	SELECT 
 	 	D.DEPT_NO 
@@ -96,7 +163,30 @@ semNo;
 	ORDER BY COLL_NO
 	
 	</select>
-
+<!-- 학기 조회  -->	
+	<select id="selectSemester"  resultMap="semester">
+	SELECT 
+	  SEM_NO
+    , SEM_YEAR
+    , SEMESTER
+    , SEM_NAME
+    FROM SEMESTER
+	</select>	
+	
+	<!-- emp 조회 -->
+	<select id="selectEmp" resultMap="emp">
+	SELECT 
+		EMP_NO
+		, EMP_TYPE
+		, DEPT_NO
+		, (SELECT MEM_NAME
+		        FROM MEMBER
+		        WHERE MEM_NO = EMP.MEM_NO) AS MEM_NO
+		, COLL_NO
+	FROM EMP
+	
+	</select>
+	
 	
 </mapper>
 
