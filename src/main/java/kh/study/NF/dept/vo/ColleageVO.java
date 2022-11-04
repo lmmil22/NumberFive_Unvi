@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 @ToString
 public class ColleageVO {
-	String collNo;
-	String collName;
+	private String collNo;
+	private String collName;
 	
 	
 }

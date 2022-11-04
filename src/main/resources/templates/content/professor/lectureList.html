@@ -1,4 +1,4 @@
-
+<!-- //by 지아 강의 리스트 보이는 페이지 입니다 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -6,24 +6,112 @@
 	layout:decorate="~{layout/base_layout}">
 
 <th:block layout:fragment="css">
-	<link rel="stylesheet" th:href="@{}">
-	<!-- 외부 css 파일 불러오겠다  rel은 고정 -->
-
 </th:block>
 
 <!-- 고정 페이지와 변동페이지는 다르다  -->
 <div layout:fragment="content">
 
-	<style>
-div {
-	text-align: center;
-}
-</style>
+	<div>등록된 강의 리스트(｡•ㅅ•｡)♡</div>
+	<div id="table_box_bootstrap" style="text-align: center;">
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th scope="col">강의 등록코드</th>
+					<th scope="col">강의명</th>
+					<th scope="col">단과대학</th>
+					<th scope="col">학과</th>
+					<th scope="col">학점</th>
+					<th scope="col">교수</th>
+					<th scope="col">강의 요일</th>
+					<th scope="col">강의 시간</th>
+					<th scope="col">강의 변경</th>
+					<th scope="col">삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="lec : ${lecList}">
+					<th scope="row" th:text="${lec.lecNo}">1</th>
+					<td th:text="${lec.lecName}"></td>
+					<td th:text="${lec.collNo}"></td>
+					<td th:text="${lec.deptNo}"></td>
+					<td th:text="${lec.lecScore}"></td>
+					<td th:text="${lec.empNo}"></td>
+					<td th:text="${lec.lectureTimeVO.lecDay}"></td>
+					<td th:text="${lec.lectureTimeVO.lastTime}"></td>
+					 <td><input type="button" value="강의 상태 수정"	th:onclick="changeLecDetail();"></td>
+					<!-- <td><input type="button" value="강의 상태 수정"	data-bs-toggle="modal"  data-bs-target="#changeLecModal"></td> -->
+					<td><input type="button" value="강의 삭제"></td>
 
-	<div class="row">
-		<!-- <div class="col mb-3" style="height: 50px; text-align:left ;">강의 등록</div> -->
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	<h4 style="text-align: left;">강의 등록</h4>
+
+<!--  수정버튼을 누르면 뜨는 모달 -->
+	<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"  data-bs-target="#changeLecModal">
+ 
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="changeLecModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <table>
+       		<thead>
+				<tr >
+					<td>강의명</td>
+					<td>단과대학</td>
+					<td>학과</td>
+					<td>강의 요일</td>
+				</tr>
+				<tr>
+					<td>교수</td>
+					<td>강의 시간</td>
+					<td>강의 시간</td>
+					<td>학점</td>
+				</tr>
+       		</thead>
+       		<tbody>
+				<tr>
+					<td>t</td>
+					<td>t</td>
+					<td>y</td>
+					<td>y</td>
+				</tr>
+				<tr>
+					<td>t</td>
+					<td>t</td>
+					<td>y</td>
+					<td>y</td>
+				</tr>
+       		</tbody>
+       
+       </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script th:src="@{/js/paginator.js}"></script>
+
+	<script th:src="@{/js/professor/lectureList.js}"></script>
+
+</div>
+
+<h4 style="text-align: left;">강의 등록</h4>
 
 	<div class="row">
 		<form th:action="@{/proF/regProfLecForm}" method="post" enctype="multipart/form-data">
@@ -143,9 +231,4 @@ div {
 		</form>
 	</div>
 
-	<!-- 인터넷에 있는 jquery 문법 로딩 이 먼저되어야한다 순서 중요-->
-	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-	<!-- 파일을 받아오겠습니다~  -->
-	<script type="text/javascript" th:src="@{/js/professor/regproFLecture.js}"></script>
-</div>
 </html>

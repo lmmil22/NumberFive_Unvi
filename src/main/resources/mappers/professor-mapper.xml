@@ -29,6 +29,8 @@
 		<result column="NOW_NUM" property="nowNum"/>
 		<result column="SEM_NO" property="semNo"/>
 		<result column="LEC_STATUS" property="lecStatus"/>
+		<association property="lecturePdfVO" resultMap="lecturePdf"/>
+		<association property="lectureTimeVO" resultMap="lectureTime"/>
 	</resultMap>
 	
 	<!--강의pdf  -->
@@ -129,6 +131,37 @@
 		, #{lecNo}
 		)
 	</insert>
+	
+	<!-- 등록된 강의 조회  -->
+	<select id="selectLecList"  resultMap="lecture">
+	       SELECT
+			L.LEC_NO
+			, LEC_NAME
+			, LEC_SCORE
+			,(SELECT COLL_NAME
+		        FROM COLLEAGE
+		        WHERE COLL_NO = L.COLL_NO) AS COLL_NO
+			, (SELECT DEPT_NAME
+		        FROM DEPT
+		        WHERE DEPT_NO = L.DEPT_NO) AS DEPT_NO
+			, (SELECT MEM_NAME
+		        FROM MEMBER
+		        WHERE MEM_NO = (SELECT MEM_NO
+                                FROM EMP
+                                WHERE EMP_NO = L.EMP_NO)) AS EMP_NO
+			, LEC_DAY
+			, (SELECT FIRST_TIME||'-'||LAST_TIME
+							  FROM LECTURE_TIME WHERE LEC_NO = L.LEC_NO ) AS LAST_TIME
+			, PDF_NO
+			, ORIGIN_PDF_NAME
+			, ATTACHED_PDF_NAME
+		FROM LECTURE L, LECTURE_PDF LP, LECTURE_TIME LT
+		WHERE  L.LEC_NO = LP.LEC_NO AND L.LEC_NO = LT.LEC_NO
+	
+	</select>
+	
+
+
 
 	<!-- dept목록조회 -->	
 	<select id="selectDept" resultMap="dept">

@@ -45,6 +45,11 @@ public class ProfessorServiceImpl implements ProfessorService{
 	
 		return sqlSession.selectOne("professorMapper.getNextLecNo");
 	}
+	//등록된 강의 조회 
+	@Override
+	public List<LectureVO> selectLecList() {
+		return sqlSession.selectList("professorMapper.selectLecList");
+	}
 	
 	
 	

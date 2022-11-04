@@ -10,6 +10,7 @@ import kh.study.NF.professor.vo.SemesterVO;
 
 public interface ProfessorService {
 	
+	//BY 지아
 	//강의 등록
 	void insertLecture(LectureVO lectureVO , LecturePdfVO lecturePdfVO , LectureTimeVO lectureTimeVO);
 	
@@ -17,4 +18,5 @@ public interface ProfessorService {
 	List<EmpVO> selectEmpList();
 	String getNextLecNo();
 	
+	List<LectureVO> selectLecList();
 }

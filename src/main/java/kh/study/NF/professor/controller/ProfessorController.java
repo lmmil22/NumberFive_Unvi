@@ -76,6 +76,16 @@ public class ProfessorController {
 		return "redirect:/stu/main";
 	}
 	
+	//강의 등록후 리스트
+	@GetMapping("/viewLecList")
+	public String lectureList(Model model) {
+		
+		model.addAttribute( "lecList", professorService.selectLecList());
+		
+		
+		return "content/professor/lectureList";
+	}
+	
 	
 	
 }
