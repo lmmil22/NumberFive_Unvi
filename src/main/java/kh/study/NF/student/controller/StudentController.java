@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kh.study.NF.config.student.ApplyCode;
 import kh.study.NF.dept.service.DeptService;
 import kh.study.NF.dept.vo.DeptVO;
 import kh.study.NF.emp.vo.DeptManageVO;
@@ -27,15 +28,9 @@ public class StudentController {
 	@Resource(name = "deptService")
 	private DeptService deptService;
 	
-	//by수경 학생정보시스템의 첫페이지 로그인 페이지입니다.
-	@GetMapping("/main")
-	public String stuMain() {
-		return "content/student/stuMain";
-	}
-	
 	//by수경 학생이 전공학과를 변경(전과)하는 페이지로 이동 메소드
 	@GetMapping("/changeMajor")
-	public String changeMajor(Model model) {
+	public String changeMajor(Model model, DeptManageVO deptManageVO) {
 		//by수경 학생정보 쿼리문
 		model.addAttribute("stuInfo", studentService.studentInfo());
 		
@@ -48,7 +43,7 @@ public class StudentController {
 	
 	//by수경 학생이 전공학과를 변경(전과)하는 페이지로 이동 메소드
 	@GetMapping("/addMajor")
-	public String addMajor(Model model) {
+	public String addMajor(Model model, DeptManageVO deptManageVO) {
 		//by수경 학생정보 쿼리문
 		model.addAttribute("stuInfo", studentService.studentInfo());
 		
@@ -70,7 +65,7 @@ public class StudentController {
 	
 	//by수경 학생이 학교를 휴학신청하는 페이지로 이동
 	@GetMapping("/takeOffUniv")
-	public String takeOffUniv(Model model) {
+	public String takeOffUniv(Model model, DeptManageVO deptManageVO) {
 		//by수경 학생정보 쿼리문
 		model.addAttribute("stuInfo", studentService.studentInfo());
 		return  "content/student/takeOffUniv";
@@ -78,7 +73,7 @@ public class StudentController {
 	
 	//by수경 학생이 학교를 복학신청하는 페이지로 이동
 	@GetMapping("/returnUniv")
-	public String returnUniv(Model model) {
+	public String returnUniv(Model model, DeptManageVO deptManageVO) {
 		//by수경 학생정보 쿼리문
 		model.addAttribute("stuInfo", studentService.studentInfo());
 		
@@ -88,21 +83,35 @@ public class StudentController {
 	//by수경 학생이 학교를 복학 신청버튼 클릭 시 실행되는 메소드
 	@PostMapping("/applyReturnUniv")
 	public String applyReturnUniv(Model model, DeptManageVO deptManageVO) {
+		//by수경 enum을 이용하여 value set
+		deptManageVO.setApplyCode(ApplyCode.복학.toString());
 		
 		studentService.applyReturnUniv(deptManageVO);
 		
 		return  "redirect:/stu/stuApplyList";
 	}
-	//by수경 학생이 학교를 휴학 신청버튼 클릭 시 실행되는 메소드
-	@PostMapping("/applyTakeOffUniv")
-	public String applyTakeOffUniv(Model model, DeptManageVO deptManageVO) {
+	
+	
+	//by수경 학생이 휴학신청버튼 클릭 시 실행되는 메소드
+	@ResponseBody
+	@PostMapping("/applyTakeOffUnivAjax")
+	public void applyTakeOffUniv(Model model, DeptManageVO deptManageVO) {
+		//by수경 enum을 이용하여 value set
+		deptManageVO.setApplyCode(ApplyCode.휴학.toString());
+		
 		studentService.applyTakeOffUniv(deptManageVO);
 		
-		return  "redirect:/stu/stuApplyList";
+		//return  "content/student/stuApplyList";
+		//return  "redirect:/stu/stuApplyList";
 	}
+	
+	
 	//by수경 학생이 학교를 전과 신청버튼 클릭 시 실행되는 메소드
 	@PostMapping("/applyChangeMajor")
 	public String applyChangeMajor(Model model, DeptManageVO deptManageVO) {
+		//by수경 enum을 이용하여 value set
+		deptManageVO.setApplyCode(ApplyCode.전과.toString());
+		
 		studentService.applyChangeMajor(deptManageVO);
 		
 		return  "redirect:/stu/stuApplyList";
@@ -110,6 +119,8 @@ public class StudentController {
 	//by수경 학생이 학교를 복수전공 신청버튼 클릭 시 실행되는 메소드
 	@PostMapping("/applyAddMajor")
 	public String applyAddMajor(Model model, DeptManageVO deptManageVO) {
+		//by수경 enum을 이용하여 value set
+		deptManageVO.setApplyCode(ApplyCode.복수전공.toString());
 		
 		studentService.applyAddMajor(deptManageVO);
 		

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout ="http://www.ultrap.net.nz/thymeleaf/layout"   
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   layout:decorate="~{layout/base_layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<!--by.수경 학생의 복학, 휴학 신청에 대한 관리자 페이지
+라디오/체크박스 기능으로 처리 가능하도록 구현  -->
+
+<body>
+<div layout:fragment ="content">
+	<div class="row justify-content-center">
+		<div class="col text-center">
+			<H5>복학신청 현황</H5>
+		</div>
+		
+		<div class="row mt-2">
+			<div class="col mb-5">
+				<table class="table table-bordered">
+				   <tr>
+					  <th>No</th>
+					  <th>전공대학</th>
+					  <th>전공학과</th>
+					  <th>신청일</th>
+					  <th>승인일</th>
+					  <th>승인여부</th>
+				    </tr>
+				    <th:block th:if="${#lists.size(applyList) == 0}">
+				    <tr>
+				      <td colspan="6">
+				      	<span>신청한 내역이 없습니다.</span>
+				      </td>
+				    </tr>  
+					</th:block>
+				    <th:block th:unless="${#lists.size(applyList) == 0}">
+					<tr>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+					</tr>
+					</th:block>
+				</table>
+			</div>		
+		</div>
+
+		<div class="col text-center">
+			<H5>휴학신청 현황</H5>
+		</div>
+		<div class="row mt-2">
+			<div class="col mb-5">
+				<table class="table table-bordered">
+				   <tr>
+					  <th>No</th>
+					  <th>전공대학</th>
+					  <th>전공학과</th>
+					  <th>신청일</th>
+					  <th>승인일</th>
+					  <th>승인여부</th>
+				    </tr>
+					
+					<th:block th:if="${#lists.size(applyList) == 0}">
+				    <tr>
+				      <td colspan="6">
+				      	<span>신청한 내역이 없습니다.</span>
+				      </td>
+				    </tr>  
+					</th:block>
+					
+					<th:block th:unless="${#lists.size(applyList) == 0}">
+					<tr>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+					</tr>
+					</th:block>
+				</table>
+			</div>		
+		</div>		
+	</div>		
+   
+</div>
+
+
+</body>
+</html>

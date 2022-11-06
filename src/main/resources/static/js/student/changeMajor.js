@@ -26,7 +26,7 @@ function changeColl(){
 				str += `<option value="${dept.deptNo}">${dept.deptName}</option>`;
 			}			
 
-			deptSelect.insertAdjacentHTML('beforeend',str); // 셀렉트박스가 끝나기 전에 str을 붙여주겠다 
+			deptSelect.insertAdjacentHTML('beforeend',str); 
 		
 	    },
 	    error: function(){
@@ -43,5 +43,32 @@ function changeColl(){
 //전과신청 버튼 클릭 시 유의사항 팝업창이 뜨고 확인버튼 누르면 
 //전과신청이 완료 되었습니다. 팝업이 뜬 후 신청현황 페이지로 이동
 
+function applyChangeMajor(){
+	
+	const textArea = document.querySelector('textarea').value;
+	//alert(textArea);
 
+	//by수경 전과사유 공백 및 빈칸 방지
+	if(textArea.replace(/\s| /gi, "").length == 0){
+		alert('전과 사유는 필수 입력 사항입니다. \n전과 사유를 작성하여 주십시오.');
+		return;
+	}
+
+	//by수경 모든 정보가 입력되었을 때 전과 유의사항 모달창
+	//모달창 소스
+	const modal = new bootstrap.Modal('#changeMajorModal');
+	//모달 보여주기
+	modal.show();
+
+}
+
+function applyResult(){
+	
+	 //모달창 소스
+	const modal = new bootstrap.Modal('#applyResultModal');
+	//모달 보여주기
+	modal.show();	
+	
+	
+}
 

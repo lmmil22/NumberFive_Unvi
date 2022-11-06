@@ -11,11 +11,7 @@
 <body>
 
 <div layout:fragment ="content">
-<th:block layout:fragment ="css">
-	<link rel ="stylesheet" th:href="@{/css/cartList.css}">
-</th:block>
 	<!--by수경 학생이 전공학과 변경(전과) 신청하는 페이지입니다.-->
-	<form th:action="@{/stu/applyChangeMajor}">
 	<div class="row justify-content-center">
 		<div class="col mt-5">
 			<table class="table table-bordered">
@@ -31,15 +27,15 @@
 				  <th>이름</th>
 				  <td th:text="${stuInfo.memberVO.memName}"></td>
 				  <th>학번</th>
-			      <td th:text="${stuInfo.stuNo}" id="stuNo"></td>
+			      <td th:text="${stuInfo.stuNo}"></td>
 			      <th>학년</th>
 			      <td th:text="${stuInfo.stuYear}"></td>
 				</tr>
 				<tr>
 			  	  <th>전공대학</th> 
-				  <td th:text="${stuInfo.collVO.collName}"></td>
+				  <td th:text="${stuInfo.collVO.collName}" ></td>
 			   	  <th>전공학과</th> 
-			   	  <td th:text="${stuInfo.deptVO.deptName}"></td>
+			   	  <td th:text="${stuInfo.deptVO.deptName}" ></td>
 			  	  <th>복수전공</th> 
 			      <td></td>
 				</tr>
@@ -71,8 +67,8 @@
 				<tr>
 		    	  <th>변경전공대학</th> 
 			      <td>
-					<select class="form-select" onchange="changeColl();" name="collNo">
-					  <option>전체</option>
+					<select class="form-select" onchange="changeColl();">
+						<option selected value="">전체</option>
 					  <th:block th:each="coll: ${collList}">
 					 	<option th:value=${coll.collNo} th:text="${coll.collName}"></option>
 					  </th:block>
@@ -81,8 +77,8 @@
 			      </td>
 		    	  <th>변경전공학과</th> 
 			      <td>
-			      <select class="form-select deptList" name="deptNo">
-			      		<option>전체</option>
+			      <select class="form-select deptList">
+			      	<option selected value="">전체</option>
 					  <th:block th:each="dept: ${deptList}">
 						<option th:value=${dept.deptNo} th:text="${dept.deptName}"></option>
 					  </th:block>
@@ -92,7 +88,8 @@
 				<tr> 
 			      <th>전과 사유</th> 
 			       <td colspan="3">
-			       		<textarea rows="3" name="applyReason"  required placeholder="전과 사유를 작성하세요."></textarea>
+			       		<textarea rows="3" name="applyReason"
+			       		required placeholder="전과 사유를 작성하세요."></textarea>
 			       </td> 
 				</tr> 
 			</table>
@@ -102,10 +99,60 @@
 	
 	<div class="row">
 		<div class="col mt-4 text-center">
-			<input type="button" value="전과신청">
+			<input type="button" value="전과신청" th:onclick="applyChangeMajor();">
 		</div>
 	</div>	
 	</form>
+	
+	<!-- by수경 전과신청 버튼 클릭 시 유의사항 모달 -->
+	<div class="modal fade" id="changeMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<div class="row mb-3" >
+		      	<div class="col text-center">
+		      	  전과신청 유의사항<p>
+		      	  1. [[${stuInfo.memberVO.memName}]]님은 2022년 2학기 전과신청을 하셨습니다.
+		      	</div>
+	      	</div>
+	      	
+	       <div class="row">
+	       	<div class="col text-center">
+	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
+	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       		th:onclick="applyResult();">확인</button>
+
+	       
+	       		<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" style="--bs-btn-padding-y: .25rem;
+	       		 --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">취소</button>
+	       	</div>
+	       </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+	
+	<!--by수경 전과신청 완료 후 모달창  -->
+	<div class="modal fade" id="applyResultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<div class="row mb-3" >
+		      	<div class="col text-center">
+		      	   [[${stuInfo.memberVO.memName}]]님의 전과신청이 완료 되었습니다.
+		      	</div>
+	      	</div>
+	      	
+	       <div class="row">
+	       	<div class="col text-center">
+	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
+	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">확인</button>
+	       	</div>
+	       </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>		
 
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	

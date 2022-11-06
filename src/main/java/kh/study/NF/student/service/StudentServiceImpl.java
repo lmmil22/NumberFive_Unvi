@@ -25,26 +25,26 @@ public class StudentServiceImpl implements StudentService {
 	//by수경 학생이 복학신청 접수 
 	@Override
 	public void applyReturnUniv(DeptManageVO deptManageVO) {
-		sqlSession.insert("studentMapper.applyReturnUniv");
+		sqlSession.insert("deptManageMapper.applyReturnUniv");
 		
 	}
 
 	//by수경 학생이 휴학신청 접수
 	@Override
 	public void applyTakeOffUniv(DeptManageVO deptManageVO) {
-		sqlSession.insert("studentMapper.applyTakeOffUniv");
+		sqlSession.insert("deptManageMapper.applyTakeOffUniv");
 	}
 
 	///by수경 학생이 전과신청 접수
 	@Override
 	public void applyChangeMajor(DeptManageVO deptManageVO) {
-		sqlSession.insert("studentMapper.applyChangeMajor");
+		sqlSession.insert("deptManageMapper.applyChangeMajor");
 	}
 
 	//by수경 학생이 복수전공신청 접수
 	@Override
 	public void applyAddMajor(DeptManageVO deptManageVO) {
-		sqlSession.insert("studentMapper.applyAddMajor");
+		sqlSession.insert("deptManageMapper.applyAddMajor");
 	}
 	
 	//by 수경 학생의 복학, 휴학, 전과, 복수전공 신청 내역 목록조회

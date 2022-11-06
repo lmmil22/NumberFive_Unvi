@@ -20,6 +20,8 @@
 <association property="memberVO" resultMap="member"/>
 <association property="deptVO" resultMap="professorMapper.dept"/>
 <association property="collVO" resultMap="professorMapper.coll"/>
+<association property="doubleMajorVO" resultMap="doubleMajor"/>
+
 </resultMap>
 
 <!--by수경 member테이블의 mapper입니다. -->
@@ -37,6 +39,20 @@
 <result column="MEM_ROLE" property="memRole"/>
 </resultMap>
 
+<!--by수경 복수전공 테이블 mapper입니다. -->
+<resultMap type="kh.study.NF.student.vo.DoubleMajorVO" id="doubleMajor">
+<id column="DOUBLE_NO" property="doubleNo"/>
+<result column="DOUBLE_STATUS" property="doubleStatus"/>
+<result column="INSERT_DATE" property="insertDate"/>
+<result column="UPDATE_DATE" property="updateDate"/>
+<result column="REASON" property="reason"/>
+<result column="STU_NO" property="stuNo"/>
+<result column="COLL_NO" property="collNo"/>
+<result column="DEPT_NO" property="deptNo"/>
+<result column="DOUBLE_COLL" property="doubleColl"/>
+<result column="DOUBLE_DEPT" property="doubleDept"/>
+</resultMap>
+
 <!-- by수경 학생의 휴학/복학/전과신청 시 학생정보를 나타내는 테이블 데이터/ 복수전공 추가 -->
 <select id="studentInfo" resultMap="student">
 	SELECT S.MEM_NO
@@ -48,6 +64,8 @@
 		, STU_STATUS
 		, (SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO = S.DEPT_NO)AS DEPT_NAME
 		, (SELECT COLL_NAME FROM COLLEAGE WHERE COLL_NO = S.COLL_NO)AS COLL_NAME
+		, DEPT_NO
+		, COLL_NO
 	FROM STU S, MEMBER M
 	WHERE S.MEM_NO = M.MEM_NO
 	AND STU_NO = 'STU_002'
@@ -61,12 +79,11 @@
                     	FROM STU
                     	WHERE DEPT_NO = D.DEPT_NO
                     	AND STU_NO = 'STU_002')
+   <!--by수경 전체선택은 value값으로 null이나 빈공백을 주었다.-->
    <if test="_parameter != null">               	
     AND COLL_NO = #{collNo}
    </if> 
     ORDER BY COLL_NO
-
-
 </select>
 
 </mapper>

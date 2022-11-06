@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout ="http://www.ultrap.net.nz/thymeleaf/layout"	
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	layout:decorate="~{layout/base_layout}">
+   xmlns:layout ="http://www.ultrap.net.nz/thymeleaf/layout"   
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   layout:decorate="~{layout/base_layout}">
 
 <head>
 <meta charset="UTF-8">
@@ -10,85 +10,11 @@
 </head>
 <body>
 
+<!--by수경 학생의 전과, 복수전공 신청 목록 관리자 페이지 -->
+<!--관리자는 해당 접수완료 버튼 클릭 시 해당 학생의 신청내역을 볼 수 있고
+아래의 승인버튼 클릭 시 접수완료 ->승인완료 변경되도록 할 것  -->
 <div layout:fragment ="content">
-<th:block layout:fragment ="css">
-	<link rel ="stylesheet" th:href="@{/css/cartList.css}">
-</th:block>
-<!--by수경 학생의 전공학과 변경(전과), 휴학신청, 복학신청, 복수전공(전공 하나 더) 신청 현황을 모아 둔 페이지입니다.-->
-	
 	<div class="row justify-content-center">
-		<div class="col text-center">
-			<H5>휴학신청 현황</H5>
-		</div>
-		<div class="row mt-2">
-			<div class="col mb-5">
-				<table class="table table-bordered">
-				   <tr>
-					  <th>No</th>
-					  <th>전공대학</th>
-					  <th>전공학과</th>
-					  <th>신청일</th>
-					  <th>승인일</th>
-					  <th>승인여부</th>
-				    </tr>
-					
-					<th:block th:if="${#lists.size(applyList) == 0}">
-				    <tr>
-				      <td colspan="6">
-				      	<span>신청한 내역이 없습니다.</span>
-				      </td>
-				    </tr>  
-					</th:block>
-					
-					<th:block th:unless="${#lists.size(applyList) == 0}">
-					<tr>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-					</tr>
-					</th:block>
-				</table>
-			</div>		
-		</div>		
-	
-		<div class="col text-center">
-			<H5>복학신청 현황</H5>
-		</div>
-		
-		<div class="row mt-2">
-			<div class="col mb-5">
-				<table class="table table-bordered">
-				   <tr>
-					  <th>No</th>
-					  <th>전공대학</th>
-					  <th>전공학과</th>
-					  <th>신청일</th>
-					  <th>승인일</th>
-					  <th>승인여부</th>
-				    </tr>
-				    <th:block th:if="${#lists.size(applyList) == 0}">
-				    <tr>
-				      <td colspan="6">
-				      	<span>신청한 내역이 없습니다.</span>
-				      </td>
-				    </tr>  
-					</th:block>
-				    <th:block th:unless="${#lists.size(applyList) == 0}">
-					<tr>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-					</tr>
-					</th:block>
-				</table>
-			</div>		
-		</div>	
 		<div class="col text-center">
 			<H5>전과신청 현황</H5>
 		</div>
@@ -169,8 +95,10 @@
 				</table>
 			</div>		
 		</div>		
-	</div>
+	</div>		
+   
 </div>
+
 
 </body>
 </html>

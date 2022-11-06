@@ -12,10 +12,7 @@
 
 <!--by수경 학생이 학교를 휴학신청하는 페이지입니다. -->
 <div layout:fragment ="content">
-<th:block layout:fragment ="css">
-	<link rel ="stylesheet" th:href="@{/css/cartList.css}">
-</th:block>
-	<form th:action="@{/stu/applyTakeOffUniv}" method="post">
+
 	<div class="row justify-content-center">
 			<div class="col mt-5">
 			<table class="table table-bordered">
@@ -60,11 +57,15 @@
 				<tr> 
 			      <th>휴학 사유</th> 
 			       <td>
-			       		<textarea rows="3" name="applyReason" required placeholder="휴학 사유를 작성하세요."></textarea>
+			       		<textarea rows="3" id="applyReason" name="applyReason"
+			       		required placeholder="휴학 사유를 작성하세요."></textarea>
 			       </td> 
 				</tr>
 			</table>
-			<input type="hidden" name="applyCode" value="휴학">
+			<input type="hidden" name="fromColl" th:value="${stuInfo.collNo}" id="collNo">
+			<input type="hidden" name="fromDept" th:value="${stuInfo.deptNo}" id="deptNo">
+			<input type="hidden" name="applyCode" value="휴학" id="applyCode">
+			<input type="hidden" name="stuNo" th:value="${stuInfo.stuNo}" id="stuNo">
 		</div>
 	</div>
 		
@@ -78,17 +79,44 @@
 		</div>
 	</div>	
 	</th:block>
-	</form>
+	
 	
 	<!-- by수경 복학신청 버튼 클릭 시 유의사항 모달 -->
-	<div class="modal fade" id="returnUnivModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="takeOffUnivModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-body">
 	      	<div class="row mb-3" >
 		      	<div class="col text-center">
-		      	  휴학신청 유의사항
-		      	  1. 귀하는 
+		      	  휴학신청 유의사항<p>
+		      	  1. [[${stuInfo.memberVO.memName}]]님은 2022년 2학기 휴학 신청을 하셨습니다.
+		      	</div>
+	      	</div>
+	      	
+	       <div class="row">
+	       	<div class="col text-center">
+	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
+	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       		th:onclick="applyResult();" id="submitBtn">확인</button>
+
+	       
+	       		<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" style="--bs-btn-padding-y: .25rem;
+	       		 --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">취소</button>
+	       	</div>
+	       </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+	
+	<!--by수경 휴학신청 완료 후 모달창  -->
+	<div class="modal fade" id="applyResultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<div class="row mb-3" >
+		      	<div class="col text-center">
+		      	   [[${stuInfo.memberVO.memName}]]님의 휴학신청이 완료 되었습니다.
 		      	</div>
 	      	</div>
 	      	
@@ -96,24 +124,15 @@
 	       	<div class="col text-center">
 	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
 	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">확인</button>
-	       
-	       		<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" style="--bs-btn-padding-y: .25rem;
-	       		 --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;" data-origin-amount="" id="cancelBtn">취소</button>
 	       	</div>
 	       </div>
 	      </div>
 	    </div>
 	  </div>
-	</div>		
-			
-	
-	
-	
-	
-	
-	
-	
-
+	</div>	
+		
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>	
+<script type="text/javascript" th:src="@{/js/student/takeOffUniv.js}"></script>		
 </div>
 
 </body>

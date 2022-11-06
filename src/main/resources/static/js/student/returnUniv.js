@@ -7,10 +7,23 @@
 
 function applyReturnUniv(){
 
+	//by수경 복학신청 버튼 클릭 시 유의사항 모달창
 	//모달창 소스
 	const modal = new bootstrap.Modal('#returnUnivModal');
 	//모달 보여주기
 	modal.show();
 	
 }
+
+//by수경 복학신청 form태그 실행을 위한 모달창 실행
+function applyResult(){
+	
+	//모달창 소스
+	const modal = new bootstrap.Modal('#applyResultModal');
+	//모달 보여주기
+	modal.show();
+	
+}
+
+
 

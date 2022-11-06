@@ -12,10 +12,6 @@
 <!--by수경 학생이 복수전공(전공 하나 더 추가)신청하는 페이지입니다.-->
 
 <div layout:fragment ="content">
-<th:block layout:fragment ="css">
-	<link rel ="stylesheet" th:href="@{/css/cartList.css}">
-</th:block>
-	<form th:action="@{/stu/applyAddMajor}" method="post">
 	<div class="row justify-content-center">
 		<div class="col mt-5">
 			<table class="table table-bordered">
@@ -59,19 +55,18 @@
 					<col width="15%">
 					<col width="15%">
 					<col width="15%">
-				
 				</colgroup>
 			   <tr>
 				  <th>현재전공대학</th>
 				   <td th:text="${stuInfo.collVO.collName}"></td>
 				    <th>현재전공학과</th>
 			    	<td th:text="${stuInfo.deptVO.deptName}"></td>
-			    	 
 			    </tr>
 				<tr>
 		    	  <th>복수전공대학</th> 
 			      <td>
 					<select class="form-select" onchange="changeColl();">
+						<option selected value="">전체</option>
 					  <th:block th:each="coll: ${collList}">
 					 	<option th:value=${coll.collNo} th:text="${coll.collName}"></option>
 					  </th:block>
@@ -81,6 +76,7 @@
 		    	  <th>복수전공학과</th> 
 			      <td>
 			      <select class="form-select deptList">
+			      	<option selected value="">전체</option>
 					  <th:block th:each="dept: ${deptList}">
 						<option th:value=${dept.deptNo} th:text="${dept.deptName}"></option>
 					  </th:block>
@@ -90,23 +86,75 @@
 				<tr> 
 			      <th>복수전공 신청사유</th> 
 			       <td colspan="3">
-			       		<textarea rows="3" name="applyReason"  required placeholder="복수전공 신청 사유를 작성하세요."></textarea>
+			       		<textarea rows="3" id="applyReason" 
+						required placeholder="복수전공 신청 사유를 작성하세요."></textarea>
 			       </td> 
 				</tr> 
 			</table>
-			<input type="hidden" name="applyCode" value="복수전공">
 		</div>
 	</div>
 	
 	<div class="row">
 		<div class="col mt-4 text-center">
-			<input type="button" value="복수전공신청">
+			<input type="button" value="복수전공신청" th:onclick="applyAddMajor();">
 		</div>
 	</div>	
 	</form>
+	
+	<!-- by수경 복수신청 버튼 클릭 시 유의사항 모달 -->
+	<div class="modal fade" id="addMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<div class="row mb-3" >
+		      	<div class="col text-center">
+		      	  복수신청 유의사항<p>
+		      	  1. [[${stuInfo.memberVO.memName}]]님은 2022년 2학기 복수전공 신청을 하셨습니다.
+		      	</div>
+	      	</div>
+	      	
+	       <div class="row">
+	       	<div class="col text-center">
+	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
+	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       		th:onclick="applyResult();">확인</button>
+
+	       
+	       		<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" style="--bs-btn-padding-y: .25rem;
+	       		 --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">취소</button>
+	       	</div>
+	       </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+	
+	<!--by수경 복수전공 신청완료 후 모달창  -->
+	<div class="modal fade" id="applyResultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<div class="row mb-3" >
+		      	<div class="col text-center">
+		      	   [[${stuInfo.memberVO.memName}]]님의 복수전공 신청이 완료 되었습니다.
+		      	</div>
+	      	</div>
+	      	
+	       <div class="row">
+	       	<div class="col text-center">
+	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
+	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">확인</button>
+	       	</div>
+	       </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>		
+	
+	
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
-<script type="text/javascript" th:src="@{/js/student/changeMajor.js}"></script>	
+<script type="text/javascript" th:src="@{/js/student/addMajor.js}"></script>	
 </div>
 
 

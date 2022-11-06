@@ -12,11 +12,7 @@
 <!--by수경 학생이 복학신청하는 페이지입니다. -->
 
 <div layout:fragment ="content">
-<th:block layout:fragment ="css">
-	<link rel ="stylesheet" th:href="@{/css/cartList.css}">
-</th:block>
 
-	<form th:action="@{/stu/applyReturnUniv}" method="post">
 	<div class="row justify-content-center">
 		<div class="col mt-5">
 			<table class="table table-bordered">
@@ -54,6 +50,8 @@
 				</tr> 
 			</table>
 			<input type="hidden" name="applyCode" value="복학">
+			<input type="hidden" th:value="${stuInfo.collNo}" id="collNo">
+			<input type="hidden" th:value="${stuInfo.deptNo}" id="deptNo">
 		</div>
 	</div>
 	
@@ -63,11 +61,11 @@
 	<th:block th:if="${stuInfo.stuStatus == '휴학'}">
 	<div class="row">
 		<div class="col mt-4 text-center">
-			<input type="button" value="복학신청" th:onclick="applyReturnUniv();">
+			<input type="button" value="복학신청" th:onclick="applyReturnUniv();" >
 		</div>
 	</div>	
 	</th:block>
-	</form>
+	
 
 	<!-- by수경 복학신청 버튼 클릭 시 유의사항 모달 -->
 	<div class="modal fade" id="returnUnivModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -77,7 +75,7 @@
 	      	<div class="row mb-3" >
 		      	<div class="col text-center">
 		      	  복학신청 유의사항
-		      	  1. 귀하는 
+		      	  1. [[${stuInfo.memberVO.memName}]]님은 2022년도 2학기 복학신청 대상자입니다.
 		      	</div>
 	      	</div>
 	      	
@@ -85,9 +83,9 @@
 	       	<div class="col text-center">
 	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
 	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-	       		th:onclick="changeCnt();" data-cart-code="" data-cart-amount="" id="updateAmountBtn">확인</button>
+	       		th:onclick="applyResult();">확인</button>
 	       
-	       		<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" th:onclick="rollbackAmount();"
+	       		<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" 
 	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;" data-origin-amount="" id="cancelBtn">취소</button>
 	       	</div>
 	       </div>
@@ -95,11 +93,32 @@
 	    </div>
 	  </div>
 	</div>		
-			
 
+	<!--by수경 복학신청 완료 후 모달창 -->
+	<div class="modal fade" id="applyResultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<div class="row mb-3" >
+		      	<div class="col text-center">
+		      	   [[${stuInfo.memberVO.memName}]]님의 복학신청이 완료 되었습니다.
+		      	</div>
+	      	</div>
+	      	
+	       <div class="row">
+	       	<div class="col text-center">
+	       		<button type="submit" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
+	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">확인</button>
+	       	</div>
+	       </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>					
+	</form>
 
-
-
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>	
+<script type="text/javascript" th:src="@{/js/student/returnUniv.js}"></script>	
 </div>
 
 </body>

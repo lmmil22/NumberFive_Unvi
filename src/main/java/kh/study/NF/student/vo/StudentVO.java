@@ -1,7 +1,5 @@
 package kh.study.NF.student.vo;
 
-import java.util.List;
-
 import groovy.transform.ToString;
 import kh.study.NF.dept.vo.ColleageVO;
 import kh.study.NF.dept.vo.DeptVO;
@@ -25,8 +23,9 @@ public class StudentVO {
 	
 	//by수경 association 1:1
 	private MemberVO memberVO;
-	//by수경 association 1:1 (전공대학, 전공학과)
+	//by수경 association 1:1 (전공대학, 전공학과, 복수전공)
 	private DeptVO deptVO;
 	private ColleageVO collVO;
+	private DoubleMajorVO doubleMajorVO;
 
 }
