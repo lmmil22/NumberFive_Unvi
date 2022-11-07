@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.study.NF.emp.vo.DeptManageVO;
+//by수경 학생의 복학, 휴학, 전과, 복수전공신청에 대한 관리자 영역
 @Service("empService")
 public class EmpServiceImpl implements EmpService{
 
-	//by수경 학생의 복학, 휴학, 전과, 복수전공신청에 대한 관리자 영역
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
@@ -21,4 +21,10 @@ public class EmpServiceImpl implements EmpService{
 		return sqlSession.selectList("deptManageMapper.applyList");
 	}
 	
+	//by수경 학생이 복학, 휴학, 전과, 복수전공 현재 학기에 신청내역 있는지 확인(수정예정)
+	@Override
+	public DeptManageVO checkApply(DeptManageVO deptManageVO) {
+		return sqlSession.selectOne("deptManageMapper.checkApply", deptManageVO);
+	}
+
 }

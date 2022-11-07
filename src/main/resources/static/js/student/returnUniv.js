@@ -6,6 +6,15 @@
 
 
 function applyReturnUniv(){
+	
+	const textArea = document.querySelector('textarea').value;
+	//alert(textArea);
+
+	//by수경 휴학사유 입력칸 공백 및 빈칸 방지
+	if(textArea.replace(/\s| /gi, "").length == 0){
+		alert('휴학 사유는 필수 입력 사항입니다. \n휴학 사유를 작성하여 주십시오.');
+		return;
+	}
 
 	//by수경 복학신청 버튼 클릭 시 유의사항 모달창
 	//모달창 소스
@@ -18,11 +27,41 @@ function applyReturnUniv(){
 //by수경 복학신청 form태그 실행을 위한 모달창 실행
 function applyResult(){
 	
-	//모달창 소스
-	const modal = new bootstrap.Modal('#applyResultModal');
-	//모달 보여주기
-	modal.show();
+	const stuNo = document.querySelector('#stuNo').value;
+	const fromColl = document.querySelector('#collNo').value;
+	const fromDept = document.querySelector('#deptNo').value;
+	const applyCode = document.querySelector('#applyCode').value;
 	
+	
+	$.ajax({
+		url: '/stu/applyReturnUnivAjax', //요청경로
+		type: 'post',
+		data: {
+			'stuNo': stuNo, 'fromColl': fromColl,
+			'fromDept': fromDept, 'applyCode': applyCode
+		}, //필요한 데이터
+
+		success: function(result) {
+
+			//모달창 소스
+			const modal = new bootstrap.Modal('#applyResultModal');
+			//모달 보여주기
+			modal.show();
+
+		},
+
+		error: function() {
+			alert('실패');
+		}
+	});
+}
+
+//by수경 신청현황을 보여주는 페이지로 이동
+function nextPage(){
+	
+	const stuNo = document.querySelector('#stuNo').value;
+	
+	location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
 }
 
 

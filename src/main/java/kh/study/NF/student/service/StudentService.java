@@ -26,11 +26,13 @@ public interface StudentService {
 	
 	//by 수경 학생의 복학, 휴학, 전과, 복수전공 신청 내역 목록조회
 	//매개변수 String stuNo 추후에 넣을 것
-	List<DeptManageVO> stuApplyList();
+	List<DeptManageVO> stuApplyList(String stuNo);
 	
 	//by수경 전공대학 전공학과 선택 시 재학중인 학과 제외
 	//추후 매개변수 DeptVO deptVO
 	List<DeptVO> DeptList(String collNo);
+	
+	
 	
 
 }

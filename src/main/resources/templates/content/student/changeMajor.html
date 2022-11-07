@@ -67,7 +67,7 @@
 				<tr>
 		    	  <th>변경전공대학</th> 
 			      <td>
-					<select class="form-select" onchange="changeColl();">
+					<select class="form-select" onchange="changeColl();" id="coll">
 						<option selected value="">전체</option>
 					  <th:block th:each="coll: ${collList}">
 					 	<option th:value=${coll.collNo} th:text="${coll.collName}"></option>
@@ -77,7 +77,7 @@
 			      </td>
 		    	  <th>변경전공학과</th> 
 			      <td>
-			      <select class="form-select deptList">
+			      <select class="form-select deptList" id="dept">
 			      	<option selected value="">전체</option>
 					  <th:block th:each="dept: ${deptList}">
 						<option th:value=${dept.deptNo} th:text="${dept.deptName}"></option>
@@ -94,6 +94,9 @@
 				</tr> 
 			</table>
 			<input type="hidden" name="applyCode" value="전과">
+			<input type="hidden" th:value="${stuInfo.collNo}" id="collNo">
+			<input type="hidden" th:value="${stuInfo.deptNo}" id="deptNo">
+			<input type="hidden" name="stuNo" th:value="${stuInfo.stuNo}" id="stuNo">
 		</div>
 	</div>
 	
@@ -102,7 +105,7 @@
 			<input type="button" value="전과신청" th:onclick="applyChangeMajor();">
 		</div>
 	</div>	
-	</form>
+	
 	
 	<!-- by수경 전과신청 버튼 클릭 시 유의사항 모달 -->
 	<div class="modal fade" id="changeMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -146,7 +149,8 @@
 	       <div class="row">
 	       	<div class="col text-center">
 	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
-	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">확인</button>
+	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       		th:onclick="nextPage();">확인</button>
 	       	</div>
 	       </div>
 	      </div>

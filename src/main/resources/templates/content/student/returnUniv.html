@@ -52,6 +52,7 @@
 			<input type="hidden" name="applyCode" value="복학">
 			<input type="hidden" th:value="${stuInfo.collNo}" id="collNo">
 			<input type="hidden" th:value="${stuInfo.deptNo}" id="deptNo">
+			<input type="hidden" name="stuNo" th:value="${stuInfo.stuNo}" id="stuNo">
 		</div>
 	</div>
 	
@@ -108,7 +109,8 @@
 	       <div class="row">
 	       	<div class="col text-center">
 	       		<button type="submit" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
-	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">확인</button>
+	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       		th:onclick="nextPage();">확인</button>
 	       	</div>
 	       </div>
 	      </div>

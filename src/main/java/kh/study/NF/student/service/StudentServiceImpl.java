@@ -25,34 +25,34 @@ public class StudentServiceImpl implements StudentService {
 	//by수경 학생이 복학신청 접수 
 	@Override
 	public void applyReturnUniv(DeptManageVO deptManageVO) {
-		sqlSession.insert("deptManageMapper.applyReturnUniv");
+		sqlSession.insert("deptManageMapper.applyReturnUniv",deptManageVO);
 		
 	}
 
 	//by수경 학생이 휴학신청 접수
 	@Override
 	public void applyTakeOffUniv(DeptManageVO deptManageVO) {
-		sqlSession.insert("deptManageMapper.applyTakeOffUniv");
+		sqlSession.insert("deptManageMapper.applyTakeOffUniv",deptManageVO);
 	}
 
 	///by수경 학생이 전과신청 접수
 	@Override
 	public void applyChangeMajor(DeptManageVO deptManageVO) {
-		sqlSession.insert("deptManageMapper.applyChangeMajor");
+		sqlSession.insert("deptManageMapper.applyChangeMajor",deptManageVO);
 	}
 
 	//by수경 학생이 복수전공신청 접수
 	@Override
 	public void applyAddMajor(DeptManageVO deptManageVO) {
-		sqlSession.insert("deptManageMapper.applyAddMajor");
+		sqlSession.insert("deptManageMapper.applyAddMajor",deptManageVO);
 	}
 	
 	//by 수경 학생의 복학, 휴학, 전과, 복수전공 신청 내역 목록조회
 	//매개변수 String stuNo 추후에 넣을 것
 	@Override 
-	public List<DeptManageVO> stuApplyList() {
+	public List<DeptManageVO> stuApplyList(String stuNo) {
 		
-		return sqlSession.selectList("deptManageMapper.stuApplyList");
+		return sqlSession.selectList("deptManageMapper.stuApplyList", stuNo);
 	}
 
 	//by수경 전공대학 전공학과 선택 시 재학중인 학과 제외

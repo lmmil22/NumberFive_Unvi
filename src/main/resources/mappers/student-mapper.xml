@@ -86,4 +86,23 @@
     ORDER BY COLL_NO
 </select>
 
+<!--by수경 학생의 휴학신청 확정 시 상태 update Mapper -->
+<update id="takeOffStu">
+	UPDATE STU 
+	SET STU_STATUS = #{stuStatus}
+	WHERE STU_NO = #{stuNo}
+	
+</update>
+
+
+<!--by수경 학생의 복학신청 확정 시 상태 update Mapper -->
+<update id="returnStu">
+	UPDATE STU 
+	SET STU_STATUS = #{stuStatus}
+	WHERE STU_NO = #{stuNo}
+	
+</update>
+
+
+
 </mapper>

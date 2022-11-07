@@ -45,7 +45,6 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 )
 </insert>
 
-
 <!--by수경 학생의 휴학신청 접수하기-->
 <insert id="applyTakeOffUniv">
 
@@ -59,12 +58,16 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, APPLY_REASON
 						, FROM_COLL
 						, FROM_DEPT
+						, STU_YEAR
+						, STU_SEM
 				)VALUES(  #{applyNo}
 						, #{stuNo}
 						, #{applyCode}
 						, #{applyReason}
 						, #{fromColl}
 						, #{fromDept}
+						<!-- , (SELECT STU_YEAR FROM STU WHERE STU_NO = #{stuNo})
+						, (SELECT STU_SEM FROM STU WHERE STU_NO = #{stuNo}) -->
 )
 </insert>
 
@@ -137,7 +140,7 @@ SELECT APPLY_NO
 	 , APPROVAL_DATE
 	 , PROCESS_STATUS
 FROM DEPT_MANAGE
-WHERE STU_NO = 'STU_002'
+WHERE STU_NO = #{stuNo}
 	 
 </select>
 
@@ -156,6 +159,16 @@ SELECT APPLY_NO
 	 , PROCESS_STATUS
 FROM DEPT_MANAGE
 	 
+</select>
+
+<!--by수경 학생이 복학, 휴학, 전과, 복수전공 신청 시 이미 신청내역 있는지 확인 -->
+<select id="checkApply" resultMap="deptManage">
+	SELECT APPLY_NO 
+		 , STU_NO
+		 , APPLY_CODE
+	FROM DEPT_MANAGE
+	WHERE STU_NO = #{stuNo}
+	AND APPLY_CODE = #{applyCode}
 </select>
 
 

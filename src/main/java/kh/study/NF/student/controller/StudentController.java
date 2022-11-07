@@ -81,14 +81,15 @@ public class StudentController {
 	}
 	
 	//by수경 학생이 학교를 복학 신청버튼 클릭 시 실행되는 메소드
-	@PostMapping("/applyReturnUniv")
-	public String applyReturnUniv(Model model, DeptManageVO deptManageVO) {
+	@ResponseBody
+	@PostMapping("/applyReturnUnivAjax")
+	public void applyReturnUniv(Model model, DeptManageVO deptManageVO) {
 		//by수경 enum을 이용하여 value set
 		deptManageVO.setApplyCode(ApplyCode.복학.toString());
 		
 		studentService.applyReturnUniv(deptManageVO);
 		
-		return  "redirect:/stu/stuApplyList";
+		//return  "redirect:/stu/stuApplyList";
 	}
 	
 	
@@ -101,38 +102,38 @@ public class StudentController {
 		
 		studentService.applyTakeOffUniv(deptManageVO);
 		
-		//return  "content/student/stuApplyList";
-		//return  "redirect:/stu/stuApplyList";
 	}
 	
 	
 	//by수경 학생이 학교를 전과 신청버튼 클릭 시 실행되는 메소드
-	@PostMapping("/applyChangeMajor")
-	public String applyChangeMajor(Model model, DeptManageVO deptManageVO) {
+	@ResponseBody
+	@PostMapping("/applyChangeMajorAjax")
+	public void applyChangeMajor(Model model, DeptManageVO deptManageVO) {
 		//by수경 enum을 이용하여 value set
 		deptManageVO.setApplyCode(ApplyCode.전과.toString());
 		
 		studentService.applyChangeMajor(deptManageVO);
 		
-		return  "redirect:/stu/stuApplyList";
+
 	}
 	//by수경 학생이 학교를 복수전공 신청버튼 클릭 시 실행되는 메소드
-	@PostMapping("/applyAddMajor")
-	public String applyAddMajor(Model model, DeptManageVO deptManageVO) {
+	@ResponseBody
+	@PostMapping("/applyAddMajorAjax")
+	public void applyAddMajor(Model model, DeptManageVO deptManageVO) {
 		//by수경 enum을 이용하여 value set
 		deptManageVO.setApplyCode(ApplyCode.복수전공.toString());
 		
 		studentService.applyAddMajor(deptManageVO);
 		
-		return  "redirect:/stu/stuApplyList";
+		
 	}
 	
 	//by수경 학생의 전공학과 변경(전과), 휴학신청, 복학신청, 복수전공(전공 하나 더) 신청 현황
 	//추후 매개변수로 stuNo 추가할 것
 	@GetMapping("/stuApplyList")
-	public String stuApplyList(Model model) {
+	public String stuApplyList(Model model, String stuNo) {
 		
-		model.addAttribute("applyList", studentService.stuApplyList());
+		model.addAttribute("applyList", studentService.stuApplyList(stuNo));
 		
 		return  "content/student/stuApplyList";
 	}

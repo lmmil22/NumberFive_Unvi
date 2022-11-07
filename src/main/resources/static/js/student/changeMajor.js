@@ -45,6 +45,13 @@ function changeColl(){
 
 function applyChangeMajor(){
 	
+	
+	const toColl = document.querySelector('#coll option:selected').value;
+	const toDept = document.querySelector('#dept option:selected').value;
+	alert(toColl);
+	alert(toDept);
+	
+	
 	const textArea = document.querySelector('textarea').value;
 	//alert(textArea);
 
@@ -63,6 +70,14 @@ function applyChangeMajor(){
 }
 
 function applyResult(){
+	
+	const stuNo = document.querySelector('#stuNo').value;
+	const fromColl = document.querySelector('#collNo').value;
+	const fromDept = document.querySelector('#deptNo').value;
+	const applyReason = document.querySelector('#applyReason').value;
+	const applyCode = document.querySelector('#applyCode').value;
+	
+	
 	
 	 //모달창 소스
 	const modal = new bootstrap.Modal('#applyResultModal');
