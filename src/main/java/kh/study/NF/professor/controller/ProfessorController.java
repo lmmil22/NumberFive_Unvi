@@ -87,14 +87,14 @@ public class ProfessorController {
 		return "content/professor/lectureList";
 	}
 	
-	//ajax로 이동해서 강의수정목록을 리스트로 띄움
+	//ajax로 이동해서 강의수정목록을 상세를 띄움
 	@ResponseBody
 	@PostMapping("/lecListAjax")
-	public String lecListAjax(String lecNo , Model model) {
+	public LectureVO lecListAjax(String lecNo , Model model) {
 		
-		model.addAttribute("lecList",professorService.selectLecture(lecNo));
+		LectureVO list=  professorService.selectLecture(lecNo);
 		
-		return "";
+		return list;
 	}
 	
 	

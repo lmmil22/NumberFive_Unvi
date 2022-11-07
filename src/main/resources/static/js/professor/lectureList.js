@@ -19,6 +19,11 @@ function changeLecDetail(lecNo){
 		 success: function(result) {
 			 alert('aaa');
 			 	//모달창 띄우는 소스 작성
+			//result에 내가 조회한 데이터가 있고 
+			// 그 데이터를 모달이 띄우기 전에 
+			// 모달 영역에 넣어준다
+			setModelData(result); 
+			
 			const Modal = new bootstrap.Modal('#changeLecModal');
 			Modal.show();
 		 },
@@ -28,4 +33,15 @@ function changeLecDetail(lecNo){
 	 });
 	//ajax end
 
+}
+
+
+function setModelData(result){
+	document.querySelector('#changeLecModal_lecName').value = result.lecName; 
+	document.querySelector('#changeLecModal_deptNo').innerText = result.deptNo;
+	document.querySelector('#changeLecModal_collNo').innerText = result.collNo;
+	document.querySelector('#changeLecModal_empNo').innerText = result.empNo;
+	document.querySelector('#changeLecModal_lastTime').innerText = result.lectureTimeVO.lastTime;
+	document.querySelector('#changeLecModal_lecScore').value = result.lecScore;
+	
 }
