@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -86,6 +87,15 @@ public class ProfessorController {
 		return "content/professor/lectureList";
 	}
 	
+	//ajax로 이동해서 강의수정목록을 리스트로 띄움
+	@ResponseBody
+	@PostMapping("/lecListAjax")
+	public String lecListAjax(String lecNo , Model model) {
+		
+		model.addAttribute("lecList",professorService.selectLecture(lecNo));
+		
+		return "";
+	}
 	
 	
 }

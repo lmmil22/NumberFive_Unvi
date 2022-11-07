@@ -19,4 +19,6 @@ public interface ProfessorService {
 	String getNextLecNo();
 	
 	List<LectureVO> selectLecList();
+	
+	 LectureVO selectLecture(String lecNo);
 }

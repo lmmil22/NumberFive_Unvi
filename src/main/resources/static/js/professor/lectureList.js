@@ -9,13 +9,23 @@ document.getElementById("table_box_bootstrap").appendChild(box);
 
 //by 지아 
 //강의 수정을 누르면 
-function changeLecDetail(){
-	
-
-	//모달창 띄우는 소스 작성
-	const Modal = new bootstrap.Modal('#changeLecModal');
-	Modal.show();
-
-
+function changeLecDetail(lecNo){
+	//ajax start
+	 $.ajax({
+		 url: '/proF/lecListAjax', //요청경로
+		 type: 'post',
+		 data: {'lecNo':lecNo}, //필요한 데이터 //전달해야하는 데이터는 괄호안에 작성  //콜론을 기준으로 홍이라는데이터를 네임이라는 이름으로 던질게요 2개 이상일땐 쉼표로 나열 해준다 
+		 //콜론 기준으로 왼쪽이 던지는 데이터의 이름 
+		 success: function(result) {
+			 alert('aaa');
+			 	//모달창 띄우는 소스 작성
+			const Modal = new bootstrap.Modal('#changeLecModal');
+			Modal.show();
+		 },
+		 error: function() {
+			 alert('실패');
+		 }
+	 });
+	//ajax end
 
 }
