@@ -91,6 +91,10 @@
 			       </td> 
 				</tr> 
 			</table>
+			<input type="hidden" name="applyCode" id="applyCode" value="복수전공">
+			<input type="hidden" th:value="${stuInfo.collNo}" id="collNo">
+			<input type="hidden" th:value="${stuInfo.deptNo}" id="deptNo">
+			<input type="hidden" name="stuNo" th:value="${stuInfo.stuNo}" id="stuNo">
 		</div>
 	</div>
 	
@@ -99,7 +103,6 @@
 			<input type="button" value="복수전공신청" th:onclick="applyAddMajor();">
 		</div>
 	</div>	
-	</form>
 	
 	<!-- by수경 복수신청 버튼 클릭 시 유의사항 모달 -->
 	<div class="modal fade" id="addMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

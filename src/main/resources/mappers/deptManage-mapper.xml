@@ -20,6 +20,8 @@
 <result column="TO_DEPT" property="toDept"/>
 <result column="DOUBLE_MAJOR_COLL" property="doubleMajorColl"/>
 <result column="DOUBLE_MAJOR_DEPT" property="doubleMajorDept"/>
+<result column="STU_YEAR" property="stuYear"/>
+<result column="STU_SEM" property="stuSem"/>
 </resultMap>
 
 <!--by수경 학생의 복학신청 접수하기-->
@@ -37,11 +39,15 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, APPLY_CODE
 						, FROM_COLL
 						, FROM_DEPT
+						, STU_YEAR
+						, STU_SEM
 				)VALUES(  #{applyNo}
 						, #{stuNo}
 						, #{applyCode}
 						, #{fromColl}
 						, #{fromDept}
+						, (SELECT STU_YEAR FROM STU WHERE STU_NO = #{stuNo})
+						, (SELECT STU_SEM FROM STU WHERE STU_NO = #{stuNo})
 )
 </insert>
 
@@ -66,8 +72,8 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, #{applyReason}
 						, #{fromColl}
 						, #{fromDept}
-						<!-- , (SELECT STU_YEAR FROM STU WHERE STU_NO = #{stuNo})
-						, (SELECT STU_SEM FROM STU WHERE STU_NO = #{stuNo}) -->
+						, (SELECT STU_YEAR FROM STU WHERE STU_NO = #{stuNo})
+						, (SELECT STU_SEM FROM STU WHERE STU_NO = #{stuNo})
 )
 </insert>
 
@@ -88,6 +94,8 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, FROM_DEPT
 						, TO_COLL
 						, TO_DEPT
+						, STU_YEAR
+						, STU_SEM
 				)VALUES(  #{applyNo}
 						, #{stuNo} 
 						, #{applyCode}
@@ -96,6 +104,8 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, #{fromDept}
 						, #{toColl}
 						, #{toDept}
+						, (SELECT STU_YEAR FROM STU WHERE STU_NO = #{stuNo})
+						, (SELECT STU_SEM FROM STU WHERE STU_NO = #{stuNo})
 )
 </insert>
 
@@ -114,6 +124,8 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, FROM_DEPT
 						, DOUBLE_MAJOR_COLL
 						, DOUBLE_MAJOR_DEPT
+						, STU_YEAR
+						, STU_SEM
 				)VALUES(  #{applyNo}
 						, #{stuNo}
 						, #{applyCode}
@@ -122,6 +134,8 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, #{fromDept}
 						, #{doubleMajorColl}
 						, #{doubleMajorDept}
+						, (SELECT STU_YEAR FROM STU WHERE STU_NO = #{stuNo})
+						, (SELECT STU_SEM FROM STU WHERE STU_NO = #{stuNo})
 )
 </insert>
 
@@ -158,7 +172,7 @@ SELECT APPLY_NO
 	 , APPROVAL_DATE
 	 , PROCESS_STATUS
 FROM DEPT_MANAGE
-	 
+
 </select>
 
 <!--by수경 학생이 복학, 휴학, 전과, 복수전공 신청 시 이미 신청내역 있는지 확인 -->
@@ -166,6 +180,8 @@ FROM DEPT_MANAGE
 	SELECT APPLY_NO 
 		 , STU_NO
 		 , APPLY_CODE
+		 , STU_YEAR
+		 , STU_SEM
 	FROM DEPT_MANAGE
 	WHERE STU_NO = #{stuNo}
 	AND APPLY_CODE = #{applyCode}
