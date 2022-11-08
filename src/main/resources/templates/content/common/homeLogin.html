@@ -12,29 +12,32 @@
 
 <div layout:fragment="content"> 
 	<div class="row">
-		<div class="col-8"> 학교 홈 이미지 화면 영역
+		<div class="col-7"> 학교 홈 이미지 화면 영역
 		<img src="/images/nf Logo.png" />
 		 </div>
-		<div class="col-4">
-			<form method="post" th:action="@{/member/loginProcess}">
-				<div class="form-floating mb-3">
-				  <input th:name="memNo" type="text" class="form-control" id="floatingInput" placeholder="학번 혹은 교직원 번호를 입력하세요">
-				  <label for="floatingInput"> 학번 / 교번 </label>
-				</div>
-				<div class="form-floating">
-				  <input th:name="memPw" type="password" class="form-control" id="floatingPassword" placeholder="비밀번호를 입력하세요">
-				  <label for="floatingPassword"> 비밀번호 </label>
-				    		<a onclick="location.href='/mail/sendMail';" > 이메일로 비밀번호 찾기</a>
-				</div>
-				<div class="row mt-3 mb-2">
-					<div class="col">
-						<div align="center">
-				    		<button type="submit" class="btn btn-outline-primary"> 로그인 </button>
-				    		<!-- <button type="button" class="btn btn-outline-primary"> 아이디찾기 </button> -->
+		<div class="col-5">
+			<!--  로그인 폼 영역 -->
+			<div style="padding-top: 30%; padding-right: 20%">
+				<form method="post" th:action="@{/member/loginProcess}">
+					<div class="form-floating mb-3">
+					  <input th:name="memNo" type="text" class="form-control" id="floatingInput" placeholder="학번 혹은 교직원 번호를 입력하세요">
+					  <label for="floatingInput"> 학번 / 교번 </label>
+					</div>
+					<div class="form-floating">
+					  <input th:name="memPw" type="password" class="form-control" id="floatingPassword" placeholder="비밀번호를 입력하세요">
+					  <label for="floatingPassword"> 비밀번호 </label>
+					    		<a onclick="location.href='/mail/sendMail';" > 이메일로 비밀번호 찾기</a>
+					</div>
+					<div class="row mt-3 mb-2">
+						<div class="col">
+							<div align="center">
+					    		<button type="submit" class="btn btn-outline-primary"> 로그인 </button>
+					    		<!-- <button type="button" class="btn btn-outline-primary"> 아이디찾기 </button> -->
+							</div>
 						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 	</div>
 
