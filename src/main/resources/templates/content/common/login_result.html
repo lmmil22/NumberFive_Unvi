@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!-- by 유빈 : 홈화면에서 로그인 버튼 클릭시 이동하는 페이지 -->
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/base_layout}">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" >
+</th:block>
+<div layout:fragment="content">
+
+<!-- 로그인 창 성공시 실패시-->	
+<th:block th:if="${session.loginInfo == null}"> 
+	<script type="text/javascript">
+		alert('로그인 실패!!');
+		location.href='/member/homeLogin';
+	</script>
+</th:block>
+<th:block th:unless="${session.loginInfo == null}"> 
+	<script type="text/javascript">
+		alert('로그인 성공!!!');
+		location.href='/mail/sendMail';
+	</script>
+</th:block>	
+<!--  -->	
+</div>
+</html>

@@ -28,7 +28,8 @@ public class MemberController {
 		return "content/common/homeLogin"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
 	}
 	
-	// by 유 : 첫 홈화면에서 form태그로 실제 로그인 페이지입니다.
+	// 로그인 세션 이용버전 
+	// by 유빈 : 첫 홈화면에서 form태그로 실제 로그인 페이지입니다.
 	@PostMapping("/loginProcess")
 	public String loginProcess(HttpSession session, MemberVO memberVO) {
 		//로그인 쿼리 실행
@@ -46,6 +47,8 @@ public class MemberController {
 		return "content/common/afterLogin"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
 	}
 	
+	
+	//이메일 테스트용 메소드 
 	@GetMapping("/test")
 	public String test() {
 		
