@@ -37,7 +37,6 @@ function changeColl(){
 	
 }
 
-
 //by수경 학생이 전과신청 버튼을 눌렀을 때
 //학생이 현재 재학중인 학과를 선택했을 때 현재 재학중인 학과는 보이지 않도록 select box(ajax) 
 //전과신청 버튼 클릭 시 유의사항 팝업창이 뜨고 확인버튼 누르면 
@@ -45,17 +44,37 @@ function changeColl(){
 
 function applyChangeMajor(){
 	
+	//by수경 전과신청(관리자 승인x, 현재 학기)내역이 있는지 확인
+	const stuNo = document.querySelector('#stuNo').value;
+	const applyCode = document.querySelector('#applyCode').value;
 	
-	const toColl = document.querySelector('#coll option:selected').value;
-	const toDept = document.querySelector('#dept option:selected').value;
-	alert(toColl);
-	alert(toDept);
+	$.ajax({
+		url: '/emp/checkApplyAjax', //요청경로
+		type: 'post',
+		data: {'stuNo':stuNo,'applyCode':applyCode}, //필요한 데이터
+		success: function(result) {
+			if(result){
+				alert('이미 신청하셨습니다. \n신청내역 페이지로 이동합니다.');
+				location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
+				return;
+			}
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
 	
 	
+	//const toColl = document.querySelector('#coll option:selected').value;
+	//const toDept = document.querySelector('#dept option:selected').value;
+	//alert(toColl);
+	//alert(toDept);
+	
+	
+	//by수경 전과사유 공백 및 빈칸 방지
 	const textArea = document.querySelector('textarea').value;
 	//alert(textArea);
 
-	//by수경 전과사유 공백 및 빈칸 방지
 	if(textArea.replace(/\s| /gi, "").length == 0){
 		alert('전과 사유는 필수 입력 사항입니다. \n전과 사유를 작성하여 주십시오.');
 		return;

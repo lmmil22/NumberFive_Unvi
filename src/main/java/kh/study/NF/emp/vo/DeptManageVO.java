@@ -23,5 +23,6 @@ public class DeptManageVO {
 	private String toDept;
 	private String doubleMajorColl;
 	private String doubleMajorDept;
-	
+	private String stuYear;
+	private int stuSem;
 }

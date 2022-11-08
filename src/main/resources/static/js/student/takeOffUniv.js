@@ -6,27 +6,30 @@
 
 function applyTakeOffUniv(){
 	
-	//const stuNo = document.querySelector('#stuNo').value;
-	//const applyCode = document.querySelector('#applyCode').value;
+	//by수경  휴학신청(관리자 승인x, 현재 학기)내역이 있는지 확인
+	const stuNo = document.querySelector('#stuNo').value;
+	const applyCode = document.querySelector('#applyCode').value;
 	
-	//by수경 한 번 휴학 신청한 학생이 두 번 접수하지 않도록 확인(수정예정)
-/*	$.ajax({
+	$.ajax({
 		url: '/emp/checkApplyAjax', //요청경로
 		type: 'post',
 		data: {'stuNo':stuNo,'applyCode':applyCode}, //필요한 데이터
 		success: function(result) {
-			alert('이미 신청하셨습니다. \n신청 목록페이지로 이동합니다.');
-			location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
+			if(result){
+				alert('이미 신청하셨습니다. \n신청내역 페이지로 이동합니다.');
+				location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
+				return;
+			}
 		},
 		error: function() {
 			alert('실패');
 		}
-	});*/
+	});
 
+	//by수경 휴학사유 입력칸 공백 및 빈칸 방지
 	const textArea = document.querySelector('textarea').value;
 	//alert(textArea);
 
-	//by수경 휴학사유 입력칸 공백 및 빈칸 방지
 	if(textArea.replace(/\s| /gi, "").length == 0){
 		alert('휴학 사유는 필수 입력 사항입니다. \n휴학 사유를 작성하여 주십시오.');
 		return;
