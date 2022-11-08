@@ -41,7 +41,10 @@ function setModelData(result){
 	document.querySelector('#changeLecModal_deptNo').innerText = result.deptNo;
 	document.querySelector('#changeLecModal_collNo').innerText = result.collNo;
 	document.querySelector('#changeLecModal_empNo').innerText = result.empNo;
-	document.querySelector('#changeLecModal_lastTime').innerText = result.lectureTimeVO.lastTime;
+	document.querySelector('#changeLecModal_lastTime').value = result.lectureTimeVO.lastTime;
+	document.querySelector('#changeLecModal_firstTime').value = result.lectureTimeVO.firstTime;
 	document.querySelector('#changeLecModal_lecScore').value = result.lecScore;
+	document.querySelector('#changeLecModal_lecDay').value = result.lectureTimeVO.lecDay;
+	document.querySelector('#changeLecModal_lecNo').value = result.lecNo;
 	
 }

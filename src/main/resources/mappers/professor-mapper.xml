@@ -178,8 +178,9 @@
                                 FROM EMP
                                 WHERE EMP_NO = L.EMP_NO)) AS EMP_NO
 			, LEC_DAY
-			, (SELECT FIRST_TIME||'-'||LAST_TIME
-							  FROM LECTURE_TIME WHERE LEC_NO = L.LEC_NO ) AS LAST_TIME
+			,  FIRST_TIME
+			, LAST_TIME
+			
 			, PDF_NO
 			, ORIGIN_PDF_NAME
 			, ATTACHED_PDF_NAME
