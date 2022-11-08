@@ -21,5 +21,5 @@ public interface ProfessorService {
 	List<LectureVO> selectLecList();
 	
 	 LectureVO selectLecture(String lecNo);
-	 void updateLec(LectureVO lectureVO);
+	 void updateLec(LectureVO lectureVO , LectureTimeVO lectureTimeVO);
 }

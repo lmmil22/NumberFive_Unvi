@@ -57,8 +57,10 @@ public class ProfessorServiceImpl implements ProfessorService{
 	}
 	//lec 변경 메소드
 	@Override
-	public void updateLec(LectureVO lectureVO) {
+	@Transactional(rollbackFor = Exception.class)
+	public void updateLec(LectureVO lectureVO , LectureTimeVO lectureTimeVO) {
 		sqlSession.update("professorMapper.updateLec" , lectureVO);
+		sqlSession.update("professorMapper.updateLecTime" , lectureTimeVO);
 	}
 	
 	

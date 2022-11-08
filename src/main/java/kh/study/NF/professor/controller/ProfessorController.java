@@ -99,9 +99,10 @@ public class ProfessorController {
 	
 	//강의 수정 버튼 클릭 시
 	@PostMapping("/updateLec")
-	public String updateLec() {
+	public String updateLec(LectureVO lectureVO , LectureTimeVO lectureTimeVO) {
 		
 		
+		professorService.updateLec(lectureVO ,lectureTimeVO );
 		
 		return "redirect:/proF/viewLecList";
 	}
