@@ -55,6 +55,11 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public LectureVO selectLecture(String lecNo) {
 		return sqlSession.selectOne("professorMapper.selectLecture",lecNo);
 	}
+	//lec 변경 메소드
+	@Override
+	public void updateLec(LectureVO lectureVO) {
+		sqlSession.update("professorMapper.updateLec" , lectureVO);
+	}
 	
 	
 	

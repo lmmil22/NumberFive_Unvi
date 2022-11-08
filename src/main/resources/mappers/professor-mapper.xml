@@ -190,6 +190,22 @@
 	
 	</select>
 	
+	
+	<!-- 업데이트 쿼리  -->
+	<update id="updateLec" >
+		UPDATE SET LECTURE
+		SET 
+			LEC_NAME = #{lecName}
+			, LEC_SCORE = #{lecScore}
+			, LEC_DAY = #{lecDay}
+			,  FIRST_TIME =#{fristTime}
+			, LAST_TIME = #{lastTime}
+		WHERE LEC_NO = #{lecNo}
+		
+	
+	
+	</update>
+	
 
 
 

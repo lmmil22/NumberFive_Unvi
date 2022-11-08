@@ -97,5 +97,14 @@ public class ProfessorController {
 		return list;
 	}
 	
+	//강의 수정 버튼 클릭 시
+	@PostMapping("/updateLec")
+	public String updateLec() {
+		
+		
+		
+		return "redirect:/proF/viewLecList";
+	}
+	
 	
 }
