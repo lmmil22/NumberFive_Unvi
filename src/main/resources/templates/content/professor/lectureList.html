@@ -31,8 +31,10 @@
 			<tbody>
 				<tr th:each="lec : ${lecList}">
 					<th scope="row" th:text="${lec.lecNo}">1</th>
-					<td th:text="${lec.lecName}" ></td>
-					<td> <a href="/proF/download">ee</a></td>
+					<td>
+					 <a th:href="@{/proF/download(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a>
+					
+					</td>
 					<td th:text="${lec.collNo}"></td>
 					<td th:text="${lec.deptNo}"></td>
 					<td th:text="${lec.lecScore}"></td>

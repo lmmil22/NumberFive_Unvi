@@ -125,11 +125,13 @@ public class ProfessorController {
 		//ajax와 redirect 를 같이 사용할 수 없다 
 	}
 	
-	//강의 이름 클릭시 ekdns진행됨 
-	
+	//강의 이름 클릭시 다운진행됨 
+	//다운로드
 	@GetMapping("/download")
-	public ResponseEntity<Object> download() {
-		String path = "D:\\workspaceSTS\\NumberFive_Unvi\\src\\main\\resources\\static\\pdf\\";
+	public ResponseEntity<Object> download(String lecNo) {
+		LecturePdfVO attachedInfo = professorService.selectLecPdf(lecNo);
+		String path = "D:\\workspaceSTS\\NumberFive_Unvi\\src\\main\\resources\\static\\pdf\\" + attachedInfo.getAttachedPdfName();
+		
 		
 		//디비로 조회해온 pdf원본 파일명 이름을 가져온다
 		
@@ -140,15 +142,22 @@ public class ProfessorController {
 			File file = new File(path);
 			
 			HttpHeaders headers = new HttpHeaders();
+			System.out.println(attachedInfo.getOriginPdfName()+"!!!!!!");
+			
+			String downloadName =  new String(attachedInfo.getOriginPdfName().getBytes("UTF-8"), "ISO-8859-1");
+			
 //			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
-			headers.setContentDisposition(ContentDisposition.builder("attachment").filename("test.pdf").build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(downloadName).build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+//			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
 			
 			return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
 		} catch(Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
 		}
 	}
 	
+
 	
 	
 	

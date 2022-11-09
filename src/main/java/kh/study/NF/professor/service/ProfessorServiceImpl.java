@@ -68,6 +68,10 @@ public class ProfessorServiceImpl implements ProfessorService{
 		sqlSession.delete("professorMapper.deleteLec" ,lecNo);
 		
 	}
+	@Override
+	public LecturePdfVO selectLecPdf(String lecNo) {
+		return sqlSession.selectOne("professorMapper.selectLecPdf",lecNo);
+	}
 	
 	
 	

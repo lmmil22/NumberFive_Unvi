@@ -217,8 +217,16 @@
 
 	
 	<!-- 강의에 첨부된 파일 조회  -->
+	<select id="selectLecPdf" resultMap="lecturePdf">
+	SELECT 
+		PDF_NO
+		, ORIGIN_PDF_NAME
+		, ATTACHED_PDF_NAME
+		, LEC_NO
+	FROM LECTURE_PDF
+	WHERE LEC_NO = #{lecNo}
 	
-
+	</select>
 
 	<!-- dept목록조회 -->	
 	<select id="selectDept" resultMap="dept">

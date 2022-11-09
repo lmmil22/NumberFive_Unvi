@@ -25,4 +25,6 @@ public interface ProfessorService {
 	 
 	 void deleteLec(String lecNo);
 	 
+	 LecturePdfVO selectLecPdf(String lecNo);
+	 
 }
