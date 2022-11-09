@@ -81,8 +81,14 @@ function applyAddMajor(){
 	modal.show();
 
 }
-
+//by수경 신청 쿼리 실행 (doubleDept, doubleColl 추가하기)
 function applyResult(){
+	
+	const stuNo = document.querySelector('#stuNo').value;
+	const fromColl = document.querySelector('#collNo').value;
+	const fromDept = document.querySelector('#deptNo').value;
+	const applyReason = document.querySelector('#applyReason').value;
+	const applyCode = document.querySelector('#applyCode').value;
 	
 	 //모달창 소스
 	const modal = new bootstrap.Modal('#applyResultModal');
@@ -90,4 +96,12 @@ function applyResult(){
 	modal.show();	
 	
 	
+}
+
+//by수경 신청현황을 보여주는 페이지로 이동
+function nextPage(){
+	
+	const stuNo = document.querySelector('#stuNo').value;
+	
+	location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
 }

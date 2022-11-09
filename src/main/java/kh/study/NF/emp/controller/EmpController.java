@@ -40,7 +40,7 @@ public class EmpController {
 		
 	}
 	
-	//by수경 학생이 복학, 휴학, 전과, 복수전공 해당 학기에 신청내역 있는지 확인(수정하기)
+	//by수경 학생이 복학, 휴학, 전과, 복수전공 해당 학기에 신청내역 있는지 확인
 	@ResponseBody
 	@PostMapping("/checkApplyAjax")
 	public DeptManageVO checkApply(DeptManageVO deptManageVO) {

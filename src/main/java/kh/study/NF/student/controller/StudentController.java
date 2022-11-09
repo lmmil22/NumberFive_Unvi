@@ -1,6 +1,8 @@
 package kh.study.NF.student.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -128,12 +130,45 @@ public class StudentController {
 		
 	}
 	
-	//by수경 학생의 전공학과 변경(전과), 휴학신청, 복학신청, 복수전공(전공 하나 더) 신청 현황
-	//추후 매개변수로 stuNo 추가할 것
+	//by수경 학생의 전공학과 변경(전과), 휴학신청, 복학신청, 복수전공 신청 현황
 	@GetMapping("/stuApplyList")
 	public String stuApplyList(Model model, String stuNo) {
 		
-		model.addAttribute("applyList", studentService.stuApplyList(stuNo));
+		//신청 내역 목록
+		List<DeptManageVO> applyList =  studentService.stuApplyList(stuNo);
+		
+		model.addAttribute("applyList", applyList);
+		
+		//신청 분류별 개수 구하기
+		int changeMajor = 0, takeOff = 0, comeback = 0 , addMajor = 0;
+		
+		for(DeptManageVO applyInfo : applyList) {
+			//전과
+			if(applyInfo.getApplyCode().equals(ApplyCode.전과.toString()) ) {
+				changeMajor++;
+			}
+			//휴학
+			else if(applyInfo.getApplyCode().equals(ApplyCode.휴학.toString()) ) {
+				takeOff++;			
+			}
+			//복학
+			else if(applyInfo.getApplyCode().equals(ApplyCode.복학.toString()) ) {
+				comeback++;
+			}
+			//복전
+			else if(applyInfo.getApplyCode().equals(ApplyCode.복수전공.toString()) ) {
+				addMajor++;
+			}
+		}
+		
+		//map으로 데이터 담아서 html로 넘기기
+		Map<String, Integer> applyCodeMap = new HashMap<>();
+		applyCodeMap.put("전과", changeMajor);
+		applyCodeMap.put("휴학", takeOff);
+		applyCodeMap.put("복학", comeback);
+		applyCodeMap.put("복수전공", addMajor);
+		
+		model.addAttribute("applyCodeMap", applyCodeMap);
 		
 		return  "content/student/stuApplyList";
 	}

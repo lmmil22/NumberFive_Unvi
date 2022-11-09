@@ -88,6 +88,7 @@ function applyChangeMajor(){
 
 }
 
+//by수경 신청 쿼리 실행 (toColl, toDept 추가하기)
 function applyResult(){
 	
 	const stuNo = document.querySelector('#stuNo').value;
@@ -97,12 +98,19 @@ function applyResult(){
 	const applyCode = document.querySelector('#applyCode').value;
 	
 	
-	
 	 //모달창 소스
 	const modal = new bootstrap.Modal('#applyResultModal');
 	//모달 보여주기
 	modal.show();	
 	
 	
+}
+
+//by수경 신청현황을 보여주는 페이지로 이동
+function nextPage(){
+	
+	const stuNo = document.querySelector('#stuNo').value;
+	
+	location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
 }
 

@@ -32,23 +32,23 @@
 					  <th>승인여부</th>
 				    </tr>
 					
-					<th:block th:if="${#lists.size(applyList) == 0}">
-				    <tr>
-				      <td colspan="6">
-				      	<span>신청한 내역이 없습니다.</span>
-				      </td>
-				    </tr>  
+					<th:block th:if="${applyCodeMap['휴학']== 0}">
+					    <tr>
+					      <td colspan="6">
+					      	<span>신청한 내역이 없습니다.</span>
+					      </td>
+					    </tr>  
 					</th:block>
 					
-					<th:block th:unless="${#lists.size(applyList) == 0}">
-					<tr>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-					</tr>
+					<th:block th:unless ="${applyCodeMap['휴학'] == 0}">
+						<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq '휴학'}">
+					      <td th:text="${status.count}"></td>
+					      <td th:text="${applyInfo.fromColl}"></td>
+					      <td th:text="${applyInfo.fromDept}"></td>
+					      <td th:text="${applyInfo.applyDate}"></td>
+					      <td th:text="${applyInfo.approvalDate}"></td>
+					      <td th:text="${applyInfo.processStatus}"></td>
+						</tr>
 					</th:block>
 				</table>
 			</div>		
@@ -69,21 +69,22 @@
 					  <th>승인일</th>
 					  <th>승인여부</th>
 				    </tr>
-				    <th:block th:if="${#lists.size(applyList) == 0}">
-				    <tr>
-				      <td colspan="6">
-				      	<span>신청한 내역이 없습니다.</span>
-				      </td>
-				    </tr>  
+				    <th:block th:if="${applyCodeMap['복학'] ==0}">
+					    <tr>
+					      <td colspan="6">
+					      	<span>신청한 내역이 없습니다.</span>
+					      </td>
+					    </tr>  
 					</th:block>
-				    <th:block th:unless="${#lists.size(applyList) == 0}">
-					<tr>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
+				    
+				    <th:block th:unless="${applyCodeMap['복학'] == 0}">
+					<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq '복학'}">
+				      <td th:text="${status.count}"></td>
+				      <td th:text="${applyInfo.fromColl}"></td>
+				      <td th:text="${applyInfo.fromDept}"></td>
+				      <td th:text="${applyInfo.applyDate}"></td>
+				      <td th:text="${applyInfo.approvalDate}"></td>
+				      <td th:text="${applyInfo.processStatus}"></td>
 					</tr>
 					</th:block>
 				</table>
@@ -106,24 +107,24 @@
 					  <th>승인여부</th>
 				    </tr>
 				   
-				    <th:block th:if="${#lists.size(applyList) == 0}">
-				    <tr>
-				      <td colspan="8">
-				      	<span>신청한 내역이 없습니다.</span>
-				      </td>
-				    </tr>  
+				    <th:block th:if="${applyCodeMap['전과'] == 0}">
+					    <tr>
+					      <td colspan="8">
+					      	<span>신청한 내역이 없습니다.</span>
+					      </td>
+					    </tr>  
 					</th:block>
-					<th:block th:unless="${#lists.size(applyList) == 0}">
-					<tr>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-					</tr>
+					<th:block th:unless="${applyCodeMap['전과'] ==0 }">
+						<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq '전과'}">
+					      <td th:text="${status.count}"></td>
+					      <td th:text="${applyInfo.fromColl}"></td>
+					      <td th:text="${applyInfo.fromDept}"></td>
+					      <td th:text="${applyInfo.toColl}"></td>
+					      <td th:text="${applyInfo.toDept}"></td>
+					      <td th:text="${applyInfo.applyDate}"></td>
+					      <td th:text="${applyInfo.approvalDate}"></td>
+					      <td th:text="${applyInfo.processStatus}"></td>
+						</tr>
 					</th:block>
 				</table>
 			</div>		
@@ -146,27 +147,28 @@
 					  <th>승인일</th>
 					  <th>승인여부</th>
 				    </tr>
-				    
-				    <th:block th:if="${#lists.size(applyList) == 0}">
+			
+				 <th:block th:if="${applyCodeMap['복수전공'] == 0}">
 				    <tr>
 				      <td colspan="8">
 				      	<span>신청한 내역이 없습니다.</span>
 				      </td>
 				    </tr>  
-					</th:block>
-				    <th:block th:unless="${#lists.size(applyList) == 0}">
-					<tr>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
+				</th:block>
+				
+				<th:block th:if="${applyCodeMap['복수전공'] != 0}">
+					<tr th:each="applyInfo : ${applyList}" th:if="${applyInfo.applyCode eq '복수전공'}">
+				      <td th:text="${status.count}"></td>
+				      <td th:text="${applyInfo.fromColl}"></td>
+				      <td th:text="${applyInfo.fromDept}"></td>
+				      <td th:text="${applyInfo.doubleMajorColl}"></td>
+				      <td th:text="${applyInfo.doubleMajorDept}"></td>
+				      <td th:text="${applyInfo.applyDate}"></td>
+				      <td th:text="${applyInfo.approvalDate}"></td>
+				      <td th:text="${applyInfo.processStatus}"></td>
 					</tr>
-					</th:block>
-				</table>
+				</th:block>
+			</table>
 			</div>		
 		</div>		
 	</div>
