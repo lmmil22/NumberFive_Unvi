@@ -1,9 +1,16 @@
 package kh.study.NF.professor.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
-
+import org.springframework.core.io.InputStreamResource;
 import javax.annotation.Resource;
-
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,7 +81,8 @@ public class ProfessorController {
 		professorService.insertLecture(lectureVO, lecturePdfVO, lectureTimeVO);
 		
 		//lec 는 nextNo로 셀렉트해서 가져와야한다 
-		return "redirect:/stu/main";
+		//return "redirect:/stu/main";
+		return "redirect:/proF/viewLecList";
 	}
 	
 	//강의 등록후 리스트
@@ -115,9 +123,33 @@ public class ProfessorController {
 		professorService.deleteLec(lecNo);
 		
 		//ajax와 redirect 를 같이 사용할 수 없다 
-		
-		
 	}
+	
+	//강의 이름 클릭시 ekdns진행됨 
+	
+	@GetMapping("/download")
+	public ResponseEntity<Object> download() {
+		String path = "D:\\workspaceSTS\\NumberFive_Unvi\\src\\main\\resources\\static\\pdf\\";
+		
+		//디비로 조회해온 pdf원본 파일명 이름을 가져온다
+		
+		try {
+			Path filePath = Paths.get(path);
+			org.springframework.core.io.Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
+			
+			File file = new File(path);
+			
+			HttpHeaders headers = new HttpHeaders();
+//			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+			headers.setContentDisposition(ContentDisposition.builder("attachment").filename("test.pdf").build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+			
+			return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
+		} catch(Exception e) {
+			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
+		}
+	}
+	
+	
 	
 	
 }

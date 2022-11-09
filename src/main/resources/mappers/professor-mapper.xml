@@ -215,6 +215,10 @@
 	WHERE LEC_NO = #{lecNo}
 	</delete>
 
+	
+	<!-- 강의에 첨부된 파일 조회  -->
+	
+
 
 	<!-- dept목록조회 -->	
 	<select id="selectDept" resultMap="dept">
