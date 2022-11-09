@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -157,7 +158,39 @@ public class ProfessorController {
 		}
 	}
 	
-
+	/*//교수가 강의 이름 눌렀을 때 보여주는 pdf (다운x)
+	@PostMapping("/viewLecPdf")
+	public ResponseEntity<Object> viewLecPdf(String lecNo) {
+		LecturePdfVO attachedInfo = professorService.selectLecPdf(lecNo);
+		String path = "D:\\workspaceSTS\\NumberFive_Unvi\\src\\main\\resources\\static\\pdf\\" + attachedInfo.getAttachedPdfName();
+		
+		try {
+			Path filePath = Paths.get(path);
+			org.springframework.core.io.Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
+			
+			File file = new File(path);
+			
+			HttpHeaders headers = new HttpHeaders();
+			System.out.println(attachedInfo.getOriginPdfName()+"!!!!!!");
+			
+			String downloadName =  new String(attachedInfo.getOriginPdfName().getBytes("UTF-8"), "ISO-8859-1");
+			
+//			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(downloadName).build());  
+			
+			return ResponseEntity.ok()
+			        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + downloadName + "\"")
+			        .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(downloadName.length()))
+			        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF.toString())
+			        .body(resource);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
+		}
+		*/
+		
+	//}
 	
 	
 	
