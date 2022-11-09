@@ -20,6 +20,7 @@ public class MailService {
     	ArrayList<String> toUerList = new ArrayList<>();
     	
     	//수신 대상 추가
+    	toUerList.add("nm@gmail.com"); // 보안설정 한 이메일 -> 수신가능 
     	//toUerList.add("numberfive.zys@gmail.com"); // 보안설정 한 이메일 -> 수신가능 
     	
     	//수신 대상 개수

@@ -14,7 +14,7 @@ public class MailController {
 	//mail기능 서비스 객체 
 	@Autowired
 	private MailService mailService;
-	// 깃 테스트 
+	
 	// 이메일 인증 
 	@GetMapping("/sendMail")
 	public String sendMail(Model model) {

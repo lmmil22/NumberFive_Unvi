@@ -30,7 +30,10 @@
 					<div class="form-floating">
 					  <input th:name="memPw" type="password" class="form-control" id="floatingPassword" placeholder="비밀번호를 입력하세요">
 					  <label for="floatingPassword"> 비밀번호 </label>
-					  	<a id="findPwId" onclick="location.href='/mail/sendMail';" style="font-style: italic; font-weight: lighter; " > 이메일로 비밀번호 찾기</a>
+					
+					  	<a id="findPwId"  style="font-style: italic; font-weight: lighter; " data-bs-toggle="modal" data-bs-target="#login_modal" > 이메일로 비밀번호 찾기</a>
+						<!-- 로그인 성공시 넘어가는 페이지경로 :onclick="location.href='/mail/sendMail';" -->		
+					
 					</div>
 					<div class="row mt-3 mb-2">
 						<div class="col">
@@ -44,8 +47,49 @@
 		</div>
 	</div>
 	
+<!-- 이메일로 비밀번호 찾기 a태그 클릭시 실행 Modal  -->
+<div class="modal fade" id="login_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="font-weight: bold;">비밀번호찾기(임시비밀번호발급)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+      <!-- 로그인 - 세션이용 데이터 form태그로 보내주기 -->
+      <!-- 부트스트랩에서 가져왔기때문에 함부러 수정x 형식에 맞게 해야사용가능하다 -->
+		<form class="row g-3" name="formLogin" method="post" action="/member/login" >
+		  <div class="mb-3">
+		  <!-- label은 input태그의 라벨(스티커)이다. 웬만하면, for값과 id값이 같아야한다 -->
+		  <!-- html 파일 내에 memberId 라는 id값이 여러개 존재한다.(중복발생) -->
+		    <label for="memNo" class="form-label" >학번/교번</label>
+		    <input  type="text" class="form-control" name="memNo" id="memNo" aria-describedby="emailHelp" placeholder="ex)MEM_001" checked="checked">
+		  </div>
+		  <div class="mb-3">
+		    <label for="memName" class="form-label">이름</label>
+		    <input type="text" class="form-control" name="memName"  id="memName" placeholder="이름을 입력하세요" checked="checked">
+		  </div>
+		  <div class="mb-3">
+		    <label for="memEmail" class="form-label">이메일</label>
+		    <input type="email" class="form-control" name="memEmail"  id="memEmail" placeholder="ex)abc123@gmail.com" checked="checked">
+		  </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-primary">Login</button>  <!--submit은 ajax에서 사용하는 것이 아니다!!! onclick이용해서 ajax? -->
+	        <button type="button" class="btn btn-primary" onclick="goLogin();">AjaxLogin</button>
+	      </div>
+		</form>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
+<script type="text/javascript" th:src="@{/js/common/homeLogin.js}"></script>
 
 </div>
 </html>

@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.NF.member.service.MemberService;
 import kh.study.NF.member.vo.MemberVO;
+
 // by 유빈
 @Controller
 @RequestMapping("/member")
@@ -18,7 +20,7 @@ public class MemberController {
 	@Resource(name = "memberService")
 	private MemberService memberService;
 
-	// by 유 : 학생정보시스템의 첫 화면 로그인 페이지입니다.
+	// by 유빈 : 학생정보시스템의 첫 화면 로그인 페이지입니다.
 	// --> stu컨트롤러에서 학생,교수,교직원 모두 로그인해야해서 공통사항은 (common폴더)여기로 옮겼어!!)
 	// 첫 화면 경로 : http://localhost:8081/member/homeLogin
 	@GetMapping("/homeLogin")
@@ -40,17 +42,34 @@ public class MemberController {
 		}
 		else {
 			System.out.println("로그인실패!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			return "redirect:/member/home_login";// by 유 : 로그인 실패시, 다시 로그인 첫 홈화면으로 돌아갑니다.
+			
+			return "redirect:/member/homeLogin";// by 유 : 로그인 실패시, 다시 로그인 첫 홈화면으로 돌아갑니다.
 
 		}
 		return "content/common/afterLogin"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
 	}
 	
+	///-------------------------------------------------------------------------------------------///	
+	//내가 만든 메소드
+	// 이메일로 비밀번호 찾기-> 모달 ajax사용 (ajaxlogin이라는 버튼을 클릭시)
+	//@PostMapping("/ajaxLogin")
+	//public String ajaxLogin() {
+	//	return "content/common/afterLogin"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
+	//}
 	
-	//이메일 테스트용 메소드 
-	@GetMapping("/test")
-	public String test() {
-		
-		return "content/common/index"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
+	//shop 복붙한 메소드
+	// 이메일로 비밀번호 찾기-> 모달 ajax사용 (ajaxlogin이라는 버튼을 클릭시)
+	//로그인(ajax.ver)
+	@ResponseBody //ajax사용할때(단,리턴값은 필요한 데이터만! html페이지가 아님!)
+	@PostMapping("/ajaxLogin")
+	public boolean ajaxLogin(HttpSession session, MemberVO memberVO) {
+		MemberVO loginInfo = memberService.login(memberVO);
+		// 로그인 정보 세션 저장
+		if(loginInfo != null) {
+			session.setAttribute("loginInfo", loginInfo);
+		} 
+		// 바로 loginInfo를 주지않고 삼항연산자 사용한다
+		return loginInfo == null? false :true;//자료형 boolean
 	}
+	
 }
