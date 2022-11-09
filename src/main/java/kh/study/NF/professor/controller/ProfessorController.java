@@ -107,5 +107,17 @@ public class ProfessorController {
 		return "redirect:/proF/viewLecList";
 	}
 	
+	//강의 삭제 버튼 클릭 시
+	@ResponseBody
+	@PostMapping("/deleteLecAjax")
+	public void deleteLecAjax(String lecNo) {
+		
+		professorService.deleteLec(lecNo);
+		
+		//ajax와 redirect 를 같이 사용할 수 없다 
+		
+		
+	}
+	
 	
 }

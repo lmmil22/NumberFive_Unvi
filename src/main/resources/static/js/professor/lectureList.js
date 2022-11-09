@@ -14,8 +14,8 @@ function changeLecDetail(lecNo){
 	 $.ajax({
 		 url: '/proF/lecListAjax', //요청경로
 		 type: 'post',
-		 data: {'lecNo':lecNo}, //필요한 데이터 //전달해야하는 데이터는 괄호안에 작성  //콜론을 기준으로 홍이라는데이터를 네임이라는 이름으로 던질게요 2개 이상일땐 쉼표로 나열 해준다 
-		 //콜론 기준으로 왼쪽이 던지는 데이터의 이름 
+		 data: {'lecNo':lecNo}, 
+		 
 		 success: function(result) {
 			 alert('aaa');
 			 	//모달창 띄우는 소스 작성
@@ -34,6 +34,29 @@ function changeLecDetail(lecNo){
 	//ajax end
 
 }
+
+//강의 삭제 클릭 시 
+function deleteLec(lecNo){
+	const result = confirm('강의를 삭제하시겠어요?');
+	
+	//ajax start
+	 $.ajax({
+		 url: '/proF/deleteLecAjax', //요청경로
+		 type: 'post',
+		 data: {'lecNo':lecNo},
+		 success: function(result) {
+			 alert('aaa');
+			location.href = '/proF/viewLecList';
+
+		 },
+		 error: function() {
+			 alert('실패');
+		 }
+	 });
+	//ajax end
+	
+}
+
 
 
 function setModelData(result){

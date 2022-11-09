@@ -62,6 +62,12 @@ public class ProfessorServiceImpl implements ProfessorService{
 		sqlSession.update("professorMapper.updateLec" , lectureVO);
 		sqlSession.update("professorMapper.updateLecTime" , lectureTimeVO);
 	}
+	//lec 삭제
+	@Override
+	public void deleteLec(String lecNo) {
+		sqlSession.delete("professorMapper.deleteLec" ,lecNo);
+		
+	}
 	
 	
 	

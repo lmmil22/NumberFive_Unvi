@@ -22,4 +22,7 @@ public interface ProfessorService {
 	
 	 LectureVO selectLecture(String lecNo);
 	 void updateLec(LectureVO lectureVO , LectureTimeVO lectureTimeVO);
+	 
+	 void deleteLec(String lecNo);
+	 
 }
