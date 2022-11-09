@@ -11,13 +11,7 @@ import lombok.Setter;
 public class DoubleMajorVO {
 
 	private String doubleNo;
-	private String doubleStatus;
-	private String insertDate;
-	private String updateDate;
-	private String reason;
 	private String stuNo;
-	private String collNo;
-	private String deptNo;
 	private String doubleColl;
 	private String doubleDept;
 	

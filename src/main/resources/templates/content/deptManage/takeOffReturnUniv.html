@@ -22,6 +22,7 @@
 			<div class="col mb-5">
 				<table class="table table-bordered">
 				   <tr>
+				   	  <th><input type="checkbox" id="allcheck1"></th>
 					  <th>No</th>
 					  <th>전공대학</th>
 					  <th>전공학과</th>
@@ -29,24 +30,37 @@
 					  <th>승인일</th>
 					  <th>승인여부</th>
 				    </tr>
-				    <th:block th:if="${#lists.size(applyList) == 0}">
-				    <tr>
-				      <td colspan="6">
-				      	<span>신청한 내역이 없습니다.</span>
-				      </td>
-				    </tr>  
+				    <th:block th:if="${applyCodeMap['comeback'] ==0}">
+					    <tr>
+					      <td colspan="7">
+					      	<span>접수된 내역이 없습니다.</span>
+					      </td>
+					    </tr>  
 					</th:block>
-				    <th:block th:unless="${#lists.size(applyList) == 0}">
-					<tr>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-					</tr>
+				    <th:block th:unless="${applyCodeMap['comeback'] == 0}">
+						<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq 'comeback'}">
+					      <td><input type="checkbox" id="check1"></td>
+					      <td th:text="${status.count}"></td>
+					      <td th:text="${applyInfo.fromColl}"></td>
+					      <td th:text="${applyInfo.fromDept}"></td>
+					      <td th:text="${applyInfo.applyDate}"></td>
+					      <td th:text="${applyInfo.approvalDate}"></td>
+					      <td>
+					      	<span>
+					      		<input type="radio" th:name="|processStatus_${status.count}|" value="waiting" 
+					      		th:checked="${applyInfo.processStatus eq 'waiting'}" th:onclick="returnStatus();"> 
+					      		<label class="form-check-label" for="flexRadioDefault1">승인대기</label>
+					      		<input type="radio" th:name="|processStatus_${status.count}|" value="accept" 
+					      		th:checked="${applyInfo.processStatus eq 'accept'}" th:onclick="returnStatus();"> 
+					      		<label class="form-check-label" for="flexRadioDefault1">승인완료</label>
+				      		</span>
+					      </td>
+						</tr>
 					</th:block>
 				</table>
+				<div class="row">
+					<div class="col"><input type="button" value="일괄승인"></div>
+				</div>
 			</div>		
 		</div>
 
@@ -57,6 +71,7 @@
 			<div class="col mb-5">
 				<table class="table table-bordered">
 				   <tr>
+					  <th><input type="checkbox" id="allcheck2"></th>				   	
 					  <th>No</th>
 					  <th>전공대학</th>
 					  <th>전공학과</th>
@@ -65,25 +80,38 @@
 					  <th>승인여부</th>
 				    </tr>
 					
-					<th:block th:if="${#lists.size(applyList) == 0}">
+					<th:block th:if="${applyCodeMap['takeOff']== 0}">
 				    <tr>
-				      <td colspan="6">
-				      	<span>신청한 내역이 없습니다.</span>
+				      <td colspan="7">
+				      	<span>접수된 내역이 없습니다.</span>
 				      </td>
 				    </tr>  
 					</th:block>
 					
-					<th:block th:unless="${#lists.size(applyList) == 0}">
-					<tr>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				      <td></td>
+					<th:block th:unless ="${applyCodeMap['takeOff'] == 0}">
+					<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq 'takeOff'}">
+				      <td><input type="checkbox" id="check2"></td>
+				      <td th:text="${status.count}"></td>
+				      <td th:text="${applyInfo.fromColl}"></td>
+				      <td th:text="${applyInfo.fromDept}"></td>
+				      <td th:text="${applyInfo.applyDate}"></td>
+				      <td th:text="${applyInfo.approvalDate}"></td>
+				      <td>
+				      	<span>
+				      		<input class="form-check-input" type="radio" name="processStatus" 
+				      		value="waiting" th:checked="${applyInfo.processStatus eq 'waiting'}"> 
+				      		<label class="form-check-label" for="flexRadioDefault1">승인대기 </label>
+				      		<input class="form-check-input" type="radio" name="processStatus" 
+				      		value="accept" th:checked="${applyInfo.processStatus eq 'accept'}"> 
+				      		<label class="form-check-label" for="flexRadioDefault1">승인완료 </label>
+				      	</span>
+				      </td>
 					</tr>
 					</th:block>
 				</table>
+				<div class="row">
+					<div class="col"><input type="button" value="일괄승인"></div>
+				</div>
 			</div>		
 		</div>		
 	</div>		

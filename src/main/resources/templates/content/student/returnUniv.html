@@ -38,7 +38,7 @@
 			   	  <th>전공학과</th> 
 			   	  <td th:text="${stuInfo.deptVO.deptName}"></td>
 			  	  <th>복수전공</th> 
-			      <td></td>
+			      <td th:text="${stuInfo.doubleNo}"></td>
 				</tr>
 				<tr> 
 			     <th>성별</th> 
@@ -49,7 +49,7 @@
 			     <td th:text="${stuInfo.stuStatus}" id="stuStatus"></td> 
 				</tr> 
 			</table>
-			<input type="hidden" name="applyCode" value="복학">
+			<input type="hidden" name="applyCode" value="comeback">
 			<input type="hidden" th:value="${stuInfo.collNo}" id="collNo">
 			<input type="hidden" th:value="${stuInfo.deptNo}" id="deptNo">
 			<input type="hidden" name="stuNo" th:value="${stuInfo.stuNo}" id="stuNo">

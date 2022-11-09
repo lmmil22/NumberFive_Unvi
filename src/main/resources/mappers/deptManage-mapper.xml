@@ -41,6 +41,7 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, FROM_DEPT
 						, STU_YEAR
 						, STU_SEM
+						, PROCESS_STATUS
 				)VALUES(  #{applyNo}
 						, #{stuNo}
 						, #{applyCode}
@@ -48,6 +49,7 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, #{fromDept}
 						, (SELECT STU_YEAR FROM STU WHERE STU_NO = #{stuNo})
 						, (SELECT STU_SEM FROM STU WHERE STU_NO = #{stuNo})
+						, #{processStatus}
 )
 </insert>
 
@@ -66,6 +68,7 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, FROM_DEPT
 						, STU_YEAR
 						, STU_SEM
+						, PROCESS_STATUS
 				)VALUES(  #{applyNo}
 						, #{stuNo}
 						, #{applyCode}
@@ -74,6 +77,7 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, #{fromDept}
 						, (SELECT STU_YEAR FROM STU WHERE STU_NO = #{stuNo})
 						, (SELECT STU_SEM FROM STU WHERE STU_NO = #{stuNo})
+						, #{processStatus}
 )
 </insert>
 
@@ -96,6 +100,7 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, TO_DEPT
 						, STU_YEAR
 						, STU_SEM
+						, PROCESS_STATUS
 				)VALUES(  #{applyNo}
 						, #{stuNo} 
 						, #{applyCode}
@@ -106,6 +111,7 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, #{toDept}
 						, (SELECT STU_YEAR FROM STU WHERE STU_NO = #{stuNo})
 						, (SELECT STU_SEM FROM STU WHERE STU_NO = #{stuNo})
+						, #{processStatus}
 )
 </insert>
 
@@ -126,6 +132,7 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, DOUBLE_MAJOR_DEPT
 						, STU_YEAR
 						, STU_SEM
+						, PROCESS_STATUS
 				)VALUES(  #{applyNo}
 						, #{stuNo}
 						, #{applyCode}
@@ -136,6 +143,7 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 						, #{doubleMajorDept}
 						, (SELECT STU_YEAR FROM STU WHERE STU_NO = #{stuNo})
 						, (SELECT STU_SEM FROM STU WHERE STU_NO = #{stuNo})
+						, #{processStatus}
 )
 </insert>
 
@@ -161,15 +169,15 @@ WHERE STU_NO = #{stuNo}
 <!--by수경 학생의 복학, 휴학, 전과, 복수전공 신청 목록을 관리자에게 보여주는 페이지-->
 <select id="applyList" resultMap="deptManage">
 SELECT APPLY_NO
-	 , FROM_COLL
-	 , FROM_DEPT
-	 , TO_COLL
-	 , TO_DEPT
+	 , (SELECT COLL_NAME FROM COLLEAGE WHERE COLL_NO = FROM_COLL)AS FROM_COLL
+	 , (SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO = FROM_DEPT)AS FROM_DEPT
+	 , (SELECT COLL_NAME FROM COLLEAGE WHERE COLL_NO = TO_COLL) AS TO_COLL
+	 , (SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO =TO_DEPT) AS TO_DEPT
 	 , DOUBLE_MAJOR_COLL
 	 , DOUBLE_MAJOR_DEPT
 	 , APPLY_CODE
-	 , APPLY_DATE
-	 , APPROVAL_DATE
+	 , TO_CHAR(APPLY_DATE, 'YYYY"년"MM"월"DD"일"')AS APPLY_DATE
+	 , TO_CHAR(APPROVAL_DATE, 'YYYY"년"MM"월"DD"일"')AS APPROVAL_DATE
 	 , PROCESS_STATUS
 FROM DEPT_MANAGE
 

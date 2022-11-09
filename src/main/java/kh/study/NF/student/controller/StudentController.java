@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kh.study.NF.config.student.AcceptApply;
 import kh.study.NF.config.student.ApplyCode;
 import kh.study.NF.dept.service.DeptService;
 import kh.study.NF.dept.vo.DeptVO;
@@ -87,8 +88,8 @@ public class StudentController {
 	@PostMapping("/applyReturnUnivAjax")
 	public void applyReturnUniv(Model model, DeptManageVO deptManageVO) {
 		//by수경 enum을 이용하여 value set
-		deptManageVO.setApplyCode(ApplyCode.복학.toString());
-		
+		deptManageVO.setApplyCode(ApplyCode.comeback.toString());
+		deptManageVO.setProcessStatus(AcceptApply.waiting.toString());
 		studentService.applyReturnUniv(deptManageVO);
 		
 		//return  "redirect:/stu/stuApplyList";
@@ -100,8 +101,8 @@ public class StudentController {
 	@PostMapping("/applyTakeOffUnivAjax")
 	public void applyTakeOffUniv(Model model, DeptManageVO deptManageVO) {
 		//by수경 enum을 이용하여 value set
-		deptManageVO.setApplyCode(ApplyCode.휴학.toString());
-		
+		deptManageVO.setApplyCode(ApplyCode.takeOff.toString());
+		deptManageVO.setProcessStatus(AcceptApply.waiting.toString());
 		studentService.applyTakeOffUniv(deptManageVO);
 		
 	}
@@ -112,8 +113,8 @@ public class StudentController {
 	@PostMapping("/applyChangeMajorAjax")
 	public void applyChangeMajor(Model model, DeptManageVO deptManageVO) {
 		//by수경 enum을 이용하여 value set
-		deptManageVO.setApplyCode(ApplyCode.전과.toString());
-		
+		deptManageVO.setApplyCode(ApplyCode.changeMajor.toString());
+		deptManageVO.setProcessStatus(AcceptApply.waiting.toString());
 		studentService.applyChangeMajor(deptManageVO);
 		
 
@@ -123,8 +124,8 @@ public class StudentController {
 	@PostMapping("/applyAddMajorAjax")
 	public void applyAddMajor(Model model, DeptManageVO deptManageVO) {
 		//by수경 enum을 이용하여 value set
-		deptManageVO.setApplyCode(ApplyCode.복수전공.toString());
-		
+		deptManageVO.setApplyCode(ApplyCode.doubleMajor.toString());
+		deptManageVO.setProcessStatus(AcceptApply.waiting.toString());
 		studentService.applyAddMajor(deptManageVO);
 		
 		
@@ -139,34 +140,34 @@ public class StudentController {
 		
 		model.addAttribute("applyList", applyList);
 		
-		//신청 분류별 개수 구하기
+		//by수경 신청 분류별 개수 구하기
 		int changeMajor = 0, takeOff = 0, comeback = 0 , addMajor = 0;
 		
 		for(DeptManageVO applyInfo : applyList) {
 			//전과
-			if(applyInfo.getApplyCode().equals(ApplyCode.전과.toString()) ) {
+			if(applyInfo.getApplyCode().equals(ApplyCode.changeMajor.toString()) ) {
 				changeMajor++;
 			}
 			//휴학
-			else if(applyInfo.getApplyCode().equals(ApplyCode.휴학.toString()) ) {
+			else if(applyInfo.getApplyCode().equals(ApplyCode.takeOff.toString()) ) {
 				takeOff++;			
 			}
 			//복학
-			else if(applyInfo.getApplyCode().equals(ApplyCode.복학.toString()) ) {
+			else if(applyInfo.getApplyCode().equals(ApplyCode.comeback.toString()) ) {
 				comeback++;
 			}
 			//복전
-			else if(applyInfo.getApplyCode().equals(ApplyCode.복수전공.toString()) ) {
+			else if(applyInfo.getApplyCode().equals(ApplyCode.doubleMajor.toString()) ) {
 				addMajor++;
 			}
 		}
 		
 		//map으로 데이터 담아서 html로 넘기기
 		Map<String, Integer> applyCodeMap = new HashMap<>();
-		applyCodeMap.put("전과", changeMajor);
-		applyCodeMap.put("휴학", takeOff);
-		applyCodeMap.put("복학", comeback);
-		applyCodeMap.put("복수전공", addMajor);
+		applyCodeMap.put("changeMajor", changeMajor);
+		applyCodeMap.put("takeOff", takeOff);
+		applyCodeMap.put("comeback", comeback);
+		applyCodeMap.put("doubleMajor", addMajor);
 		
 		model.addAttribute("applyCodeMap", applyCodeMap);
 		

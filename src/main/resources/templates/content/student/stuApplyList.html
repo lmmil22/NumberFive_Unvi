@@ -32,7 +32,7 @@
 					  <th>승인여부</th>
 				    </tr>
 					
-					<th:block th:if="${applyCodeMap['휴학']== 0}">
+					<th:block th:if="${applyCodeMap['takeOff']== 0}">
 					    <tr>
 					      <td colspan="6">
 					      	<span>신청한 내역이 없습니다.</span>
@@ -40,8 +40,8 @@
 					    </tr>  
 					</th:block>
 					
-					<th:block th:unless ="${applyCodeMap['휴학'] == 0}">
-						<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq '휴학'}">
+					<th:block th:unless ="${applyCodeMap['takeOff'] == 0}">
+						<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq 'takeOff'}">
 					      <td th:text="${status.count}"></td>
 					      <td th:text="${applyInfo.fromColl}"></td>
 					      <td th:text="${applyInfo.fromDept}"></td>
@@ -69,7 +69,7 @@
 					  <th>승인일</th>
 					  <th>승인여부</th>
 				    </tr>
-				    <th:block th:if="${applyCodeMap['복학'] ==0}">
+				    <th:block th:if="${applyCodeMap['comeback'] ==0}">
 					    <tr>
 					      <td colspan="6">
 					      	<span>신청한 내역이 없습니다.</span>
@@ -77,8 +77,8 @@
 					    </tr>  
 					</th:block>
 				    
-				    <th:block th:unless="${applyCodeMap['복학'] == 0}">
-					<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq '복학'}">
+				    <th:block th:unless="${applyCodeMap['comeback'] == 0}">
+					<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq 'comeback'}">
 				      <td th:text="${status.count}"></td>
 				      <td th:text="${applyInfo.fromColl}"></td>
 				      <td th:text="${applyInfo.fromDept}"></td>
@@ -107,15 +107,15 @@
 					  <th>승인여부</th>
 				    </tr>
 				   
-				    <th:block th:if="${applyCodeMap['전과'] == 0}">
+				    <th:block th:if="${applyCodeMap['changeMajor'] == 0}">
 					    <tr>
 					      <td colspan="8">
 					      	<span>신청한 내역이 없습니다.</span>
 					      </td>
 					    </tr>  
 					</th:block>
-					<th:block th:unless="${applyCodeMap['전과'] ==0 }">
-						<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq '전과'}">
+					<th:block th:unless="${applyCodeMap['changeMajor'] ==0 }">
+						<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq 'changeMajor'}">
 					      <td th:text="${status.count}"></td>
 					      <td th:text="${applyInfo.fromColl}"></td>
 					      <td th:text="${applyInfo.fromDept}"></td>
@@ -141,14 +141,14 @@
 					  <th>No</th>
 					  <th>소속전공대학</th>
 					  <th>소속전공학과</th>
-					  <th>신청전공대학</th>
-					  <th>신청전공학과</th>
+					  <th>복수전공대학</th>
+					  <th>복수전공학과</th>
 					  <th>신청일</th>
 					  <th>승인일</th>
 					  <th>승인여부</th>
 				    </tr>
 			
-				 <th:block th:if="${applyCodeMap['복수전공'] == 0}">
+				 <th:block th:if="${applyCodeMap['doubleMajor'] == 0}">
 				    <tr>
 				      <td colspan="8">
 				      	<span>신청한 내역이 없습니다.</span>
@@ -156,8 +156,8 @@
 				    </tr>  
 				</th:block>
 				
-				<th:block th:if="${applyCodeMap['복수전공'] != 0}">
-					<tr th:each="applyInfo : ${applyList}" th:if="${applyInfo.applyCode eq '복수전공'}">
+				<th:block th:if="${applyCodeMap['doubleMajor'] != 0}">
+					<tr th:each="applyInfo : ${applyList}" th:if="${applyInfo.applyCode eq 'doubleMajor'}">
 				      <td th:text="${status.count}"></td>
 				      <td th:text="${applyInfo.fromColl}"></td>
 				      <td th:text="${applyInfo.fromDept}"></td>
