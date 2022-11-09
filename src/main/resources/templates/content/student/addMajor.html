@@ -65,7 +65,7 @@
 				<tr>
 		    	  <th>복수전공대학</th> 
 			      <td>
-					<select class="form-select" onchange="changeColl();">
+					<select class="form-select" onchange="changeColl();" id="coll">
 						<option selected value="">전체</option>
 					  <th:block th:each="coll: ${collList}">
 					 	<option th:value=${coll.collNo} th:text="${coll.collName}"></option>
@@ -75,7 +75,7 @@
 			      </td>
 		    	  <th>복수전공학과</th> 
 			      <td>
-			      <select class="form-select deptList">
+			      <select class="form-select deptList" id="dept">
 			      	<option selected value="">전체</option>
 					  <th:block th:each="dept: ${deptList}">
 						<option th:value=${dept.deptNo} th:text="${dept.deptName}"></option>

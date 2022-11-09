@@ -11,9 +11,6 @@
 <body>
 
 <div layout:fragment ="content">
-<th:block layout:fragment ="css">
-	<link rel ="stylesheet" th:href="@{/css/cartList.css}">
-</th:block>
 <!--by수경 학생의 전공학과 변경(전과), 휴학신청, 복학신청, 복수전공(전공 하나 더) 신청 현황을 모아 둔 페이지입니다.-->
 	
 	<div class="row justify-content-center">
@@ -157,7 +154,7 @@
 				</th:block>
 				
 				<th:block th:if="${applyCodeMap['doubleMajor'] != 0}">
-					<tr th:each="applyInfo : ${applyList}" th:if="${applyInfo.applyCode eq 'doubleMajor'}">
+					<tr th:each="applyInfo, status : ${applyList}" th:if="${applyInfo.applyCode eq 'doubleMajor'}">
 				      <td th:text="${status.count}"></td>
 				      <td th:text="${applyInfo.fromColl}"></td>
 				      <td th:text="${applyInfo.fromDept}"></td>

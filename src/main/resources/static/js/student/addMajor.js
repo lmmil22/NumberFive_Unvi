@@ -89,11 +89,30 @@ function applyResult(){
 	const fromDept = document.querySelector('#deptNo').value;
 	const applyReason = document.querySelector('#applyReason').value;
 	const applyCode = document.querySelector('#applyCode').value;
+	const doubleMajorColl = document.querySelector('#coll').value;
+	const doubleMajorDept = document.querySelector('#dept').value;
 	
-	 //모달창 소스
-	const modal = new bootstrap.Modal('#applyResultModal');
-	//모달 보여주기
-	modal.show();	
+	$.ajax({
+		url: '/stu/applyAddMajorAjax', //요청경로
+		type: 'post',
+		data: {
+			'stuNo': stuNo, 'fromColl': fromColl,'fromDept': fromDept, 
+			'applyReason': applyReason, 'applyCode': applyCode,
+			'doubleMajorColl':doubleMajorColl, 'doubleMajorDept':doubleMajorDept
+		}, //필요한 데이터
+
+		success: function(result) {
+
+			//모달창 소스
+			const modal = new bootstrap.Modal('#applyResultModal');
+			//모달 보여주기
+			modal.show();
+		},
+
+		error: function() {
+			alert('실패');
+		}
+	});
 	
 	
 }

@@ -64,13 +64,6 @@ function applyChangeMajor(){
 		}
 	});
 	
-	
-	//const toColl = document.querySelector('#coll option:selected').value;
-	//const toDept = document.querySelector('#dept option:selected').value;
-	//alert(toColl);
-	//alert(toDept);
-	
-	
 	//by수경 전과사유 공백 및 빈칸 방지
 	const textArea = document.querySelector('textarea').value;
 	//alert(textArea);
@@ -88,7 +81,7 @@ function applyChangeMajor(){
 
 }
 
-//by수경 신청 쿼리 실행 (toColl, toDept 추가하기)
+//by수경 신청 쿼리 실행
 function applyResult(){
 	
 	const stuNo = document.querySelector('#stuNo').value;
@@ -96,13 +89,30 @@ function applyResult(){
 	const fromDept = document.querySelector('#deptNo').value;
 	const applyReason = document.querySelector('#applyReason').value;
 	const applyCode = document.querySelector('#applyCode').value;
+	const toColl = document.querySelector('#coll').value;
+	const toDept = document.querySelector('#dept').value;
 	
-	
-	 //모달창 소스
-	const modal = new bootstrap.Modal('#applyResultModal');
-	//모달 보여주기
-	modal.show();	
-	
+	$.ajax({
+		url: '/stu/applyChangeMajorAjax', //요청경로
+		type: 'post',
+		data: {
+			'stuNo': stuNo, 'fromColl': fromColl,'fromDept': fromDept, 
+			'applyReason': applyReason, 'applyCode': applyCode,
+			'toColl':toColl, 'toDept':toDept
+		}, //필요한 데이터
+
+		success: function(result) {
+
+			//모달창 소스
+			const modal = new bootstrap.Modal('#applyResultModal');
+			//모달 보여주기
+			modal.show();
+		},
+
+		error: function() {
+			alert('실패');
+		}
+	});
 	
 }
 
