@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +35,7 @@ public class MemberController {
 	@PostMapping("/loginProcess")
 	public String loginProcess(HttpSession session, MemberVO memberVO) {
 		//로그인 쿼리 실행
-		MemberVO loginInfo = memberService.login(memberVO);
+		MemberVO loginInfo = memberService.findPw(memberVO);
 		System.out.println("로그인하러 넘어왔다");
 		
 		if (loginInfo != null) { // by 유 :로그인 성공시, 첫홈화면에서 본인의 학사정보시스템 페이지로 넘어갑니다.
@@ -50,20 +51,13 @@ public class MemberController {
 	}
 	
 	///-------------------------------------------------------------------------------------------///	
-	//내가 만든 메소드
-	// 이메일로 비밀번호 찾기-> 모달 ajax사용 (ajaxlogin이라는 버튼을 클릭시)
-	//@PostMapping("/ajaxLogin")
-	//public String ajaxLogin() {
-	//	return "content/common/afterLogin"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
-	//}
 	
-	//shop 복붙한 메소드
 	// 이메일로 비밀번호 찾기-> 모달 ajax사용 (ajaxlogin이라는 버튼을 클릭시)
 	//로그인(ajax.ver)
 	@ResponseBody //ajax사용할때(단,리턴값은 필요한 데이터만! html페이지가 아님!)
 	@PostMapping("/ajaxLogin")
 	public boolean ajaxLogin(HttpSession session, MemberVO memberVO) {
-		MemberVO loginInfo = memberService.login(memberVO);
+		MemberVO loginInfo = memberService.findPw(memberVO);
 		// 로그인 정보 세션 저장
 		if(loginInfo != null) {
 			session.setAttribute("loginInfo", loginInfo);
@@ -72,4 +66,13 @@ public class MemberController {
 		return loginInfo == null? false :true;//자료형 boolean
 	}
 	
+	// ajax로 이메일 임시비밀번호 발급 후 이동 페이지 
+	@GetMapping("/afterLogin")
+	public String afterLogin(boolean isLoginFail, Model model) {
+		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
+		System.out.println("@@@@@@@@@@@@@@@@@@@" + isLoginFail);
+		model.addAttribute("isLoginFail",isLoginFail);
+		
+		return "content/common/afterLogin";
+	}
 }

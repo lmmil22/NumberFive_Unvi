@@ -12,6 +12,7 @@ import kh.study.NF.member.vo.MemberVO;
 public class MemberServiceImpl implements MemberService{
 	@Autowired//어노테이션으로 객체생성
 	private SqlSessionTemplate sqlSession;
+	
 	//로그인
 	@Override
 	public MemberVO login(MemberVO memberVO) {
@@ -27,5 +28,11 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public MemberVO selectMemberDetail(String memNo) {
 		return sqlSession.selectOne("memberMapper.selectMemberDetail",memNo);
+	}
+	
+	// 이메일로 비밀번호찾기
+	@Override
+	public MemberVO findPw(MemberVO memberVO) {
+		return sqlSession.selectOne("memberMapper.findPw",memberVO);
 	}
 }

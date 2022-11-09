@@ -26,6 +26,18 @@
 	FROM  MEMBER
 	WHERE MEM_NO = #{memNo}
 	AND   MEM_PW = #{memPw}
+</select> 
+ 
+<!-- 비밀번호 찾기 조회시 -->
+  <select id="findPw" resultMap="member">
+	SELECT MEM_NO
+			,MEM_NAME
+			,MEM_EMAIL
+			,MEM_PW
+	FROM  MEMBER
+	WHERE MEM_NO = #{memNo}
+	AND   MEM_NAME = #{memName}
+	AND   MEM_EMAIL = #{memEmail}
 </select>  
 
 
