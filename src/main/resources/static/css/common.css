@@ -11,12 +11,19 @@ body{
  font-family: 'Nanum Gothic', sans-serif;
  font-weight: bold;
  font-size: 19px;
+
 }
 a{
 color: black;/* 글자색 */
-text-decoration: none;
-
+text-decoration: none;  
 }
+
+/* by 유빈 a태그 hover */
+#findPwId:hover{
+	color: #1C6758;
+}
+
+
 
 textarea{
 	resize: none;
