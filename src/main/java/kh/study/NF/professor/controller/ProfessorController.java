@@ -193,5 +193,16 @@ public class ProfessorController {
 	//}
 	
 	
+	//수강신청시 진행 
+	@GetMapping("/enrollList")
+	public String enrollList(Model model ) {
+		
+		model.addAttribute( "lecList",professorService.selectLecLIstEnroll());
+		
+		return "content/professor/enrollClassList";
+		
+	}
+	
+	
 	
 }

@@ -225,8 +225,48 @@
 		, LEC_NO
 	FROM LECTURE_PDF
 	WHERE LEC_NO = #{lecNo}
-	
 	</select>
+	
+		<!-- 등록된 강의 수강신청시 조회  -->
+	<select id="selectLecLIstEnroll"  resultMap="lecture">
+	       SELECT
+			L.LEC_NO
+			, LEC_NAME
+			, LEC_SCORE
+			,(SELECT COLL_NAME
+		        FROM COLLEAGE
+		        WHERE COLL_NO = L.COLL_NO) AS COLL_NO
+			, (SELECT DEPT_NAME
+		        FROM DEPT
+		        WHERE DEPT_NO = L.DEPT_NO) AS DEPT_NO
+			, (SELECT MEM_NAME
+		        FROM MEMBER
+		        WHERE MEM_NO = (SELECT MEM_NO
+                                FROM EMP
+                                WHERE EMP_NO = L.EMP_NO)) AS EMP_NO
+			, (SELECT LEC_DAY||'/'||FIRST_TIME||'-'||LAST_TIME
+							  FROM LECTURE_TIME WHERE LEC_NO = L.LEC_NO ) AS LAST_TIME
+			, MAX_NUM 
+			, NOW_NUM 
+			, SEM_NO
+			, PDF_NO
+			, ORIGIN_PDF_NAME
+			, ATTACHED_PDF_NAME
+		FROM LECTURE L, LECTURE_PDF LP, LECTURE_TIME LT
+		WHERE  L.LEC_NO = LP.LEC_NO AND L.LEC_NO = LT.LEC_NO
+		ORDER BY LEC_NO DESC
+	</select>
+
+
+
+
+
+
+
+
+
+
+
 
 	<!-- dept목록조회 -->	
 	<select id="selectDept" resultMap="dept">

@@ -10,6 +10,7 @@ document.getElementById("table_box_bootstrap").appendChild(box);
 //by 지아 
 //강의 수정을 누르면 
 function changeLecDetail(lecNo){
+	const result = confirm('강의를 수정하시겠어요?');
 	//ajax start
 	 $.ajax({
 		 url: '/proF/lecListAjax', //요청경로
@@ -17,7 +18,7 @@ function changeLecDetail(lecNo){
 		 data: {'lecNo':lecNo}, 
 		 
 		 success: function(result) {
-			 alert('aaa');
+			 //alert('aaa');
 			 	//모달창 띄우는 소스 작성
 			//result에 내가 조회한 데이터가 있고 
 			// 그 데이터를 모달이 띄우기 전에 
@@ -35,6 +36,7 @@ function changeLecDetail(lecNo){
 
 }
 
+//by 지아 
 //강의 삭제 클릭 시 
 function deleteLec(lecNo){
 	const result = confirm('강의를 삭제하시겠어요?');

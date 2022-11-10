@@ -73,6 +73,11 @@ public class ProfessorServiceImpl implements ProfessorService{
 		return sqlSession.selectOne("professorMapper.selectLecPdf",lecNo);
 	}
 	
+	@Override
+	public List<LectureVO> selectLecLIstEnroll() {
+		return sqlSession.selectList("professorMapper.selectLecLIstEnroll");
+	}
+	
 	
 	
 	

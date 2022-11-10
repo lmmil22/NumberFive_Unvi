@@ -18,13 +18,22 @@ public interface ProfessorService {
 	List<EmpVO> selectEmpList();
 	String getNextLecNo();
 	
+	//강의 목록 조회
 	List<LectureVO> selectLecList();
 	
+	//선택한 강의조회
 	 LectureVO selectLecture(String lecNo);
+	 
+	 //수정
 	 void updateLec(LectureVO lectureVO , LectureTimeVO lectureTimeVO);
 	 
+	 //삭제
 	 void deleteLec(String lecNo);
 	 
+	 //등록된 pdf 조회
 	 LecturePdfVO selectLecPdf(String lecNo);
+	 
+	 //강의 수강 신청시 조회 
+	 List<LectureVO> selectLecLIstEnroll();
 	 
 }

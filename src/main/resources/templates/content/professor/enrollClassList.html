@@ -1,0 +1,61 @@
+<!-- by 지아 수강 신청 페이지입니다-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"	
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/base_layout}"> 
+<th:block layout:fragment="css"> 
+<link rel="stylesheet"  th:href="@{}"> 
+</th:block>
+
+<div layout:fragment="content" > 
+	
+	<div>강의 리스트 </div>
+	
+	<div>
+	</div>
+	
+	<div id="table_box_bootstrap" style="text-align: center;">
+		<table class="table table-striped table-hover" >
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">강의명</th>
+					<th scope="col">학점</th>
+					<th scope="col">단과대학</th>
+					<th scope="col">학과</th>
+					<th scope="col">교수</th>
+					<th scope="col">강의 요일/시간</th>
+					<th scope="col">최대인원</th>
+					<th scope="col">현재인원</th>
+					<th scope="col">수강 신청</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="lec : ${lecList}">
+					<th scope="row" th:text="${lec.lecNo}">1</th>
+					<td>
+					 <a th:href="@{/proF/viewLecPdf(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a>
+					 
+					</td>
+					<td th:text="${lec.lecScore}"></td>
+					<td th:text="${lec.collNo}"></td>
+					<td th:text="${lec.deptNo}"></td>
+					<td th:text="${lec.empNo}"></td>
+					<td th:text="${lec.lectureTimeVO.lastTime}"></td>
+					<td th:text="${lec.maxNum}"></td>
+					<td th:text="${lec.nowNum}"></td>
+					
+					<!-- <td><input type="button" value="강의 상태 수정"	data-bs-toggle="modal"  data-bs-target="#changeLecModal"></td> -->
+					<td><input type="button" value="수강 신청" th:onclick="selectLec([[${lec.lecNo}]]);"></td>
+
+				</tr>
+			</tbody>   
+		</table>
+	</div>
+	
+	
+	
+</div>
+
+</html>
