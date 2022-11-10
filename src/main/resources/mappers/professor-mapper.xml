@@ -229,7 +229,7 @@
 	
 		<!-- 등록된 강의 수강신청시 조회  -->
 	<select id="selectLecLIstEnroll"  resultMap="lecture">
-	       SELECT
+ SELECT
 			L.LEC_NO
 			, LEC_NAME
 			, LEC_SCORE
@@ -248,20 +248,43 @@
 							  FROM LECTURE_TIME WHERE LEC_NO = L.LEC_NO ) AS LAST_TIME
 			, MAX_NUM 
 			, NOW_NUM 
-			, SEM_NO
+			, (SELECT SEM_NAME
+		        FROM SEMESTER
+		        WHERE SEM_NO = L.SEM_NO) AS SEM_NO
 			, PDF_NO
 			, ORIGIN_PDF_NAME
 			, ATTACHED_PDF_NAME
+			, CASE 
+                WHEN MAX_NUM - NOW_NUM > 0 THEN 'Y'
+                ELSE 'N' END AS LEC_STATUS
 		FROM LECTURE L, LECTURE_PDF LP, LECTURE_TIME LT
 		WHERE  L.LEC_NO = LP.LEC_NO AND L.LEC_NO = LT.LEC_NO
-		ORDER BY LEC_NO DESC
+	<!-- 	AND COLL_NO = #{}
+		AND DEPT_NO = #{}
+	 -->
+	 	ORDER BY LEC_NO DESC
 	</select>
 
+	<!-- 수강신청 클릭 -->
+	<insert id="insertEnroll">
+		INSERT INTO ENROLLMENT (
+		ENROLLMENT_NO
+		, LEC_NO
+		, STU_NO
+		) VALUES (
+		(SELECT 'ENROLLMENT_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ENROLLMENT_NO, 12))),0)+1,3,0) FROM ENROLLMENT)
+	, #{lecNo}
+	, 'STU_001'
+	)
+	</insert>
 
+	<!-- 수강 참여 인원 증가  -->
+	<update id="updateNowNum">
+	 UPDATE LECTURE 
+	 SET NOW_NUM = NOW_NUM+1 WHERE LEC_NO = #{lecNo}
+	</update>
 
-
-
-
+	<!--  -->
 
 
 

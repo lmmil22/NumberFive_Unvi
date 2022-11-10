@@ -25,6 +25,7 @@ import kh.study.NF.config.UploadFileUtil;
 import kh.study.NF.dept.service.DeptService;
 import kh.study.NF.dept.vo.DeptVO;
 import kh.study.NF.professor.service.ProfessorService;
+import kh.study.NF.professor.vo.EnrollmentVO;
 import kh.study.NF.professor.vo.LecturePdfVO;
 import kh.study.NF.professor.vo.LectureTimeVO;
 import kh.study.NF.professor.vo.LectureVO;
@@ -201,6 +202,18 @@ public class ProfessorController {
 		
 		return "content/professor/enrollClassList";
 		
+	}
+	
+	@ResponseBody
+	@PostMapping("/insertEnrollAjax")
+	public void insertEnrollAjax(EnrollmentVO enrollmentVO , String lecNo) {
+		
+		
+		
+		professorService.insertEnroll(enrollmentVO, lecNo);
+		
+		
+		//return "";
 	}
 	
 	

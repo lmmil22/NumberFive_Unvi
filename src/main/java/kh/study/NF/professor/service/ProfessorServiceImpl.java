@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kh.study.NF.emp.vo.EmpVO;
+import kh.study.NF.professor.vo.EnrollmentVO;
 import kh.study.NF.professor.vo.LecturePdfVO;
 import kh.study.NF.professor.vo.LectureTimeVO;
 import kh.study.NF.professor.vo.LectureVO;
@@ -68,14 +69,23 @@ public class ProfessorServiceImpl implements ProfessorService{
 		sqlSession.delete("professorMapper.deleteLec" ,lecNo);
 		
 	}
+	
 	@Override
 	public LecturePdfVO selectLecPdf(String lecNo) {
 		return sqlSession.selectOne("professorMapper.selectLecPdf",lecNo);
 	}
-	
+	//수강신청 강의 리스트 조회시
 	@Override
 	public List<LectureVO> selectLecLIstEnroll() {
 		return sqlSession.selectList("professorMapper.selectLecLIstEnroll");
+	}
+	
+	//수강 신청
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void insertEnroll(EnrollmentVO enrollmentVO , String lecNo) {
+		sqlSession.insert("professorMapper.insertEnroll", enrollmentVO);
+		sqlSession.update("professorMapper.updateNowNum" , lecNo);
 	}
 	
 	

@@ -11,8 +11,16 @@
 <div layout:fragment="content" > 
 	
 	<div>강의 리스트 </div>
-	
 	<div>
+		<select>
+		<option>1</option>
+		</select>
+		<select>
+		<option>2</option>
+		</select>
+		
+		<span> <input type="text" >  </span>
+		<span> <input type="submit" value="검색" >  </span>
 	</div>
 	
 	<div id="table_box_bootstrap" style="text-align: center;">
@@ -29,6 +37,7 @@
 					<th scope="col">최대인원</th>
 					<th scope="col">현재인원</th>
 					<th scope="col">수강 신청</th>
+					<th scope="col">수강 학기</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -45,15 +54,24 @@
 					<td th:text="${lec.lectureTimeVO.lastTime}"></td>
 					<td th:text="${lec.maxNum}"></td>
 					<td th:text="${lec.nowNum}"></td>
+					<td th:text="${lec.semNo}"></td>
 					
 					<!-- <td><input type="button" value="강의 상태 수정"	data-bs-toggle="modal"  data-bs-target="#changeLecModal"></td> -->
-					<td><input type="button" value="수강 신청" th:onclick="selectLec([[${lec.lecNo}]]);"></td>
+					<!-- <td><input class="btn btn-primary disabled" type="button" value="수강 신청" th:onclick="selectLecEnroll([[${lec.lecNo}]]);"></td> -->
+					<td>
+						<input class="btn btn-primary" th:classappend="${lec.lecStatus eq 'N' ? 'disabled' : ''}" 
+							type="button" value="수강 신청" th:onclick="selectLecEnroll([[${lec.lecNo}]]);">
+					</td>
 
 				</tr>
 			</tbody>   
 		</table>
 	</div>
 	
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script th:src="@{/js/paginator.js}"></script>
+
+	<script th:src="@{/js/professor/enrollClassList.js}"></script>
 	
 	
 </div>
