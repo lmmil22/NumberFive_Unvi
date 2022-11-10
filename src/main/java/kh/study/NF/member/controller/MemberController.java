@@ -35,7 +35,7 @@ public class MemberController {
 	@PostMapping("/loginProcess")
 	public String loginProcess(HttpSession session, MemberVO memberVO) {
 		//로그인 쿼리 실행
-		MemberVO loginInfo = memberService.findPw(memberVO);
+		MemberVO loginInfo = memberService.login(memberVO);
 		System.out.println("로그인하러 넘어왔다");
 		
 		if (loginInfo != null) { // by 유 :로그인 성공시, 첫홈화면에서 본인의 학사정보시스템 페이지로 넘어갑니다.
@@ -49,6 +49,16 @@ public class MemberController {
 		}
 		return "content/common/afterLogin"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
 	}
+	
+	///-------------------------------------------------------------------------------------------///	
+	//로그아웃
+	@GetMapping("/logout")//get메소드사용해야 에러가 안난다
+	public String logout(HttpSession session ) {
+		session.removeAttribute("loginInfo");
+		
+		return "redirect:/member/homeLogin";
+	}
+
 	
 	///-------------------------------------------------------------------------------------------///	
 	
@@ -67,6 +77,7 @@ public class MemberController {
 	}
 	
 	// ajax로 이메일 임시비밀번호 발급 후 이동 페이지 
+	// 이전 shop에서 ajaxlogin 메소드 가져온것임.
 	@GetMapping("/afterLogin")
 	public String afterLogin(boolean isLoginFail, Model model) {
 		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
@@ -74,5 +85,12 @@ public class MemberController {
 		model.addAttribute("isLoginFail",isLoginFail);
 		
 		return "content/common/afterLogin";
+	}
+	///-------------------------------------------------------------------------------------------///	
+	// 나의 정보관리 클릭시,
+	@GetMapping("/myinfo")
+	public String myinfo(MemberVO memberVO) {
+		//아직 아무것도...없다..세션?시큐리티? 고민중
+		return "content/common/my_info";
 	}
 }

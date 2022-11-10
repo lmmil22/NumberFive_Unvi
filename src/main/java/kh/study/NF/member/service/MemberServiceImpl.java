@@ -24,7 +24,7 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectList("memberMapper.selectMemberList");
 	}
 	
-	//상세조회
+	//회원정보 상세조회
 	@Override
 	public MemberVO selectMemberDetail(String memNo) {
 		return sqlSession.selectOne("memberMapper.selectMemberDetail",memNo);
