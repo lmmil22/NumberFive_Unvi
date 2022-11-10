@@ -6,13 +6,17 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>[NFU]복학/휴학신청 현황</title>
 </head>
 <!--by.수경 학생의 복학, 휴학 신청에 대한 관리자 페이지
 라디오/체크박스 기능으로 처리 가능하도록 구현  -->
 
 <body>
 <div layout:fragment ="content">
+<th:block layout:fragment ="css">
+	<link rel ="stylesheet" th:href="@{/css/applyModal.css}">
+</th:block>
+
 	<div class="row justify-content-center">
 		<div class="col text-center">
 			<H5>복학신청 현황</H5>
@@ -24,39 +28,43 @@
 				   <tr>
 				   	  <th><input type="checkbox" id="allcheck1"></th>
 					  <th>No</th>
+					  <th>학 번</th>
 					  <th>전공대학</th>
 					  <th>전공학과</th>
 					  <th>신청일</th>
-					  <th>승인일</th>
 					  <th>승인여부</th>
+					  <th>처리일</th>
 				    </tr>
-				    <th:block th:if="${applyCodeMap['comeback'] ==0}">
-					    <tr>
-					      <td colspan="7">
-					      	<span>접수된 내역이 없습니다.</span>
-					      </td>
-					    </tr>  
+				    <th:block th:if="${#lists.size(comebackList) == 0}">
+				    <tr>
+				      <td colspan="8">
+				      	<span>접수된 내역이 없습니다.</span>
+				      </td>
+				    </tr>  
 					</th:block>
-				    <th:block th:unless="${applyCodeMap['comeback'] == 0}">
-						<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq 'comeback'}">
-					      <td><input type="checkbox" id="check1"></td>
-					      <td th:text="${status.count}"></td>
-					      <td th:text="${applyInfo.fromColl}"></td>
-					      <td th:text="${applyInfo.fromDept}"></td>
-					      <td th:text="${applyInfo.applyDate}"></td>
-					      <td th:text="${applyInfo.approvalDate}"></td>
-					      <td>
-					      	<span>
-					      		<input type="radio" th:name="|processStatus_${status.count}|" value="waiting" 
-					      		th:checked="${applyInfo.processStatus eq 'waiting'}" th:onclick="returnStatus();"> 
-					      		<label class="form-check-label" for="flexRadioDefault1">승인대기</label>
-					      		<input type="radio" th:name="|processStatus_${status.count}|" value="accept" 
-					      		th:checked="${applyInfo.processStatus eq 'accept'}" th:onclick="returnStatus();"> 
-					      		<label class="form-check-label" for="flexRadioDefault1">승인완료</label>
-				      		</span>
-					      </td>
-						</tr>
+					
+					<th:block th:if="${#lists.size(comebackList) != 0}">
+					<tr th:each="comeback, status :${comebackList}">
+				      <td><input type="checkbox" id="check2"></td>
+			          <td th:text="${#lists.size(comebackList) - status.index}"></td>
+				      <td th:text="${comeback.stuNo}" th:onclick="stuInfo([[${comeback.stuNo}]])"></td>
+				      <td th:text="${comeback.fromColl}"></td>
+				      <td th:text="${comeback.fromDept}"></td>
+				      <td th:text="${comeback.applyDate}"></td>
+				      <td>
+				      	<span>
+				      		<input class="form-check-input" type="radio" name="processStatus" 
+				      		value="waiting" th:checked="${comeback.processStatus eq 'waiting'}"> 
+				      		<label class="form-check-label" for="flexRadioDefault1">승인대기 </label>
+				      		<input class="form-check-input" type="radio" name="processStatus" 
+				      		value="accept" th:checked="${comeback.processStatus eq 'accept'}"> 
+				      		<label class="form-check-label" for="flexRadioDefault1">승인완료 </label>
+				      	</span>
+				      </td>
+					  <td th:text="${applyInfo.approvalDate}"></td>
+					</tr>
 					</th:block>
+				   
 				</table>
 				<div class="row">
 					<div class="col"><input type="button" value="일괄승인"></div>
@@ -73,40 +81,40 @@
 				   <tr>
 					  <th><input type="checkbox" id="allcheck2"></th>				   	
 					  <th>No</th>
+					  <th>학 번</th>
 					  <th>전공대학</th>
 					  <th>전공학과</th>
 					  <th>신청일</th>
-					  <th>승인일</th>
 					  <th>승인여부</th>
+					  <th>처리일</th>
 				    </tr>
-					
-					<th:block th:if="${applyCodeMap['takeOff']== 0}">
-				    <tr>
-				      <td colspan="7">
-				      	<span>접수된 내역이 없습니다.</span>
-				      </td>
-				    </tr>  
+				     <th:block th:if="${#lists.size(takeOffList) == 0}">
+					    <tr>
+					      <td colspan="8">
+					      	<span>접수된 내역이 없습니다.</span>
+					      </td>
+					    </tr>  
 					</th:block>
-					
-					<th:block th:unless ="${applyCodeMap['takeOff'] == 0}">
-					<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq 'takeOff'}">
-				      <td><input type="checkbox" id="check2"></td>
-				      <td th:text="${status.count}"></td>
-				      <td th:text="${applyInfo.fromColl}"></td>
-				      <td th:text="${applyInfo.fromDept}"></td>
-				      <td th:text="${applyInfo.applyDate}"></td>
-				      <td th:text="${applyInfo.approvalDate}"></td>
-				      <td>
-				      	<span>
-				      		<input class="form-check-input" type="radio" name="processStatus" 
-				      		value="waiting" th:checked="${applyInfo.processStatus eq 'waiting'}"> 
-				      		<label class="form-check-label" for="flexRadioDefault1">승인대기 </label>
-				      		<input class="form-check-input" type="radio" name="processStatus" 
-				      		value="accept" th:checked="${applyInfo.processStatus eq 'accept'}"> 
-				      		<label class="form-check-label" for="flexRadioDefault1">승인완료 </label>
-				      	</span>
-				      </td>
-					</tr>
+				    <th:block th:if="${#lists.size(takeOffList) != 0}">
+						<tr th:each="takeOff, status :${takeOffList}">
+					      <td><input type="checkbox" id="check1"></td>
+					      <td th:text="${#lists.size(takeOffList) - status.index}"></td>
+					      <td th:text="${takeOff.stuNo}" th:onclick="stuInfo([[${takeOff.stuNo}]])" data-bs-toggle="modal" data-bs-target="#stuInfoModal"></td>
+					      <td th:text="${takeOff.fromColl}"></td>
+					      <td th:text="${takeOff.fromDept}"></td>
+					      <td th:text="${takeOff.applyDate}"></td>
+					      <td>
+					      	<span>
+					      		<input type="radio" th:name="|processStatus_${status.count}|" value="waiting" 
+					      		th:checked="${takeOff.processStatus eq 'waiting'}" th:onclick="returnStatus();"> 
+					      		<label class="form-check-label" for="flexRadioDefault1">승인대기</label>
+					      		<input type="radio" th:name="|processStatus_${status.count}|" value="accept" 
+					      		th:checked="${takeOff.processStatus eq 'accept'}" th:onclick="returnStatus();"> 
+					      		<label class="form-check-label" for="flexRadioDefault1">승인완료</label>
+				      		</span>
+					      </td>
+					       <td th:text="${takeOff.approvalDate}"></td>
+						</tr>
 					</th:block>
 				</table>
 				<div class="row">
@@ -115,7 +123,79 @@
 			</div>		
 		</div>		
 	</div>		
-   
+	
+	
+	
+	<!-- 휴학 신청 현황에서 학번 클릭 시 뜨는 모달 창 -->
+	<div class="modal fade" id="stuInfoModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title" >학생정보</h4>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+			<div class="row">
+				<div class="col-12">
+					<table class="table">
+						<tr>
+							<th>이름</th>  
+						    <td>
+						    	<div id="stuInfoModal_name"></div>
+						    </td>  
+						    <th>학 번</th>  
+					        <td>
+					        	<div id="stuInfoModal_no"></div>
+					        </td>  
+					        <th>학년</th>  
+					        <td>
+					        	<div id="stuInfoModal_grade"></div>
+					        </td>
+						</tr>
+						<tr>  
+					  	    <th>전공대학</th>   
+						    <td>
+						    	<div id="stuInfoModal_coll"></div>
+						    </td>  
+					   	    <th>전공학과</th>   
+					   	    <td>
+					   	    	<div id="stuInfoModal_dept"></div>
+					   	    </td>  
+					  	    <th>복수전공</th>   
+					        <td>
+					        	<div id="stuInfoModal_doubleDept"></div>
+					        </td>  
+						</tr>  
+						<tr>   
+					        <th>성별</th>   
+					        <td>
+					        	<div id="stuInfoModal_gender"></div>
+					        </td>   
+					        <th>생년월일</th>   
+					        <td>
+					        	<div id="stuInfoModal_birth"></div>
+					        </td>   
+					        <th>학적상태</th>   
+					        <td>
+					        	<div id="stuInfoModal_status"></div>
+					        </td>   
+						</tr>  
+					</table>
+				</div>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >확인</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+	
+		
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>	
+<script type="text/javascript" th:src="@{/js/deptManage/takeOffReturnUniv.js}"></script>	 
 </div>
 
 

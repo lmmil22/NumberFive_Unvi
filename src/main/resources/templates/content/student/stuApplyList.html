@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>[NFU]휴학, 복학, 전과, 복수전공 신청현황</title>
 </head>
 <body>
 
@@ -29,7 +29,7 @@
 					  <th>승인여부</th>
 				    </tr>
 					
-					<th:block th:if="${applyCodeMap['takeOff']== 0}">
+					<th:block th:if="${#lists.size(takeOffList) == 0}">
 					    <tr>
 					      <td colspan="6">
 					      	<span>신청한 내역이 없습니다.</span>
@@ -37,14 +37,14 @@
 					    </tr>  
 					</th:block>
 					
-					<th:block th:unless ="${applyCodeMap['takeOff'] == 0}">
-						<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq 'takeOff'}">
-					      <td th:text="${status.count}"></td>
-					      <td th:text="${applyInfo.fromColl}"></td>
-					      <td th:text="${applyInfo.fromDept}"></td>
-					      <td th:text="${applyInfo.applyDate}"></td>
-					      <td th:text="${applyInfo.approvalDate}"></td>
-					      <td th:text="${applyInfo.processStatus}"></td>
+					<th:block th:if="${#lists.size(takeOffList) != 0}">
+						<tr th:each="takeOff, status :${takeOffList}">
+					      <td th:text="${#lists.size(takeOffList) - status.index}"></td>
+					      <td th:text="${takeOff.fromColl}"></td>
+					      <td th:text="${takeOff.fromDept}"></td>
+					      <td th:text="${takeOff.applyDate}"></td>
+					      <td th:text="${takeOff.approvalDate}"></td>
+					      <td th:text="${takeOff.processStatus}"></td>
 						</tr>
 					</th:block>
 				</table>
@@ -66,7 +66,7 @@
 					  <th>승인일</th>
 					  <th>승인여부</th>
 				    </tr>
-				    <th:block th:if="${applyCodeMap['comeback'] ==0}">
+				    <th:block th:if="${#lists.size(comebackList) == 0}">
 					    <tr>
 					      <td colspan="6">
 					      	<span>신청한 내역이 없습니다.</span>
@@ -74,14 +74,14 @@
 					    </tr>  
 					</th:block>
 				    
-				    <th:block th:unless="${applyCodeMap['comeback'] == 0}">
-					<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq 'comeback'}">
-				      <td th:text="${status.count}"></td>
-				      <td th:text="${applyInfo.fromColl}"></td>
-				      <td th:text="${applyInfo.fromDept}"></td>
-				      <td th:text="${applyInfo.applyDate}"></td>
-				      <td th:text="${applyInfo.approvalDate}"></td>
-				      <td th:text="${applyInfo.processStatus}"></td>
+				     <th:block th:if="${#lists.size(comebackList) != 0}">
+					<tr th:each="comeback, status :${comebackList}">
+				      <td th:text="${#lists.size(comebackList) - status.index}"></td>
+				      <td th:text="${comeback.fromColl}"></td>
+				      <td th:text="${comeback.fromDept}"></td>
+				      <td th:text="${comeback.applyDate}"></td>
+				      <td th:text="${comeback.approvalDate}"></td>
+				      <td th:text="${comeback.processStatus}"></td>
 					</tr>
 					</th:block>
 				</table>
@@ -104,23 +104,23 @@
 					  <th>승인여부</th>
 				    </tr>
 				   
-				    <th:block th:if="${applyCodeMap['changeMajor'] == 0}">
+				    <th:block th:if="${#lists.size(changeMajorList) == 0}">
 					    <tr>
 					      <td colspan="8">
 					      	<span>신청한 내역이 없습니다.</span>
 					      </td>
 					    </tr>  
 					</th:block>
-					<th:block th:unless="${applyCodeMap['changeMajor'] ==0 }">
-						<tr th:each="applyInfo, status :${applyList}" th:if="${applyInfo.applyCode eq 'changeMajor'}">
-					      <td th:text="${status.count}"></td>
-					      <td th:text="${applyInfo.fromColl}"></td>
-					      <td th:text="${applyInfo.fromDept}"></td>
-					      <td th:text="${applyInfo.toColl}"></td>
-					      <td th:text="${applyInfo.toDept}"></td>
-					      <td th:text="${applyInfo.applyDate}"></td>
-					      <td th:text="${applyInfo.approvalDate}"></td>
-					      <td th:text="${applyInfo.processStatus}"></td>
+					 <th:block th:if="${#lists.size(changeMajorList) != 0}">
+						<tr th:each="changeMajor, status :${changeMajorList}">
+					      <td th:text="${#lists.size(changeMajorList) - status.index}"></td>
+					      <td th:text="${changeMajor.fromColl}"></td>
+					      <td th:text="${changeMajor.fromDept}"></td>
+					      <td th:text="${changeMajor.toColl}"></td>
+					      <td th:text="${changeMajor.toDept}"></td>
+					      <td th:text="${changeMajor.applyDate}"></td>
+					      <td th:text="${changeMajor.approvalDate}"></td>
+					      <td th:text="${changeMajor.processStatus}"></td>
 						</tr>
 					</th:block>
 				</table>
@@ -145,7 +145,7 @@
 					  <th>승인여부</th>
 				    </tr>
 			
-				 <th:block th:if="${applyCodeMap['doubleMajor'] == 0}">
+				<th:block th:if="${#lists.size(doubleMajorList) == 0}">
 				    <tr>
 				      <td colspan="8">
 				      	<span>신청한 내역이 없습니다.</span>
@@ -153,16 +153,16 @@
 				    </tr>  
 				</th:block>
 				
-				<th:block th:if="${applyCodeMap['doubleMajor'] != 0}">
-					<tr th:each="applyInfo, status : ${applyList}" th:if="${applyInfo.applyCode eq 'doubleMajor'}">
-				      <td th:text="${status.count}"></td>
-				      <td th:text="${applyInfo.fromColl}"></td>
-				      <td th:text="${applyInfo.fromDept}"></td>
-				      <td th:text="${applyInfo.doubleMajorColl}"></td>
-				      <td th:text="${applyInfo.doubleMajorDept}"></td>
-				      <td th:text="${applyInfo.applyDate}"></td>
-				      <td th:text="${applyInfo.approvalDate}"></td>
-				      <td th:text="${applyInfo.processStatus}"></td>
+				<th:block th:if="${#lists.size(doubleMajorList) != 0}">
+					<tr th:each="doubleMajor, status : ${doubleMajorList}">
+				      <td th:text="${#lists.size(doubleMajorList) - status.index}"></td>
+				      <td th:text="${doubleMajor.fromColl}"></td>
+				      <td th:text="${doubleMajor.fromDept}"></td>
+				      <td th:text="${doubleMajor.doubleMajorColl}"></td>
+				      <td th:text="${doubleMajor.doubleMajorDept}"></td>
+				      <td th:text="${doubleMajor.applyDate}"></td>
+				      <td th:text="${doubleMajor.approvalDate}"></td>
+				      <td th:text="${doubleMajor.processStatus}"></td>
 					</tr>
 				</th:block>
 			</table>

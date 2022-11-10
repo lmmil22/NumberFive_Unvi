@@ -17,9 +17,9 @@ public class StudentServiceImpl implements StudentService {
 	
 	//by수경 휴학/복학/전과신청 시 학생정보 나타내는 테이블 데이터
 	@Override
-	public StudentVO studentInfo() {
+	public StudentVO studentInfo(String stuNo) {
 		
-		return sqlSession.selectOne("studentMapper.studentInfo");
+		return sqlSession.selectOne("studentMapper.studentInfo",stuNo);
 	}
 	
 	//by수경 학생이 복학신청 접수 
@@ -58,9 +58,9 @@ public class StudentServiceImpl implements StudentService {
 	//by수경 전공대학 전공학과 선택 시 재학중인 학과 제외
 	//추후 매개변수 DeptVO deptVO
 	@Override
-	public List<DeptVO> DeptList(String collNo) {
+	public List<DeptVO> DeptList(DeptVO deptVO) {
 		
-		return sqlSession.selectList("studentMapper.DeptList", collNo);
+		return sqlSession.selectList("studentMapper.DeptList",deptVO);
 	}
 
 

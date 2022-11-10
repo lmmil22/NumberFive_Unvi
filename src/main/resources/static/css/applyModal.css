@@ -1,0 +1,18 @@
+@charset "UTF-8";
+@charset "UTF-8";
+/*by수경 모달창 사용을 위해 만든 페이지 */
+
+.modal.fade {
+  text-align: center;
+}
+
+.modal-content {
+  width: 800px;
+  min-height: 200px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+ 

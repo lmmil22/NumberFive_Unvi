@@ -13,5 +13,7 @@ public class DeptVO {
 	private String deptNo; 
 	private String deptName;
 	private String collNo;
-		
+	
+	//by수경 학과 선택 시 재학중인 학과 제외하기 위해 추가
+	private String stuNo;
 }

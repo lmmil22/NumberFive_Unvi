@@ -1,5 +1,6 @@
 package kh.study.NF.student.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,9 +34,9 @@ public class StudentController {
 	
 	//by수경 학생이 전공학과를 변경(전과)하는 페이지로 이동 메소드
 	@GetMapping("/changeMajor")
-	public String changeMajor(Model model, DeptManageVO deptManageVO) {
+	public String changeMajor(Model model, DeptManageVO deptManageVO, String stuNo) {
 		//by수경 학생정보 쿼리문
-		model.addAttribute("stuInfo", studentService.studentInfo());
+		model.addAttribute("stuInfo", studentService.studentInfo(stuNo));
 		
 		//by수경 변경할 전공대학, 전공학과 선택 쿼리문
 		 model.addAttribute("deptList",deptService.selectDeptList());
@@ -46,9 +47,9 @@ public class StudentController {
 	
 	//by수경 학생이 전공학과를 변경(전과)하는 페이지로 이동 메소드
 	@GetMapping("/addMajor")
-	public String addMajor(Model model, DeptManageVO deptManageVO) {
+	public String addMajor(Model model, DeptManageVO deptManageVO, String stuNo) {
 		//by수경 학생정보 쿼리문
-		model.addAttribute("stuInfo", studentService.studentInfo());
+		model.addAttribute("stuInfo", studentService.studentInfo(stuNo));
 		
 		//by수경 변경할 전공대학, 전공학과 선택 쿼리문
 		model.addAttribute("deptList",deptService.selectDeptList());
@@ -61,24 +62,24 @@ public class StudentController {
 	//추후 매개변수 DeptVO deptVO(collNo, stuNo)
 	@ResponseBody
 	@PostMapping("/getMajorAjax")
-	public List<DeptVO> getMajorAjax(String collNo) {
+	public List<DeptVO> getMajorAjax(DeptVO deptVO) {
 		
-		return studentService.DeptList(collNo);
+		return studentService.DeptList(deptVO);
 	}
 	
 	//by수경 학생이 학교를 휴학신청하는 페이지로 이동
 	@GetMapping("/takeOffUniv")
-	public String takeOffUniv(Model model, DeptManageVO deptManageVO) {
+	public String takeOffUniv(Model model, DeptManageVO deptManageVO, String stuNo) {
 		//by수경 학생정보 쿼리문
-		model.addAttribute("stuInfo", studentService.studentInfo());
+		model.addAttribute("stuInfo", studentService.studentInfo(stuNo));
 		return  "content/student/takeOffUniv";
 	}
 	
 	//by수경 학생이 학교를 복학신청하는 페이지로 이동
 	@GetMapping("/returnUniv")
-	public String returnUniv(Model model, DeptManageVO deptManageVO) {
+	public String returnUniv(Model model, DeptManageVO deptManageVO, String stuNo) {
 		//by수경 학생정보 쿼리문
-		model.addAttribute("stuInfo", studentService.studentInfo());
+		model.addAttribute("stuInfo", studentService.studentInfo(stuNo));
 		
 		return  "content/student/returnUniv";
 	}
@@ -137,39 +138,54 @@ public class StudentController {
 		
 		//신청 내역 목록
 		List<DeptManageVO> applyList =  studentService.stuApplyList(stuNo);
-		
-		model.addAttribute("applyList", applyList);
-		
+
 		//by수경 신청 분류별 개수 구하기
-		int changeMajor = 0, takeOff = 0, comeback = 0 , addMajor = 0;
+		int changeMajor = 0, takeOff = 0, comeback = 0, doubleMajor = 0;
+		
+		//전과 목록 담을 리스트
+		List<DeptManageVO> changeMajorList = new ArrayList<>();
+		//휴학 목록 담을 리스트
+		List<DeptManageVO> takeOffList = new ArrayList<>();
+		//복학 목록을 담을 리스트
+		List<DeptManageVO> comebackList = new ArrayList<>();
+		//복수전공 목록을 담을 리스트
+		List<DeptManageVO> doubleMajorList = new ArrayList<>();
 		
 		for(DeptManageVO applyInfo : applyList) {
 			//전과
 			if(applyInfo.getApplyCode().equals(ApplyCode.changeMajor.toString()) ) {
+				//전과 데이터 수 
 				changeMajor++;
+				//전과 목록 데이터 담기
+				changeMajorList.add(applyInfo);
 			}
 			//휴학
 			else if(applyInfo.getApplyCode().equals(ApplyCode.takeOff.toString()) ) {
-				takeOff++;			
+				//휴학 데이터 수 
+				takeOff++;		
+				//휴학 목록 데이터 담기
+				takeOffList.add(applyInfo);
 			}
 			//복학
 			else if(applyInfo.getApplyCode().equals(ApplyCode.comeback.toString()) ) {
+				//복학 데이터 수
 				comeback++;
+				//복학 목록 데이터 담기
+				comebackList.add(applyInfo);
 			}
-			//복전
+			//복수전공
 			else if(applyInfo.getApplyCode().equals(ApplyCode.doubleMajor.toString()) ) {
-				addMajor++;
+				//복수전공 데이터 수 
+				doubleMajor++;
+				//복수전공 목록 데이터 담기
+				doubleMajorList.add(applyInfo);
 			}
 		}
-		
-		//map으로 데이터 담아서 html로 넘기기
-		Map<String, Integer> applyCodeMap = new HashMap<>();
-		applyCodeMap.put("changeMajor", changeMajor);
-		applyCodeMap.put("takeOff", takeOff);
-		applyCodeMap.put("comeback", comeback);
-		applyCodeMap.put("doubleMajor", addMajor);
-		
-		model.addAttribute("applyCodeMap", applyCodeMap);
+		//html로 데이터 보내기
+		model.addAttribute("changeMajorList", changeMajorList);
+		model.addAttribute("takeOffList", takeOffList);
+		model.addAttribute("comebackList", comebackList);
+		model.addAttribute("doubleMajorList", doubleMajorList);
 		
 		return  "content/student/stuApplyList";
 	}

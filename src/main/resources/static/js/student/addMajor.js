@@ -4,14 +4,14 @@
 function changeColl(){
 	
 	const collNo = document.querySelector('select').value;
-	//by수경 제외하기 위해서 매개변수로 stuNo 필요 
-	//const stuNo = document.querySelector('#stuNo');
+	//by수경 재학중인 학과 제외하기 위해서 매개변수로 stuNo 필요 
+	const stuNo = document.querySelector('#stuNo').value;
 	
 	$.ajax({
 	   url: '/stu/getMajorAjax', //요청경로
 	    type: 'post',
 	    // 추후 stuNo 추가하기
-	    data: {'collNo':collNo}, //필요한 데이터
+	    data: {'collNo':collNo, 'stuNo':stuNo}, //필요한 데이터
 	    success: function(result) {
 	   		//by수경 학과 select박스 선택
 	   		const deptSelect = document.querySelector('.deptList');
