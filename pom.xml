@@ -74,22 +74,25 @@
 		    <artifactId>thymeleaf-layout-dialect</artifactId>
 		    <version>3.1.0</version>
 		</dependency>
-		
-		  
-		<!-- <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency> -->
+				
+		<!--  validation처리 추가 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
-		<!-- <dependency> 시큐리티는 우선 주석처리 -지아
+
+		<!-- by 유빈 : 시큐리티 추가  -->		  
+		 <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency> 
+		 <dependency> <!-- 시큐리티는 우선 주석처리 -지아 -->
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		html에서 시큐리티 정보를 가져올 수 있는 태그를 사용
+		
+		<!-- html에서 시큐리티 정보를 가져올 수 있는 태그를 사용 2개 -->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-taglibs</artifactId>
@@ -99,7 +102,7 @@
 		    <groupId>org.thymeleaf.extras</groupId>
 		    <artifactId>thymeleaf-extras-springsecurity5</artifactId>
 		    <version>3.0.4.RELEASE</version>
-		</dependency> -->
+		</dependency> 
 		
 		<!-- by 유빈 : 메일 기능 추가  -->
 		<dependency>
@@ -112,7 +115,6 @@
 		    <artifactId>commons-email</artifactId>
 		    <version>1.5</version>
 		</dependency>
-		
 	</dependencies>
 
 	<build>

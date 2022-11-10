@@ -35,4 +35,9 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVO findPw(MemberVO memberVO) {
 		return sqlSession.selectOne("memberMapper.findPw",memberVO);
 	}
+	//회원가입
+	@Override
+	public void join(MemberVO memberVO) {
+		 sqlSession.insert("memberMapper.join", memberVO);
+	}
 }

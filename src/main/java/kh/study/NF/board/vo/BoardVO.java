@@ -1,5 +1,34 @@
 package kh.study.NF.board.vo;
 
-public class BoardVO {
+import groovy.transform.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+@ToString
+public class BoardVO {
+//디비 실제 컬럼명	
+//	BOARD_NO
+//	BOARD_TITLE
+//	BOARD_CONTENT
+//	BOARD_WRITER
+//	BOARD_CREATE_DATE
+//	BOARD_READ_CNT
+//	CATE_NO
+//	REPLY_CNT
+//	IS_SECRERT
+//	IS_NOTICE
+	
+	private String boardNo;
+	private String boardTitle;
+	private String boardContent;
+	private String boardWriter;
+	private String boardCreateDate;
+	private int boardReadCnt;
+	private String cateNo;
+	private int replyCnt;
+	private String isSecrert;
+	private String isNotice;
+	
 }

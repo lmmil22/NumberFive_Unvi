@@ -5,6 +5,8 @@ import java.util.List;
 import kh.study.NF.member.vo.MemberVO;
 //by 유빈
 public interface MemberService {
+	//회원가입
+	void join(MemberVO memberVO);
 	//로그인
 	MemberVO login(MemberVO memberVO);
 	

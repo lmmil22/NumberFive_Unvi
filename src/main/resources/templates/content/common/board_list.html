@@ -8,6 +8,36 @@
 </th:block>
 <div layout:fragment="content">
 board_list페이지입니다.
+<table class="table table-hover ">
+  
+	<thead class="table-light">
+		<tr>
+			<td>글번호</td>
+			<td>글제목</td>
+			<td>작성일</td>
+			<td>작성자</td>
+		</tr>
+	  </thead>
+	  <tbody>
+	  <th:block th:if="${#lists.size('boardList') == 0}">
+		<tr>
+			<td colspan="4"> 게시글이 없습니다.</td>
+		</tr>
+		</th:block>
+		<!--  boardListr가져올때 홀따옴표 감싸서 가져오기 주의!!!! -->
+	  <!-- <th:block th:unless="${#lists.size('boardList') == 0}" >
+		<tr th:each="board : ${boardList}">
+			<td th:text="${board.boardNum}"></td>
+			<td>
+				<a th:href="@{/board/detail(boardNum=${board.boardNum})}" th:text="${board.title}"></a>
+			</td>
+			<td th:text="${board.createDate}"></td>
+			<td th:text="${board.memberId}"></td>
+		</tr>
+	  </th:block> -->
+	  </tbody>
+</table>	
+
 
 
 </div>
