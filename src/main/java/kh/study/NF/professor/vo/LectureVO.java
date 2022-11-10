@@ -24,7 +24,6 @@ public class LectureVO {
 	private String firstTime;
 	private String lastTime;
 	
-	
 	private LecturePdfVO lecturePdfVO;
 	private LectureTimeVO lectureTimeVO;
 	

@@ -76,8 +76,8 @@ public class ProfessorServiceImpl implements ProfessorService{
 	}
 	//수강신청 강의 리스트 조회시
 	@Override
-	public List<LectureVO> selectLecLIstEnroll() {
-		return sqlSession.selectList("professorMapper.selectLecLIstEnroll");
+	public List<LectureVO> selectLecListEnroll(EnrollmentVO enrollmentVO) {
+		return sqlSession.selectList("professorMapper.selectLecLIstEnroll", enrollmentVO);
 	}
 	
 	//수강 신청
@@ -86,6 +86,14 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public void insertEnroll(EnrollmentVO enrollmentVO , String lecNo) {
 		sqlSession.insert("professorMapper.insertEnroll", enrollmentVO);
 		sqlSession.update("professorMapper.updateNowNum" , lecNo);
+	}
+	@Override
+	public List<EnrollmentVO> selectStuLectureList(EnrollmentVO enrollmentVO) {
+		return sqlSession.selectList("professorMapper.selectStuLecture", enrollmentVO);
+	}
+	@Override
+	public List<String> selectEnrollmentLecNoList(String stuNo) {
+		return sqlSession.selectList("professorMapper.selectEnrollmentLecNoList", stuNo);
 	}
 	
 	

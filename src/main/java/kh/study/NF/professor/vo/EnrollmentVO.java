@@ -1,5 +1,7 @@
 package kh.study.NF.professor.vo;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,8 +16,9 @@ public class EnrollmentVO {
 	private String	lecNo;
 	private String	stuNo;
 	private String	semNo;
-			
-		
+	private LectureVO lectureVO;
 	
+	//이미 수강신청한 lec_no 목록 정보를 담기 위한 변수
+	List<String> emrolledList;
 	
 }

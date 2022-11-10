@@ -196,9 +196,20 @@ public class ProfessorController {
 	
 	//수강신청시 진행 
 	@GetMapping("/enrollList")
-	public String enrollList(Model model ) {
+	public String enrollList(Model model, EnrollmentVO enrollmentVO) {
+		//로그인 임시 코드, 로그인 구현 시 소스 변경 필요
+		enrollmentVO.setStuNo("STU_001");
 		
-		model.addAttribute( "lecList",professorService.selectLecLIstEnroll());
+		//이미 수강신청한 lec_no 목록 조회
+		List<String> emrolledList = professorService.selectEnrollmentLecNoList(enrollmentVO.getStuNo());
+		
+		//이미 수강신청한 lec_no 목록을 쿼리 실행시 전달
+		enrollmentVO.setEmrolledList(emrolledList);
+		
+		//수강 신청 가능한 목록 리스트
+		model.addAttribute( "lecList",professorService.selectLecListEnroll(enrollmentVO));
+		//학생이 신청한 수강목록
+		model.addAttribute( "enrollList",professorService.selectStuLectureList(enrollmentVO));
 		
 		return "content/professor/enrollClassList";
 		

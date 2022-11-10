@@ -16,6 +16,7 @@
 		 success: function(result) {
 			
 			alert('수강 신청이 완료되었습니다 ');
+			location.href = '/proF/enrollList';
 		 },
 		 error: function() {
 			 alert('실패');
@@ -25,19 +26,3 @@
 	
 } 
 
-	
-	//ajax start
-	 $.ajax({
-		 url: '/proF/lecListAjax', //요청경로
-		 type: 'post',
-		 data: {'lecNo':lecNo}, 
-		 
-		 success: function(result) {
-			
-		 },
-		 error: function() {
-			 alert('실패');
-		 }
-	 });
-	//ajax end
-	
