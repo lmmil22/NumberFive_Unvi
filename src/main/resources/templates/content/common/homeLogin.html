@@ -22,7 +22,7 @@
 		<div class="col-5">
 			<!--  로그인 폼 영역 -->
 			<div style="padding-top: 30%; padding-right: 20%">
-				<form method="post" th:action="@{/member/loginProcess}">
+				<form method="post" th:action="@{/member/afterLogin}">
 					<div class="form-floating mb-3">
 					  <input th:name="memNo" type="text" class="form-control" id="floatingInput" placeholder="학번 혹은 교직원 번호를 입력하세요">
 					  <label for="floatingInput"> 학번 / 교번 </label>
@@ -38,7 +38,7 @@
 					<div class="row mt-3 mb-2">
 						<div class="col">
 							<div align="center">
-					    		<button type="submit" class="btn btn-outline-primary"> 로그인 </button>
+					    		<button type="submit" class="btn btn-outline-primary" > 로그인 </button>
 							</div>
 						</div>
 					</div>
@@ -82,7 +82,7 @@
 	      
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" onclick="goLogin();">AjaxLogin</button>
+	        <button type="button" class="btn btn-primary" onclick="sendEmail();">임시비밀번호발급하러가기=이메일로비밀번호찾기</button>
 	      </div>
 		</form>
       </div>

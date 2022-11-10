@@ -23,7 +23,7 @@ public class BoardVO {
 	private String boardNo;
 	private String boardTitle;
 	private String boardContent;
-	private String boardWriter;
+	private String boardWriter;//작성자 학번및교번으로 함.(mem_no-member테이블) 
 	private String boardCreateDate;
 	private int boardReadCnt;
 	private String cateNo;

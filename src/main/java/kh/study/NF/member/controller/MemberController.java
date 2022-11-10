@@ -24,7 +24,6 @@ public class MemberController {
 	private MemberService memberService;
 	@Autowired
 	private PasswordEncoder encoder;
-	
 //-------------------------------------------------------------------------------------------///	
 	
 	//회원가입(shop에서 복붙 -우린아직 회원가입은 없음)
@@ -39,6 +38,7 @@ public class MemberController {
 		
 		// 위에서 불러온 암호화 객체를 사용해서 암호화한 비밀번호값 넣어 디비저장해준다.
 		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+		
 		//회원가입
 		memberService.join(memberVO);
 		
@@ -55,37 +55,6 @@ public class MemberController {
 		return "content/common/homeLogin"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
 	}
 //-------------------------------------------------------------------------------------------///	
-	
-	// 로그인 세션 이용버전 
-	// by 유빈 : 첫 홈화면에서 form태그로 실제 로그인 페이지입니다.
-	//@PostMapping("/loginProcess")
-	//public String loginProcess(HttpSession session, MemberVO memberVO) {
-//		//로그인 쿼리 실행
-//		MemberVO loginInfo = memberService.login(memberVO);
-//		System.out.println("로그인하러 넘어왔다");
-//		
-//		if (loginInfo != null) { // by 유 :로그인 성공시, 첫홈화면에서 본인의 학사정보시스템 페이지로 넘어갑니다.
-//			session.setAttribute("loginInfo", loginInfo);
-//		}
-//		else {
-//			System.out.println("로그인실패!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//			
-//			return "redirect:/member/homeLogin";// by 유 : 로그인 실패시, 다시 로그인 첫 홈화면으로 돌아갑니다.
-//
-//		}
-//		return "content/common/afterLogin"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
-//	}
-	
-//-------------------------------------------------------------------------------------------///	
-	//로그아웃
-//	@GetMapping("/logout")//get메소드사용해야 에러가 안난다
-//	public String logout(HttpSession session ) {
-//		session.removeAttribute("loginInfo");
-//		
-//		return "redirect:/member/homeLogin";
-//	}
-	
-///-------------------------------------------------------------------------------------------///	
 	
 	// 이메일로 비밀번호 찾기 (ajax.ver) -> 모달 ajax사용 (ajaxlogin이라는 버튼을 클릭시)
 	@ResponseBody //ajax사용할때(단,리턴값은 필요한 데이터만! html페이지가 아님!)
@@ -104,8 +73,19 @@ public class MemberController {
 	// ajax로 이메일 임시비밀번호 발급 후 이동 페이지 
 	// 이전 shop에서 이름만->ajaxlogin 메소드 가져온것임.
 	@GetMapping("/afterLogin")
-	public String afterLogin(boolean isLoginFail, Model model) {
+	public String afterLogin1(boolean isLoginFail, Model model) {
 		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
+		System.out.println("@@@@@@@@@@@@@@@@@@@" + isLoginFail);
+		model.addAttribute("isLoginFail",isLoginFail);
+		
+		return "content/common/afterLogin";
+	}
+	
+	//로그인
+	@PostMapping("/stuLogin")
+	public String afterLogin2(boolean isLoginFail, Model model) {
+		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
+		//false면 로그인성공-fail이면 로그인 실패
 		System.out.println("@@@@@@@@@@@@@@@@@@@" + isLoginFail);
 		model.addAttribute("isLoginFail",isLoginFail);
 		

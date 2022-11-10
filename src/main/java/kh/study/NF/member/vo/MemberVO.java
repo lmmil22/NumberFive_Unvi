@@ -12,9 +12,22 @@ import lombok.Setter;
 @Setter
 @ToString
 public class MemberVO {
+//	MEM_NO
+//	MEM_PW
+//	MEM_NAME
+//	MEM_EMAIL
+//	MEM_ADDR
+//	MEM_ADDR_DETAIL
+//	MEM_TELL
+//	MEM_IMAGE
+//	MEM_GENDER
+//	MEM_BIRTH
+//	MEM_ROLE
+
+	
 	//by수경 member table로 만든 VO
 	@NotBlank(message = "학번 및 교직원 번호는 필수입력입니다.")
-	private String memNo;
+	private String memNo;//아이디이자 학번,교번
 	
 	//  by 유빈 : 정규식 코드 사용해야한다.(복사붙여넣기)
 	// 8-16자리, 영어대소문자,특수문자포함(#은 포함시키지않음! 주의!)

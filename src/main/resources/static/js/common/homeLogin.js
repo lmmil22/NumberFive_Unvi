@@ -12,7 +12,7 @@ const login_modal = document.querySelector('#login_modal');
 //------------------------------ 함수 정의 -----------------------------------//
 
 //로그인 기능 함수(ajax로 로그인실행시 진행) 
-function goLogin(loginInfo) {
+function sendEmail(loginInfo) {
 	//[[${sessionScope.loginInfo}]] js에서 데이터가져오는 방법
 	const member_no = login_modal.querySelector('#memNo').value;
 	const member_name = login_modal.querySelector('#memName').value;

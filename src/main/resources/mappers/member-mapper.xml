@@ -17,18 +17,48 @@
 		<result column="MEM_BIRTH"			property="memBirth"/>
 		<result column="MEM_ROLE" 			property="memRole"/>
 	</resultMap>  
+	
+<!-- 회원가입 -->
+	<insert id="join">
+		INSERT INTO SHOP_MEMBER 
+				(
+					MEM_NO
+					,MEM_PW 
+					,MEM_NAME
+					,MEM_EMAIL
+					,MEM_ADDR
+					,MEM_ADDR_DETAIL
+					,MEM_TELL
+					,MEM_IMAGE
+					,MEM_GENDER
+					,MEM_BIRTH
+					,MEM_ROLE
+				)
+		VALUES (
+					#{memNo}
+					,#{memPw}
+					,#{memName}
+					,#{memEmail}
+					,#{memAddr}
+					,#{memAddrDetail}
+					,#{memTell}
+					,#{memImage}
+					,#{memGender}
+					,#{memBirth}
+					,#{memRole}
+				)
+	</insert>
 
-<!-- 로그인 -->
+<!-- 로그인 - 시큐리티 적용 버전 -->
   <select id="login" resultMap="member">
 	SELECT MEM_NO
-			,MEM_NAME
 			,MEM_ROLE
+			,MEM_PW
 	FROM  MEMBER
 	WHERE MEM_NO = #{memNo}
-	AND   MEM_PW = #{memPw}
-</select> 
+  </select> 
  
-<!-- 비밀번호 찾기 조회시 -->
+<!-- 이메일로 비밀번호 찾기 조회시 -->
   <select id="findPw" resultMap="member">
 	SELECT MEM_NO
 			,MEM_NAME
@@ -38,30 +68,30 @@
 	WHERE MEM_NO = #{memNo}
 	AND   MEM_NAME = #{memName}
 	AND   MEM_EMAIL = #{memEmail}
-</select>  
+  </select>  
 
 
 <!--  목록조회-->
-<select id="selectMemberList" resultMap="member">
-   SELECT 
-       MEM_NO
-      ,MEM_NAME
-      ,DECODE(MEM_ROLE,'STU','학생','ADMIN','교직원','PROFESSOR','교수') AS MEM_ROLE
-   FROM MEMBER
-   ORDER BY MEM_NAME
-</select> 
+	<select id="selectMemberList" resultMap="member">
+	   SELECT 
+	       MEM_NO
+	      ,MEM_NAME
+	      ,DECODE(MEM_ROLE,'STU','학생','ADMIN','교직원','PROFESSOR','교수') AS MEM_ROLE
+	   FROM MEMBER
+	   ORDER BY MEM_NAME
+	</select> 
 
 <!-- 상세조회 -->
-<select id="selectMemberDetail" resultMap="member">
-   SELECT 
-       MEM_NO
-      ,MEM_NAME
-      ,MEM_ADDR||''||MEM_ADDR_DETAIL as MEM_ADDR
-      ,MEM_EMAIL
-      ,DECODE(MEM_ROLE,'STU','학생','ADMIN','교직원','PROFESSOR','교수') AS MEM_ROLE
-   FROM MEMBER
-   WHERE MEM_NO = #{memNo}
-</select>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+	<select id="selectMemberDetail" resultMap="member">
+	   SELECT 
+	       MEM_NO
+	      ,MEM_NAME
+	      ,MEM_ADDR||''||MEM_ADDR_DETAIL as MEM_ADDR
+	      ,MEM_EMAIL
+	      ,DECODE(MEM_ROLE,'STU','학생','ADMIN','교직원','PROFESSOR','교수') AS MEM_ROLE
+	   FROM MEMBER
+	   WHERE MEM_NO = #{memNo}
+	</select>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 
 </mapper> 
 

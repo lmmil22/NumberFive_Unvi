@@ -1,28 +1,43 @@
 <!DOCTYPE html>
-<!-- by 유빈 : 홈화면에서 로그인 버튼 클릭시 이동하는 페이지 -->
-<!-- 이페이지만든 이유? 
-	로그인의 실패와 성공의 차이를 alert을 띄우고 확인 버튼을 누르면 각 페이지로 다시 이동하기위해서  -->
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/base_layout}">
-<th:block layout:fragment="css">
-	<link rel="stylesheet" >
-</th:block>
-<div layout:fragment="content">
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>로그인 확인</title>
 
-<!-- 로그인 창 성공시 실패시-->	
-<th:block th:if="${session.loginInfo == null}"> 
+</head>
+<body>
+	
+ <div sec:authorize="isAnonymous()">
 	<script type="text/javascript">
-		alert('로그인 실패!!');
-		location.href='/member/homeLogin';
+		alert('로그인 실패');
+		location.href='/member/homeLogin?isLoginFail=true';
 	</script>
-</th:block>
-<th:block th:unless="${session.loginInfo == null}"> 
-	<script type="text/javascript">
-		alert('로그인 성공!!!');
-		location.href='/mail/sendMail';
-	</script>
-</th:block>	
-<!--  -->	
 </div>
+<div sec:authorize="isAuthenticated()" >
+	<div sec:authorize="hasRole('ROLE_STUDENT')" >
+		<script type="text/javascript">
+			alert('로그인 인증 성공');
+			location.href='/member/stuLogin';
+		</script>
+	</div> 
+	<div sec:authorize="hasRole('ROLE_ADMIN')" >
+		<script type="text/javascript">
+			alert('관리자 인증 성공');
+			location.href='/admin/adminLogin';
+		</script>
+	</div>
+	<div sec:authorize="hasRole('ROLE_PROFESSOR')" >
+		<script type="text/javascript">
+			alert('교수 인증 성공');
+			location.href='/professor/professorLogin';
+		</script>
+	</div>
+</div>
+
+</body>
 </html>
+
+
+
+

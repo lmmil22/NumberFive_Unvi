@@ -39,22 +39,18 @@ public class BoardController {
 		return "content/common/board_list";
 	}
 	
-	// 글쓰러가기
+	// 글쓰러가기-양식페이지로이동
 	@GetMapping("/reg")
 	public String reg(BoardVO boardVO) {
 		return"content/board/reg_board";
 	}
-	// 글 등록
+	// 실제 글 등록
 	@PostMapping("/reg")
-	public String reg(@Valid BoardVO boardVO, BindingResult bindingResult, Model model) {
-//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX//		
-		//USER 디테일을 만들어하나??????????? 일단 주석처리함 시큐리티필요하다!!!!!!
-		//User user = (User) authentication.
-		//boardVO.setMemberId(user.getUsername());
-//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX//		
-
+	public String reg(@Valid BoardVO boardVO, BindingResult bindingResult, Model model
+						,Authentication authentication){
+		User user = (User) authentication.getPrincipal();
+		boardVO.setBoardWriter(user.getUsername());
 		boardService.insertBoard(boardVO);
-		
 		
 		// 주의! 순서중요하다. 유효성체크 먼저 한 후, 로그인정보값 boardVO에 넣어주기 !!
 		if (bindingResult.hasErrors()) {
@@ -63,13 +59,6 @@ public class BoardController {
 			//주의!!! 컨트롤러(redirect)가 아닌 html페이지로 가야 데이터가 남아있는다
 			return"content/board/reg_board";
 		}
-
-		// 작성자(memberId)는 PK이기때문에 글등록양식페이지에서 화면에 보이도록 띄워줘야함
-		// <시큐리티 사용시> 세션session 사용불가능하기 때문에 생략
-		// MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
-		
-		//boardVO.setMemberId(loginInfo.getMemberId());
-		//boardService.insertBoard(boardVO);
 		
 		return "content/board/reg_result";
 	}
