@@ -11,6 +11,8 @@ document.getElementById("table_box_bootstrap").appendChild(box);
 //강의 수정을 누르면 
 function changeLecDetail(lecNo){
 	const result = confirm('강의를 수정하시겠어요?');
+	
+	if (result){
 	//ajax start
 	 $.ajax({
 		 url: '/proF/lecListAjax', //요청경로
@@ -33,6 +35,10 @@ function changeLecDetail(lecNo){
 		 }
 	 });
 	//ajax end
+	}
+	$('#changeLecModal').modal('hide');
+	
+	
 
 }
 

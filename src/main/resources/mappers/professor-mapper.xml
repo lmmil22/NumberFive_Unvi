@@ -372,11 +372,32 @@
 		DELETE FROM ENROLLMENT
 		WHERE  STU_NO = #{stuNo} 
 		AND LEC_NO = #{lecNo}
-		
-	
-	
 	</delete>
+
+	<!-- 학생 점수 등록  -->
+<!-- 	<insert id="">
 	
+	
+	셀렉트 해와서 INSERT
+	
+	</insert>
+ -->
+	<!-- 점수등록할 학생 조회 
+	<select id="">
+	SELECT 
+	
+	
+	FROM STU S, LECTURE L , STU_GRADE G , 
+	
+
+	
+	
+	
+	
+	
+	
+	</select>
+	 -->	
 
 
 
