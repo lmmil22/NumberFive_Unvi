@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <!--BY 유빈 -->
 <mapper namespace="boardMapper">
-<resultMap type="kh.study.NF.board.vo.BoardVO" id="board">
-	<id column="BOARD_NO" property="boardNo"/>
-	<result column="BOARD_TITLE" property="boardTitle"/>
-	<result column="BOARD_CONTENT" property="boardContent"/>
-	<result column="BOARD_WRITER" property="boardWriter"/>
-	<result column="BOARD_CREATE_DATE" property="boardCreateDate"/>
-	<result column="BOARD_READ_CNT" property="boardReadCnt"/>
-	<result column="CATE_NO" property="cateNo"/>
-	<result column="REPLY_CNT" property="replyCnt"/>
-	<result column="IS_SECRERT" property="isSecrert"/>
-	<result column="IS_NOTICE" property="isNotice"/>
-</resultMap>
+	<resultMap type="kh.study.NF.board.vo.BoardVO" id="board">
+		<id column="BOARD_NO" 				property="boardNo"/>
+		<result column="BOARD_TITLE" 		property="boardTitle"/>
+		<result column="BOARD_CONTENT" 		property="boardContent"/>
+		<result column="BOARD_WRITER" 		property="boardWriter"/>
+		<result column="BOARD_CREATE_DATE"  property="boardCreateDate"/>
+		<result column="BOARD_READ_CNT"		property="boardReadCnt"/>
+		<result column="CATE_NO" 			property="cateNo"/>
+		<result column="REPLY_CNT" 			property="replyCnt"/>
+		<result column="IS_SECRERT" 		property="isSecrert"/>
+		<result column="IS_NOTICE" 			property="isNotice"/>
+		<result column="MEM_NO" 			property="memNo"/>
+	</resultMap>
 
-<!-- 글등록 -->	
-<!-- <insert id="insertBoard">
-INSERT INTO BOARD (BOARD_NO , BOARD_TITLE , BOARD_CONTENT , memberId )
-VALUES(
-	( SELECT  NVL ( MAX (BOARD_NO) , 0 ) + 1  FROM BOARD) 
-	, #{boardTitle} 
-	, #{boardContent}
-	, #{memberId}
-	)
-</insert> -->
-
-<!-- 게시글목록조회 -->
-<!-- <select id="selectBoard" resultMap="board">
-SELECT BOARD_NUM,TITLE,CONTENT,MEMBER_ID,TO_CHAR(CREATE_DATE,'YYYY-MM-DD') AS CREATE_DATE
-FROM BOARD
-ORDER BY BOARD_NUM DESC
-</select> -->
-
-<!-- 게시글 상세조회 -->
-<!-- <select id="selectDetailBoard" resultMap="board">
-SELECT BOARD_NUM,TITLE,CONTENT,MEMBER_ID,TO_CHAR(CREATE_DATE,'YYYY-MM-DD') AS CREATE_DATE
-FROM BOARD
-WHERE BOARD_NUM = #{boardNum}
-</select> -->
-
-<!-- 글수정 -->
-<!-- <update id="update" >
-UPDATE BOARD
-SET TITLE = #{title}
-	,CONTENT = #{content}
-WHERE BOARD_NUM = #{boardNum}
-</update> -->
-
-<!-- 글삭제 -->
-<!-- <delete id="delete">
-DELETE BOARD
-WHERE BOARD_NUM = #{boardNum}
-</delete> -->
+	<!-- 글등록 -->	
+	 <insert id="insertBoard">
+	INSERT INTO BOARD (BOARD_NO , BOARD_TITLE , BOARD_CONTENT , MEM_NO )
+	VALUES(
+		( SELECT  NVL ( MAX (BOARD_NO) , 0 ) + 1  FROM BOARD) 
+		, #{boardTitle} 
+		, #{boardContent}
+		, #{memNo}
+		)
+	</insert> 
+	
+	<!-- 게시글목록조회 -->
+	 <select id="selectBoard" resultMap="board">
+	SELECT BOARD_NUM,TITLE,CONTENT,MEMBER_ID,TO_CHAR(CREATE_DATE,'YYYY-MM-DD') AS CREATE_DATE
+	FROM BOARD
+	ORDER BY BOARD_NUM DESC
+	</select> 
+	
+	<!-- 게시글 상세조회 -->
+	<!--  <select id="selectDetailBoard" resultMap="board">
+	SELECT BOARD_NUM,TITLE,CONTENT,MEMBER_ID,TO_CHAR(CREATE_DATE,'YYYY-MM-DD') AS CREATE_DATE
+	FROM BOARD
+	WHERE BOARD_NUM = #{boardNum}
+	</select> -->
+	
+	<!-- 글수정 -->
+	<!--  <update id="update" >
+	UPDATE BOARD
+	SET TITLE = #{title}
+		,CONTENT = #{content}
+	WHERE BOARD_NUM = #{boardNum}
+	</update>  -->
+	
+	<!-- 글삭제 -->
+	<!--  <delete id="delete">
+	DELETE BOARD
+	WHERE BOARD_NUM = #{boardNum}
+	</delete>  -->
 
 </mapper> 
 

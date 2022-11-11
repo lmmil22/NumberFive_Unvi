@@ -19,6 +19,7 @@ public class BoardVO {
 //	REPLY_CNT
 //	IS_SECRERT
 //	IS_NOTICE
+//  MEM_NO
 	
 	private String boardNo;
 	private String boardTitle;
@@ -30,5 +31,7 @@ public class BoardVO {
 	private int replyCnt;
 	private String isSecrert;
 	private String isNotice;
+	//디비 컬럼추가)게시판 memNo(memberId)값가져오려면 테이블에 추가하기
+	private String memNo;
 	
 }
