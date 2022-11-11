@@ -6,6 +6,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 // by 유빈 : 메일기능 구현
 @Service
@@ -20,8 +21,7 @@ public class MailService {
     	ArrayList<String> toUerList = new ArrayList<>();
     	
     	//수신 대상 추가
-    	toUerList.add("nm@gmail.com"); // 보안설정 한 이메일 -> 수신가능 
-    	//toUerList.add("numberfive.zys@gmail.com"); // 보안설정 한 이메일 -> 수신가능 
+    	toUerList.add("numberfive.zys@gmail.com"); //내게쓰기 보안설정 한 이메일 -> 수신가능 
     	
     	//수신 대상 개수
     	int toUserSize = toUerList.size();
@@ -36,7 +36,7 @@ public class MailService {
     	simpleMessage.setSubject("[NFU 임시 비밀번호 안내]");
     	
     	// 메일 내용
-    	// 암호화 키 생성
+    	// 암호화 키로 임시비밀번호 랜덤 생성
     	StringBuffer key = new StringBuffer();
  	    Random rnd = new Random();
  	    for (int i = 0; i < 10; i++) {
@@ -58,15 +58,14 @@ public class MailService {
     							+ "회원님의 임시 발급된 비밀번호를 안내해드립니다. "
     							+ " < "+ key.toString() + " > "
     							+ "해당 임시비밀번호로 다시 로그인해주십시오.");
-    	System.out.println("XXXXXXXXXXXXXXXXX 임시비밀번호 생성 "+key.toString());
-    	System.out.println("XXXXXXXXXXXXXXXXX 임시비밀번호 생성 "+key.toString());
-    	System.out.println("XXXXXXXXXXXXXXXXX 임시비밀번호 생성 "+key.toString());
+    	
+    	System.out.println("XXXXXXXXXXXXXXXXX 임시비밀번호 생성 " + key.toString());
+    	
     	// 메일 발송
         javaMailSender.send(simpleMessage);
         System.out.println("WWWWWWWWWWWWWWWWWWWWW 메일발송 성공");
-        System.out.println("WWWWWWWWWWWWWWWWWWWWW 메일발송 성공");
-        System.out.println("WWWWWWWWWWWWWWWWWWWWW 메일발송 성공");
     }
-    
+ ////////////////////////////////////////////////////////////////////////
+
     
 }

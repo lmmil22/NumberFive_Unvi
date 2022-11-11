@@ -23,13 +23,13 @@ public class SecurityConfig {
 					.and()
 						.formLogin()
 						.loginPage("/login")
-						.defaultSuccessUrl("/member/afterLogin")//로그인성공시
-						.failureUrl("/member/loginFail")//로그인실패시
+						.defaultSuccessUrl("/member/loginResult")
+						.failureUrl("/member/loginResult")//로그인실패시
 						.loginProcessingUrl("/member/homeLogin")// 실제 로그인을 진행할 요청 정보
 					.and()
 						.logout()
 						.invalidateHttpSession(true)
-						.logoutSuccessUrl("/board/list")//로그아웃후 페이지이동
+						.logoutSuccessUrl("/member/homeLogin")//로그아웃후 페이지이동 -> 첫로그인홈화면으로
 					.and()
 						.exceptionHandling()//인증은 있지만 권한없어서 오류발생하면 처리한다.
 						.accessDeniedPage("/member/accessDenied")//접근거부페이지 커스터마이징설정

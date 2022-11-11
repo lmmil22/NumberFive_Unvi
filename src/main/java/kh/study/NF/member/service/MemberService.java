@@ -18,4 +18,7 @@ public interface MemberService {
 	
 	//상세조회
 	MemberVO selectMemberDetail(String memNo);
+	
+	//이매일로 전송된 비밀번호로 업데이트
+	void updatePw(MemberVO memberVO);
 }

@@ -3,33 +3,33 @@
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
-<title>로그인 확인</title>
+<title>임시비밀번호 재로그인 확인</title>
 
 </head>
 <body>
 	
  <div sec:authorize="isAnonymous()">
 	<script type="text/javascript">
-		alert('로그인 실패');
+		alert('재로그인 실패');
 		location.href='/member/homeLogin?isLoginFail=true';
 	</script>
 </div>
 <div sec:authorize="isAuthenticated()" >
 	<div sec:authorize="hasRole('ROLE_STUDENT')" >
 		<script type="text/javascript">
-			alert('로그인 인증 성공');
+			alert('학생 재로그인 인증 성공');
 			location.href='/member/afterLogin';
 		</script>
 	</div> 
 	<div sec:authorize="hasRole('ROLE_ADMIN')" >
 		<script type="text/javascript">
-			alert('관리자 인증 성공');
+			alert('관리자 재로그인 인증 성공');
 			location.href='/admin/adminLogin';
 		</script>
 	</div>
 	<div sec:authorize="hasRole('ROLE_PROFESSOR')" >
 		<script type="text/javascript">
-			alert('교수 인증 성공');
+			alert('교수 재로그인 인증 성공');
 			location.href='/professor/professorLogin';
 		</script>
 	</div>

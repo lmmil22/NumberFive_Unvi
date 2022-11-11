@@ -40,4 +40,9 @@ public class MemberServiceImpl implements MemberService{
 	public void join(MemberVO memberVO) {
 		 sqlSession.insert("memberMapper.join", memberVO);
 	}
+	//이메일 임시비밀번호 업데이트
+	@Override
+	public void updatePw(MemberVO memberVO) {
+		 sqlSession.update("memberMapper.updatePw",memberVO);
+	}
 }

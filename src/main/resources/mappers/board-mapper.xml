@@ -18,28 +18,28 @@
 
 	<!-- 글등록 -->	
 	 <insert id="insertBoard">
-	INSERT INTO BOARD (BOARD_NO , BOARD_TITLE , BOARD_CONTENT , MEM_NO )
-	VALUES(
-		( SELECT  NVL ( MAX (BOARD_NO) , 0 ) + 1  FROM BOARD) 
-		, #{boardTitle} 
-		, #{boardContent}
-		, #{memNo}
-		)
+		INSERT INTO BOARD (BOARD_NO , BOARD_TITLE , BOARD_CONTENT , MEM_NO )
+		VALUES(
+			( SELECT  NVL ( MAX (BOARD_NO) , 0 ) + 1  FROM BOARD) 
+			, #{boardTitle} 
+			, #{boardContent}
+			, #{memNo}
+			)
 	</insert> 
 	
 	<!-- 게시글목록조회 -->
 	 <select id="selectBoard" resultMap="board">
-	SELECT BOARD_NUM,TITLE,CONTENT,MEMBER_ID,TO_CHAR(CREATE_DATE,'YYYY-MM-DD') AS CREATE_DATE
-	FROM BOARD
-	ORDER BY BOARD_NUM DESC
+		SELECT BOARD_NO,BOARD_TITLE,BOARD_CONTENT,MEM_NO,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE
+		FROM BOARD
+		ORDER BY BOARD_NO DESC
 	</select> 
 	
 	<!-- 게시글 상세조회 -->
-	<!--  <select id="selectDetailBoard" resultMap="board">
-	SELECT BOARD_NUM,TITLE,CONTENT,MEMBER_ID,TO_CHAR(CREATE_DATE,'YYYY-MM-DD') AS CREATE_DATE
-	FROM BOARD
-	WHERE BOARD_NUM = #{boardNum}
-	</select> -->
+	<select id="selectDetailBoard" resultMap="board">
+		SELECT BOARD_NO,BOARD_TITLE,BOARD_CONTENT,MEM_NO,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE
+		FROM BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</select> 
 	
 	<!-- 글수정 -->
 	<!--  <update id="update" >
