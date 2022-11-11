@@ -16,6 +16,13 @@
 		<result column="COLL_NAME" property="collName"/>
 	</resultMap>
 
+	<resultMap type="kh.study.NF.professor.vo.GradeVO" id="grade">
+		<id column="GRADE" property="grade"/>
+		<result column="SCORE" property="score"/>
+	</resultMap>
+
+
+
 	<!-- 강의등록  -->
 	<resultMap type="kh.study.NF.professor.vo.LectureVO" id="lecture">
 		<id column="LEC_NO" property="lecNo"/>
@@ -374,7 +381,7 @@
 		AND LEC_NO = #{lecNo}
 	</delete>
 
-	<!-- 학생 점수 등록  -->
+	
 <!-- 	<insert id="">
 	
 	
@@ -389,18 +396,31 @@
 	
 	FROM STU S, LECTURE L , STU_GRADE G , 
 	
-
-	
-	
-	
-	
-	
-	
 	</select>
 	 -->	
+<!-- 수강신청시 등록되는 학생점수  -->
+<insert id="settingStuGrade">
+INSERT INTO STU_GRADE(
+    STU_GRADE_NO
+    , LEC_NO
+    , GRADE
+    , STU_NO
+)VALUES (
+    (SELECT 'STU_GRADE_' ||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(SUBJECT_NO,11))),0)+1,3,0) FROM STU_GRADE)
+    , #{lecNo}
+    , #{grade}
+  , #{stuNo}
+)
+</insert>
 
 
-
+	<!-- grade목록조회 -->	
+	<select id="selectGrade" resultMap="Grade">
+	SELECT 
+	 	GRADE 
+    	, SCORE
+    FROM  GRADE
+	</select>
 
 	<!-- dept목록조회 -->	
 	<select id="selectDept" resultMap="dept">
