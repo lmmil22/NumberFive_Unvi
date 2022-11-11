@@ -1,5 +1,6 @@
 package kh.study.NF.emp.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kh.study.NF.config.student.ApplyCode;
+import kh.study.NF.config.Student.ApplyCode;
 import kh.study.NF.emp.service.EmpService;
 import kh.study.NF.emp.vo.DeptManageVO;
 import kh.study.NF.student.service.StudentService;
@@ -122,5 +123,25 @@ public class EmpController {
 	  
 		  return studentService.studentInfo(stuNo);
 	  }
-	 
+	
+	 //by수경 휴학/복학 승인대기/승인완료(라디오) 클릭 시 업데이트 ajax
+	  @ResponseBody
+	  @PostMapping("/changeStatusAjax")
+	  public void changeStatusAjax(DeptManageVO deptManageVO) {
+		  
+		  	//현재 날짜 구하기
+		    LocalDate date = LocalDate.now();
+		    
+		    int year = date.getYear();
+		    int month = date.getMonthValue();
+		    int day = date.getDayOfMonth(); 
+		    
+		    String nowDate = year +"년" + month + "월" + day +"일";
+		  
+		  deptManageVO.setApprovalDate(nowDate);
+		  
+		  empService.changeStatus(deptManageVO);
+		 
+	  }
+	  
 }

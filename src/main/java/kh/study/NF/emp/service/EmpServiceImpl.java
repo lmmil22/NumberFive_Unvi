@@ -26,5 +26,12 @@ public class EmpServiceImpl implements EmpService{
 	public DeptManageVO checkApply(DeptManageVO deptManageVO) {
 		return sqlSession.selectOne("deptManageMapper.checkApply", deptManageVO);
 	}
+	
+	//by수경 승인대기/승인완료 상태 변경(라디오 값)
+	@Override
+	public void changeStatus(DeptManageVO deptManageVO) {
+		sqlSession.update("deptManageMapper.changeStatus", deptManageVO);
+		
+	}
 
 }

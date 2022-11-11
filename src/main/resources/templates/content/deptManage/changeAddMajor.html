@@ -14,6 +14,9 @@
 <!--관리자는 해당 접수완료 버튼 클릭 시 해당 학생의 신청내역을 볼 수 있고
 아래의 승인버튼 클릭 시 접수완료 ->승인완료 변경되도록 할 것  -->
 <div layout:fragment ="content">
+<th:block layout:fragment ="css">
+	<link rel ="stylesheet" th:href="@{/css/applyModal.css}">
+</th:block>
 	<div class="row justify-content-center">
 		<div class="col text-center">
 			<H5>전과신청 현황</H5>

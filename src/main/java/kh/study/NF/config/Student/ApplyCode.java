@@ -1,4 +1,4 @@
-package kh.study.NF.config.student;
+package kh.study.NF.config.Student;
 
 public enum ApplyCode {
 	takeOff, comeback, changeMajor, doubleMajor

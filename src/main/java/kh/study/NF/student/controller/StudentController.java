@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kh.study.NF.config.student.AcceptApply;
-import kh.study.NF.config.student.ApplyCode;
+import kh.study.NF.config.Student.AcceptApply;
+import kh.study.NF.config.Student.ApplyCode;
 import kh.study.NF.dept.service.DeptService;
 import kh.study.NF.dept.vo.DeptVO;
 import kh.study.NF.emp.vo.DeptManageVO;
