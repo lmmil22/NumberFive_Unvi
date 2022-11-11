@@ -31,7 +31,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		UserDetails userDetails = User
 								.withUsername(loginInfo.getMemNo())
-								.password(loginInfo.getMemPw())
+								//암호화 작업3 -noop제거 
+								.password("{noop}"+loginInfo.getMemPw())
 								.roles(loginInfo.getMemRole())
 								.build();
 		return userDetails;

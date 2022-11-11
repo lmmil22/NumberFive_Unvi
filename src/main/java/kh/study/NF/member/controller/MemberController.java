@@ -22,8 +22,10 @@ import kh.study.NF.member.vo.MemberVO;
 public class MemberController {
 	@Resource(name = "memberService")
 	private MemberService memberService;
-	@Autowired
-	private PasswordEncoder encoder;
+	
+	//암호화 작업 1-주석풀기 
+//	@Autowired
+//	private PasswordEncoder encoder;
 //-------------------------------------------------------------------------------------------///	
 	
 	//회원가입(shop에서 복붙 -우린아직 회원가입은 없음)
@@ -36,8 +38,9 @@ public class MemberController {
 		//(우리파일엔 없어서 )memberVO.setMemberStatus(MemberStatus.ACTIVE.toString());
 		memberVO.setMemRole(MemRole.STUDENT.toString());
 		
+		//암호화 작업2 -주석풀기 
 		// 위에서 불러온 암호화 객체를 사용해서 암호화한 비밀번호값 넣어 디비저장해준다.
-		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+		//memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 		
 		//회원가입
 		memberService.join(memberVO);
@@ -50,7 +53,7 @@ public class MemberController {
 	// --> stu컨트롤러에서 학생,교수,교직원 모두 로그인해야해서 공통사항은 (common폴더)여기로 옮겼어!!)
 	// 첫 화면 경로 : http://localhost:8081/member/homeLogin
 	@GetMapping("/homeLogin")
-	public String homeLogin( ) {
+	public String homeLogin(MemberVO memberVO ) {
 		
 		return "content/common/homeLogin"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
 	}

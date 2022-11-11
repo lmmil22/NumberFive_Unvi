@@ -22,33 +22,34 @@ public class SecurityConfig {
 						.anyRequest().authenticated()
 					.and()
 						.formLogin()
-						.loginPage("/member/homeLogin")
-						.defaultSuccessUrl("/board/list")
-						.failureUrl("/member/loginFail")
-						.loginProcessingUrl("/member/login")// 실제 로그인을 진행할 요청 정보
+						.loginPage("/login")
+						.defaultSuccessUrl("/member/afterLogin")//로그인성공시
+						.failureUrl("/member/loginFail")//로그인실패시
+						.loginProcessingUrl("/member/homeLogin")// 실제 로그인을 진행할 요청 정보
 					.and()
 						.logout()
 						.invalidateHttpSession(true)
-						.logoutSuccessUrl("/board/list")
+						.logoutSuccessUrl("/board/list")//로그아웃후 페이지이동
 					.and()
-						.exceptionHandling()
-						.accessDeniedPage("/member/accessDenied")
+						.exceptionHandling()//인증은 있지만 권한없어서 오류발생하면 처리한다.
+						.accessDeniedPage("/member/accessDenied")//접근거부페이지 커스터마이징설정
 						;
 		return security.build();
 		
 	}
 	//------------------------- 스프링 암호화 -------------------------------------//
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	// 암호화작업 0번 - 회원가입하면서 암호화된 비밀번호 암호화작업 사용하려면 주석풀어주기!!
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
 
 	//------css,js 요청 인증 무시 -------------------------------------------------//
 	// css,js 파일 모두 열리면 인증을 받아야하기때문에 
 	// /js,/css와 같은 파일 요청이 있으면 무시하도록 설정
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().antMatchers("/js/**",  "/css/**");
+		return (web) -> web.ignoring().antMatchers("/js/**",  "/css/**","/images/**","/pdf/**");
 	}
 }
 
