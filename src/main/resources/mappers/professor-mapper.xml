@@ -365,9 +365,18 @@
 		         WHERE LEC_NO = E.LEC_NO)  AS ATTACHED_PDF_NAME                                     
 		FROM ENROLLMENT E
 		WHERE STU_NO = 'STU_001'
+		ORDER BY LEC_NO DESC
 	</select>
-
-
+	<!-- 수강 신청 취소시 진행   -->
+	<delete id="deleteStuLec">
+		DELETE FROM ENROLLMENT
+		WHERE  STU_NO = #{stuNo} 
+		AND LEC_NO = #{lecNo}
+		
+	
+	
+	</delete>
+	
 
 
 

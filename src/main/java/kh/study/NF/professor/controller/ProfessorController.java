@@ -214,19 +214,21 @@ public class ProfessorController {
 		return "content/professor/enrollClassList";
 		
 	}
-	
+	//by 지아 수강 신청 클릭시 진행되는 ajax 
 	@ResponseBody
 	@PostMapping("/insertEnrollAjax")
 	public void insertEnrollAjax(EnrollmentVO enrollmentVO , String lecNo) {
 		
-		
-		
 		professorService.insertEnroll(enrollmentVO, lecNo);
 		
-		
-		//return "";
 	}
-	
+
+	@ResponseBody
+	@PostMapping("/deleteEnrollAjax")
+	public void deleteEnrollAjax(EnrollmentVO enrollmentVO) {
+		
+		professorService.deleteStuLec(enrollmentVO);
+	}
 	
 	
 }

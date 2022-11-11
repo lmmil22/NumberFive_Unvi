@@ -47,4 +47,8 @@ public interface ProfessorService {
 	 //목록에서 제외하기 위해 신청한 lec_no 목록 데이터를 조회
 	 List<String> selectEnrollmentLecNoList(String stuNo);
 	 
+	 //수강 취소시 진행 
+	 void deleteStuLec(EnrollmentVO enrollmentVO);
+	 
+	 
 }

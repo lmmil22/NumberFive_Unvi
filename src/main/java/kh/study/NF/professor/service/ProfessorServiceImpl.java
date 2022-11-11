@@ -95,6 +95,12 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public List<String> selectEnrollmentLecNoList(String stuNo) {
 		return sqlSession.selectList("professorMapper.selectEnrollmentLecNoList", stuNo);
 	}
+	//수강 취소시
+	@Override
+	public void deleteStuLec(EnrollmentVO enrollmentVO) {
+
+		sqlSession.delete("professorMapper.deleteStuLec",enrollmentVO);
+	}
 	
 	
 	

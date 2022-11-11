@@ -32,8 +32,8 @@
 				<tr th:each="lec : ${lecList}">
 					<th scope="row" th:text="${lec.lecNo}">1</th>
 					<td>
-					<!-- 다운가능 <a th:href="@{/proF/download(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a>
-					 -->
+					 다운가능 <a th:href="@{/proF/download(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a>
+					
 					 <a th:href="@{/proF/viewLecPdf(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a>
 					 
 					</td>

@@ -140,9 +140,9 @@
 										<!-- <td><input type="button" value="강의 상태 수정"	data-bs-toggle="modal"  data-bs-target="#changeLecModal"></td> -->
 										
 										<td>
-											<!-- <input class="btn btn-primary btn-sm" th:classappend="${enroll.lecStatus eq 'N' ? 'disabled' : ''}" 
-												type="button" value="수강 신청" > -->
-												123
+											 <input class="btn btn-primary btn-sm" 
+												type="button" value="수강 취소" th:onclick="deleteLecEnroll([[${enroll.stuNo}]],[[${enroll.lecNo}]])" > 
+												
 										</td>
 									</tr>
 								</tbody>
