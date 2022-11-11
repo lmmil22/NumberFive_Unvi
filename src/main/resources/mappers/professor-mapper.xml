@@ -16,11 +16,11 @@
 		<result column="COLL_NAME" property="collName"/>
 	</resultMap>
 
-	<resultMap type="kh.study.NF.professor.vo.GradeVO" id="grade">
+<!-- 	<resultMap type="kh.study.NF.professor.vo.GradeVO" id="grade">
 		<id column="GRADE" property="grade"/>
 		<result column="SCORE" property="score"/>
 	</resultMap>
-
+ -->
 
 
 	<!-- 강의등록  -->
@@ -399,7 +399,7 @@
 	</select>
 	 -->	
 <!-- 수강신청시 등록되는 학생점수  -->
-<insert id="settingStuGrade">
+<!-- <insert id="settingStuGrade">
 INSERT INTO STU_GRADE(
     STU_GRADE_NO
     , LEC_NO
@@ -413,15 +413,16 @@ INSERT INTO STU_GRADE(
 )
 </insert>
 
-
+ -->
 	<!-- grade목록조회 -->	
-	<select id="selectGrade" resultMap="Grade">
+	<!--by수경 지아야 이부분이 문제엿옹~~ 나중에 주석 지우면 된딩!! -->
+<!-- 	<select id="selectGrade" resultMap="Grade">
 	SELECT 
 	 	GRADE 
     	, SCORE
     FROM  GRADE
 	</select>
-
+ -->
 	<!-- dept목록조회 -->	
 	<select id="selectDept" resultMap="dept">
 	SELECT 
@@ -481,24 +482,6 @@ INSERT INTO STU_GRADE(
 	
 	
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

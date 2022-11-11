@@ -45,7 +45,7 @@
 					
 					<th:block th:if="${#lists.size(comebackList) != 0}">
 					<tr th:each="comeback, status :${comebackList}">
-				      <td><input type="checkbox" id="check2"></td>
+				      <td><input type="checkbox" class="check1" th:value="${comeback.applyNo}"></td>
 			          <td th:text="${#lists.size(comebackList) - status.index}"></td>
 				      <td th:text="${comeback.stuNo}" th:onclick="stuInfo([[${comeback.stuNo}]])"></td>
 				      <td th:text="${comeback.fromColl}"></td>
@@ -53,10 +53,10 @@
 				      <td th:text="${comeback.applyDate}"></td>
 				      <td>
 				      	<span>
-				      		<input class="form-check-input" type="radio" name="processStatus" th:onclick="changeTakeOffStatus([[${comeback.applyNo}]], 'waiting');"
+				      		<input type="radio" name="processStatus" th:onclick="changeStatus([[${comeback.applyNo}]], 'waiting');"
 				      		value="waiting" th:checked="${comeback.processStatus eq 'waiting'}"> 
 				      		<label class="form-check-label" for="flexRadioDefault1">승인대기 </label>
-				      		<input class="form-check-input" type="radio" name="processStatus" th:onclick="changeTakeOffStatus([[${comeback.applyNo}]], 'accept');"
+				      		<input type="radio" name="processStatus" th:onclick="changeStatus([[${comeback.applyNo}]], 'accept');"
 				      		value="accept" th:checked="${comeback.processStatus eq 'accept'}" > 
 				      		<label class="form-check-label" for="flexRadioDefault1">승인완료 </label>
 				      	</span>
@@ -67,7 +67,12 @@
 				   
 				</table>
 				<div class="row">
-					<div class="col"><input type="button" value="일괄승인"></div>
+					<div class="col">
+						<form th:action="@{/emp/comebackAllAccept}" method="post" id="comebackForm">
+							<input type="button" value="일괄승인" th:onclick="comebackAllAccept();">
+							<input type="hidden" name="applyNos" value="" id="comebackInput">
+						</form>
+					</div>
 				</div>
 			</div>		
 		</div>
@@ -97,7 +102,7 @@
 					</th:block>
 				    <th:block th:if="${#lists.size(takeOffList) != 0}">
 						<tr th:each="takeOff, status :${takeOffList}">
-					      <td><input type="checkbox" id="check1"></td>
+					      <td><input type="checkbox" class="check2" th:value="${takeOff.applyNo}"></td>
 					      <td th:text="${#lists.size(takeOffList) - status.index}"></td>
 					      <td th:text="${takeOff.stuNo}" th:onclick="stuInfo([[${takeOff.stuNo}]])" data-bs-toggle="modal" data-bs-target="#stuInfoModal"></td>
 					      <td th:text="${takeOff.fromColl}"></td>
@@ -105,11 +110,11 @@
 					      <td th:text="${takeOff.applyDate}"></td>
 					      <td>
 					      	<span>
-					      		<input type="radio" th:name="|processStatus_${status.count}|" value="waiting" 
-					      		th:checked="${takeOff.processStatus eq 'waiting'}" th:onclick="changeTakeOffStatus([[${takeOff.applyNo}]], 'waiting');"> 
+					      		<input type="radio" th:name="|processStatus_${status.count}|" value="waiting"
+					      		th:checked="${takeOff.processStatus eq 'waiting'}" th:onclick="changeStatus([[${takeOff.applyNo}]], 'waiting');"> 
 					      		<label class="form-check-label" for="flexRadioDefault1">승인대기</label>
 					      		<input type="radio" th:name="|processStatus_${status.count}|" value="accept" 
-					      		th:checked="${takeOff.processStatus eq 'accept'}" th:onclick="changeTakeOffStatus([[${takeOff.applyNo}]], 'accept');"> 
+					      		th:checked="${takeOff.processStatus eq 'accept'}" th:onclick="changeStatus([[${takeOff.applyNo}]], 'accept');"> 
 					      		<label class="form-check-label" for="flexRadioDefault1">승인완료</label>
 				      		</span>
 					      </td>
@@ -118,7 +123,12 @@
 					</th:block>
 				</table>
 				<div class="row">
-					<div class="col"><input type="button" value="일괄승인"></div>
+					<div class="col">
+						<form th:action="@{/emp/takeOffAllAccept}" method="post" id="takeOffForm">
+							<input type="button" value="일괄승인" th:onclick="takeOffAllAccept();">
+							<input type="hidden" name="applyNos" value="" id="takeOffInput">
+						</form>
+					</div>
 				</div>
 			</div>		
 		</div>		
@@ -191,7 +201,7 @@
 	  </div>
 	</div>
 	
-	<!--by수경 휴학/복학 승인완료 모달창 -->
+	<!--by수경 휴학/복학 단일 승인완료  모달창 -->
 	<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered">
 	    <div class="modal-content">
@@ -201,12 +211,32 @@
 		      	  최종 승인이 완료되었습니다.
 		      	</div>
 	      	</div>
-	      	
 	       <div class="row">
 	       	<div class="col text-center">
 	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
-	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-	       		>확인</button>
+	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">
+	       		확인</button>
+	       	</div>
+	       </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>		
+	<!--by수경 휴학/복학 일괄승인완료  모달창 -->
+	<div class="modal fade" id="resultAlltModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<div class="row mb-3" >
+		      	<div class="col text-center">
+		      	  일괄 승인이 완료되었습니다.
+		      	</div>
+	      	</div>
+	       <div class="row">
+	       	<div class="col text-center">
+	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
+	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       		th:onclick="formSubmit();">확인</button>
 	       	</div>
 	       </div>
 	      </div>

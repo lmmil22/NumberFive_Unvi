@@ -1,5 +1,7 @@
 package kh.study.NF.emp.vo;
 
+import java.util.List;
+
 import groovy.transform.ToString;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,4 +27,8 @@ public class DeptManageVO {
 	private String doubleMajorDept;
 	private String stuYear;
 	private int stuSem;
+	
+	//by수경 applyNo를 여러개 담을 List
+	private List<String> applyNoList;
+
 }

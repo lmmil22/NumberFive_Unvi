@@ -2,6 +2,7 @@ package kh.study.NF.emp.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kh.study.NF.config.Student.AcceptApply;
 import kh.study.NF.config.Student.ApplyCode;
 import kh.study.NF.emp.service.EmpService;
 import kh.study.NF.emp.vo.DeptManageVO;
@@ -129,19 +131,78 @@ public class EmpController {
 	  @PostMapping("/changeStatusAjax")
 	  public void changeStatusAjax(DeptManageVO deptManageVO) {
 		  
-		  	//현재 날짜 구하기
-		    LocalDate date = LocalDate.now();
-		    
-		    int year = date.getYear();
-		    int month = date.getMonthValue();
-		    int day = date.getDayOfMonth(); 
-		    
-		    String nowDate = year +"년" + month + "월" + day +"일";
-		  
+	  	  //현재 날짜 구하기
+	      LocalDate date = LocalDate.now();
+	    
+	      int year = date.getYear();
+	      int month = date.getMonthValue();
+	      int day = date.getDayOfMonth(); 
+	    
+	      String nowDate = year +"년" + month + "월" + day +"일";
+	  
 		  deptManageVO.setApprovalDate(nowDate);
 		  
 		  empService.changeStatus(deptManageVO);
 		 
 	  }
 	  
+	  //by수경 복학신청 일괄승인
+	  @PostMapping("/comebackAllAccept")
+	  public String comebackAllAccept(String applyNos, DeptManageVO deptManageVO) {
+		  //applyNo를 ,로 구분하여 데이터를 가져왔음
+		  String [] applyNosArr = applyNos.split(",");
+		  //배열 데이터 하나하나를 담을 List 준비
+		  List<String>applyNoList = Arrays.asList(applyNosArr);
+		  //데이터 담기
+		  deptManageVO.setApplyNoList(applyNoList);
+		  
+		  //현재 날짜 구하기
+		  LocalDate date = LocalDate.now();
+		    
+		  int year = date.getYear();
+		  int month = date.getMonthValue();
+		  int day = date.getDayOfMonth(); 
+		    
+		  String nowDate = year +"년" + month + "월" + day +"일";
+		  //현재 날짜 데이터 지정
+		  deptManageVO.setApprovalDate(nowDate);
+		  
+		  //processStatus 값 세팅
+		  deptManageVO.setProcessStatus(AcceptApply.accept.toString());
+		  
+		  //일괄승인 쿼리 실행
+		  empService.comebackTakeOffAllAccept(deptManageVO);
+		  
+		  return"redirect:/emp/takeOffReturnUniv";
+	  }
+	  
+	  //수경 휴학신청 일괄승인
+	  @PostMapping("/takeOffAllAccept")
+	  public String takeOffAllAccept(String applyNos, DeptManageVO deptManageVO) {
+		//applyNo를 ,로 구분하여 데이터를 가져왔기에 제거
+		  String [] applyNosArr = applyNos.split(",");
+		  //배열 데이터 하나하나를 담을 List 준비
+		  List<String> applyNoList = Arrays.asList(applyNosArr);
+		  //데이터 담기
+		  deptManageVO.setApplyNoList(applyNoList);
+		  
+		  //현재 날짜 구하기
+		  LocalDate date = LocalDate.now();
+		    
+		  int year = date.getYear();
+		  int month = date.getMonthValue();
+		  int day = date.getDayOfMonth(); 
+		    
+		  String nowDate = year +"년" + month + "월" + day +"일";
+		  //현재 날짜 데이터 지정
+		  deptManageVO.setApprovalDate(nowDate);
+		  
+		  //processStatus 값 세팅
+		  deptManageVO.setProcessStatus(AcceptApply.accept.toString());
+		  
+		  //일괄승인 쿼리 실행
+		  empService.comebackTakeOffAllAccept(deptManageVO);
+		  
+		  return"redirect:/emp/takeOffReturnUniv";
+	  }
 }

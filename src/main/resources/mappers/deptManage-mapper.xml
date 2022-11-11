@@ -196,12 +196,25 @@ FROM DEPT_MANAGE
 	AND APPLY_CODE = #{applyCode}
 </select>
 
-<!--by수경 승인대기/승인완료 클릭 시 업데이트 (라디오 값) -->
+<!--by수경 승인대기/승인완료 단일승인(라디오 값) -->
 <update id="changeStatus">
 	UPDATE DEPT_MANAGE 
 	SET PROCESS_STATUS = #{processStatus}
 		, APPROVAL_DATE = #{approvalDate} 
 	WHERE APPLY_NO = #{applyNo} 
 </update>
+
+<!-- by수경 복학/휴학신청 일괄승인 -->
+<update id="comebackTakeOffAllAccept">
+	UPDATE DEPT_MANAGE
+	SET APPROVAL_DATE = #{approvalDate}
+		, PROCESS_STATUS = #{processStatus}
+	WHERE APPLY_NO IN
+	<foreach collection="applyNoList" item="applyNo" separator="," open="(" close=")" >
+       #{applyNo}
+  	</foreach> 
+
+</update>
+
 
 </mapper>

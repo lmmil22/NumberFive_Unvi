@@ -13,6 +13,9 @@ public interface EmpService {
 	//by수경 학생이 복학, 휴학, 전과, 복수전공 해당 학기에 신청내역 있는지 확인
 	DeptManageVO checkApply(DeptManageVO deptManageVO);
 	
-	//by수경 승인대기/승인완료 상태 변경(라디오 값)
+	//by수경 승인대기/승인완료 단일 승인(라디오 값)
 	void changeStatus(DeptManageVO deptManageVO);
+	
+	//by수경 복학/휴학신청 일괄승인
+	void comebackTakeOffAllAccept(DeptManageVO deptManageVO);
 }

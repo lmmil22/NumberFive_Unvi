@@ -33,5 +33,12 @@ public class EmpServiceImpl implements EmpService{
 		sqlSession.update("deptManageMapper.changeStatus", deptManageVO);
 		
 	}
+	
+	//by수경 복학/휴학신청 일괄승인
+	@Override
+	public void comebackTakeOffAllAccept(DeptManageVO deptManageVO) {
+		sqlSession.update("deptManageMapper.comebackTakeOffAllAccept", deptManageVO);
+		
+	}
 
 }
