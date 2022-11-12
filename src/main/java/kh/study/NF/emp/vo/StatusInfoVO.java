@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ToString
+//by수경 statusInfo 테이블 기반VO
 public class StatusInfoVO {
 
 	private String statusNo;

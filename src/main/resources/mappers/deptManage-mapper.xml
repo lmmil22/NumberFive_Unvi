@@ -22,6 +22,8 @@
 <result column="DOUBLE_MAJOR_DEPT" property="doubleMajorDept"/>
 <result column="STU_YEAR" property="stuYear"/>
 <result column="STU_SEM" property="stuSem"/>
+<result column="MEM_NAME" property="memName"/>
+
 </resultMap>
 
 <!--by수경 학생의 복학신청 접수하기-->
@@ -82,7 +84,7 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 </insert>
 
 
-<!--by수경 학생의 전과신청 접수하기 STU_NO는 추후 수정 예정-->
+<!--by수경 학생의 전과신청 접수하기-->
 <insert id="applyChangeMajor">
 
 <selectKey resultType="String" keyProperty="applyNo" order="BEFORE">
@@ -116,7 +118,7 @@ INSERT INTO DEPT_MANAGE(APPLY_NO
 </insert>
 
 
-<!--by수경 학생의 복수전공 신청 접수하기 STU_NO는 추후 수정 예정-->
+<!--by수경 학생의 복수전공 신청 접수하기-->
 <insert id="applyAddMajor">
 <selectKey resultType="String" keyProperty="applyNo" order="BEFORE">
 SELECT 'APPLY_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(APPLY_NO,7))), 0)+1, 3, 0) FROM DEPT_MANAGE
@@ -180,7 +182,10 @@ SELECT APPLY_NO
 	 , APPROVAL_DATE
 	 , PROCESS_STATUS
 	 , STU_NO
-FROM DEPT_MANAGE
+	 , (SELECT TO_CHAR(STU_YEAR)||'학년'||' '||TO_CHAR(STU_SEM)||'학기'FROM DEPT_MANAGE WHERE APPLY_NO = D.APPLY_NO)AS STU_YEAR 
+	 , (SELECT MEM_NAME FROM MEMBER WHERE MEM_NO =
+	 								(SELECT MEM_NO FROM STU WHERE STU_NO = D.STU_NO))AS MEM_NAME
+FROM DEPT_MANAGE D
 
 </select>
 

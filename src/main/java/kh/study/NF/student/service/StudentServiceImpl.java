@@ -62,6 +62,47 @@ public class StudentServiceImpl implements StudentService {
 		
 		return sqlSession.selectList("studentMapper.DeptList",deptVO);
 	}
+	
+	//by수경 학생 휴학신청 확정 시 상태 변경(단일 승인)
+	@Override
+	public void takeOffStu(String stuNo) {
+		
+		sqlSession.update("studentMapper.takeOffStu",stuNo);
+		
+	}
+	
+	//by수경 학생 복학신청 확정 시 상태 변경(단일 승인)
+	@Override
+	public void returnStu(String stuNo) {
+
+		sqlSession.update("studentMapper.returnStu", stuNo);
+		
+	}
+	
+	//by수경 학생 전과신청 확정 시 상태 변경
+	@Override
+	public void changeMajorStu(String stuNo) {
+		sqlSession.update("studentMapper.changeMajorStu", stuNo);
+		
+	}
+	
+	//by수경 학생 복수전공 신청 확정 시 상태 변경
+	@Override
+	public void insertDoubleMajor(String stuNo) {
+		sqlSession.insert("studentMapper.insertDoubleMajor", stuNo);
+		
+	}
+	
+	//by수경 학생 휴학 일괄 승인 시 상태 변경
+	@Override
+	public void takeOffStus(StudentVO studentVO) {
+		sqlSession.update("studentMapper.takeOffStus", studentVO);
+	}
+	//by수경 학생 복학 일괄 승인 시 상태 변경
+	@Override
+	public void returnStus(StudentVO studentVO) {
+		sqlSession.update("studentMapper.returnStus", studentVO);
+	}
 
 
 }

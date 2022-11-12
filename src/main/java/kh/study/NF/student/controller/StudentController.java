@@ -45,7 +45,7 @@ public class StudentController {
 		return "content/student/changeMajor";
 	}
 	
-	//by수경 학생이 전공학과를 변경(전과)하는 페이지로 이동 메소드
+	//by수경 학생이 복수전공 신청하는 페이지로 이동 메소드
 	@GetMapping("/addMajor")
 	public String addMajor(Model model, DeptManageVO deptManageVO, String stuNo) {
 		//by수경 학생정보 쿼리문
@@ -92,8 +92,7 @@ public class StudentController {
 		deptManageVO.setApplyCode(ApplyCode.comeback.toString());
 		deptManageVO.setProcessStatus(AcceptApply.waiting.toString());
 		studentService.applyReturnUniv(deptManageVO);
-		
-		//return  "redirect:/stu/stuApplyList";
+	
 	}
 	
 	

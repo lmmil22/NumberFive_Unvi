@@ -30,5 +30,9 @@ public class DeptManageVO {
 	
 	//by수경 applyNo를 여러개 담을 List
 	private List<String> applyNoList;
+	
+	//by수경 화면에 학생이름 표시를 위하여 추가
+	private String memName;
+
 
 }

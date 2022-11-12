@@ -20,7 +20,6 @@
 <association property="deptVO" resultMap="professorMapper.dept"/>
 <association property="collVO" resultMap="professorMapper.coll"/>
 <association property="doubleMajorVO" resultMap="doubleMajor"/>
-
 </resultMap>
 
 <!--by수경 member테이블의 mapper입니다. -->
@@ -45,7 +44,7 @@
 <result column="DOUBLE_COLL" property="doubleColl"/>
 <result column="DOUBLE_DEPT" property="doubleDept"/>
 </resultMap>
-
+<!--by수경 학과 테이블 mapper(stuNo추가본)  -->
 <resultMap type="kh.study.NF.dept.vo.DeptVO" id="dept">
 <id column="DEPT_NO" property="deptNo"/>
 <result column="DEPT_NAME" property="deptName"/>
@@ -89,20 +88,40 @@
     ORDER BY COLL_NO
 </select>
 
-<!--by수경 학생의 휴학신청 확정 시 상태 update Mapper -->
+<!--by수경 학생의 휴학신청 확정(단일승인) 시 상태 update Mapper -->
 <update id="takeOffStu">
 	UPDATE STU 
-	SET STU_STATUS = (SELECT PROCESS_STATUS FROM DEPT_MANAGE WHERE STU_NO = #{stuNo})
+	SET STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','휴학','재학') FROM DEPT_MANAGE WHERE STU_NO = #{stuNo})
 	WHERE STU_NO = #{stuNo}
 	
 </update>
 
-<!--by수경 학생의 복학신청 확정 시 상태 update Mapper -->
+<!--by수경 학생 휴학 확정(일괄승인) 시 상태 변경  -->
+<update id="takeOffStus">
+	UPDATE STU 
+	SET STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','휴학','재학') FROM DEPT_MANAGE D WHERE STU_NO = D.STU_NO)
+	WHERE STU_NO IN
+	<foreach collection="stuNoList" item="stuNo" separator="," open="(" close=")" >
+		#{stuNo}
+  	</foreach> 
+</update>
+
+<!--by수경 학생의 복학신청 확정(단일승인) 시 상태 update Mapper -->
 <update id="returnStu">
 	UPDATE STU 
-	SET STU_STATUS = (SELECT PROCESS_STATUS FROM DEPT_MANAGE WHERE STU_NO = #{stuNo})
+	SET STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','재학','휴학') FROM DEPT_MANAGE WHERE STU_NO = #{stuNo})
 	WHERE STU_NO = #{stuNo}
 	
+</update>
+
+<!--by수경 학생 복학신청 확정(일괄승인) 시 상태 변경  -->
+<update id="returnStus">
+	UPDATE STU 
+	SET STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','재학','휴학') FROM DEPT_MANAGE D WHERE STU_NO = D.STU_NO)
+	WHERE STU_NO IN
+	<foreach collection="stuNoList" item="stuNo" separator="," open="(" close=")" >
+		#{stuNo}
+  	</foreach> 
 </update>
 
 <!-- by수경 학생의 전과신청 확정 시 상태 update -->

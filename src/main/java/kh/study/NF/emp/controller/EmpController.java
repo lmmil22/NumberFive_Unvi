@@ -126,10 +126,10 @@ public class EmpController {
 		  return studentService.studentInfo(stuNo);
 	  }
 	
-	 //by수경 휴학/복학 승인대기/승인완료(라디오) 클릭 시 업데이트 ajax
+	 //by수경 휴학신청 단일승인(라디오) 클릭 시 업데이트 ajax
 	  @ResponseBody
-	  @PostMapping("/changeStatusAjax")
-	  public void changeStatusAjax(DeptManageVO deptManageVO) {
+	  @PostMapping("/changeTakeOffStatusAjax")
+	  public void changeTakeOffStatus(DeptManageVO deptManageVO) {
 		  
 	  	  //현재 날짜 구하기
 	      LocalDate date = LocalDate.now();
@@ -139,23 +139,50 @@ public class EmpController {
 	      int day = date.getDayOfMonth(); 
 	    
 	      String nowDate = year +"년" + month + "월" + day +"일";
-	  
+	      //승인날짜에 추가
 		  deptManageVO.setApprovalDate(nowDate);
 		  
+		  //휴학 승인 쿼리 실행
 		  empService.changeStatus(deptManageVO);
+		  
+		  //학생 상태 변경 쿼리 실행
+		  studentService.takeOffStu(deptManageVO.getStuNo());
 		 
+	  }
+	  
+	  //by수경 복학 승인대기/승인완료(라디오) 클릭 시 업데이트 ajax(단일승인)
+	  @ResponseBody
+	  @PostMapping("/changeComebackStatusAjax")
+	  public void changeComebackStatus(DeptManageVO deptManageVO) {
+		  
+		  //현재 날짜 구하기
+		  LocalDate date = LocalDate.now();
+		  
+		  int year = date.getYear();
+		  int month = date.getMonthValue();
+		  int day = date.getDayOfMonth(); 
+		  
+		  String nowDate = year +"년" + month + "월" + day +"일";
+		  //승인날짜에 추가
+		  deptManageVO.setApprovalDate(nowDate);
+		  
+		  //복학 승인 쿼리 실행
+		  empService.changeStatus(deptManageVO);
+		  //학생 상태 변경 쿼리 실행
+		  studentService.returnStu(deptManageVO.getStuNo());
 	  }
 	  
 	  //by수경 복학신청 일괄승인
 	  @PostMapping("/comebackAllAccept")
-	  public String comebackAllAccept(String applyNos, DeptManageVO deptManageVO) {
+	  public String comebackAllAccept(String applyNos, String stuNos
+			  						, DeptManageVO deptManageVO, StudentVO studentVO) {
 		  //applyNo를 ,로 구분하여 데이터를 가져왔음
 		  String [] applyNosArr = applyNos.split(",");
 		  //배열 데이터 하나하나를 담을 List 준비
 		  List<String>applyNoList = Arrays.asList(applyNosArr);
 		  //데이터 담기
 		  deptManageVO.setApplyNoList(applyNoList);
-		  
+
 		  //현재 날짜 구하기
 		  LocalDate date = LocalDate.now();
 		    
@@ -173,12 +200,23 @@ public class EmpController {
 		  //일괄승인 쿼리 실행
 		  empService.comebackTakeOffAllAccept(deptManageVO);
 		  
+		  //stuNo를 ,로 구분하여 데이터를 가져왔음
+		  String [] stuNosArr = stuNos.split(",");
+		  //배열 데이터 하나하나를 담을 List 준비
+		  List<String>stuNoList = Arrays.asList(stuNosArr);
+		  //데이터 담기
+		  studentVO.setStuNoList(stuNoList);
+		 
+		  //일괄승인 시 학생정보 변경 쿼리 실행
+		  studentService.returnStus(studentVO);
+		  
 		  return"redirect:/emp/takeOffReturnUniv";
 	  }
 	  
 	  //수경 휴학신청 일괄승인
 	  @PostMapping("/takeOffAllAccept")
-	  public String takeOffAllAccept(String applyNos, DeptManageVO deptManageVO) {
+	  public String takeOffAllAccept(String applyNos, String stuNos
+			  						, DeptManageVO deptManageVO, StudentVO studentVO) {
 		//applyNo를 ,로 구분하여 데이터를 가져왔기에 제거
 		  String [] applyNosArr = applyNos.split(",");
 		  //배열 데이터 하나하나를 담을 List 준비
@@ -202,6 +240,16 @@ public class EmpController {
 		  
 		  //일괄승인 쿼리 실행
 		  empService.comebackTakeOffAllAccept(deptManageVO);
+		  
+		  //stuNo를 ,로 구분하여 데이터를 가져왔음
+		  String [] stuNosArr = stuNos.split(",");
+		  //배열 데이터 하나하나를 담을 List 준비
+		  List<String>stuNoList = Arrays.asList(stuNosArr);
+		  //데이터 담기
+		  studentVO.setStuNoList(stuNoList);
+		 
+		  //일괄승인 시 학생정보 변경 쿼리 실행
+		  studentService.takeOffStus(studentVO);
 		  
 		  return"redirect:/emp/takeOffReturnUniv";
 	  }

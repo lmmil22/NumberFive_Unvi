@@ -31,7 +31,21 @@ public interface StudentService {
 	//추후 매개변수 DeptVO deptVO
 	List<DeptVO> DeptList(DeptVO deptVO);
 	
+	//by수경 학생 휴학신청 확정(단일승인) 시 상태 변경
+	void takeOffStu(String stuNo);
 	
+	//by수경 학생 복학신청 확정(단일승인) 시 상태 변경
+	void returnStu(String stuNo);
 	
+	//by수경 학생 휴학 일괄 승인 시 상태 변경
+	void takeOffStus(StudentVO studentVO);
+	
+	//by수경 학생 복학 일괄 승인 시 상태 변경
+	void returnStus(StudentVO studentVO);
+	
+	//by수경 학생 전과신청 확정 시 상태 변경
+	void changeMajorStu(String stuNo);
 
+	//by수경 학생 복수전공 신청 확정 시 상태 변경
+	void insertDoubleMajor(String stuNo);
 }
