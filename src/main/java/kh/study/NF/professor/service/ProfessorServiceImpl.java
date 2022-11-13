@@ -13,6 +13,7 @@ import kh.study.NF.professor.vo.LecturePdfVO;
 import kh.study.NF.professor.vo.LectureTimeVO;
 import kh.study.NF.professor.vo.LectureVO;
 import kh.study.NF.professor.vo.SemesterVO;
+import kh.study.NF.professor.vo.StuGradeVO;
 
 @Service("professorService")
 public class ProfessorServiceImpl implements ProfessorService{
@@ -91,6 +92,7 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public List<EnrollmentVO> selectStuLectureList(EnrollmentVO enrollmentVO) {
 		return sqlSession.selectList("professorMapper.selectStuLecture", enrollmentVO);
 	}
+	//기존에 있던 메소드 
 	@Override
 	public List<String> selectEnrollmentLecNoList(String stuNo) {
 		return sqlSession.selectList("professorMapper.selectEnrollmentLecNoList", stuNo);
@@ -101,7 +103,13 @@ public class ProfessorServiceImpl implements ProfessorService{
 
 		sqlSession.delete("professorMapper.deleteStuLec",enrollmentVO);
 	}
-	
+	//수강 신청시 점수등록도 같이 하기 위해서 
+//	@Override
+//	public List<String> selectEnrollmentLecNoList(String stuNo, StuGradeVO stuGradeVO) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
 	
 	
 	

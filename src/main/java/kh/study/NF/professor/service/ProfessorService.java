@@ -8,6 +8,7 @@ import kh.study.NF.professor.vo.LecturePdfVO;
 import kh.study.NF.professor.vo.LectureTimeVO;
 import kh.study.NF.professor.vo.LectureVO;
 import kh.study.NF.professor.vo.SemesterVO;
+import kh.study.NF.professor.vo.StuGradeVO;
 
 public interface ProfessorService {
 	
@@ -46,6 +47,8 @@ public interface ProfessorService {
 	 //수강 신청 가능한 목록을 띄울 때, 이미 수간 신청한 강의는 
 	 //목록에서 제외하기 위해 신청한 lec_no 목록 데이터를 조회
 	 List<String> selectEnrollmentLecNoList(String stuNo);
+	 //점수 까지 같이 셋팅 
+//	 List<String> selectEnrollmentLecNoList(String stuNo , StuGradeVO stuGradeVO);
 	 
 	 //수강 취소시 진행 
 	 void deleteStuLec(EnrollmentVO enrollmentVO);
