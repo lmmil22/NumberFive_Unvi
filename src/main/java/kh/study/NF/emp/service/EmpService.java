@@ -18,4 +18,10 @@ public interface EmpService {
 	
 	//by수경 복학/휴학신청 일괄승인
 	void comebackTakeOffAllAccept(DeptManageVO deptManageVO);
+	
+	//by수경 관리자에게 전과신청서 보여주기
+	DeptManageVO showChangeMajor(String stuNo);
+	
+	//by수경 관리자에게 복수전공 신청서 보여주기
+	DeptManageVO showDoubleMajor(String stuNo);
 }

@@ -117,6 +117,7 @@ function takeOffAllAccept(){
 	
 		if(checkedBoxes.length == 0){
 			alert('선택한 내역이 없습니다. \n확인 후 다시 시도하여 주시길 바랍니다.');
+			return;
 		}
 	
 	//여러 체크박스가 선택되었다면
@@ -190,6 +191,7 @@ function comebackAllAccept(){
 	if(checkedBoxes.length == 0){
 		
 		alert('선택한 내역이 없습니다. \n확인 후 다시 시도하여 주시길 바랍니다.');
+		return;
 	}
 	
 	//여러 체크박스가 선택되었다면

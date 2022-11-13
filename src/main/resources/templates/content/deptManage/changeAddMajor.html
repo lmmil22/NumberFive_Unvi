@@ -6,27 +6,70 @@
 
 <head>
 <meta charset="UTF-8">
-<title>[NFU]전과/복수전공신청 현황</title>
+<title>[NFU]전과/복수전공신청 접수현황</title>
 </head>
 <body>
 
 <!--by수경 학생의 전과, 복수전공 신청 목록 관리자 페이지 -->
-<!--관리자는 해당 접수완료 버튼 클릭 시 해당 학생의 신청내역을 볼 수 있고
-아래의 승인버튼 클릭 시 접수완료 ->승인완료 변경되도록 할 것  -->
+<!--관리자는 승인대기 버튼 클릭 시 해당 학생의 신청내역을 볼 수 있고
+승인버튼 클릭 시 승인대기 ->승인완료 변경되도록 구현 -->
 <div layout:fragment ="content">
 <th:block layout:fragment ="css">
 	<link rel ="stylesheet" th:href="@{/css/applyModal.css}">
 </th:block>
 	<div class="row justify-content-center">
-		<div class="col text-center">
-			<H5>전과신청 현황</H5>
+<!--by수경 전과신청 현황 테이블  -->
+		<div class="row mt-3">	
+			<div class="col mb-2">
+			 1. 전과신청 접수현황
+			</div>
 		</div>
-		<div class="row mt-2">
+		<div class="row mt-4">
+			<div class="col">
+				 <table class="table align-middle table-bordered text-center test">
+		            <tr>
+		               <td class="searchTitle">신청일</td>
+		               <td colspan="3">
+		                  <div class="row">
+		                     <div class="col-6">
+		                        <input class="form-control" type="date">
+		                     </div>
+		                     <div class="col-6">
+		                        <input class="form-control" type="date">
+		                     </div>
+		                  </div>
+		               </td>
+		               <td class="searchTitle">처리상태</td>
+		               <td colspan="3">
+		                  <div class="form-check form-check-inline">		
+		                    <input class="form-check-input" type="radio" >
+		                    <label class="form-check-label" for="" >전체</label>
+		                  </div>
+		                     <div class="form-check form-check-inline">
+		                    <input class="form-check-input" type="radio" >
+		                    <label class="form-check-label" for="">승인대기</label>
+		                  </div>
+		                     <div class="form-check form-check-inline">
+		                    <input class="form-check-input" type="radio">
+		                    <label class="form-check-label" for="">승인완료</label>
+		                  </div>
+		               </td>
+		               <td>
+		                  <button class="btn btn-primary" style="height: 45px;" type="button">Search</button>
+		               </td>
+		            </tr>
+		         </table>
+	         </div>
+         </div>
+		<div class="row">
 			<div class="col mb-5">
-				<table class="table table-bordered">
+				<table class="table table-bordered text-center">
 				   <tr>
+				   	  <th> <input type="checkbox"></th>
 					  <th>No</th>
+					  <th>이 름</th>
 					  <th>학 번</th>
+					  <th>학 년</th>
 					  <th>소속전공대학</th>
 					  <th>소속전공학과</th>
 					  <th>변경전공대학</th>
@@ -37,38 +80,82 @@
 				    </tr>
 				   <th:block th:if="${#lists.size(changeMajorList) == 0}">
 					    <tr>
-					      <td colspan="9">
+					      <td colspan="12">
 					      	<span>접수된 내역이 없습니다.</span>
 					      </td>
 					    </tr>  
 					</th:block>
 					<th:block th:if="${#lists.size(changeMajorList) != 0}">
 						<tr th:each="changeMajor, status : ${changeMajorList}" >
+					      <td><input type="checkbox"></td>
 					      <td th:text="${#lists.size(changeMajorList) - status.index}"></td>
+					      <td th:text="${changeMajor.memName}"></td>
 					      <td th:text ="${changeMajor.stuNo}"></td>
+					      <td th:text="${changeMajor.stuYear}"></td>
 					      <td th:text="${changeMajor.fromColl}"></td>
 					      <td th:text="${changeMajor.fromDept}"></td>
 					      <td th:text="${changeMajor.toColl}"></td>
 					      <td th:text="${changeMajor.toDept}"></td>
 					      <td th:text="${changeMajor.applyDate}"></td>
-					      <td th:text="${changeMajor.processStatus}"></td>
+					      <td th:text="${changeMajor.processStatus}"  th:onclick="showChangeMajorApply([[${changeMajor.stuNo}]]);" data-bs-toggle="modal" data-bs-target="#stuInfoModal"></td>
 					      <td th:text="${changeMajor.approvalDate}"></td>
 						</tr>
 					</th:block>
 				</table>
 			</div>		
 		</div>
-			
-		<div class="col text-center">
-			<H5>복수전공신청 현황</H5>
+<!--by수경 복수전공신청 현황 테이블-->		
+		<div class="row mt-3">	
+			<div class="col mb-2">
+			 2. 복수전공신청 접수현황
+			</div>
 		</div>
-		
-		<div class="row mt-2">
+		<div class="row mt-4">
+			<div class="col">
+				 <table class="table align-middle table-bordered text-center test">
+		            <tr>
+		               <td class="searchTitle">신청일</td>
+		               <td colspan="3">
+		                  <div class="row">
+		                     <div class="col-6">
+		                        <input class="form-control" type="date">
+		                     </div>
+		                     <div class="col-6">
+		                        <input class="form-control" type="date">
+		                     </div>
+		                  </div>
+		               </td>
+		               <td class="searchTitle">처리상태</td>
+		               <td colspan="3">
+		                  <div class="form-check form-check-inline">		
+		                    <input class="form-check-input" type="radio" >
+		                    <label class="form-check-label" for="" >전체</label>
+		                  </div>
+		                     <div class="form-check form-check-inline">
+		                    <input class="form-check-input" type="radio" >
+		                    <label class="form-check-label" for="">승인대기</label>
+		                  </div>
+		                     <div class="form-check form-check-inline">
+		                    <input class="form-check-input" type="radio">
+		                    <label class="form-check-label" for="">승인완료</label>
+		                  </div>
+		               </td>
+		               <td>
+		                  <button class="btn btn-primary" style="height: 45px;" type="button">Search</button>
+		               </td>
+		            </tr>
+		         </table>
+	         </div>
+         </div>
+		<div class="row">
 			<div class="col mb-5">
-				<table class="table table-bordered">
+				<table class="table table-bordered text-center">
 				   <tr>
+				   	  <th><input type="checkbox"></th>
 					  <th>No</th>
+					  <th>이 름</th>
 					  <th>학 번</th>
+					  <th>학 년</th>
 					  <th>소속전공대학</th>
 					  <th>소속전공학과</th>
 					  <th>복수전공대학</th>
@@ -80,29 +167,245 @@
 				    
 				    <th:block th:if="${#lists.size(doubleMajorList) == 0}">
 				    <tr>
-				      <td colspan="9">
+				      <td colspan="12">
 				      	<span>접수된 내역이 없습니다.</span>
 				      </td>
 				    </tr>  
 					</th:block>
 				    <th:block th:if="${#lists.size(doubleMajorList) != 0}">
 					<tr th:each="doubleMajor, status: ${doubleMajorList}">
+					  <td><input type="checkbox"></td>
 				      <td th:text="${#lists.size(doubleMajorList) - status.index}"></td>
+				      <td th:text="${doubleMajor.memName}"></td>
 				      <td th:text="${doubleMajor.stuNo}"></td>
+				      <td th:text="${doubleMajor.stuYear}"></td>
 				      <td th:text="${doubleMajor.fromColl}"></td>
 				      <td th:text="${doubleMajor.fromDept}"></td>
 				      <td th:text="${doubleMajor.doubleMajorColl}"></td>
 				      <td th:text="${doubleMajor.doubleMajorDept}"></td>
 				      <td th:text="${doubleMajor.applyDate}"></td>
-				      <td th:text="${doubleMajor.processStatus}"></td>
+				      <td th:text="${doubleMajor.processStatus}" th:onclick="showDoubleMajorApply([[${doubleMajor.stuNo}]]);" data-bs-toggle="modal" data-bs-target="#doubleMajorModal"></td>
 				      <td th:text="${doubleMajor.approvalDate}"></td>
 					</tr>
 					</th:block>
 				</table>
 			</div>		
 		</div>		
-	</div>		
-   
+	</div>
+	
+	<!--by수경 전과 신청 현황에서 신청현황 클릭 시 뜨는 전과 신청서 -->
+	<div class="modal fade" id="stuInfoModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title" >전과 신청서</h4>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+			<div class="row">
+				<div class="col-12">
+					<table class="table">
+						<tr>
+							<th>이름</th>  
+						    <td>
+						    	<div id="stuInfoModal_name"></div>
+						    </td>
+						    <th>성별</th>  
+						    <td>
+						    	<div id="stuInfoModal_gender"></div>
+						    </td>   
+						    <th>생년월일</th>  
+					        <td>
+					        	<div id="stuInfoModal_birth"></div>
+					        </td>  
+					        
+						</tr>
+						<tr>
+							<th>연락처</th>  
+					        <td>
+					        	<div id="stuInfoModal_tell"></div>
+					        </td>
+						    <th>주소</th>  
+					        <td colspan="3">
+					        	<div id="stuInfoModal_addr"></div>
+					        </td>  
+						</tr>
+						<tr>  
+						  
+					  	    <th>학번</th>   
+						    <td>
+						    	<div id="stuInfoModal_no"></div>
+						    </td>  
+					   	    <th>학년</th>   
+					   	    <td>
+					   	    	<div id="stuInfoModal_grade"></div>
+					   	    </td> 
+					   	   	<th>상태</th>  
+						    <td>
+						    	<div id="stuInfoModal_status"></div>
+						    </td>  
+						</tr> 
+						<tr>  
+					  	    <th>전공대학</th>   
+						    <td>
+						    	<div id="stuInfoModal_coll"></div>
+						    </td>  
+					   	    <th>전공학과</th>   
+					   	    <td>
+					   	    	<div id="stuInfoModal_dept"></div>
+					   	    </td>  
+					  	    <th>복수전공</th>   
+					        <td>
+					        	<div id="stuInfoModal_doubleDept"></div>
+					        </td>  
+						</tr> 
+					</table>
+					<table class="table">
+						<tr>  
+					  	    <th>소속전공대학</th>   
+						    <td>
+						    	<div id="stuInfoModal_fromColl"></div>
+						    </td>  
+					   	    <th>소속전공학과</th>   
+					   	    <td>
+					   	    	<div id="stuInfoModal_fromDept"></div>
+					   	    </td>  
+						</tr>  
+						<tr>   
+					        <th>변경전공대학</th>   
+					        <td>
+					        	<div id="stuInfoModal_changeColl"></div>
+					        </td>   
+					        <th>변경전공학과</th>   
+					        <td>
+					        	<div id="stuInfoModal_changeDept"></div>
+					        </td>   
+						</tr>  
+						<tr>   
+					        <th colspan="2">신청사유</th>   
+					        <td colspan="2">
+					        	<div id="stuInfoModal_reason"></div>
+					        </td>   
+						</tr>  
+					</table>
+				</div>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >확인</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+			
+	<!--by수경 복수전공 신청 현황에서 신청 현황 클릭 시 뜨는 복수전공 신청서 -->
+	<div class="modal fade" id="doubleMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title" >복수전공 신청서</h4>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+			<div class="row">
+				<div class="col-12">
+					<table class="table">
+						<tr>
+							<th>이름</th>  
+						    <td>
+						    	<div id="doubleMajorModal_name"></div>
+						    </td>
+						    <th>성별</th>  
+						    <td>
+						    	<div id="doubleMajorModal_gender"></div>
+						    </td>   
+						    <th>생년월일</th>  
+					        <td>
+					        	<div id="doubleMajorModal_birth"></div>
+					        </td>  
+					        
+						</tr>
+						<tr>
+							<th>연락처</th>  
+					        <td>
+					        	<div id="doubleMajorModal_tell"></div>
+					        </td>
+						    <th>주소</th>  
+					        <td colspan="3">
+					        	<div id="doubleMajorModal_addr"></div>
+					        </td>  
+						</tr>
+						<tr>  
+						  
+					  	    <th>학번</th>   
+						    <td>
+						    	<div id="doubleMajorModal_no"></div>
+						    </td>  
+					   	    <th>학년</th>   
+					   	    <td>
+					   	    	<div id="doubleMajorModal_grade"></div>
+					   	    </td> 
+					   	   	<th>상태</th>  
+						    <td>
+						    	<div id="doubleMajorModal_status"></div>
+						    </td>  
+						</tr> 
+						<tr>  
+					  	    <th>전공대학</th>   
+						    <td>
+						    	<div id="doubleMajorModal_coll"></div>
+						    </td>  
+					   	    <th>전공학과</th>   
+					   	    <td>
+					   	    	<div id="doubleMajorModal_dept"></div>
+					   	    </td>  
+					  	    <th>복수전공</th>   
+					        <td>
+					        	<div id="doubleMajorModal_doubleNo"></div>
+					        </td>  
+						</tr> 
+					</table>
+					<table class="table">
+						<tr>  
+					  	    <th>소속전공대학</th>   
+						    <td>
+						    	<div id="doubleMajorModal_fromColl"></div>
+						    </td>  
+					   	    <th>소속전공학과</th>   
+					   	    <td>
+					   	    	<div id="doubleMajorModal_fromDept"></div>
+					   	    </td>  
+						</tr>  
+						<tr>   
+					        <th>복수전공대학</th>   
+					        <td>
+					        	<div id="doubleMajorModal_doubleColl"></div>
+					        </td>   
+					        <th>복수전공학과</th>   
+					        <td>
+					        	<div id="doubleMajorModal_doubleDept"></div>
+					        </td>   
+						</tr>  
+						<tr>   
+					        <th colspan="2">신청사유</th>   
+					        <td colspan="2">
+					        	<div id="doubleMajorModal_reason"></div>
+					        </td>   
+						</tr>  
+					</table>
+				</div>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >확인</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+			
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>	
+<script type="text/javascript" th:src="@{/js/deptManage/changeAddMajor.js}"></script>	
 </div>
 
 

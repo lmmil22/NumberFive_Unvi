@@ -253,4 +253,20 @@ public class EmpController {
 		  
 		  return"redirect:/emp/takeOffReturnUniv";
 	  }
+	  
+	  //by수경 관리자에게 전과신청서 보여주기
+	  @ResponseBody
+	  @PostMapping("/showChangeMajorApplyAjax")
+	  public DeptManageVO showChangeMajorApplyAjax(String stuNo) {
+		  
+		  return empService.showChangeMajor(stuNo);
+	  }
+	  
+	  //by수경 관리자에게 복수전공 신청서 보여주기
+	  @ResponseBody
+	  @PostMapping("/showDoubleMajorAjax")
+	  public DeptManageVO showDoubleMajorAjax(String stuNo) {
+		  
+		  return empService.showDoubleMajor(stuNo);
+	  }
 }

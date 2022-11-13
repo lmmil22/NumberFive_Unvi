@@ -149,4 +149,5 @@ INSERT INTO DOUBLE_MAJOR (DOUBLE_NO
 );
 </insert>
 
+
 </mapper>

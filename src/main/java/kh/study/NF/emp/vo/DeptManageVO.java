@@ -3,6 +3,7 @@ package kh.study.NF.emp.vo;
 import java.util.List;
 
 import groovy.transform.ToString;
+import kh.study.NF.student.vo.StudentVO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +34,9 @@ public class DeptManageVO {
 	
 	//by수경 화면에 학생이름 표시를 위하여 추가
 	private String memName;
+	
+	//by수경 전과/복전 신청서 관리자 페이지 출력을 위하여 추가
+	private StudentVO studentVO;
 
 
 }

@@ -40,5 +40,17 @@ public class EmpServiceImpl implements EmpService{
 		sqlSession.update("deptManageMapper.comebackTakeOffAllAccept", deptManageVO);
 		
 	}
+	
+	//by수경 관리자에게 전과신청서 보여주기
+	@Override
+	public DeptManageVO showChangeMajor(String stuNo) {
+		return sqlSession.selectOne("deptManageMapper.showChangeMajor", stuNo);
+	}
+
+	//by수경 관리자에게 복수전공 신청서 보여주기
+	@Override
+	public DeptManageVO showDoubleMajor(String stuNo) {
+		return sqlSession.selectOne("deptManageMapper.showDoubleMajor", stuNo);
+	}
 
 }

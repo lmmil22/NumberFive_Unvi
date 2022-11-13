@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>[NFU]복학/휴학신청 현황</title>
+<title>[NFU]복학/휴학신청 접수현황</title>
 </head>
 <!--by.수경 학생의 복학, 휴학 신청에 대한 관리자 페이지
 라디오/체크박스 기능으로 처리 가능하도록 구현  -->
@@ -16,15 +16,54 @@
 <th:block layout:fragment ="css">
 	<link rel ="stylesheet" th:href="@{/css/applyModal.css}">
 </th:block>
-
+<!--by수경 복학신청 현황 테이블  -->
 	<div class="row justify-content-center">
-		<div class="col text-center">
-			<H5>복학신청 현황</H5>
+		<div class="row mt-3">	
+			<div class="col mb-2">
+			 1. 복학신청 접수현황
+			</div>
 		</div>
+		<div class="row mt-4">
+			<div class="col">
+				 <table class="table align-middle table-bordered text-center test">
+		            <tr>
+		               <td class="searchTitle">신청일</td>
+		               <td colspan="3">
+		                  <div class="row">
+		                     <div class="col-6">
+		                        <input class="form-control" type="date">
+		                     </div>
+		                     <div class="col-6">
+		                        <input class="form-control" type="date">
+		                     </div>
+		                  </div>
+		               </td>
+		               <td class="searchTitle">처리상태</td>
+		               <td colspan="3">
+		                  <div class="form-check form-check-inline">			
+		                    <input class="form-check-input" type="radio" >
+		                    <label class="form-check-label" for="" >전체</label>
+		                  </div>
+		                     <div class="form-check form-check-inline">
+		                    <input class="form-check-input" type="radio" >
+		                    <label class="form-check-label" for="">승인대기</label>
+		                  </div>
+		                     <div class="form-check form-check-inline">
+		                    <input class="form-check-input" type="radio">
+		                    <label class="form-check-label" for="">승인완료</label>
+		                  </div>
+		               </td>
+		               <td>
+		                  <button class="btn btn-primary" style="height: 45px;" type="button">Search</button>
+		               </td>
+		            </tr>
+		         </table>
+	         </div>
+         </div>
 		
-		<div class="row mt-2">
+		<div class="row">
 			<div class="col mb-5">
-				<table class="table table-bordered">
+				<table class="table table-bordered text-center">
 				   <tr>
 				   	  <th><input type="checkbox" id="allcheck1"></th>
 					  <th>No</th>
@@ -50,7 +89,7 @@
 				      <td><input type="checkbox" class="check1" th:value="${comeback.applyNo}" th:data-stu-no ="${comeback.stuNo}"></td>
 			          <td th:text="${#lists.size(comebackList) - status.index}"></td>
 			          <td th:text="${comeback.memName}"></td>
-				      <td th:text="${comeback.stuNo}" th:onclick="stuInfo([[${comeback.stuNo}]])"></td>
+				      <td th:text="${comeback.stuNo}" th:onclick="stuInfo([[${comeback.stuNo}]])"  data-bs-toggle="modal" data-bs-target="#stuInfoModal"></td>
 				      <td th:text="${comeback.stuYear}"></td>
 				      <td th:text="${comeback.fromColl}"></td>
 				      <td th:text="${comeback.fromDept}"></td>
@@ -70,10 +109,10 @@
 					</th:block>
 				   
 				</table>
-				<div class="row">
-					<div class="col">
+				<div class="row mt-5">
+					<div class="col text-center">
 						<form th:action="@{/emp/comebackAllAccept}" method="post" id="comebackForm">
-							<input type="button" value="일괄승인" th:onclick="comebackAllAccept();">
+							<input type="button" value="일괄승인" th:onclick="comebackAllAccept();"  class="btn btn-primary">
 							<input type="hidden" name="applyNos" value="" id="comebackInput1">
 							<input type="hidden" name="stuNos" value="" id="comebackInput2">
 						</form>
@@ -81,13 +120,53 @@
 				</div>
 			</div>		
 		</div>
-
-		<div class="col text-center">
-			<H5>휴학신청 현황</H5>
+<!-- by수경 휴학신청 현황 테이블  -->
+		<div class="row mt-3">	
+			<div class="col mb-2">
+			 2. 휴학신청 접수현황
+			</div>
 		</div>
-		<div class="row mt-2">
+		<div class="row mt-4">
+			<div class="col">
+				 <table class="table align-middle table-bordered text-center test">
+		            <tr>
+		               <td class="searchTitle">신청일</td>
+		               <td colspan="3">
+		                  <div class="row">
+		                     <div class="col-6">
+		                        <input class="form-control" type="date">
+		                     </div>
+		                     <div class="col-6">
+		                        <input class="form-control" type="date">
+		                     </div>
+		                  </div>
+		               </td>
+		               <td class="searchTitle">처리상태</td>
+		               <td colspan="3">
+		                  <div class="form-check form-check-inline">		
+		                    <input class="form-check-input" type="radio" >
+		                    <label class="form-check-label" for="" >전체</label>
+		                  </div>
+		                     <div class="form-check form-check-inline">
+		                    <input class="form-check-input" type="radio" >
+		                    <label class="form-check-label" for="">승인대기</label>
+		                  </div>
+		                     <div class="form-check form-check-inline">
+		                    <input class="form-check-input" type="radio">
+		                    <label class="form-check-label" for="">승인완료</label>
+		                  </div>
+		               </td>
+		               <td>
+		                  <button class="btn btn-primary" style="height: 45px;" type="button">Search</button>
+		               </td>
+		            </tr>
+		         </table>
+	         </div>
+         </div>
+		
+		<div class="row">
 			<div class="col mb-5">
-				<table class="table table-bordered">
+				<table class="table table-bordered text-center">
 				   <tr>
 					  <th><input type="checkbox" id="allcheck2"></th>				   	
 					  <th>No</th>
@@ -131,10 +210,10 @@
 						</tr>
 					</th:block>
 				</table>
-				<div class="row">
-					<div class="col">
+				<div class="row mt-5">
+					<div class="col text-center">
 						<form th:action="@{/emp/takeOffAllAccept}" method="post" id="takeOffForm">
-							<input type="button" value="일괄승인" th:onclick="takeOffAllAccept();">
+							<input type="button" value="일괄승인" th:onclick="takeOffAllAccept();"  class="btn btn-primary">
 							<input type="hidden" name="applyNos" value="" id="takeOffInput1">
 							<input type="hidden" name="stuNos" value="" id="takeOffInput2">
 						</form>
@@ -144,9 +223,7 @@
 		</div>		
 	</div>		
 	
-	
-	
-	<!-- 휴학 신청 현황에서 학번 클릭 시 뜨는 모달 창 -->
+	<!-- 휴학/복학 신청 현황에서 학번 클릭 시 뜨는 모달 창 -->
 	<div class="modal fade" id="stuInfoModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered">
 	    <div class="modal-content">
@@ -253,10 +330,7 @@
 	    </div>
 	  </div>
 	</div>		
-	
-	
-	
-		
+			
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
 <script type="text/javascript" th:src="@{/js/deptManage/takeOffReturnUniv.js}"></script>	 
 </div>
