@@ -20,7 +20,7 @@
 	
 <!-- 회원가입 -->
 	<insert id="join">
-		INSERT INTO SHOP_MEMBER 
+		INSERT INTO MEMBER 
 				(
 					MEM_NO
 					,MEM_PW 
@@ -28,11 +28,7 @@
 					,MEM_EMAIL
 					,MEM_ADDR
 					,MEM_ADDR_DETAIL
-					,MEM_TELL
-					,MEM_IMAGE
-					,MEM_GENDER
-					,MEM_BIRTH
-					,MEM_ROLE
+					
 				)
 		VALUES (
 					#{memNo}
@@ -41,11 +37,7 @@
 					,#{memEmail}
 					,#{memAddr}
 					,#{memAddrDetail}
-					,#{memTell}
-					,#{memImage}
-					,#{memGender}
-					,#{memBirth}
-					,#{memRole}
+					
 				)
 	</insert>
 
@@ -78,7 +70,7 @@
 </update> 
 
 
-<!--  목록조회-->
+<!-- 회원 목록조회-->
 	<select id="selectMemberList" resultMap="member">
 	   SELECT 
 	       MEM_NO

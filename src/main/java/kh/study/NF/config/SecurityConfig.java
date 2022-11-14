@@ -39,10 +39,10 @@ public class SecurityConfig {
 	}
 	//------------------------- 스프링 암호화 -------------------------------------//
 	// 암호화작업 0번 - 회원가입하면서 암호화된 비밀번호 암호화작업 사용하려면 주석풀어주기!!
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	//------css,js 요청 인증 무시 -------------------------------------------------//
 	// css,js 파일 모두 열리면 인증을 받아야하기때문에 

@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		UserDetails userDetails = User
 								.withUsername(loginInfo.getMemNo())
 								//암호화 작업3 -noop제거 
-								.password("{noop}"+loginInfo.getMemPw())
+								.password(loginInfo.getMemPw())
 								.roles(loginInfo.getMemRole().split(","))
 								.build();
 		return userDetails;

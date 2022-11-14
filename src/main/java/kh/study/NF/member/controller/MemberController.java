@@ -31,8 +31,8 @@ public class MemberController {
 	private MailService mailService;
 	
 	//암호화 작업 1-주석풀기 
-	//@Autowired
-	//private PasswordEncoder encoder;
+	@Autowired
+	private PasswordEncoder encoder;
 //-------------------------------------------------------------------------------------------///	
 	
 	//회원가입(shop에서 복붙 - 우린아직 회원가입은 없음)
@@ -47,7 +47,7 @@ public class MemberController {
 		
 		//암호화 작업2 -주석풀기 
 		//위에서 불러온 암호화 객체를 사용해서 암호화한 비밀번호값 넣어 디비저장해준다.
-		//memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 		
 		//회원가입
 		memberService.join(memberVO);
@@ -59,18 +59,20 @@ public class MemberController {
 	// --> stu컨트롤러에서 학생,교수,교직원 모두 로그인해야해서 공통사항은 (common폴더)여기로 옮겼어!!)
 	// 첫 화면 경로 : http://localhost:8081/member/homeLogin
 	@GetMapping("/homeLogin")
-	public String homeLogin(MemberVO memberVO ) {
-		
+	public String homeLogin(MemberVO memberVO,boolean isLoginFail,Model model ) {
+		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
+		System.out.println("____________지금 로그인 실패니???_________" + isLoginFail);
+		model.addAttribute("isLoginFail",isLoginFail);
 		return "content/common/home_Login"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
 	}
 //-------------------------------------------------------------------------------------------///	
 	// 로그인성공시,로그인실패시 -> 로그인페이지로 이동
-		// 스프링 시큐리티 config에서 설정한 경로대로 보내준다.
-		@GetMapping("/loginResult")
-		public String loginResult() {
-			System.out.println("로그인 결과");
-			return "content/common/login_result";
-		}	
+	// 스프링 시큐리티 config에서 설정한 경로대로 보내준다.
+	@GetMapping("/loginResult")
+	public String loginResult() {
+		System.out.println("로그인 결과");
+		return "content/common/login_result";
+	}	
 //-------------------------------------------------------------------------------------------///	
 	// 이메일로 비밀번호 찾기 (ajax.ver) -> 모달 ajax사용 (ajaxlogin이라는 버튼을 클릭시)
 	//@ResponseBody //ajax사용할때(단,리턴값은 필요한 데이터만! html페이지가 아님!)
@@ -97,10 +99,10 @@ public class MemberController {
 	    	// 여기까지 11/11 완료된 상태
 	    	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	    	// 여기서부터 프로젝트 다시 시작하면된다. 현재상태 : 업데이트쿼리문이 실행되지 않는 상태이다...
-	    	
+	    	// 그러면 회원가입을 진행하고 시큐리티 암호화작업들어가면서 비밀번호 생성해보자. 
 	    	
 	    	// 아래처럼 암호화된 비밀번호를 넣어서 업데이트해야한다.
-			// memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+			 memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 
 	    	// 임시발급비밀번호로 업데이트하기
 	    	memberService.updatePw(memberVO);
@@ -119,7 +121,7 @@ public class MemberController {
 	@GetMapping("/afterLogin")
 	public String afterLogin1(boolean isLoginFail, Model model) {
 		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
-		System.out.println("@@@@@@@@@@@@@@@@@@@" + isLoginFail);
+		System.out.println("_______________로그인 성공시 false값 떠라 -->" + isLoginFail);
 		model.addAttribute("isLoginFail",isLoginFail);
 		
 		return "content/common/after_Login";
