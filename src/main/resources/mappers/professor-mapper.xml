@@ -413,16 +413,15 @@
 		INSERT INTO STU_GRADE(
 		    STU_GRADE_NO
 		    , LEC_NO
-		    , GRADE
 		    , STU_NO
 		)VALUES (
-		    (SELECT 'STU_GRADE_' ||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(SUBJECT_NO,11))),0)+1,3,0) FROM STU_GRADE)
+		    (SELECT 'STU_GRADE_' ||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(STU_GRADE_NO,11))),0)+1,3,0) FROM STU_GRADE)
 		    , #{lecNo}
-		    , #{grade}
 		  	, #{stuNo}
 		)
 	</insert>
 
+	
 
 	<!-- grade목록조회 -->	
  	<select id="selectGrade" resultMap="grade">

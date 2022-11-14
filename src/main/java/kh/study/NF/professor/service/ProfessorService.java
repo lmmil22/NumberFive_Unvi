@@ -39,7 +39,10 @@ public interface ProfessorService {
 	 List<LectureVO> selectLecListEnroll(EnrollmentVO enrollmentVO);
 	 
 	 //수강 신청
-	 void insertEnroll(EnrollmentVO enrollmentVO , String lecNo); 
+//	 void insertEnroll(EnrollmentVO enrollmentVO , String lecNo); 
+	 // //점수 까지 같이 셋팅 
+	 void insertEnroll(EnrollmentVO enrollmentVO , StuGradeVO stuGradeVO,  String lecNo); 
+	 
 	 
 	 //학생이 신청한 수강목록조회 
 	 List<EnrollmentVO> selectStuLectureList(EnrollmentVO enrollmentVO);
@@ -47,7 +50,7 @@ public interface ProfessorService {
 	 //수강 신청 가능한 목록을 띄울 때, 이미 수간 신청한 강의는 
 	 //목록에서 제외하기 위해 신청한 lec_no 목록 데이터를 조회
 	 List<String> selectEnrollmentLecNoList(String stuNo);
-	 //점수 까지 같이 셋팅 
+	
 //	 List<String> selectEnrollmentLecNoList(String stuNo , StuGradeVO stuGradeVO);
 	 
 	 //수강 취소시 진행 

@@ -81,13 +81,13 @@ public class ProfessorServiceImpl implements ProfessorService{
 		return sqlSession.selectList("professorMapper.selectLecLIstEnroll", enrollmentVO);
 	}
 	
-	//수강 신청
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public void insertEnroll(EnrollmentVO enrollmentVO , String lecNo) {
-		sqlSession.insert("professorMapper.insertEnroll", enrollmentVO);
-		sqlSession.update("professorMapper.updateNowNum" , lecNo);
-	}
+//	//수강 신청
+//	@Override
+//	@Transactional(rollbackFor = Exception.class)
+//	public void insertEnroll(EnrollmentVO enrollmentVO , String lecNo) {
+//		sqlSession.insert("professorMapper.insertEnroll", enrollmentVO);
+//		sqlSession.update("professorMapper.updateNowNum" , lecNo);
+//	}
 	@Override
 	public List<EnrollmentVO> selectStuLectureList(EnrollmentVO enrollmentVO) {
 		return sqlSession.selectList("professorMapper.selectStuLecture", enrollmentVO);
@@ -104,11 +104,15 @@ public class ProfessorServiceImpl implements ProfessorService{
 		sqlSession.delete("professorMapper.deleteStuLec",enrollmentVO);
 	}
 	//수강 신청시 점수등록도 같이 하기 위해서 
-//	@Override
-//	public List<String> selectEnrollmentLecNoList(String stuNo, StuGradeVO stuGradeVO) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void insertEnroll(EnrollmentVO enrollmentVO, StuGradeVO stuGradeVO, String lecNo) {
+		sqlSession.insert("professorMapper.insertEnroll", enrollmentVO);
+		sqlSession.update("professorMapper.updateNowNum" , lecNo);
+		sqlSession.insert("professorMapper.settingStuGrade",stuGradeVO );
+		
+	}
 
 	
 	

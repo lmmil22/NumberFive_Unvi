@@ -29,6 +29,7 @@ import kh.study.NF.professor.vo.EnrollmentVO;
 import kh.study.NF.professor.vo.LecturePdfVO;
 import kh.study.NF.professor.vo.LectureTimeVO;
 import kh.study.NF.professor.vo.LectureVO;
+import kh.study.NF.professor.vo.StuGradeVO;
 
 //by지아
 @Controller
@@ -217,9 +218,14 @@ public class ProfessorController {
 	//by 지아 수강 신청 클릭시 진행되는 ajax 
 	@ResponseBody
 	@PostMapping("/insertEnrollAjax")
-	public void insertEnrollAjax(EnrollmentVO enrollmentVO , String lecNo) {
+	public void insertEnrollAjax(EnrollmentVO enrollmentVO , String lecNo , StuGradeVO stuGradeVO) {
+		enrollmentVO.setStuNo("STU_001");
+		stuGradeVO.setLecNo(lecNo);
+		stuGradeVO.setStuNo("STU_001");
 		
-		professorService.insertEnroll(enrollmentVO, lecNo);
+		professorService.insertEnroll(enrollmentVO, stuGradeVO, lecNo);
+		
+		
 		
 	}
 

@@ -47,6 +47,10 @@ function changeLecDetail(lecNo){
 function deleteLec(lecNo){
 	const result = confirm('강의를 삭제하시겠어요?');
 	
+	if(result){
+		
+		
+	
 	//ajax start
 	 $.ajax({
 		 url: '/proF/deleteLecAjax', //요청경로
@@ -62,6 +66,7 @@ function deleteLec(lecNo){
 		 }
 	 });
 	//ajax end
+	}
 	
 }
 
