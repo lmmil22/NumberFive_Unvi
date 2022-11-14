@@ -199,7 +199,7 @@ public class ProfessorController {
 	@GetMapping("/enrollList")
 	public String enrollList(Model model, EnrollmentVO enrollmentVO) {
 		//로그인 임시 코드, 로그인 구현 시 소스 변경 필요
-		enrollmentVO.setStuNo("STU_001");
+		enrollmentVO.setStuNo("STU_003");
 		
 		//이미 수강신청한 lec_no 목록 조회
 		List<String> emrolledList = professorService.selectEnrollmentLecNoList(enrollmentVO.getStuNo());
@@ -220,9 +220,9 @@ public class ProfessorController {
 	@PostMapping("/insertEnrollAjax")
 	public void insertEnrollAjax(EnrollmentVO enrollmentVO , String lecNo , StuGradeVO stuGradeVO) {
 		//시큐리티로 사용시 변경해줘야한다 
-		enrollmentVO.setStuNo("STU_001");
+		enrollmentVO.setStuNo("STU_003");
 		stuGradeVO.setLecNo(lecNo);
-		stuGradeVO.setStuNo("STU_001");
+		stuGradeVO.setStuNo("STU_003");
 		
 		professorService.insertEnroll(enrollmentVO, stuGradeVO, lecNo);
 		
@@ -239,16 +239,28 @@ public class ProfessorController {
 	
 	//점수 등록 페이지로 이동 
 	@GetMapping("/scoreManagement")
-	public String scoreManagement( Model model ) {
+	public String scoreManagement( Model model ,String empNo) {
 		
-		String empNo = "EMP_001";
+		empNo = "EMP_001";
 		
-		professorService.selectProFLecList(empNo);
+		model.addAttribute("lecList", professorService.selectProFLecList(empNo));
 		
 		
 		return "content/professor/stuRegistrationScore";
 		
 	}
+	
+	//선택한 강의의 학생 조회 
+	@ResponseBody
+	@PostMapping("/selectLecStuAjax")
+	public List<StuGradeVO> selectLecStuAjax(String lecNo , Model model) {
+		
+		List<StuGradeVO> list = professorService.selectLecEnrollStuList(lecNo);
+		
+	return list;
+	}
+	//선택한 강의의 학생 정보 조회 점수등록
+	
 	
 	
 	

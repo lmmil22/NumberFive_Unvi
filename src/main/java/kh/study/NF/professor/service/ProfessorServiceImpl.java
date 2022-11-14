@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kh.study.NF.emp.vo.EmpVO;
 import kh.study.NF.professor.vo.EnrollmentVO;
+import kh.study.NF.professor.vo.GradeVO;
 import kh.study.NF.professor.vo.LecturePdfVO;
 import kh.study.NF.professor.vo.LectureTimeVO;
 import kh.study.NF.professor.vo.LectureVO;
@@ -129,6 +130,11 @@ public class ProfessorServiceImpl implements ProfessorService{
 	@Override
 	public List<LectureVO> selectProFLecList(String empNo) {
 		return sqlSession.selectList("professorMapper.selectProFLecList",empNo);
+	}
+	//점수목록조회
+	@Override
+	public List<GradeVO> selectGrade() {
+		return sqlSession.selectList("professorMapper.gradeList");
 	}
 
 	

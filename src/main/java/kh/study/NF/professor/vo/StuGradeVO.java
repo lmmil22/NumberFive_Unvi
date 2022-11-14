@@ -2,6 +2,7 @@
 package kh.study.NF.professor.vo;
 
 import groovy.transform.ToString;
+import kh.study.NF.student.vo.StudentVO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,5 +20,7 @@ public class StuGradeVO {
 	
 	
 	private GradeVO gradeVO;
+	private StudentVO studentVO;
 	private String lecName;	
+	
 }

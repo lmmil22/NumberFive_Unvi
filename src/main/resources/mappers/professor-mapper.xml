@@ -30,7 +30,8 @@
 		<result column="STU_NO" property="grade"/>	
 		<result column="SEM_NO" property="semNo"/>	
 		<result column="LEC_NAME" property="lecName"/>	
-		<association  property="gradeVo" resultMap="grade"/>	
+		<association  property="gradeVO" resultMap="grade"/>	
+		<association  property="studentVO" resultMap="studentMapper.student"/>	
 	</resultMap>
 	
 
@@ -49,6 +50,7 @@
 		<result column="LEC_STATUS" property="lecStatus"/>
 		<association property="lecturePdfVO" resultMap="lecturePdf"/>
 		<association property="lectureTimeVO" resultMap="lectureTime"/>
+		<association property="stuGradeVO" resultMap="stuGrade"/>
 	</resultMap>
 	
 	<!--강의pdf  -->
@@ -382,7 +384,7 @@
 		         FROM LECTURE_PDF
 		         WHERE LEC_NO = E.LEC_NO)  AS ATTACHED_PDF_NAME                                     
 		FROM ENROLLMENT E
-		WHERE STU_NO = 'STU_001'
+		WHERE STU_NO = 'STU_003'
 		ORDER BY LEC_NO DESC
 	</select>
 	<!-- 수강 신청 취소시 진행   -->
@@ -408,10 +410,11 @@
 	
 	
 	<!-- 점수 등록을 위한 교수 강의 조회 -->
-	<select id="selectProFLecList"  resultType="String">
+	<select id="selectProFLecList"  resultMap="lecture">
 	  SELECT
 			L.LEC_NO
 			, LEC_NAME
+			, LEC_SCORE
 			,(SELECT COLL_NAME
 		        FROM COLLEAGE
 		        WHERE COLL_NO = L.COLL_NO) AS COLL_NO
@@ -434,26 +437,31 @@
 	</select>
 	
 
-	 <!-- 점수등록할 강의의 학생 목록 조회  -->
+	 <!-- 점수등록할 강의의 학생들 목록 조회  -->
  	<select id="selectLecEnrollStuList" resultMap="stuGrade">
 	SELECT 
 		L.LEC_NO
 		,(SELECT LEC_NAME
 		        FROM LECTURE
 		        WHERE LEC_NO = L.LEC_NO) AS LEC_NAME
-		, S.STU_NO
+		, G.STU_NO
+
 		, (SELECT MEM_NAME
-			        FROM MEMBER
-			        WHERE MEM_NO = S.MEM_NO) AS MEM_NO
+		        FROM MEMBER
+		        WHERE MEM_NO = (SELECT MEM_NO
+                                FROM STU
+                                WHERE STU_NO = S.STU_NO)) AS MEM_NO
 	    , GRADE
 		FROM STU S, LECTURE L , STU_GRADE G 
-		WHERE L.LEC_NO = G.LEC_NO AND S.STU_NO = G.STU_NO  
+		WHERE L.LEC_NO = G.LEC_NO AND S.STU_NO = G.STU_NO 
+		AND L.LEC_NO = #{lecNo} 
 	   <!--  AND S.STU_NO = 'STU_001' --> 
-	   	<if test="lecNo != null and !lecNo.equals('')">
+	   <!-- 	<if test="lecNo != null and !lecNo.equals('')">
 		AND L.LEC_NO = #{lecNo}
-		</if>
+		</if> -->
 	</select> 
 	
+	<!-- 점수 입력해줄 학생 조회  -->
 	
 	
 	 	
@@ -472,7 +480,7 @@
 
 
 	<!-- grade목록조회 -->	
- 	<select id="selectGrade" resultMap="grade">
+ 	<select id="gradeList" resultMap="grade">
 		SELECT 
 		 	  GRADE 
 	    	, SCORE

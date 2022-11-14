@@ -4,6 +4,7 @@ import java.util.List;
 
 import kh.study.NF.emp.vo.EmpVO;
 import kh.study.NF.professor.vo.EnrollmentVO;
+import kh.study.NF.professor.vo.GradeVO;
 import kh.study.NF.professor.vo.LecturePdfVO;
 import kh.study.NF.professor.vo.LectureTimeVO;
 import kh.study.NF.professor.vo.LectureVO;
@@ -61,5 +62,8 @@ public interface ProfessorService {
 	 
 	 //교수가 등록한 강의 목록만 조회 
 	 List<LectureVO> selectProFLecList(String empNo);
+	 
+	 //점수입력을 위한 점수조회
+	 List<GradeVO> selectGrade();
 	 
 }
