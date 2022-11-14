@@ -25,6 +25,7 @@ function showChangeMajorApply(stuNo, applyNo){
 			document.querySelector('#changeMajorModal_changeColl').innerText = result.toColl;
 			document.querySelector('#changeMajorModal_changeDept').innerText = result.toDept;
 			document.querySelector('#changeMajorModal_reason').innerText = result.applyReason;
+			document.querySelector('#changeMajorModal_apply').value = result.applyNo;
 	    },
 	    error: function(){
 	       alert('실패');
@@ -57,6 +58,7 @@ function showDoubleMajorApply(stuNo, applyNo){
 			document.querySelector('#doubleMajorModal_doubleColl').innerText = result.doubleMajorColl;
 			document.querySelector('#doubleMajorModal_doubleDept').innerText = result.doubleMajorDept;
 			document.querySelector('#doubleMajorModal_reason').innerText = result.applyReason;
+			document.querySelector('#doubleMajorModal_apply').value = result.applyNo;
 	     
 	    },
 	    error: function(){
@@ -226,8 +228,11 @@ function formSubmit(){
 //by수경 전과신청 관리자 단일 승인
 function acceptChangeMajor(){
 	
-	const applyNo = document.querySelector('#changeApplyNo').value;
-	const stuNo = document.querySelector('#changeApplyNo').dataset.stuNo;
+	const applyNo = document.querySelector('#changeMajorModal_apply').value;
+	const stuNo = document.querySelector('#changeMajorModal_no').innerText;
+	alert(stuNo);
+	alert(applyNo);
+	
 	
 	$.ajax({
 	   url: '/emp/acceptChangeMajorAjax', //요청경로
@@ -248,9 +253,10 @@ function acceptChangeMajor(){
 }
 //by수경 복수전공신청 관리자 단일 승인
 function acceptDoubleMajor(){
-	const applyNo = document.querySelector('#doubleApply').value;
-	const stuNo = document.querySelector('#doubleApply').dataset.stuNo;
+	const applyNo = document.querySelector('#doubleMajorModal_apply').value;
+	const stuNo = document.querySelector('#doubleMajorModal_no').innerText;
 	alert(stuNo);
+	alert(applyNo);
 	
 	$.ajax({
 	   url: '/emp/acceptDoubleMajorAjax', //요청경로
