@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>회원가입 결과 실패시</title>
+
+</head>
+<body>
+회원가입 실패
+ <script type="text/javascript">
+		alert(`회원가입 실패하셨습니다. 
+			   요구한 형식에 맞게 회원가입을 다시 진행해주시기 바랍니다.`);
+		location.href='/member/homeLogin?isLoginFail=true';
+</script>
+</body>
+</html>
+
+
+
+
