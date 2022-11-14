@@ -2,6 +2,7 @@ package kh.study.NF.member.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,33 +51,15 @@ public class MemberController {
 			model.addAttribute("memberVO", memberVO);//회원가입 실패시 입력 데이터 값 유지.
 			System.out.println("@@@@@@@@@@@@@@@@@@@@ 회원가입 유효성체크 >>> error발생   @@@@@@@@@@@@@@@@@@@");
 			System.out.println("지금 바인딩 오류의 상태는? " + bindingResult.hasErrors());//true
-			
-			model.addAttribute("isError",bindingResult.hasErrors());
-			//return "content/common/join_fail";
-			
-			//구글링소스
-			/* 유효성 검사를 통과하지 못 한 필드와 메시지 핸들링 */
-			Map<String, String> errorMap = new HashMap<>();
-			
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				errorMap.put("valid_"+error.getField(), error.getDefaultMessage());
-				//log.info("error message : "+error.getDefaultMessage());
-			}
-			/* 회원가입 페이지로 리턴 */
-			return "content/common/join_result";
+			//어떤 오류인지 확인
+			 List<ObjectError> list =  bindingResult.getAllErrors();
+             for(ObjectError e : list) {
+                  System.out.println(e.getDefaultMessage());
+             }
 		}
-		//회원가입 성공시//
-
-		//데이터 유효성 검증이 오류가 없다면?
-		System.out.println("지금 바인딩 오류의 상태는? " + bindingResult.hasErrors());
-		
-		// memberVO값에 status값 세팅해주기
-		// null값들어가지않도록 Enum파일에 있는 'ACTIVE' 값넣어주기
 		memberVO.setMemRole(MemRole.STUDENT.toString());
 		//암호화 작업2 -주석풀기 
-		//위에서 불러온 암호화 객체를 사용해서 암호화한 비밀번호값 넣어 디비저장해준다.
 		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
-		
 		//회원가입 
 		memberService.join(memberVO);
 		return "content/common/join_result";

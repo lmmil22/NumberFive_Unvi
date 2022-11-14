@@ -100,9 +100,11 @@ join_modal.addEventListener('hidden.bs.modal', function(event) {//모달이 완�
 
 
 //////////////////로그인 모달이 닫히면 실행되는 이벤트////////////////////////////////
-login_modal.addEventListener('hidden.bs.modal', function(event) {
-	login_modal.querySelector('form').reset();
-});
+
+// 회원가입 유효성처리한다고 일단 주석처리함 오류나서
+//login_modal.addEventListener('hidden.bs.modal', function(event) {
+//	login_modal.querySelector('form').reset();
+//});
 
 
 
@@ -150,3 +152,119 @@ $('.modal').on('hidden.bs.modal', function (e) {
             }
         })
     })
+    
+    
+
+////////////////////////////////////////////////////////////////////////////////////
+//----------[ 회원가입 모달 유효성 검사 함수 ]------------------------------------//
+function checkValid(){
+// ----------------------------변수선언-------------------------------------------//	
+	let str ='';//validation 처리 표시 문자열
+
+	let memNoTag = document.querySelector('#memNo');
+	let memNameTag = document.querySelector('#memName');
+	let memAddrTag = document.querySelector('#memAddr');
+	let memAddrDetailTag = document.querySelector('#memAddrDetail');
+	
+	// --비밀번호 유효성검사
+	//조건: 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하
+	let pw_regex = new RegExp("^(?=.*[0-9])(?=.*[a-zA-z]).{8,15}$");
+	let memPwTag = document.querySelector('#memPw');
+	// --이메일 유효성검사
+	let email_regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+	let memEmailTag = document.querySelector('#memEmail');
+	
+	
+// ---------------- if문 --------------------------------------------------------//	
+	// 빈 값일 때
+	// 비번
+	if(memPwTag.value == ''){
+		str = '비밀번호는 필수입력입니다.';
+		
+		$(memPwTag).next().remove();
+		str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
+		memPwTag.insertAdjacentHTML('afterend', str);
+		//이메일
+		if(memEmailTag.value == ''){
+			str = '이메일은 필수입력입니다.';
+			
+			$(memEmailTag).next().remove();
+			str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
+			memEmailTag.insertAdjacentHTML('afterend', str);
+			//학번교번
+			if(memNoTag.value == ''){
+				str = '학번및 교번은 필수입력입니다.';
+				
+				//$(memNoTag).next().remove();
+				str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
+				memNoTag.insertAdjacentHTML('afterend', str);
+				//이름
+				if(memNameTag.value == ''){
+					str = '이름은 필수입력입니다.';
+					
+					//$(memNameTag).next().remove();
+					str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
+					memNameTag.insertAdjacentHTML('afterend', str);
+					//주소
+					if(memAddrTag.value == ''){
+						str = '주소는 필수입력입니다.';
+						
+						//$(memAddrTag).next().remove();
+						str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
+						memAddrTag.insertAdjacentHTML('afterend', str);
+						//상세주소
+						if(memAddrDetailTag.value == ''){
+							str = '학번및 교번은 필수입력입니다.';
+							
+							//$(memAddrDetailTag).next().remove();
+							str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
+							memAddrDetailTag.insertAdjacentHTML('afterend', str);
+							
+							return ;	
+						}
+						return ;	
+					}
+					return ;	
+				}
+				return ;	
+			}
+			return ;	
+		}
+		return ;	
+	}
+	
+	
+	// 형식에 맞지않을 때
+	if(!pw_regex.test(memPwTag.value)){// false 값이 아니면(비밀번호정규식대로 사용하지 않으면)
+		str = '올바른 비밀번호 형식이 아닙니다.';
+		
+		$(memPwTag).next().remove();
+		str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
+		memPwTag.insertAdjacentHTML('afterend', str);
+		
+		if(!email_regex.test(memEmailTag.value)){// false 값이 아니면(비밀번호정규식대로 사용하지 않으면)
+			str = '올바른 이메일 형식이 아닙니다.';
+			
+			$(memEmailTag).next().remove();
+			str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
+			memEmailTag.insertAdjacentHTML('afterend', str);
+			
+			return;
+		}
+		return;
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//폼태그 서브밋주기
+	document.querySelector('#joinFormTag').submit();
+	
+	
+}    

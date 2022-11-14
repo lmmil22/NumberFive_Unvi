@@ -152,7 +152,7 @@
       <div class="modal-body">
       <!--  너비 조정-->
       <!-- col-12 / col-6 :  한 줄 너비 총 크기 12이기때문에 12분등 중 어느만큼 사용하는건지 -->
-	  	<form class="row g-3" th:action="@{/member/join}" method="post" th:object="${memberVO}">
+	  	<form id="joinFormTag" class="row g-3" th:action="@{/member/join}" method="post" th:object="${memberVO}">
 		  	<!-- class값은 고정 건드리면 안됨. 부트스트랩사용하기위한 의미 -->
 		    <!-- for태그와 id태그 이름은 같게 하도록 -->
 		  <div class="col-12">
@@ -178,7 +178,7 @@
 		 <!-- 줄을 맞추기위해 실제내용은 화면에 안보이도록 공백문자사용/ class에 form-control 붙여넣기 -->
 		  <div class="col-9">
 		    <label for="memAddr" class="form-label"> 주 소 </label>
-		    <input type="text" class="form-control" th:field="*{memAddr}" placeholder="주소를 검색하세요."  readonly onclick="searchAddr();" required><!-- 값변경못하도록 읽기전용속성값부여하기 ( 데이터넘기기 가능) -->
+		    <input type="text" class="form-control" th:field="*{memAddr}" placeholder="주소를 검색하세요."  readonly onclick="searchAddr();"><!-- 값변경못하도록 읽기전용속성값부여하기 ( 데이터넘기기 가능) -->
 			<div class="hasError" th:if="${#fields.hasErrors('memAddr')}" th:errors="*{memAddr}"></div>
 		  </div>
 		  <div class="col-3" >
@@ -186,19 +186,20 @@
 			<input type="button" class="btn btn-secondary form-control" onclick="searchAddr();" value="검색" >
 		  </div>
 		  <div class="col-12" >
-		    <input type="text" class="form-control" th:field="*{memAddrDetail}" placeholder="상세주소를 입력하세요." required>
+		    <input type="text" class="form-control" th:field="*{memAddrDetail}" placeholder="상세주소를 입력하세요.">
    			<div class="hasError" th:if="${#fields.hasErrors('memAddrDetail')}" th:errors="*{memAddrDetail}"></div>
 		  </div>
 		 
 		  <div class="col-12">
 		    <label for="memEmail" class="form-label">이 메 일</label>
-		    <input type="text" class="form-control" th:field="*{memEmail}"  placeholder="이메일을 입력하세요." required >
+		    <input type="email" class="form-control" th:field="*{memEmail}"  placeholder="이메일을 입력하세요." >
 			<div class="hasError" th:if="${#fields.hasErrors('memEmail')}" th:errors="*{memEmail}"></div>
 		  </div>
 		  
 		  <div class="d-grid gap-2 col-12" >
 		    <!-- 버튼클릭하나로 모든 데이터 가져가야하므로 무조건 submit!  -->
-		    <button type="submit" class="btn btn-primary" >회원가입</button>
+		   <!--  <button type="submit" class="btn btn-primary" >회원가입</button> -->
+		    <button type="button" class="btn btn-primary" onclick="checkValid();">회원가입</button>
 		  </div>
 		</form>
 	  </div>      
