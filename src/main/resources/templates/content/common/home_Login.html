@@ -163,7 +163,7 @@
 
 		  <div class="col-12">
 		    <label for="memPw" class="form-label">비 밀 번 호</label>
-		    <div style="color: red; font-size: 13px;"> ※ 8-16자리, 영어대소문자,해당 특수문자(@$!%*?&) 반드시 포함</div>
+		    <div style="color: red; font-size: 13px;"> ※ 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하</div>
 		    <input type="password" class="form-control"  th:field="*{memPw}"  placeholder="비밀번호를 입력하세요." required>
  			<div class="hasError" th:if="${#fields.hasErrors('memPw')}" 	  th:errors="*{memPw}"></div>
 		  </div>

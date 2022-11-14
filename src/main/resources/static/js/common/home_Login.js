@@ -193,7 +193,7 @@ function checkValid(){
 			memEmailTag.insertAdjacentHTML('afterend', str);
 			//학번교번
 			if(memNoTag.value == ''){
-				str = '학번및 교번은 필수입력입니다.';
+				str = '학번 및 교번은 필수입력입니다.';
 				
 				//$(memNoTag).next().remove();
 				str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;

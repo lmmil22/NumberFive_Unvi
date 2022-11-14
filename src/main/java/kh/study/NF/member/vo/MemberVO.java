@@ -62,8 +62,10 @@ public class MemberVO {
 	private String memTell; 
 	
 	private String memImage;
+	
 	private String memGender;
 	private String memBirth;
+	
 	private String memRole;
 	
 	

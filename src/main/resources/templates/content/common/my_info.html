@@ -7,81 +7,180 @@
 	<link rel="stylesheet" th:href="@{}">
 </th:block>
 <div layout:fragment="content">
-<!-- 제목줄 -->
+
+	<!-- 제목줄 -->
 	<div class="row mb-5">
 		<div class="col">
+		<div align="center">
 		 <h1>회원 정보 수정</h1>
+		</div>
 		 </div>
 	</div>
 	
+	<!-- 부트스트랩-폼태그 -->
+	<form id="updateMemInfoForm" >
+	 <div class="row justify-center-center" style="padding-left : 30%; padding-right: 30%;"  > 
+  <div class="col-md-6">
+    <label for="inputEmail4" class="form-label">학번/교번</label>
+    <input type="email" class="form-control" id="inputEmail4">
+  </div>
+  <div class="col-md-6">
+    <label for="inputEmail4" class="form-label">이름</label>
+    <input type="email" class="form-control" id="inputEmail4">
+  </div>
+  
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label">비밀번호</label>
+	    <input type="password" class="form-control is-invalid" id="inputPassword4" aria-describedby="validationServer05Feedback" required>
+	    <div id="validationServer05Feedback" class="invalid-feedback">
+	      <span style="color: red; font-size: 0.7rem;"> ※ 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하 </span>
+	    </div>
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label">비밀번호 재입력</label>
+    <input type="password" class="form-control" id="inputPassword4">
+    <span style="color: red; font-size: 0.8rem;">입력하신 비밀번호와 일치하지 않습니다.</span>
+  </div>
+  
+  
+  <div class="col-md-12">
+    <label for="inputPassword4" class="form-label">이메일</label>
+    <input type="email" class="form-control" id="inputPassword4">
+  </div>
+  <div class="col-12">
+    <label for="inputAddress" class="form-label">주소</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+  </div>
+  <div class="col-12">
+    <label for="inputAddress2" class="form-label">상세주소 </label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+  </div>
+  <div class="col-md-6">
+    <label for="inputCity" class="form-label">연락처</label>
+    <input type="text" class="form-control" id="inputCity">
+  </div>
+  <div class="col-md-6">
+    <label for="inputCity" class="form-label">생년월일</label>
+    <input type="text" class="form-control" id="inputCity">
+  </div>
+  <div class="col-md-6">
+    <label for="inputState" class="form-label">성별</label>
+    <select id="inputState" class="form-select">
+      <option selected>Choose...</option>
+      <option>...</option>
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label for="validationServer05" class="form-label">이미지 첨부</label>
+	    <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
+	    <div id="validationServer05Feedback" class="invalid-feedback">
+	       <span style="color: red; font-size: 0.8rem;">본인증명사진을 업로드하세요.</span>
+	    </div>
+  </div>
+  <div align="center" class="col-12 mt-3">
+    <button type="submit" class="btn btn-primary">수정 완료</button>
+  </div>
+  
+ </div>
+</form>
 	
-	<!-- 부트스트랩-폼 -->
-	<form class="row g-3">
+	
+	
+	
+	<!-- <form id="updateMemInfoForm" >
+	  <div class="row justify-center-center" style="padding-left : 30%; padding-right: 30%;"  > 
 	  <div class="col-md">
-	    <label for="validationServer01" class="form-label">First name</label>
+	    <label for="validationServer01" class="form-label"> 학번/교번</label>
 	    <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required>
 	    <div class="valid-feedback">
 	      Looks good!
 	    </div>
 	  </div>
+	 
 	  <div>
 		  <div class="col-md">
-		    <label for="validationServer02" class="form-label">Last name</label>
+		    <label for="validationServer02" class="form-label">비밀번호</label>
 		    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
 		    <div class="valid-feedback">
 		      Looks good!
 		    </div>
 		  </div>
 	  </div>
-	  <div class="col-md">
-	    <label for="validationServerUsername" class="form-label">Username</label>
-	    <div class="input-group has-validation">
-	      <span class="input-group-text" id="inputGroupPrepend3">@</span>
-	      <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
-	      <div id="validationServerUsernameFeedback" class="invalid-feedback">
-	        Please choose a username.
-	      </div>
-	    </div>
+	  
+	  <div>
+		  <div class="col-md">
+		    <label for="validationServer02" class="form-label">이름</label>
+		    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
+		    <div class="valid-feedback">
+		      Looks good!
+		    </div>
+		  </div>
 	  </div>
-	  <div class="col-md">
-	    <label for="validationServer03" class="form-label">City</label>
-	    <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required>
-	    <div id="validationServer03Feedback" class="invalid-feedback">
-	      Please provide a valid city.
-	    </div>
+	  
+	  <div>
+		  <div class="col-md">
+		    <label for="validationServer02" class="form-label">이메일</label>
+		    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
+		    <div class="valid-feedback">
+		      Looks good!
+		    </div>
+		  </div>
 	  </div>
+	  
+	  <div>
+		  <div class="col-md">
+		    <label for="validationServer02" class="form-label">주소</label>
+		    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
+		    <div class="valid-feedback">
+		      Looks good!
+		    </div>
+		  </div>
+	  </div>
+	  <div>
+		  <div class="col-md">
+		    <label for="validationServer02" class="form-label">연락처</label>
+		    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
+		    <div class="valid-feedback">
+		      선택사항입니다.
+		    </div>
+		  </div>
+	  </div>
+	  
 	  <div class="col-md">
-	    <label for="validationServer04" class="form-label">State</label>
+	    <label for="validationServer04" class="form-label">성별</label>
 	    <select class="form-select is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
-	      <option selected disabled value="">Choose...</option>
-	      <option>...</option>
+	      <option selected disabled value="">남</option>
+	      <option>여</option>
 	    </select>
 	    <div id="validationServer04Feedback" class="invalid-feedback">
-	      Please select a valid state.
+	      선택사항입니다.
 	    </div>
 	  </div>
+	  
+	  <div>
+		  <div class="col-md">
+		    <label for="validationServer02" class="form-label">생년월일</label>
+		    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
+		    <div class="valid-feedback">
+		      선택사항입니다.
+		    </div>
+		  </div>
+	  </div>
+	  
 	  <div class="col-md">
-	    <label for="validationServer05" class="form-label">Zip</label>
+	    <label for="validationServer05" class="form-label">이미지 첨부</label>
 	    <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
 	    <div id="validationServer05Feedback" class="invalid-feedback">
-	      Please provide a valid zip.
+	      선택사항입니다. 본인증명사진을 업로드하세요.
 	    </div>
 	  </div>
-	  <div class="col-12">
-	    <div class="form-check">
-	      <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
-	      <label class="form-check-label" for="invalidCheck3">
-	        Agree to terms and conditions
-	      </label>
-	      <div id="invalidCheck3Feedback" class="invalid-feedback">
-	        You must agree before submitting.
-	      </div>
-	    </div>
-	  </div>
-	  <div class="col-12">
+	  
+	  <div align="center" class="col-12">
 	    <button class="btn btn-primary" type="submit">Submit form</button>
 	  </div>
-	</form>
+	  
+	 </div>
+	</form> -->
 		
 	
 
