@@ -17,6 +17,7 @@ public class StuGradeVO {
 	private	String grade;
 	private	String semNo;
 	
+	
 	private GradeVO gradeVO;
-		
+	private String lecName;	
 }

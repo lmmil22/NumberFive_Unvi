@@ -29,6 +29,7 @@
 		<result column="STU_NO" property="stuNo"/>	
 		<result column="STU_NO" property="grade"/>	
 		<result column="SEM_NO" property="semNo"/>	
+		<result column="LEC_NAME" property="lecName"/>	
 		<association  property="gradeVo" resultMap="grade"/>	
 	</resultMap>
 	
@@ -180,7 +181,7 @@
 			, ORIGIN_PDF_NAME
 			, ATTACHED_PDF_NAME
 		FROM LECTURE L, LECTURE_PDF LP, LECTURE_TIME LT
-		WHERE  L.LEC_NO = LP.LEC_NO AND L.LEC_NO = LT.LEC_NO
+		WHERE  L.LEC_NO = LP.LEC_NO AND L.LEC_NO = LT.LEC_NO AND 
 		ORDER BY LEC_NO DESC
 	</select>
 	
@@ -390,24 +391,72 @@
 		WHERE  STU_NO = #{stuNo} 
 		AND LEC_NO = #{lecNo}
 	</delete>
-
+	<!-- 수강 신청 취소시 학생 점수도 삭제 진행   -->
+	<delete id="deleteStuLecGrade">
+		DELETE FROM STU_GRADE
+		WHERE  STU_NO = #{stuNo} 
+		AND LEC_NO = #{lecNo}
+	</delete>
 	
-<!-- 	<insert id="">
+	<!-- 수강 취소시 인원 감소  -->
+	<update id="subNowNum">
+	 UPDATE LECTURE 
+	 SET NOW_NUM = NOW_NUM-1 WHERE LEC_NO = #{lecNo}
+	</update>
 	
 	
-	셀렉트 해와서 INSERT
-	
-	</insert>
- -->
-	<!-- 점수등록할 학생 조회 
-	<select id="">
-	SELECT 
 	
 	
-	FROM STU S, LECTURE L , STU_GRADE G , 
+	<!-- 점수 등록을 위한 교수 강의 조회 -->
+	<select id="selectProFLecList"  resultType="String">
+	  SELECT
+			L.LEC_NO
+			, LEC_NAME
+			,(SELECT COLL_NAME
+		        FROM COLLEAGE
+		        WHERE COLL_NO = L.COLL_NO) AS COLL_NO
+			, (SELECT DEPT_NAME
+		        FROM DEPT
+		        WHERE DEPT_NO = L.DEPT_NO) AS DEPT_NO
+			, (SELECT MEM_NAME
+		        FROM MEMBER
+		        WHERE MEM_NO = (SELECT MEM_NO
+                                FROM EMP
+                                WHERE EMP_NO = L.EMP_NO)) AS EMP_NO
+			, (SELECT LEC_DAY||'/'||FIRST_TIME||'-'||LAST_TIME
+							  FROM LECTURE_TIME WHERE LEC_NO = L.LEC_NO ) AS LEC_DAY
+		FROM LECTURE L, LECTURE_TIME LT
+		WHERE L.LEC_NO = LT.LEC_NO AND 
+		EMP_NO = #{empNo}
+		ORDER BY LEC_NO DESC
+	
 	
 	</select>
-	 -->	
+	
+
+	 <!-- 점수등록할 강의의 학생 목록 조회  -->
+ 	<select id="selectLecEnrollStuList" resultMap="stuGrade">
+	SELECT 
+		L.LEC_NO
+		,(SELECT LEC_NAME
+		        FROM LECTURE
+		        WHERE LEC_NO = L.LEC_NO) AS LEC_NAME
+		, S.STU_NO
+		, (SELECT MEM_NAME
+			        FROM MEMBER
+			        WHERE MEM_NO = S.MEM_NO) AS MEM_NO
+	    , GRADE
+		FROM STU S, LECTURE L , STU_GRADE G 
+		WHERE L.LEC_NO = G.LEC_NO AND S.STU_NO = G.STU_NO  
+	   <!--  AND S.STU_NO = 'STU_001' --> 
+	   	<if test="lecNo != null and !lecNo.equals('')">
+		AND L.LEC_NO = #{lecNo}
+		</if>
+	</select> 
+	
+	
+	
+	 	
 	<!-- 수강신청시 등록되는 학생점수  -->
 	 <insert id="settingStuGrade">
 		INSERT INTO STU_GRADE(
@@ -421,7 +470,6 @@
 		)
 	</insert>
 
-	
 
 	<!-- grade목록조회 -->	
  	<select id="selectGrade" resultMap="grade">

@@ -56,5 +56,10 @@ public interface ProfessorService {
 	 //수강 취소시 진행 
 	 void deleteStuLec(EnrollmentVO enrollmentVO);
 	 
+	 // 점수등록할 강의의 학생 목록 조회
+	 List<StuGradeVO> selectLecEnrollStuList(String lecNo);
+	 
+	 //교수가 등록한 강의 목록만 조회 
+	 List<LectureVO> selectProFLecList(String empNo);
 	 
 }

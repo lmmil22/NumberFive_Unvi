@@ -99,9 +99,15 @@ public class ProfessorServiceImpl implements ProfessorService{
 	}
 	//수강 취소시
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void deleteStuLec(EnrollmentVO enrollmentVO) {
 
+		//강의삭제
 		sqlSession.delete("professorMapper.deleteStuLec",enrollmentVO);
+		//강의 점수 삭제 
+		sqlSession.delete("professorMapper.deleteStuLecGrade",enrollmentVO);
+		//강의 인원 삭제 
+		sqlSession.update("professorMapper.subNowNum", enrollmentVO);
 	}
 	//수강 신청시 점수등록도 같이 하기 위해서 
 
@@ -112,6 +118,17 @@ public class ProfessorServiceImpl implements ProfessorService{
 		sqlSession.update("professorMapper.updateNowNum" , lecNo);
 		sqlSession.insert("professorMapper.settingStuGrade",stuGradeVO );
 		
+	}
+	//강의듣는 학생 조회 
+	@Override
+	public List<StuGradeVO> selectLecEnrollStuList(String lecNo) {
+
+		return sqlSession.selectList("professorMapper.selectLecEnrollStuList",lecNo);
+	}
+	//점수 등록을 위한 교수 강의 조회 
+	@Override
+	public List<LectureVO> selectProFLecList(String empNo) {
+		return sqlSession.selectList("professorMapper.selectProFLecList",empNo);
 	}
 
 	

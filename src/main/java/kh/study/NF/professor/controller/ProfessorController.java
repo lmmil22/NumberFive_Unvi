@@ -219,6 +219,7 @@ public class ProfessorController {
 	@ResponseBody
 	@PostMapping("/insertEnrollAjax")
 	public void insertEnrollAjax(EnrollmentVO enrollmentVO , String lecNo , StuGradeVO stuGradeVO) {
+		//시큐리티로 사용시 변경해줘야한다 
 		enrollmentVO.setStuNo("STU_001");
 		stuGradeVO.setLecNo(lecNo);
 		stuGradeVO.setStuNo("STU_001");
@@ -228,13 +229,28 @@ public class ProfessorController {
 		
 		
 	}
-
+	//by 지아 수강 취소를 누르면 
 	@ResponseBody
 	@PostMapping("/deleteEnrollAjax")
 	public void deleteEnrollAjax(EnrollmentVO enrollmentVO) {
 		
 		professorService.deleteStuLec(enrollmentVO);
 	}
+	
+	//점수 등록 페이지로 이동 
+	@GetMapping("/scoreManagement")
+	public String scoreManagement( Model model ) {
+		
+		String empNo = "EMP_001";
+		
+		professorService.selectProFLecList(empNo);
+		
+		
+		return "content/professor/stuRegistrationScore";
+		
+	}
+	
+	
 	
 	
 }
