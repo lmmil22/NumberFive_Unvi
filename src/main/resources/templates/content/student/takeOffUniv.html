@@ -81,15 +81,29 @@
 	</th:block>
 	
 	
-	<!-- by수경 복학신청 버튼 클릭 시 유의사항 모달 -->
+	<!-- by수경 휴학신청 버튼 클릭 시 유의사항 모달 -->
 	<div class="modal fade" id="takeOffUnivModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
+	    <div class="modal-header">
+	        <h5 class="modal-title" > 휴학신청 유의사항</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
 	      <div class="modal-body">
 	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	  휴학신청 유의사항<p>
-		      	  1. [[${stuInfo.memberVO.memName}]]님은 2022년 2학기 휴학 신청을 하셨습니다.
+		      	<div class="col">
+		      	 
+		      	   [[${stuInfo.memberVO.memName}]]님은 2022년 2학기 휴학 신청을 하셨습니다.<p>
+		      	   <p>1. 금학기 신청기간 중 일반휴학 신청하고 승인을 받은 후 본인의 사정에 의하여 
+		      	   취소를 하고 싶으면, 단과대학행정실을 통하여 서면(오프라인)으로 취소신청하고
+		      	    허가를 받아야 합니다. 금학기 일반휴학자는 수강신청과 등록금을 납부하더라도
+		      	    자동으로 복학되지 않습니다.<p>
+				  2. 일반휴학기간은 기본 1년 2개 학기(6개월 1개학기 선택가능)이며, 군휴학은 기본 3년입니다.<p>
+				  3. 미반납 도서 또는 무선랜카드 대여가 있을 경우 반드시 반납하고 신청하시기 바랍니다. (휴학불가)<p>
+				  4. 지난 2022년 8월 졸업예정자 중 졸업학점 또는 졸업요건 미취득으로 추가학
+기 등록이 필요한 학생(재학)은 졸업일 후 일반휴학신청을 할 수 있습니다.<p> - 단, 수료예정자 중 부분수강등록신청자(수료예정자학적처리)는 휴학신청을 할 
+수 없습니다.<p> - 2022-2학기 휴학생은 2023년 2월 졸업대상자가 아닙니다. 따라서, 2022-2학기 휴학생 신분으로는 겨울계절학기를 수강 등을 통해 
+ 이수학점 등을 충족하더라도 2023년 2월에 졸업할 수 없습니다.<p>
 		      	</div>
 	      	</div>
 	      	

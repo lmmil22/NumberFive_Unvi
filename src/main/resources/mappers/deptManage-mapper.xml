@@ -264,9 +264,11 @@ SELECT APPLY_NO
 												   AND S.STU_NO = M.STU_NO)) AS DOUBLE_NO 												
 FROM DEPT_MANAGE D, STU S, MEMBER R
 WHERE APPLY_CODE = 'changeMajor'
-AND S.STU_NO = #{stuNo}
+AND APPLY_NO = #{applyNo}
 AND S.MEM_NO = R.MEM_NO
+AND S.STU_NO = #{stuNo}
 </select>
+
 <!--by수경 관리자에게 복수전공 신청서 보여주기 -->
 <select id="showDoubleMajor" resultMap="deptManage">
 SELECT APPLY_NO
@@ -306,10 +308,31 @@ SELECT APPLY_NO
 												   WHERE M.DOUBLE_NO = S.DOUBLE_NO 
 												   AND #{stuNo} = M.STU_NO)) AS DOUBLE_NO 												
 FROM DEPT_MANAGE D, STU S, MEMBER R
-WHERE APPLY_CODE = 'doubleMajor'
-AND S.STU_NO = #{stuNo}
-AND S.MEM_NO = R.MEM_NO
+WHERE APPLY_CODE = 'doubleMajor' 
+AND  APPLY_NO = #{applyNo}
+AND S.MEM_NO = R.MEM_NO 
+AND S.STU_NO = #{stuNo} 
 </select>
 
+
+<!-- by수경 전과/복수전공신청 일괄승인 -->
+<update id="changeDoubleMajorAllAccept">
+	UPDATE DEPT_MANAGE
+	SET APPROVAL_DATE = #{approvalDate}
+		, PROCESS_STATUS = #{processStatus}
+	WHERE APPLY_NO IN
+	<foreach collection="applyNoList" item="applyNo" separator="," open="(" close=")" >
+       #{applyNo}
+  	</foreach> 
+</update>
+
+
+<!-- by수경 전과/복수전공신청 단일승인 -->
+<update id="acceptChangeDoubleMajor">
+	UPDATE DEPT_MANAGE
+	SET APPROVAL_DATE = #{approvalDate}
+	  , PROCESS_STATUS = #{processStatus}
+	WHERE APPLY_NO = #{applyNo}  
+</update>
 
 </mapper>

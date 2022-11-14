@@ -146,7 +146,7 @@ public class EmpController {
 		  empService.changeStatus(deptManageVO);
 		  
 		  //학생 상태 변경 쿼리 실행
-		  studentService.takeOffStu(deptManageVO.getStuNo());
+		  studentService.takeOffStu(deptManageVO);
 		 
 	  }
 	  
@@ -169,7 +169,7 @@ public class EmpController {
 		  //복학 승인 쿼리 실행
 		  empService.changeStatus(deptManageVO);
 		  //학생 상태 변경 쿼리 실행
-		  studentService.returnStu(deptManageVO.getStuNo());
+		  studentService.returnStu(deptManageVO);
 	  }
 	  
 	  //by수경 복학신청 일괄승인
@@ -197,18 +197,18 @@ public class EmpController {
 		  //processStatus 값 세팅
 		  deptManageVO.setProcessStatus(AcceptApply.accept.toString());
 		  
-		  //일괄승인 쿼리 실행
-		  empService.comebackTakeOffAllAccept(deptManageVO);
-		  
 		  //stuNo를 ,로 구분하여 데이터를 가져왔음
 		  String [] stuNosArr = stuNos.split(",");
 		  //배열 데이터 하나하나를 담을 List 준비
 		  List<String>stuNoList = Arrays.asList(stuNosArr);
 		  //데이터 담기
-		  studentVO.setStuNoList(stuNoList);
+		  deptManageVO.setStuNoList(stuNoList);
 		 
+		  //일괄승인 쿼리 실행
+		  empService.comebackTakeOffAllAccept(deptManageVO);
+		  
 		  //일괄승인 시 학생정보 변경 쿼리 실행
-		  studentService.returnStus(studentVO);
+		  studentService.returnStus(deptManageVO);
 		  
 		  return"redirect:/emp/takeOffReturnUniv";
 	  }
@@ -238,18 +238,18 @@ public class EmpController {
 		  //processStatus 값 세팅
 		  deptManageVO.setProcessStatus(AcceptApply.accept.toString());
 		  
-		  //일괄승인 쿼리 실행
-		  empService.comebackTakeOffAllAccept(deptManageVO);
-		  
 		  //stuNo를 ,로 구분하여 데이터를 가져왔음
 		  String [] stuNosArr = stuNos.split(",");
 		  //배열 데이터 하나하나를 담을 List 준비
 		  List<String>stuNoList = Arrays.asList(stuNosArr);
 		  //데이터 담기
-		  studentVO.setStuNoList(stuNoList);
+		  deptManageVO.setStuNoList(stuNoList);
+		  
+		  //일괄승인 쿼리 실행
+		  empService.comebackTakeOffAllAccept(deptManageVO);
 		 
 		  //일괄승인 시 학생정보 변경 쿼리 실행
-		  studentService.takeOffStus(studentVO);
+		  studentService.takeOffStus(deptManageVO);
 		  
 		  return"redirect:/emp/takeOffReturnUniv";
 	  }
@@ -257,16 +257,156 @@ public class EmpController {
 	  //by수경 관리자에게 전과신청서 보여주기
 	  @ResponseBody
 	  @PostMapping("/showChangeMajorApplyAjax")
-	  public DeptManageVO showChangeMajorApplyAjax(String stuNo) {
+	  public DeptManageVO showChangeMajorApplyAjax(DeptManageVO deptManageVO) {
 		  
-		  return empService.showChangeMajor(stuNo);
+		  return empService.showChangeMajor(deptManageVO);
 	  }
 	  
 	  //by수경 관리자에게 복수전공 신청서 보여주기
 	  @ResponseBody
 	  @PostMapping("/showDoubleMajorAjax")
-	  public DeptManageVO showDoubleMajorAjax(String stuNo) {
+	  public DeptManageVO showDoubleMajorAjax(DeptManageVO deptManageVO) {
 		  
-		  return empService.showDoubleMajor(stuNo);
+		  return empService.showDoubleMajor(deptManageVO);
+	  }
+	  
+	  //수경 전과신청 일괄승인
+	  @PostMapping("/changeAllAccept")
+	  public String changeAllAccept(String applyNos, String stuNos
+			  						, DeptManageVO deptManageVO, StudentVO studentVO) {
+		//applyNo를 ,로 구분하여 데이터를 가져왔기에 제거
+		  String [] applyNosArr = applyNos.split(",");
+		  //배열 데이터 하나하나를 담을 List 준비
+		  List<String> applyNoList = Arrays.asList(applyNosArr);
+		  //데이터 담기
+		  deptManageVO.setApplyNoList(applyNoList);
+		  
+		  //현재 날짜 구하기
+		  LocalDate date = LocalDate.now();
+		    
+		  int year = date.getYear();
+		  int month = date.getMonthValue();
+		  int day = date.getDayOfMonth(); 
+		    
+		  String nowDate = year +"년" + month + "월" + day +"일";
+		  //현재 날짜 데이터 지정
+		  deptManageVO.setApprovalDate(nowDate);
+		  
+		  //processStatus 값 세팅
+		  deptManageVO.setProcessStatus(AcceptApply.accept.toString());
+		  
+		  //stuNo를 ,로 구분하여 데이터를 가져왔음
+		  String [] stuNosArr = stuNos.split(",");
+		  //배열 데이터 하나하나를 담을 List 준비
+		  List<String>stuNoList = Arrays.asList(stuNosArr);
+		  //데이터 담기
+		  deptManageVO.setStuNoList(stuNoList);
+		  
+		  //일괄승인 쿼리 실행
+		  empService.changeDoubleMajorAllAccept(deptManageVO);
+		 
+		  //일괄승인 시 학생정보 변경 쿼리 실행
+		  studentService.changeMajorStus(deptManageVO);
+		  
+		  return"redirect:/emp/changeAddMajor";
+	  }
+	  //수경 복수전공신청 일괄승인
+	  @PostMapping("/doubleAllAccept")
+	  public String doubleAllAccept(String applyNos, String stuNos
+			  , DeptManageVO deptManageVO, StudentVO studentVO) {
+		  //applyNo를 ,로 구분하여 데이터를 가져왔기에 제거
+		  String [] applyNosArr = applyNos.split(",");
+		  //배열 데이터 하나하나를 담을 List 준비
+		  List<String> applyNoList = Arrays.asList(applyNosArr);
+		  //데이터 담기
+		  deptManageVO.setApplyNoList(applyNoList);
+		  
+		  //현재 날짜 구하기
+		  LocalDate date = LocalDate.now();
+		  
+		  int year = date.getYear();
+		  int month = date.getMonthValue();
+		  int day = date.getDayOfMonth(); 
+		  
+		  String nowDate = year +"년" + month + "월" + day +"일";
+		  //현재 날짜 데이터 지정
+		  deptManageVO.setApprovalDate(nowDate);
+		  
+		  //processStatus 값 세팅
+		  deptManageVO.setProcessStatus(AcceptApply.accept.toString());
+		  
+		  //stuNo를 ,로 구분하여 데이터를 가져왔음
+		  String [] stuNosArr = stuNos.split(",");
+		  //배열 데이터 하나하나를 담을 List 준비
+		  List<String>stuNoList = Arrays.asList(stuNosArr);
+		  //데이터 담기
+		  deptManageVO.setStuNoList(stuNoList);
+		  
+		  //일괄승인 쿼리 실행
+		  empService.changeDoubleMajorAllAccept(deptManageVO);
+		  
+		  //일괄승인 시 복수전공 테이블에 테이터 삽입 쿼리 실행
+		  studentService.insertDoubleMajors(deptManageVO);
+		  
+		  //일괄승인 시 학생테이블에 복수전공 코드 데이터 넣기
+		  studentService.updateDoubleMajors(deptManageVO);
+		  
+		  return"redirect:/emp/changeAddMajor";
+	  }
+	  
+	  //by수경 전과신청 관리자 단일승인
+	  @ResponseBody
+	  @PostMapping("/acceptChangeMajorAjax")
+	  public void acceptChangeMajorAjax(DeptManageVO deptManageVO, String applyNo, String stuNo) {
+		  
+		  deptManageVO.setApplyNo(applyNo);
+		  deptManageVO.setStuNo(stuNo);
+		//현재 날짜 구하기
+		  LocalDate date = LocalDate.now();
+		  
+		  int year = date.getYear();
+		  int month = date.getMonthValue();
+		  int day = date.getDayOfMonth(); 
+		  
+		  String nowDate = year +"년" + month + "월" + day +"일";
+		  //현재 날짜 데이터 지정
+		  deptManageVO.setApprovalDate(nowDate);
+		  
+		  //processStatus 값 세팅
+		  deptManageVO.setProcessStatus(AcceptApply.accept.toString());
+		  //전과 단일승인 쿼리 실행
+		  empService.acceptChangeDoubleMajor(deptManageVO);
+		  //학생정보 변경 쿼리 실행
+		  studentService.changeMajorStu(deptManageVO);
+	  }
+	  
+	  //by수경 복수전공신청 관리자 단일승인
+	  @ResponseBody
+	  @PostMapping("/acceptDoubleMajorAjax")
+	  public void acceptDoubleMajorAjax(DeptManageVO deptManageVO, String applyNo, String stuNo) {
+		  
+		  deptManageVO.setApplyNo(applyNo);
+		  deptManageVO.setStuNo(stuNo);
+		  
+		  //현재 날짜 구하기
+		  LocalDate date = LocalDate.now();
+		  
+		  int year = date.getYear();
+		  int month = date.getMonthValue();
+		  int day = date.getDayOfMonth(); 
+		  
+		  String nowDate = year +"년" + month + "월" + day +"일";
+		  //현재 날짜 데이터 지정
+		  deptManageVO.setApprovalDate(nowDate);
+		  
+		  //processStatus 값 세팅
+		  deptManageVO.setProcessStatus(AcceptApply.accept.toString());
+		  
+		  //전과 단일승인 쿼리 실행
+		  empService.acceptChangeDoubleMajor(deptManageVO);
+		  // 복수전공 테이블에 데이터 넣기
+		  studentService.insertDoubleMajor(deptManageVO);
+		  //학생 테이블에 doubleNo데이터 넣기
+		  studentService.updateDoubleMajor(deptManageVO.getStuNo());
 	  }
 }

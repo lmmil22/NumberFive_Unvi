@@ -1,7 +1,5 @@
 package kh.study.NF.student.vo;
 
-import java.util.List;
-
 import groovy.transform.ToString;
 import kh.study.NF.dept.vo.ColleageVO;
 import kh.study.NF.dept.vo.DeptVO;
@@ -30,7 +28,6 @@ public class StudentVO {
 	private ColleageVO collVO;
 	private DoubleMajorVO doubleMajorVO;
 	
-	//by수경 stuNo 여러개 담을 List
-	private List<String> stuNoList; 
+
 
 }

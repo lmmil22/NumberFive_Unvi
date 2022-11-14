@@ -38,5 +38,7 @@ public class DeptManageVO {
 	//by수경 전과/복전 신청서 관리자 페이지 출력을 위하여 추가
 	private StudentVO studentVO;
 
+	//by수경 stuNo 여러개 담을 List
+	private List<String> stuNoList; 
 
 }

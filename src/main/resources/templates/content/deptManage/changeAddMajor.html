@@ -65,7 +65,7 @@
 			<div class="col mb-5">
 				<table class="table table-bordered text-center">
 				   <tr>
-				   	  <th> <input type="checkbox"></th>
+				   	  <th> <input type="checkbox" id="allChk1"></th>
 					  <th>No</th>
 					  <th>이 름</th>
 					  <th>학 번</th>
@@ -87,7 +87,7 @@
 					</th:block>
 					<th:block th:if="${#lists.size(changeMajorList) != 0}">
 						<tr th:each="changeMajor, status : ${changeMajorList}" >
-					      <td><input type="checkbox"></td>
+					      <td><input type="checkbox" class="check1" th:value="${changeMajor.applyNo}" th:data-stu-no="${changeMajor.stuNo}"></td>
 					      <td th:text="${#lists.size(changeMajorList) - status.index}"></td>
 					      <td th:text="${changeMajor.memName}"></td>
 					      <td th:text ="${changeMajor.stuNo}"></td>
@@ -97,11 +97,28 @@
 					      <td th:text="${changeMajor.toColl}"></td>
 					      <td th:text="${changeMajor.toDept}"></td>
 					      <td th:text="${changeMajor.applyDate}"></td>
-					      <td th:text="${changeMajor.processStatus}"  th:onclick="showChangeMajorApply([[${changeMajor.stuNo}]]);" data-bs-toggle="modal" data-bs-target="#stuInfoModal"></td>
+					      <td th:onclick="showChangeMajorApply([[${changeMajor.stuNo}]], [[${changeMajor.applyNo}]]);" data-bs-toggle="modal" data-bs-target="#changeMajorModal">
+					      	<th:block th:if="${changeMajor.processStatus eq 'waiting'}">
+					      		<button>승인대기</button>
+					      	</th:block>
+					      	<th:block th:unless="${changeMajor.processStatus eq 'waiting'}" th:value="${changeMajor.applyNo}" >
+					      		<button>승인완료</button>
+					      	</th:block>
+					      </td>
 					      <td th:text="${changeMajor.approvalDate}"></td>
+					      <span><input type="hidden" th:value="${changeMajor.applyNo}" id="changeApplyNo" th:data-stu-no="${changeMajor.stuNo}"></span>
 						</tr>
 					</th:block>
 				</table>
+				<div class="row mt-5">
+					<div class="col text-center">
+						<form th:action="@{/emp/changeAllAccept}" method="post" id="changeForm">
+							<input type="button" value="일괄승인" th:onclick="changeAllAccept();"  class="btn btn-primary">
+							<input type="hidden" name="applyNos" value="" id="changeInput1">
+							<input type="hidden" name="stuNos" value="" id="changeInput2">
+						</form>
+					</div>
+				</div>
 			</div>		
 		</div>
 <!--by수경 복수전공신청 현황 테이블-->		
@@ -151,7 +168,7 @@
 			<div class="col mb-5">
 				<table class="table table-bordered text-center">
 				   <tr>
-				   	  <th><input type="checkbox"></th>
+				   	  <th><input type="checkbox" id="allChk2"></th>
 					  <th>No</th>
 					  <th>이 름</th>
 					  <th>학 번</th>
@@ -174,7 +191,7 @@
 					</th:block>
 				    <th:block th:if="${#lists.size(doubleMajorList) != 0}">
 					<tr th:each="doubleMajor, status: ${doubleMajorList}">
-					  <td><input type="checkbox"></td>
+					  <td><input type="checkbox" class="check2" th:value="${doubleMajor.applyNo}" th:data-stu-no ="${doubleMajor.stuNo}"></td>
 				      <td th:text="${#lists.size(doubleMajorList) - status.index}"></td>
 				      <td th:text="${doubleMajor.memName}"></td>
 				      <td th:text="${doubleMajor.stuNo}"></td>
@@ -184,17 +201,34 @@
 				      <td th:text="${doubleMajor.doubleMajorColl}"></td>
 				      <td th:text="${doubleMajor.doubleMajorDept}"></td>
 				      <td th:text="${doubleMajor.applyDate}"></td>
-				      <td th:text="${doubleMajor.processStatus}" th:onclick="showDoubleMajorApply([[${doubleMajor.stuNo}]]);" data-bs-toggle="modal" data-bs-target="#doubleMajorModal"></td>
+				      <td th:onclick="showDoubleMajorApply([[${doubleMajor.stuNo}]], [[${doubleMajor.applyNo}]]);" data-bs-toggle="modal" data-bs-target="#doubleMajorModal">
+				      		<th:block th:if="${doubleMajor.processStatus eq 'waiting'}">
+					      		<button>승인대기</button>
+					      	</th:block>
+					      	<th:block th:unless="${doubleMajor.processStatus eq 'waiting'}">
+					      		<button>승인완료</button>
+					      	</th:block>
+				      </td>
 				      <td th:text="${doubleMajor.approvalDate}"></td>
+					<span><input type="hidden" th:value="${doubleMajor.applyNo}" id="doubleApply" th:data-stu-no="${doubleMajor.stuNo}"></span>
 					</tr>
 					</th:block>
 				</table>
+				<div class="row mt-5">
+					<div class="col text-center">
+						<form th:action="@{/emp/doubleAllAccept}"method="post" id="doubleForm">
+							<input type="button" value="일괄승인" th:onclick="doubleAllAccept();"  class="btn btn-primary">
+							<input type="hidden" name="applyNos" value="" id="doubleInput1">
+							<input type="hidden" name="stuNos" value="" id="doubleInput2">
+						</form>
+					</div>
+				</div>
 			</div>		
 		</div>		
 	</div>
 	
 	<!--by수경 전과 신청 현황에서 신청현황 클릭 시 뜨는 전과 신청서 -->
-	<div class="modal fade" id="stuInfoModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+	<div class="modal fade" id="changeMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -208,55 +242,55 @@
 						<tr>
 							<th>이름</th>  
 						    <td>
-						    	<div id="stuInfoModal_name"></div>
+						    	<div id="changeMajorModal_name"></div>
 						    </td>
 						    <th>성별</th>  
 						    <td>
-						    	<div id="stuInfoModal_gender"></div>
+						    	<div id="changeMajorModal_gender"></div>
 						    </td>   
 						    <th>생년월일</th>  
 					        <td>
-					        	<div id="stuInfoModal_birth"></div>
+					        	<div id="changeMajorModal_birth"></div>
 					        </td>  
 					        
 						</tr>
 						<tr>
 							<th>연락처</th>  
 					        <td>
-					        	<div id="stuInfoModal_tell"></div>
+					        	<div id="changeMajorModal_tell"></div>
 					        </td>
 						    <th>주소</th>  
 					        <td colspan="3">
-					        	<div id="stuInfoModal_addr"></div>
+					        	<div id="changeMajorModal_addr"></div>
 					        </td>  
 						</tr>
 						<tr>  
 						  
 					  	    <th>학번</th>   
 						    <td>
-						    	<div id="stuInfoModal_no"></div>
+						    	<div id="changeMajorModal_no"></div>
 						    </td>  
 					   	    <th>학년</th>   
 					   	    <td>
-					   	    	<div id="stuInfoModal_grade"></div>
+					   	    	<div id="changeMajorModal_grade"></div>
 					   	    </td> 
 					   	   	<th>상태</th>  
 						    <td>
-						    	<div id="stuInfoModal_status"></div>
+						    	<div id="changeMajorModal_status"></div>
 						    </td>  
 						</tr> 
 						<tr>  
 					  	    <th>전공대학</th>   
 						    <td>
-						    	<div id="stuInfoModal_coll"></div>
+						    	<div id="changeMajorModal_coll"></div>
 						    </td>  
 					   	    <th>전공학과</th>   
 					   	    <td>
-					   	    	<div id="stuInfoModal_dept"></div>
+					   	    	<div id="changeMajorModal_dept"></div>
 					   	    </td>  
 					  	    <th>복수전공</th>   
 					        <td>
-					        	<div id="stuInfoModal_doubleDept"></div>
+					        	<div id="changeMajorModal_doubleDept"></div>
 					        </td>  
 						</tr> 
 					</table>
@@ -264,27 +298,27 @@
 						<tr>  
 					  	    <th>소속전공대학</th>   
 						    <td>
-						    	<div id="stuInfoModal_fromColl"></div>
+						    	<div id="changeMajorModal_fromColl"></div>
 						    </td>  
 					   	    <th>소속전공학과</th>   
 					   	    <td>
-					   	    	<div id="stuInfoModal_fromDept"></div>
+					   	    	<div id="changeMajorModal_fromDept"></div>
 					   	    </td>  
 						</tr>  
 						<tr>   
 					        <th>변경전공대학</th>   
 					        <td>
-					        	<div id="stuInfoModal_changeColl"></div>
+					        	<div id="changeMajorModal_changeColl"></div>
 					        </td>   
 					        <th>변경전공학과</th>   
 					        <td>
-					        	<div id="stuInfoModal_changeDept"></div>
+					        	<div id="changeMajorModal_changeDept"></div>
 					        </td>   
 						</tr>  
 						<tr>   
 					        <th colspan="2">신청사유</th>   
 					        <td colspan="2">
-					        	<div id="stuInfoModal_reason"></div>
+					        	<div id="changeMajorModal_reason"></div>
 					        </td>   
 						</tr>  
 					</table>
@@ -292,7 +326,11 @@
 			</div>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >확인</button>
+	      	<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
+	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       		th:onclick="acceptChangeMajor();">승인하기</button>
+	        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" 
+	        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">취소</button>
 	      </div>
 	    </div>
 	  </div>
@@ -397,11 +435,58 @@
 			</div>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >확인</button>
+	      	<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
+	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       		th:onclick="acceptDoubleMajor();">승인하기</button>
+	        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" 
+	        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">취소</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
+	<!--by수경 전과/복수전공 일괄승인완료 모달창 -->
+	<div class="modal fade" id="resultAlltModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<div class="row mb-3" >
+		      	<div class="col text-center">
+		      	  일괄 승인이 완료되었습니다.
+		      	</div>
+	      	</div>
+	       <div class="row">
+	       	<div class="col text-center">
+	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
+	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       		th:onclick="formSubmit();">확인</button>
+	       	</div>
+	       </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>		
+	<!--by수경 전과/복수전공 단일 승인완료 모달창 -->
+	<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<div class="row mb-3" >
+		      	<div class="col text-center">
+		      	  승인이 완료되었습니다.
+		      	</div>
+	      	</div>
+	       <div class="row">
+	       	<div class="col text-center">
+	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
+	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       		>확인</button>
+	       	</div>
+	       </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>		
+	
 			
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	

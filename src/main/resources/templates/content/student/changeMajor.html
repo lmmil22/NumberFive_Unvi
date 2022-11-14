@@ -28,7 +28,7 @@
 				</colgroup>
 				<tr>
 				  <th>이름</th>
-				  <td th:text="${stuInfo.memberVO.memName}"></td>
+			 	  <td th:text="${stuInfo.memberVO.memName}"></td>
 				  <th>학번</th>
 			      <td th:text="${stuInfo.stuNo}"></td>
 			      <th>학년</th>
@@ -113,10 +113,13 @@
 	<div class="modal fade" id="changeMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered">
 	    <div class="modal-content">
+		    <div class="modal-header">
+		        <h5 class="modal-title" >전과신청 유의사항</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
 	      <div class="modal-body">
 	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	  전과신청 유의사항<p>
+		      	<div class="col">
 		      	  1. [[${stuInfo.memberVO.memName}]]님은 2022년 2학기 전과신청을 하셨습니다.
 		      	</div>
 	      	</div>

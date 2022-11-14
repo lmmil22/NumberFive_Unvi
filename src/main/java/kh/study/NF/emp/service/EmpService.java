@@ -20,8 +20,15 @@ public interface EmpService {
 	void comebackTakeOffAllAccept(DeptManageVO deptManageVO);
 	
 	//by수경 관리자에게 전과신청서 보여주기
-	DeptManageVO showChangeMajor(String stuNo);
+	DeptManageVO showChangeMajor(DeptManageVO deptManageVO);
 	
 	//by수경 관리자에게 복수전공 신청서 보여주기
-	DeptManageVO showDoubleMajor(String stuNo);
+	DeptManageVO showDoubleMajor(DeptManageVO deptManageVO);
+	
+	//by수경 전과/복수전공신청 일괄 승인
+	void changeDoubleMajorAllAccept(DeptManageVO deptManageVO);
+	
+	//by수경 전과/복수전공신청 단일 승인
+	void acceptChangeDoubleMajor(DeptManageVO deptManageVO);
+
 }

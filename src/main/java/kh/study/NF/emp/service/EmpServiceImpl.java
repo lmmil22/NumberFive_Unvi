@@ -43,14 +43,27 @@ public class EmpServiceImpl implements EmpService{
 	
 	//by수경 관리자에게 전과신청서 보여주기
 	@Override
-	public DeptManageVO showChangeMajor(String stuNo) {
-		return sqlSession.selectOne("deptManageMapper.showChangeMajor", stuNo);
+	public DeptManageVO showChangeMajor(DeptManageVO deptManageVO) {
+		return sqlSession.selectOne("deptManageMapper.showChangeMajor", deptManageVO);
 	}
 
 	//by수경 관리자에게 복수전공 신청서 보여주기
 	@Override
-	public DeptManageVO showDoubleMajor(String stuNo) {
-		return sqlSession.selectOne("deptManageMapper.showDoubleMajor", stuNo);
+	public DeptManageVO showDoubleMajor(DeptManageVO deptManageVO) {
+		return sqlSession.selectOne("deptManageMapper.showDoubleMajor", deptManageVO);
+	}
+	
+	//by수경 전과/복수전공신청 일괄 승인
+	@Override
+	public void changeDoubleMajorAllAccept(DeptManageVO deptManageVO) {
+		sqlSession.update("deptManageMapper.changeDoubleMajorAllAccept", deptManageVO);
+	}
+	
+	//by수경 전과/복수전공신청 단일 승인
+	@Override
+	public void acceptChangeDoubleMajor(DeptManageVO deptManageVO) {
+		sqlSession.update("deptManageMapper.acceptChangeDoubleMajor", deptManageVO);
+		
 	}
 
 }

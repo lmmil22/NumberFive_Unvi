@@ -67,7 +67,7 @@
 		, COLL_NO
 		, (SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO = 
 									(SELECT DOUBLE_DEPT FROM DOUBLE_MAJOR D 
-													WHERE D.DOUBLE_NO = S.DOUBLE_NO AND S.STU_NO = D.STU_NO)) AS DOUBLE_NO
+													WHERE S.STU_NO = #{stuNo})) AS DOUBLE_NO
 	FROM STU S, MEMBER M
 	WHERE S.MEM_NO = M.MEM_NO
 	AND STU_NO = #{stuNo}
@@ -91,7 +91,9 @@
 <!--by수경 학생의 휴학신청 확정(단일승인) 시 상태 update Mapper -->
 <update id="takeOffStu">
 	UPDATE STU 
-	SET STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','휴학','재학') FROM DEPT_MANAGE WHERE STU_NO = #{stuNo})
+	SET STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','휴학','재학') 
+					  FROM DEPT_MANAGE 
+					  WHERE APPLY_NO = #{applyNo})
 	WHERE STU_NO = #{stuNo}
 	
 </update>
@@ -99,7 +101,13 @@
 <!--by수경 학생 휴학 확정(일괄승인) 시 상태 변경  -->
 <update id="takeOffStus">
 	UPDATE STU 
-	SET STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','휴학','재학') FROM DEPT_MANAGE D WHERE STU_NO = D.STU_NO)
+	SET 
+	<foreach collection="applyNoList" item="applyNo" separator=",">
+	STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','휴학','재학') 
+				  FROM DEPT_MANAGE D 
+				  WHERE APPLY_NO = #{applyNo})
+	</foreach> 
+	
 	WHERE STU_NO IN
 	<foreach collection="stuNoList" item="stuNo" separator="," open="(" close=")" >
 		#{stuNo}
@@ -109,7 +117,9 @@
 <!--by수경 학생의 복학신청 확정(단일승인) 시 상태 update Mapper -->
 <update id="returnStu">
 	UPDATE STU 
-	SET STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','재학','휴학') FROM DEPT_MANAGE WHERE STU_NO = #{stuNo})
+	SET STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','재학','휴학') 
+					  FROM DEPT_MANAGE 
+					  WHERE APPLY_NO = #{applyNo})
 	WHERE STU_NO = #{stuNo}
 	
 </update>
@@ -117,37 +127,95 @@
 <!--by수경 학생 복학신청 확정(일괄승인) 시 상태 변경  -->
 <update id="returnStus">
 	UPDATE STU 
-	SET STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','재학','휴학') FROM DEPT_MANAGE D WHERE STU_NO = D.STU_NO)
-	WHERE STU_NO IN
-	<foreach collection="stuNoList" item="stuNo" separator="," open="(" close=")" >
-		#{stuNo}
-  	</foreach> 
+		   SET 
+			<foreach collection="applyNoList" item="applyNo" separator=",">
+				STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','재학','휴학') 
+							  FROM DEPT_MANAGE D 
+							  WHERE APPLY_NO = #{applyNo})
+			</foreach>				  
+			
+			WHERE STU_NO IN
+			<foreach collection="stuNoList" item="stuNo" separator="," open="(" close=")" >
+				#{stuNo}
+		 	</foreach> 
 </update>
 
-<!-- by수경 학생의 전과신청 확정 시 상태 update -->
+<!-- by수경 학생의 전과신청(단일승인) 확정 시 상태 update -->
 <update id="changeMajorStu">
 	UPDATE STU 
-	SET DEPT_NO = (SELECT TO_DEPT FROM DEPT_MANAGE WHERE STU_NO = #{stuNo})
-	  , COLL_NO = (SELECT TO_COLL FROM DEPT_MANAGE WHERE STU_NO = #{stuNo})
+	SET DEPT_NO = (SELECT TO_DEPT FROM DEPT_MANAGE WHERE APPLY_NO = #{applyNo})
+	  , COLL_NO = (SELECT TO_COLL FROM DEPT_MANAGE WHERE APPLY_NO = #{applyNo})
 	WHERE STU_NO = #{stuNo}
 </update>
 
-<!-- by수경 학생의 복수전공 신청 확정 시 상태 update -->
-<insert id="insertDoubleMajor">
-<selectKey resultType="String" keyProperty="doubleNo" order="BEFORE">
-SELECT 'DOUBLE_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(DOUBLE_NO, 8))), 0)+1, 3, 0) FROM DOUBLE_MAJOR
-</selectKey>
+<!-- by수경 학생의 전과신청(일괄승인) 확정 시 상태 update -->
+<update id="changeMajorStus">
+	UPDATE STU 
+			SET
+		    <foreach collection="applyNoList" item="applyNo" separator=",">
+			 DEPT_NO = (SELECT TO_DEPT FROM DEPT_MANAGE D WHERE APPLY_NO = #{applyNo})
+			 , COLL_NO = (SELECT TO_COLL FROM DEPT_MANAGE D WHERE APPLY_NO = #{applyNo})
+		    </foreach>
+			
+			WHERE STU_NO IN
+		    <foreach collection="stuNoList" item="stuNo" separator="," open="(" close=")" >
+			 #{stuNo}
+		    </foreach>
+</update>
 
-INSERT INTO DOUBLE_MAJOR (DOUBLE_NO
-						, STU_NO
-						, DOUBLE_COLL
-						, DOUBLE_DEPT
-			  	)VALUES( #{doubleNo}
-				 		, #{stuNo}
-				 		, (SELECT DOUBLE_MAJOR_COLL FROM DEPT_MANAGE WHERE STU_NO = #{stuNo})
-				 		, (SELECT DOUBLE_MAJOR_DEPT FROM DEPT_MANAGE WHERE STU_NO = #{stuNo})
-);
+<!-- by수경 학생의 복수전공 신청(단일승인) 확정 시 상태 update -->
+<insert id="insertDoubleMajor">
+	INSERT INTO DOUBLE_MAJOR (DOUBLE_NO
+							, STU_NO
+							, DOUBLE_COLL
+							, DOUBLE_DEPT
+				  	)VALUES( (SELECT 'DOUBLE_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(DOUBLE_NO, 8))), 0)+1, 3, 0) 
+				  			  FROM DOUBLE_MAJOR)
+					 		, #{stuNo}
+					 		, (SELECT DOUBLE_MAJOR_COLL FROM DEPT_MANAGE WHERE APPLY_NO = #{applyNo})
+					 		, (SELECT DOUBLE_MAJOR_DEPT FROM DEPT_MANAGE WHERE APPLY_NO = #{applyNo})
+	)
 </insert>
 
+<!-- by수경 학생의 복수전공 신청(일괄승인) 확정 시 상태 INSERT -->
+<insert id="insertDoubleMajors">
+	INSERT INTO DOUBLE_MAJOR (DOUBLE_NO
+							, STU_NO
+							, DOUBLE_COLL
+							, DOUBLE_DEPT
+				  	)VALUES(
+				  	<foreach collection="stuNoList" item="stuNo" separator="," index="i">
+						(SELECT 'DOUBLE_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(DOUBLE_NO, 8))), 0)+1 + #{i}, 3, 0) FROM DOUBLE_MAJOR)
+						, #{stuNo}
+					</foreach>
+					
+					<foreach collection="applyNoList" item="applyNo" separator=",">
+						,(SELECT DOUBLE_MAJOR_COLL FROM DEPT_MANAGE D WHERE APPLY_NO = #{applyNo})
+						, (SELECT DOUBLE_MAJOR_DEPT FROM DEPT_MANAGE D WHERE APPLY_NO = #{applyNo})
+					</foreach>
+	) 
+</insert>
+
+<!--by수경 복수전공 일괄신청승인 후 학생테이블에 doubleNo 데이터 넣기 -->
+<update id="updateDoubleMajors">
+
+	UPDATE STU 
+		<foreach collection="stuNoList" item="stuNo" separator=",">
+			SET DOUBLE_NO = (SELECT DOUBLE_NO FROM DOUBLE_MAJOR WHERE STU_NO = #{stuNo})
+			WHERE STU_NO = #{stuNo}
+		</foreach>
+
+</update>
+
+<!--by수경 복수전공 단일승인 후 학생테이블에 doubleNo 데이터 넣기 -->
+<update id="updateDoubleMajor">
+
+	UPDATE STU 
+		   SET DOUBLE_NO = (SELECT DOUBLE_NO 
+					 		FROM DOUBLE_MAJOR D 
+					 		WHERE D.STU_NO = #{stuNo})
+		   WHERE STU_NO = #{stuNo}
+</update>
+			
 
 </mapper>
