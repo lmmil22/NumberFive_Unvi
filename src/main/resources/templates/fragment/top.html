@@ -19,7 +19,24 @@
         <li class="nav-item"><a href="/board/list" class="nav-link">게시판</a></li>
       </ul>
     </header>
-  </div>
+    <!-- shop 가져온 소스 로그인,로그아웃 -->
+    <div class="row">
+		<div class="col text-end" sec:authorize="isAnonymous()">
+			<span data-bs-toggle="modal" data-bs-target="#join_modal" style="color: #3D8361;">JOIN</span>
+			<span data-bs-toggle="modal" data-bs-target="#login_modal" style="color: #3D8361;">LOGIN</span>
+		</div>
+		
+		
+		<div class="col text-end" sec:authorize="isAuthenticated()" >
+			<!-- 아래 sec 데이터값은 아이디값을 추출되기때문에 span태그 사이에 다른 문자열을 넣을 수 없다. -->
+			<!-- 그래서 이어서 문자열을 작성하려면 span태그 밖에서 작성하도록 한다.  -->
+			✨ WELLCOME [ <span sec:authentication="name"></span>	] 님 ✨
+			<!-- 로그아웃 컨트롤러는 시큐리티에서 자동으로 호출되기때문에 컨트롤러나 form태그 작성 불필요 -->
+			<!-- 단순히 a태그나 버튼으로 경로이동만 시켜주면 된다! --> 
+			<button th:onclick="location.href='@{/logout}';" sec:authorize="isAuthenticated()" type="submit"  class="btn btn-light">LOGOUT</button>
+		</div>
+	</div>
+</div>
 
 </div>
 </html>
