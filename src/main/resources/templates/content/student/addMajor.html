@@ -99,12 +99,13 @@
 		</div>
 	</div>
 	
+	<th:block th:if="${stuInfo.doubleNo eq null}">
 	<div class="row">
 		<div class="col mt-4 text-center">
-			<input type="button" value="복수전공신청" th:onclick="applyAddMajor();">
+			<input type="button" class="btn btn-primary" value="복수전공신청" th:onclick="applyAddMajor();">
 		</div>
 	</div>	
-	
+	</th:block>
 	<!-- by수경 복수신청 버튼 클릭 시 유의사항 모달 -->
 	<div class="modal fade" id="addMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered">
