@@ -255,14 +255,6 @@ function checkValid(){
 	}	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	//폼태그 서브밋주기
 	document.querySelector('#joinFormTag').submit();
 	
