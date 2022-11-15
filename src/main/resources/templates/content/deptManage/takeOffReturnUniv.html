@@ -25,32 +25,33 @@
 		</div>
 		<div class="row mt-4">
 			<div class="col">
+				<form action="" method="post">
 				 <table class="table align-middle table-bordered text-center test">
 		            <tr>
 		               <td class="searchTitle">신청일</td>
 		               <td colspan="3">
 		                  <div class="row">
 		                     <div class="col-6">
-		                        <input class="form-control" type="date">
+		                        <input class="form-control" type="date" name="fromDate" th:value="${paramMap['fromDate']}" >
 		                     </div>
 		                     <div class="col-6">
-		                        <input class="form-control" type="date">
+		                        <input class="form-control" type="date" name="toDate" th:value="${paramMap['toDate']}" >
 		                     </div>
 		                  </div>
 		               </td>
-		               <td class="searchTitle">처리상태</td>
-		               <td colspan="3">
+		               <td class="searchTitle">처리 상태</td>
+		               <td colspan="3" th:each="comeback:${comebackList}">				
 		                  <div class="form-check form-check-inline">			
-		                    <input class="form-check-input" type="radio" >
-		                    <label class="form-check-label" for="" >전체</label>
+		                    <input class="form-check-input" type="radio" name="processStatus" id="" value="" th:checked="${paramMap[''] == null or paramMap['itemStatus'] eq ''}" >
+		                    <label class="form-check-label">전체</label>
 		                  </div>
 		                     <div class="form-check form-check-inline">
-		                    <input class="form-check-input" type="radio" >
-		                    <label class="form-check-label" for="">승인대기</label>
+		                    <input class="form-check-input" type="radio" name="processStatus" id="" value="waiting" th:checked="${paramMap['itemStatus'] eq 'ON_SALE'}">
+		                    <label class="form-check-label">승인대기</label>
 		                  </div>
-		                     <div class="form-check form-check-inline">
-		                    <input class="form-check-input" type="radio">
-		                    <label class="form-check-label" for="">승인완료</label>
+		                  <div class="form-check form-check-inline">
+		                    <input class="form-check-input" type="radio" name="processStatus" id="" value="accept" th:checked="${paramMap['itemStatus'] eq 'ON_SALE'}">
+		                    <label class="form-check-label">승인완료</label>
 		                  </div>
 		               </td>
 		               <td>
@@ -58,6 +59,7 @@
 		               </td>
 		            </tr>
 		         </table>
+		       </form>
 	         </div>
          </div>
 		
@@ -134,10 +136,10 @@
 		               <td colspan="3">
 		                  <div class="row">
 		                     <div class="col-6">
-		                        <input class="form-control" type="date">
+		                        <input class="form-control" type="date" name="fromDate" th:value="${paramMap['fromDate']}" >
 		                     </div>
 		                     <div class="col-6">
-		                        <input class="form-control" type="date">
+		                        <input class="form-control" type="date" name="toDate" th:value="${paramMap['toDate']}" >
 		                     </div>
 		                  </div>
 		               </td>

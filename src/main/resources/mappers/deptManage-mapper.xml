@@ -171,7 +171,7 @@ WHERE STU_NO = #{stuNo}
 </select>
 
 <!--by수경 관리자에게 학생의 복학, 휴학, 전과, 복수전공 신청 목록 보여주는 페이지-->
-<select id="applyList" resultMap="deptManage">
+<select id="applyList" resultMap="deptManage" parameterType="hashMap">
 SELECT APPLY_NO
 	 , (SELECT COLL_NAME FROM COLLEAGE WHERE COLL_NO = FROM_COLL)AS FROM_COLL
 	 , (SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO = FROM_DEPT)AS FROM_DEPT
@@ -189,6 +189,16 @@ SELECT APPLY_NO
 	 												FROM STU 
 	 												WHERE STU_NO = D.STU_NO))AS MEM_NAME
 FROM DEPT_MANAGE D
+WHERE 1=1
+<if test="fromDate != null and !fromDate.equals('')">
+AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
+</if>
+<if test="toDate != null and !toDate.equals('')">
+AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+</if>
+<if test="processStatus !=null and !processStatus.equals('')">
+AND ITEM_STATUS = #{itemStatus}
+</if>
 
 </select>
 

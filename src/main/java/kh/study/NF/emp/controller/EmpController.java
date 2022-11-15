@@ -1,9 +1,9 @@
 package kh.study.NF.emp.controller;
 
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,11 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.NF.config.Student.AcceptApply;
 import kh.study.NF.config.Student.ApplyCode;
+import kh.study.NF.config.Student.DeptManageCalendar;
 import kh.study.NF.emp.service.EmpService;
 import kh.study.NF.emp.vo.DeptManageVO;
 import kh.study.NF.student.service.StudentService;
@@ -36,8 +37,8 @@ public class EmpController {
 	private StudentService studentService;
 	
 	//by수경 휴학,복학 관리자 페이지
-	@GetMapping("/takeOffReturnUniv")
-	public String takeOffReturnUniv(Model model) {
+	@GetMapping("/takeOffReturnUniv") //requestMapping으로 바꿀 것
+	public String takeOffReturnUniv(Model model, @RequestParam Map<String, String> paramMap) {
 		//휴학, 복학, 전과, 복전 신청 목록 조회
 		List<DeptManageVO> applyList = empService.applyList();
 		
@@ -68,12 +69,31 @@ public class EmpController {
 		model.addAttribute("takeOffList", takeOffList);
 		model.addAttribute("comebackList", comebackList);
 		
+		//현재 날짜
+		String nowDate = DeptManageCalendar.nowDate();
+		
+		//한달 전 날짜
+		String aMonthAgo = DeptManageCalendar.aMonthAgo();
+		
+		//넘어오는 fromDate가 없다면 한달 전 날짜로 set 하겠다
+		if(paramMap.get("fromDate")==null) {
+			
+			paramMap.put("fromDate", aMonthAgo);
+		}
+		
+		if(paramMap.get("toDate")==null) {
+			paramMap.put("toDate", nowDate);
+		}
+		//paramMap 데이터 넘기기
+		model.addAttribute("paramMap", paramMap);
+		
+		
 		return "content/deptManage/takeOffReturnUniv";
 	}
 	
 	//by수경 전과, 복수전공 관리자 페이지
 	@GetMapping("/changeAddMajor")
-	public String changeAddMajor(Model model) {
+	public String changeAddMajor(Model model, @RequestParam Map<String, String> paramMap) {
 		//휴학, 복학, 전과, 복전 신청 목록 조회
 		List<DeptManageVO> applyList = empService.applyList();
 	
@@ -105,6 +125,25 @@ public class EmpController {
 		model.addAttribute("changeMajorList", changeMajorList);
 		model.addAttribute("doubleMajorList", doubleMajorList);
 		
+		
+		//현재 날짜
+		String nowDate = DeptManageCalendar.nowDate();
+		
+		//한달 전 날짜
+		String aMonthAgo = DeptManageCalendar.aMonthAgo();
+		
+			//넘어오는 fromDate가 없다면 한달 전 날짜로 set 하겠다
+			if(paramMap.get("fromDate")==null) {
+				
+				paramMap.put("fromDate", aMonthAgo);
+			}
+			
+			if(paramMap.get("toDate")==null) {
+				paramMap.put("toDate", nowDate);
+			}
+		//paramMap 데이터 넘기기
+		model.addAttribute("paramMap", paramMap);
+		
 		return "content/deptManage/changeAddMajor";
 		
 	}
@@ -130,16 +169,11 @@ public class EmpController {
 	  @ResponseBody
 	  @PostMapping("/changeTakeOffStatusAjax")
 	  public void changeTakeOffStatus(DeptManageVO deptManageVO) {
+	
+	      //deptManageCalendar 메소드에서 현재 날짜 데이터 가져오기
+		  String nowDate = DeptManageCalendar.nowDateToString();
 		  
-	  	  //현재 날짜 구하기
-	      LocalDate date = LocalDate.now();
-	    
-	      int year = date.getYear();
-	      int month = date.getMonthValue();
-	      int day = date.getDayOfMonth(); 
-	    
-	      String nowDate = year +"년" + month + "월" + day +"일";
-	      //승인날짜에 추가
+		  //승인날짜에 추가
 		  deptManageVO.setApprovalDate(nowDate);
 		  
 		  //휴학 승인 쿼리 실행
@@ -155,14 +189,9 @@ public class EmpController {
 	  @PostMapping("/changeComebackStatusAjax")
 	  public void changeComebackStatus(DeptManageVO deptManageVO) {
 		  
-		  //현재 날짜 구하기
-		  LocalDate date = LocalDate.now();
+		  //deptManageCalendar 메소드에서 현재 날짜 데이터 가져오기
+		  String nowDate = DeptManageCalendar.nowDateToString();
 		  
-		  int year = date.getYear();
-		  int month = date.getMonthValue();
-		  int day = date.getDayOfMonth(); 
-		  
-		  String nowDate = year +"년" + month + "월" + day +"일";
 		  //승인날짜에 추가
 		  deptManageVO.setApprovalDate(nowDate);
 		  
@@ -183,14 +212,9 @@ public class EmpController {
 		  //데이터 담기
 		  deptManageVO.setApplyNoList(applyNoList);
 
-		  //현재 날짜 구하기
-		  LocalDate date = LocalDate.now();
-		    
-		  int year = date.getYear();
-		  int month = date.getMonthValue();
-		  int day = date.getDayOfMonth(); 
-		    
-		  String nowDate = year +"년" + month + "월" + day +"일";
+		  //deptManageCalendar 메소드에서 현재 날짜 데이터 가져오기
+		  String nowDate = DeptManageCalendar.nowDateToString();
+		  
 		  //현재 날짜 데이터 지정
 		  deptManageVO.setApprovalDate(nowDate);
 		  
@@ -224,14 +248,9 @@ public class EmpController {
 		  //데이터 담기
 		  deptManageVO.setApplyNoList(applyNoList);
 		  
-		  //현재 날짜 구하기
-		  LocalDate date = LocalDate.now();
-		    
-		  int year = date.getYear();
-		  int month = date.getMonthValue();
-		  int day = date.getDayOfMonth(); 
-		    
-		  String nowDate = year +"년" + month + "월" + day +"일";
+		  //deptManageCalendar 메소드에서 현재 날짜 데이터 가져오기
+		  String nowDate = DeptManageCalendar.nowDateToString();
+		  
 		  //현재 날짜 데이터 지정
 		  deptManageVO.setApprovalDate(nowDate);
 		  
@@ -281,14 +300,9 @@ public class EmpController {
 		  //데이터 담기
 		  deptManageVO.setApplyNoList(applyNoList);
 		  
-		  //현재 날짜 구하기
-		  LocalDate date = LocalDate.now();
-		    
-		  int year = date.getYear();
-		  int month = date.getMonthValue();
-		  int day = date.getDayOfMonth(); 
-		    
-		  String nowDate = year +"년" + month + "월" + day +"일";
+		  //deptManageCalendar 메소드에서 현재 날짜 데이터 가져오기
+		  String nowDate = DeptManageCalendar.nowDateToString();
+		  
 		  //현재 날짜 데이터 지정
 		  deptManageVO.setApprovalDate(nowDate);
 		  
@@ -321,14 +335,9 @@ public class EmpController {
 		  //데이터 담기
 		  deptManageVO.setApplyNoList(applyNoList);
 		  
-		  //현재 날짜 구하기
-		  LocalDate date = LocalDate.now();
+		  //deptManageCalendar 메소드에서 현재 날짜 데이터 가져오기
+		  String nowDate = DeptManageCalendar.nowDateToString();
 		  
-		  int year = date.getYear();
-		  int month = date.getMonthValue();
-		  int day = date.getDayOfMonth(); 
-		  
-		  String nowDate = year +"년" + month + "월" + day +"일";
 		  //현재 날짜 데이터 지정
 		  deptManageVO.setApprovalDate(nowDate);
 		  
@@ -361,14 +370,10 @@ public class EmpController {
 		  
 		  deptManageVO.setApplyNo(applyNo);
 		  deptManageVO.setStuNo(stuNo);
-		//현재 날짜 구하기
-		  LocalDate date = LocalDate.now();
 		  
-		  int year = date.getYear();
-		  int month = date.getMonthValue();
-		  int day = date.getDayOfMonth(); 
+		  //deptManageCalendar 메소드에서 현재 날짜 데이터 가져오기
+		  String nowDate = DeptManageCalendar.nowDateToString();
 		  
-		  String nowDate = year +"년" + month + "월" + day +"일";
 		  //현재 날짜 데이터 지정
 		  deptManageVO.setApprovalDate(nowDate);
 		  
@@ -388,14 +393,9 @@ public class EmpController {
 		  deptManageVO.setApplyNo(applyNo);
 		  deptManageVO.setStuNo(stuNo);
 		  
-		  //현재 날짜 구하기
-		  LocalDate date = LocalDate.now();
+		  //deptManageCalendar 메소드에서 현재 날짜 데이터 가져오기
+		  String nowDate = DeptManageCalendar.nowDateToString();
 		  
-		  int year = date.getYear();
-		  int month = date.getMonthValue();
-		  int day = date.getDayOfMonth(); 
-		  
-		  String nowDate = year +"년" + month + "월" + day +"일";
 		  //현재 날짜 데이터 지정
 		  deptManageVO.setApprovalDate(nowDate);
 		  
