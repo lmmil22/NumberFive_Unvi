@@ -99,14 +99,13 @@
 					      <td th:text="${changeMajor.applyDate}"></td>
 					      <td th:onclick="showChangeMajorApply([[${changeMajor.stuNo}]], [[${changeMajor.applyNo}]]);" data-bs-toggle="modal" data-bs-target="#changeMajorModal">
 					      	<th:block th:if="${changeMajor.processStatus eq 'waiting'}">
-					      		<button>승인대기</button>
+					      		<button type="button" class="btn btn-primary">승인<p>대기</button>
 					      	</th:block>
 					      	<th:block th:unless="${changeMajor.processStatus eq 'waiting'}" th:value="${changeMajor.applyNo}" >
-					      		<button>승인완료</button>
+					      		<button type="button" class="btn btn-primary">승인<p>완료</button>
 					      	</th:block>
 					      </td>
 					      <td th:text="${changeMajor.approvalDate}"></td>
-					      <span><input type="hidden" th:value="${changeMajor.applyNo}" id="changeApplyNo" th:data-stu-no="${changeMajor.stuNo}"></span>
 						</tr>
 					</th:block>
 				</table>
@@ -203,14 +202,13 @@
 				      <td th:text="${doubleMajor.applyDate}"></td>
 				      <td th:onclick="showDoubleMajorApply([[${doubleMajor.stuNo}]], [[${doubleMajor.applyNo}]]);" data-bs-toggle="modal" data-bs-target="#doubleMajorModal">
 				      		<th:block th:if="${doubleMajor.processStatus eq 'waiting'}">
-					      		<button>승인대기</button>
+					      		<button type="button" class="btn btn-outline-primary">승인<p>대기</button>
 					      	</th:block>
 					      	<th:block th:unless="${doubleMajor.processStatus eq 'waiting'}">
-					      		<button>승인완료</button>
+					      		<button type="button" class="btn btn-primary">승인<p>완료</button>
 					      	</th:block>
 				      </td>
 				      <td th:text="${doubleMajor.approvalDate}"></td>
-					<span><input type="hidden" th:value="${doubleMajor.applyNo}" id="doubleApply" th:data-stu-no="${doubleMajor.stuNo}"></span>
 					</tr>
 					</th:block>
 				</table>
@@ -479,7 +477,7 @@
 	       	<div class="col text-center">
 	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
 	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-	       		>확인</button>
+	       		th:onclick="home();">확인</button>
 	       	</div>
 	       </div>
 	      </div>

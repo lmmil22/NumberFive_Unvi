@@ -66,11 +66,11 @@
 		, DEPT_NO
 		, COLL_NO
 		, (SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO = 
-									(SELECT DOUBLE_DEPT FROM DOUBLE_MAJOR D 
-													WHERE S.STU_NO = #{stuNo})) AS DOUBLE_NO
+									(SELECT DOUBLE_DEPT FROM DOUBLE_MAJOR
+													WHERE STU_NO = #{stuNo})) AS DOUBLE_NO
 	FROM STU S, MEMBER M
-	WHERE S.MEM_NO = M.MEM_NO
-	AND STU_NO = #{stuNo}
+	WHERE STU_NO = #{stuNo} 
+	AND S.MEM_NO = M.MEM_NO
 </select>
 
 <!--by수경 전공대학 전공학과 선택 시 재학중인 학과 제외  --> 

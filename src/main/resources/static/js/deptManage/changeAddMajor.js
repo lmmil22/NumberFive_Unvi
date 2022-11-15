@@ -230,9 +230,6 @@ function acceptChangeMajor(){
 	
 	const applyNo = document.querySelector('#changeMajorModal_apply').value;
 	const stuNo = document.querySelector('#changeMajorModal_no').innerText;
-	alert(stuNo);
-	alert(applyNo);
-	
 	
 	$.ajax({
 	   url: '/emp/acceptChangeMajorAjax', //요청경로
@@ -255,9 +252,7 @@ function acceptChangeMajor(){
 function acceptDoubleMajor(){
 	const applyNo = document.querySelector('#doubleMajorModal_apply').value;
 	const stuNo = document.querySelector('#doubleMajorModal_no').innerText;
-	alert(stuNo);
-	alert(applyNo);
-	
+
 	$.ajax({
 	   url: '/emp/acceptDoubleMajorAjax', //요청경로
 	    type: 'post',
@@ -274,4 +269,8 @@ function acceptDoubleMajor(){
 	    }
 	});
 
+}
+//by수경 다시 전과/복수전공관리자 페이지로 이동(단일승인)
+function home(){
+	location.href = '/emp/changeAddMajor';
 }

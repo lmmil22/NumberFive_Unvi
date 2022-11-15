@@ -17,7 +17,7 @@ function changeColl(){
 	   		const deptSelect = document.querySelector('.deptList');
 	   		//by수경 학과 select박스 안에 option 태그 선택
 	   		const optionTags = deptSelect.querySelectorAll('option');
-			//by수경 태그를 비우자
+			
 			$('.deptList').empty(); 
 		
 			let str ='';

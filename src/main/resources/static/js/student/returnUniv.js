@@ -10,7 +10,7 @@ function applyReturnUniv(){
 	//by수경 복학신청(관리자 승인x, 현재 학기)내역이 있는지 확인
 	const stuNo = document.querySelector('#stuNo').value;
 	const applyCode = document.querySelector('#applyCode').value;
-	
+
 	$.ajax({
 		url: '/emp/checkApplyAjax', //요청경로
 		type: 'post',
@@ -26,15 +26,6 @@ function applyReturnUniv(){
 			alert('실패');
 		}
 	});
-	
-	//by수경 휴학사유 입력칸 공백 및 빈칸 방지
-	const textArea = document.querySelector('textarea').value;
-	//alert(textArea);
-
-	if(textArea.replace(/\s| /gi, "").length == 0){
-		alert('휴학 사유는 필수 입력 사항입니다. \n휴학 사유를 작성하여 주십시오.');
-		return;
-	}
 
 	//by수경 복학신청 버튼 클릭 시 유의사항 모달창
 	//모달창 소스
