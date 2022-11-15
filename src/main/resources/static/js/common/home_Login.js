@@ -214,7 +214,7 @@ function checkValid(){
 						memAddrTag.insertAdjacentHTML('afterend', str);
 						//상세주소
 						if(memAddrDetailTag.value == ''){
-							str = '학번및 교번은 필수입력입니다.';
+							str = '상세주소는 필수입력입니다.';
 							
 							//$(memAddrDetailTag).next().remove();
 							str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;

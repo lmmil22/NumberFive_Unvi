@@ -80,16 +80,23 @@
 	   ORDER BY MEM_NAME
 	</select> 
 
-<!-- 상세조회 -->
+<!-- 회원상세조회 -->
 	<select id="selectMemberDetail" resultMap="member">
 	   SELECT 
 	       MEM_NO
+	      ,MEM_PW
 	      ,MEM_NAME
-	      ,MEM_ADDR||''||MEM_ADDR_DETAIL as MEM_ADDR
+	      <!-- ,MEM_ADDR||''||MEM_ADDR_DETAIL as MEM_ADDR -->
+	      ,MEM_ADDR
+	      ,MEM_ADDR_DETAIL
 	      ,MEM_EMAIL
 	      ,DECODE(MEM_ROLE,'STU','학생','ADMIN','교직원','PROFESSOR','교수') AS MEM_ROLE
+	      ,MEM_TELL
+	      ,MEM_IMAGE
+	      ,MEM_GENDER
+	      ,MEM_BIRTH
 	   FROM MEMBER
-	   WHERE MEM_NO = #{memNo}
+	   WHERE MEM_NO = #{memNo} 
 	</select>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 
 </mapper> 

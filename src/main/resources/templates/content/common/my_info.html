@@ -8,81 +8,86 @@
 </th:block>
 <div layout:fragment="content">
 
+<div class="row justify-content-center" style="padding:1%;" >
+	<div class="col-12">
+	
 	<!-- 제목줄 -->
 	<div class="row mb-5">
 		<div class="col">
-		<div align="center">
-		 <h1>회원 정보 수정</h1>
-		</div>
+			<div align="center">
+			 <h1>회원 정보 수정 및 등록 </h1>
+			</div>
 		 </div>
 	</div>
 	
 	<!-- 부트스트랩-폼태그 -->
-	<form id="updateMemInfoForm" >
-	 <div class="row justify-center-center" style="padding-left : 30%; padding-right: 30%;"  > 
-  <div class="col-md-6">
-    <label for="inputEmail4" class="form-label">학번/교번</label>
-    <input type="email" class="form-control" id="inputEmail4">
-  </div>
-  <div class="col-md-6">
-    <label for="inputEmail4" class="form-label">이름</label>
-    <input type="email" class="form-control" id="inputEmail4">
-  </div>
-  
-  <div class="col-md-6">
-    <label for="inputPassword4" class="form-label">비밀번호</label>
-	    <input type="password" class="form-control is-invalid" id="inputPassword4" aria-describedby="validationServer05Feedback" required>
-	    <div id="validationServer05Feedback" class="invalid-feedback">
-	      <span style="color: red; font-size: 0.7rem;"> ※ 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하 </span>
-	    </div>
-  </div>
-  <div class="col-md-6">
-    <label for="inputPassword4" class="form-label">비밀번호 재입력</label>
-    <input type="password" class="form-control" id="inputPassword4">
-    <span style="color: red; font-size: 0.8rem;">입력하신 비밀번호와 일치하지 않습니다.</span>
-  </div>
-  
-  
-  <div class="col-md-12">
-    <label for="inputPassword4" class="form-label">이메일</label>
-    <input type="email" class="form-control" id="inputPassword4">
-  </div>
-  <div class="col-12">
-    <label for="inputAddress" class="form-label">주소</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  </div>
-  <div class="col-12">
-    <label for="inputAddress2" class="form-label">상세주소 </label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">연락처</label>
-    <input type="text" class="form-control" id="inputCity">
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">생년월일</label>
-    <input type="text" class="form-control" id="inputCity">
-  </div>
-  <div class="col-md-6">
-    <label for="inputState" class="form-label">성별</label>
-    <select id="inputState" class="form-select">
-      <option selected>Choose...</option>
-      <option>...</option>
-    </select>
-  </div>
-  <div class="col-md-6">
-    <label for="validationServer05" class="form-label">이미지 첨부</label>
-	    <input type="file" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
-	    <div id="validationServer05Feedback" class="invalid-feedback">
-	       <span style="color: red; font-size: 0.8rem;">본인증명사진을 업로드하세요.</span>
-	    </div>
-  </div>
-  <div align="center" class="col-12 mt-3">
-    <button type="submit" class="btn btn-primary">수정 완료</button>
-  </div>
-  
- </div>
-</form>
+	<form id="updateMemInfoForm"  th:action="@{/member/updateMemInfo}" method="post" object="">
+	 <div class="row justify-center-center" style="padding-left : 30%; padding-right: 30%;">    
+		  <div class="col-md-6">
+		    <label for="inputEmail4" class="form-label"> 학번/교번 </label>
+		    <div  th:text="${#authentication.name}" type="email" class="form-control" id="inputEmail4"></div>
+		  </div>
+		  <div class="col-md-6">
+		    <label for="inputEmail4" class="form-label"> 이름 </label>
+		    <input  type="text" class="form-control" id="inputEmail4">
+		  </div>
+		  <div class="input-group col-md-12 mb-3 mt-3">
+			  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+			  <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+			</div>
+		  
+		  <div class="col-md-6">
+		    <label for="inputPassword4" class="form-label">비밀번호</label>
+		    <input type="password" class="form-control is-invalid" id="inputPassword4" aria-describedby="validationServer05Feedback" required>
+		    <div id="validationServer05Feedback" class="invalid-feedback">
+		      <span style="color: red; font-size: 0.7rem;"> ※ 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하 </span>
+		    </div>
+		  </div>
+		  <div class="col-md-6">
+		    <label for="inputPassword4" class="form-label">비밀번호 재입력</label>
+		    <input type="password" class="form-control" id="inputPassword4">
+		    <span style="color: red; font-size: 0.8rem;">입력하신 비밀번호와 일치하지 않습니다.</span>
+		  </div>
+		  <div class="col-md-12">
+		    <label for="inputPassword4" class="form-label">이메일</label>
+		    <input type="email" class="form-control" id="inputPassword4">
+		  </div>
+		  <div class="col-12">
+		    <label for="inputAddress" class="form-label">주소</label>
+		    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+		  </div>
+		  <div class="col-12">
+		    <label for="inputAddress2" class="form-label">상세주소 </label>
+		    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+		  </div>
+		  <div class="col-md-6">
+		    <label for="inputCity" class="form-label">연락처</label>
+		    <input type="text" class="form-control" id="inputCity">
+		  </div>
+		  <div class="col-md-6">
+		    <label for="inputCity" class="form-label">생년월일</label>
+		    <input type="text" class="form-control" id="inputCity">
+		  </div>
+		  <div class="col-md-6">
+		    <label for="inputState" class="form-label">성별</label>
+		    <select id="inputState" class="form-select">
+		      <option selected>Choose...</option>
+		      <option>...</option>
+		    </select>
+		  </div>
+		  <div class="col-md-6">
+		    <label for="validationServer05" class="form-label">이미지 첨부</label>
+			    <input type="file" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
+			    <div id="validationServer05Feedback" class="invalid-feedback">
+			       <span style="color: red; font-size: 0.8rem;">본인증명사진을 업로드하세요.</span>
+			    </div>
+		  </div>
+		  <div align="center" class="col-12 mt-3">
+		    <button type="submit" class="btn btn-primary">수정 완료</button>
+		  </div>
+		  
+		 </div>
+		</form>
 	
 	
 	
@@ -183,7 +188,8 @@
 	</form> -->
 		
 	
-
+	</div>
+</div>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
 <script type="text/javascript" th:src="@{/js/common/my_info.js}"></script>	
 </div>

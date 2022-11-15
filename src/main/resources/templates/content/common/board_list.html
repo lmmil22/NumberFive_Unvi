@@ -7,38 +7,48 @@
 	<link rel="stylesheet" th:href="@{}">
 </th:block>
 <div layout:fragment="content">
-board_list페이지입니다.
-<table class="table table-hover ">
-  
-	<thead class="table-light">
-		<tr>
-			<td>글번호</td>
-			<td>글제목</td>
-			<td>작성일</td>
-			<td>작성자</td>
-		</tr>
-	  </thead>
-	  <tbody>
-	  <th:block th:if="${#lists.size('boardList') == 0}">
-		<tr>
-			<td colspan="4"> 게시글이 없습니다.</td>
-		</tr>
-		</th:block>
-		<!--  boardListr가져올때 홀따옴표 감싸서 가져오기 주의!!!! -->
-	  <!-- <th:block th:unless="${#lists.size('boardList') == 0}" >
-		<tr th:each="board : ${boardList}">
-			<td th:text="${board.boardNum}"></td>
-			<td>
-				<a th:href="@{/board/detail(boardNum=${board.boardNum})}" th:text="${board.title}"></a>
-			</td>
-			<td th:text="${board.createDate}"></td>
-			<td th:text="${board.memberId}"></td>
-		</tr>
-	  </th:block> -->
-	  </tbody>
-</table>	
+<!-- 제목/내용 셀렉트박스 선택  + 키워드검색 -->
+<div class="row" style="background-color: yellow; text-align: center;">
+	<div class="col">제목/내용 셀렉트박스 선택  + 키워드검색 영역 </div>
+</div> 
 
-
+<div class="row mt-5">
+	<div class="col">
+	<table class="table table-hover ">
+		<thead class="table-light">
+			<tr>
+				<td>글번호</td>
+				<td>글제목</td>
+				<td>작성일</td>
+				<td>작성자</td>
+			</tr>
+		  </thead>
+		  <tbody>
+		  <th:block th:if="${#lists.size('boardList') == 0}">
+			<tr>
+				<td colspan="4"> 게시글이 없습니다.</td>
+			</tr>
+			</th:block>
+			<!--  boardListr가져올때 홀따옴표 감싸서 가져오기 주의!!!! -->
+			  <th:block th:unless="${#lists.size('boardList') == 0}" >
+				<tr th:each="board : ${boardList}">
+					<td th:text="${board.boardNo}"></td>
+					<td>
+						<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="${board.boardTitle}"></a>
+					</td>
+					<td th:text="${board.boardCreateDate}"></td>
+					<td th:text="${board.memNo}"></td>
+				</tr>
+			  </th:block>
+			</tbody>
+	</table>	
+	</div>
+	
+	<!--로그인하면 글쓰기 등록버튼 -->
+	 <div align="center">
+		<button  sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-success" th:onclick="@{location.href='/board/reg';}">글쓰기</button>
+	</div> 
+</div>
 
 </div>
 </html>

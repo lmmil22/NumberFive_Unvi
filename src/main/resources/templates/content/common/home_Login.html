@@ -21,9 +21,14 @@
 			</span> 
 		 </div>
 		 
+		<!--  로그인 폼 영역 -->
 		<div class="col-5">
-			<!--  로그인 폼 영역 -->
+		<!-- 로그인이 안되면 뜨고 아니면 안뜨도록해보자. -->
+		<!-- <th:block if="${#authentication.authenticated eq False}">
+		 	 로그인 및 회원가입이 필요합니다. -->
+		 	 
 			<div style="padding-top: 30%; padding-right: 20%">
+				
 				<form method="post" action="/member/homeLogin"  th:object="${memberVO}">
 					<div class="form-floating mb-3">
 					  <input name="username" type="text" class="form-control" id="floatingInput" placeholder="학번 혹은 교직원 번호를 입력하세요">
@@ -39,19 +44,28 @@
 					  	<a id="findPwId"  style="font-style: italic; font-weight: lighter; " data-bs-toggle="modal" data-bs-target="#myModal" > 이메일로 비밀번호 찾기</a>
 						
 						<!-- 로그인 성공시 넘어가는 페이지경로 :onclick="location.href='/mail/sendMail';" -->		
-					
 					</div>
-					<div class="row mt-3 mb-2">
-						<div class="col">
-							<div align="center">
-					    		<button type="submit" class="btn btn-outline-primary" > 로그인 </button>
-					    		<button data-bs-toggle="modal" data-bs-target="#join_modal" type="button" class="btn btn-outline-primary" > 회원가입 </button>
+					
+					
+						<div class="row mt-3 mb-2" >
+							<div class="col">
+								<div align="center">
+						    		<button type="submit" class="btn btn-outline-primary" > 로그인 </button>
+						    		<button data-bs-toggle="modal" data-bs-target="#join_modal" type="button" class="btn btn-outline-primary" > 회원가입 </button>
+								</div>
 							</div>
 						</div>
-					</div>
+					
 				</form>
 			</div>
+			</th:block>
+			
+			<!-- <th:block if="${#authentication.authenticated ne False}">
+				현재 회원님은 로그인이 되어있습니다. 홈페이지를 이용해주시길 바랍니다.
+			</th:block> -->
+			
 		</div>
+		<!-- 로그인 폼 영역 끝 -->
 	</div>
 	
 <!-- 1번) shop 복붙소스- 이메일로 비밀번호 찾기 a태그 클릭시 실행 Modal  -->
@@ -211,6 +225,7 @@
 
 <!-- 주소 API  -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" th:src="@{/js/common/home_Login.js}"></script>
 
 </div>

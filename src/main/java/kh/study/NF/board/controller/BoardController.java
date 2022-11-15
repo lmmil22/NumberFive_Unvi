@@ -26,12 +26,6 @@ public class BoardController {
 	@Resource(name = "boardService")
 	private BoardService boardService;
 	
-	//게시판 목록조회
-	//@GetMapping("/list")
-	//public String list() {
-	//	return "content/common/board_list";
-	//}
-	
 	//게시글 목록페이지
 	@RequestMapping("/list")
 	public String select(Model model,BoardVO boardVO) {

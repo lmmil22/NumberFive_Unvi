@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -143,15 +145,68 @@ public class MemberController {
 		
 		return "content/common/afterLogin";
 	}
-	
-//-------------------------------------------------------------------------------------------///	
+//-------------------------------------------------------------------------------------------//	
 	// 나의 정보관리 클릭시,
 	@GetMapping("/myinfo")
-	public String myinfo(MemberVO memberVO) {
+	public String myinfo(String memNo, Model model,Authentication authentication) {
+		//시큐리티 사용했으므로 로그인한 유저의 정보를 가져온다.
+		User user = (User)authentication.getPrincipal();
+		//로그인한 사람의 아이디,비밀번호,권한정보 데이터만 가져올수있다.
+		System.out.println("id = " + user.getUsername());
+		//System.out.println("pw = " + encoder.encode(user.getPassword()));
+		
+		//회원상세정보조회
+		model.addAttribute("memInfo", memberService.selectMemberDetail(memNo));
+		
 		return "content/common/my_info";
 	}
+
+	//상세조회 후 회원정보수정
+	@PostMapping("/updateMemInfo")
+	public String updateMemInfo() {
+		return "redirect:/member/myInfo";
+	}
+//-------------------------------------------------------------------------------------------//
 	
-//-------------------------------------------------------------------------------------------///	
+	// 관리자모드 - 회원등록양식페이지이동
+	@GetMapping("/regMemForm")
+	public String regMemForm(MemberVO memberVO, boolean isLoginFail, Model model ) {
+		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
+		System.out.println("____________지금 로그인 실패니???_________" + isLoginFail);
+		model.addAttribute("isLoginFail",isLoginFail);
+		return "content/admin/reg_mem";
+	}
+	
+	//관리자모드 - 회원등록 실제 페이지 이동
+	@PostMapping("/regMem")
+	public String regMem(@Valid MemberVO memberVO, BindingResult bindingResult, Model model) {
+		// !! validation 체크 (데이터 유효성 검증)
+		if (bindingResult.hasErrors()) {// 바인딩하는데 오류가 생겼니?: 결과는 true/false
+			model.addAttribute("memberVO", memberVO);//회원가입 실패시 입력 데이터 값 유지.
+			System.out.println("@@@@@@@@@@@@@@@@@@@@ 회원가입 유효성체크 >>> error발생   @@@@@@@@@@@@@@@@@@@");
+			System.out.println("지금 바인딩 오류의 상태는? " + bindingResult.hasErrors());//true
+			//어떤 오류인지 확인
+			 List<ObjectError> list =  bindingResult.getAllErrors();
+             for(ObjectError e : list) {
+                  System.out.println(e.getDefaultMessage());
+             }
+		}
+		memberVO.setMemRole(MemRole.STUDENT.toString());
+		//암호화 작업2 -주석풀기 
+		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+		//회원가입 
+		memberService.join(memberVO);
+		return "redirect:/member/afterLogin";
+	}	
+	
+	
+	
+	
+	
+
+	
+	
+//-------------------------------------------------------------------------------------------//
 	// 로그인 실패시
 	@GetMapping("/loginFail")
 	public String loginFail( ) {
