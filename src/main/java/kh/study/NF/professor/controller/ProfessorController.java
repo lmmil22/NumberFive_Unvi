@@ -26,6 +26,7 @@ import kh.study.NF.dept.service.DeptService;
 import kh.study.NF.dept.vo.DeptVO;
 import kh.study.NF.professor.service.ProfessorService;
 import kh.study.NF.professor.vo.EnrollmentVO;
+import kh.study.NF.professor.vo.GradeVO;
 import kh.study.NF.professor.vo.LecturePdfVO;
 import kh.study.NF.professor.vo.LectureTimeVO;
 import kh.study.NF.professor.vo.LectureVO;
@@ -260,9 +261,14 @@ public class ProfessorController {
 	return list;
 	}
 	//선택한 강의의 학생 정보 조회 점수등록
-	
-	
-	
+	@ResponseBody
+	@PostMapping("/setScoreAjax")
+	public List<GradeVO> setScoreAjax(Model model) {
+		
+	List<GradeVO> list = 	professorService.selectGrade();
+		
+		return list;
+	}
 	
 	
 }

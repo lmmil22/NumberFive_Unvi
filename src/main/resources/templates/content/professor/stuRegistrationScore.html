@@ -14,11 +14,11 @@
 	<input type="text" >
 	<input type="button" value="검색"> 
 	<div class="row">
-		<div class="col-5">강의 목록
+		<div class="col">강의 목록
 			<div>
 			<table class="table table-primary table-hover" style="text-align: center;"  >
 			  <thead>
-			    <tr>
+			    <tr class="table-light">
 			      <th scope="col">강의명</th>
 			      <th scope="col">강의 학점</th>
 			      <th scope="col">단대</th>
@@ -26,7 +26,7 @@
 			    </tr>
 			  </thead>
 			  <tbody>
-			    <tr th:each="lec : ${lecList}">
+			    <tr class="table-light" th:each="lec : ${lecList}">
 					<!-- <th scope="row" th:text="${lec.lecNo}">1</th> -->
 					<td th:text="${lec.lecName}" th:onclick="selectLecStu([[${lec.lecNo}]]);"></td>
 					<td th:text="${lec.lecScore}"></td>
@@ -38,12 +38,15 @@
 			</div>
 
 		</div>
-		<div class="col">수강 학생
+		
+		</div>
+		<div class="col">
+			<div class="col">수강 학생
 					<div>
-			<table class="table table-primary table-hover stuListTable" style="text-align: center;"  >
+			<table class="table table-light table-hover stuListTable" style="text-align: center;"  >
 			  <thead>
-			    <tr>
-			      <th scope="col">학번</th>
+			    <tr class="table-light">
+			      <th  scope="col">학번</th>
 			      <th scope="col">이름</th>
 			      <th scope="col">성적</th>
 			      <th scope="col">등록</th>
@@ -59,49 +62,13 @@
 			</div>
 
 		</div>
-		
-		
-		
 		</div>
-		<div class="col">학생 점수
-			<div>
-			<table class="table table-primary table-hover stuListTable" style="text-align: center;"  >
-			  <thead>
-			    <tr>
-			      <th scope="col">학번</th>
-			      <th scope="col">이름</th>
-			      <th scope="col">강의명 </th>
-			      <th scope="col">점수 </th>
-			      <th scope="col">등록</th>
 
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr >
-					<!-- <th scope="row" th:text="${lec.lecNo}">1</th> -->
-
-			  </tbody>
-			</table>
-			
-			
-			
-			</div>
-		
-		
-		</div>
-	
-
-
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-
-
 	<script th:src="@{/js/professor/stuRegistrationScore.js}"></script>
-
-
 
 </div>
 	
-	
-
 
 </html>
