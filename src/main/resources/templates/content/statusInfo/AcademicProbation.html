@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout ="http://www.ultrap.net.nz/thymeleaf/layout"	
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/base_layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div layout:fragment ="content">
+	<div class="row justify-content-center">
+		<div class="col mt-5">
+		학사경고 학생조회
+			<table class="table align-middle text-center">
+				<tr>
+					<td>소속대학</td>
+					<td colspan="3"> 
+						<select class="form-select" th:onchange="changeColl();" id="coll">
+							<option selected value="">전체</option>
+							<th:block th:each=" coll : ${collList}">
+								<option th:value="${coll.collNo}" th:text="${coll.collName}"></option>
+							</th:block>
+						</select>
+					</td>
+					<td>소속학과</td>
+					<td colspan="2"> 
+						<select class="form-select deptList" id="dept">
+							<option selected value="">전체</option>
+							<th:block th:each=" dept : ${deptList}">
+								<option th:value="${dept.deptNo}" th:text="${dept.deptName}"></option>
+							</th:block>
+						</select> 
+					</td>
+					<td rowspan="2">  <button class="btn btn-primary" style="height: 90px;" type="submit">Search</button> </td>
+				</tr>
+				<tr>
+					<td>학적</td>
+					<td><select class="form-select" ><option selected value="">전체</option></select></td>
+					<td>학년</td>
+					<td><select class="form-select" ><option selected value="">전체</option></select></td>
+					<td>성명</td>
+					<td colspan="2"> <input type="text"> </td>
+				</tr>
+			</table>
+		학생목록
+			<table class="table align-middle text-center">
+				<tr>
+					<td>학번</td>
+					<td>학년</td>
+					<td>이름</td>
+					<td>소속대학</td>
+					<td>소속학과</td>
+					<td>학사경고</td>
+				</tr>
+				<tr></tr>
+			</table>
+		</div>
+	</div>
+	
+</div>
+
+
+</body>
+</html>

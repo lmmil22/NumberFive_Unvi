@@ -1,7 +1,6 @@
 package kh.study.NF.emp.controller;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import java.util.List;
@@ -20,12 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kh.study.NF.config.Student.AcceptApply;
 import kh.study.NF.config.Student.ApplyCode;
 import kh.study.NF.config.Student.DeptManageCalendar;
+import kh.study.NF.dept.service.DeptService;
 import kh.study.NF.emp.service.EmpService;
 import kh.study.NF.emp.vo.DeptManageVO;
 import kh.study.NF.student.service.StudentService;
 import kh.study.NF.student.vo.StudentVO;
 
-//by수경 학생의 복학, 휴학, 전과, 복수전공신청에 대한 관리자 영역
+//by수경 학생의 복학, 휴학, 전과, 복수전공신청, 학사경고, 제적에 대한 관리자 영역
 @Controller
 @RequestMapping("/emp")
 public class EmpController {
@@ -35,6 +35,9 @@ public class EmpController {
 	
 	@Resource(name = "studentService")
 	private StudentService studentService;
+	
+	@Resource(name = "deptService")
+	private DeptService deptService;
 	
 	//by수경 휴학, 복학 신청 관리자 페이지
 	@RequestMapping("/takeOffReturnUniv") 
@@ -421,5 +424,16 @@ public class EmpController {
 		  studentService.insertDoubleMajor(deptManageVO);
 		  //학생 테이블에 doubleNo데이터 넣기
 		  studentService.updateDoubleMajor(deptManageVO.getStuNo());
+	  }
+	  
+	  //by수경 학사경고 페이지로 이동
+	  @GetMapping("/probation")
+	  public String academicProbation(Model model) {
+		  //소속학과, 소속대학 select box 데이터 
+		  model.addAttribute("collList", deptService.selectCollList());
+		  model.addAttribute("deptList", deptService.selectDeptList());
+		  
+		  
+		  return "content/statusInfo/AcademicProbation";
 	  }
 }

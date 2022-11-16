@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<!--by수경 학생의 학사경고, 제적을 위한 stutusInfo mapper입니다.-->
+<mapper namespace="statusInfoMapper">
+
+<!-- by수경 stutusInfo resultMap -->
+<resultMap type="kh.study.NF.emp.vo.StatusInfoVO" id="StatusInfo">
+<id column="STATUS_NO" property="statusNo"/>
+<result column="STU_NO" property="stuNo"/>
+<result column="NOW_STATUS" property="nowStatus"/>
+<result column="AFTER_STATUS" property="afterStatus"/>
+<result column="APPLY_DATE" property="applyDate"/>
+<result column="APPROVAL_DATE" property="approvalDate"/>
+<result column="ING_STATUS" property="ingStatus"/>
+</resultMap>
+	
+<!--by수경 stuOut resultMap 학사경고 -->
+<resultMap type="kh.study.NF.emp.vo.StuOutVO" id="StuOut">
+<id column="STU_OUT_NO" property="stuOutNo"/>
+<result column="STU_NO" property="stuNo"/>
+<result column="STU_OUT_DATE" property="stuOutDate"/>
+<result column="STU_OUT_REASON" property="stuOutReason"/>
+</resultMap>
+
+<!--by수경 academicProbation resultMap 제적 -->
+<resultMap type="kh.study.NF.emp.vo.AcademicProbationVO" id="probation">
+<id column="PROB_NO" property="probNo"/>
+<result column="STU_NO" property="stuNo"/>
+<result column="PROB_DATE" property="probDate"/>
+<result column="PROB_REASON" property="probReason"/>
+<result column="SEM_NO" property="semNo"/>
+<result column="MEM_NO" property="memNo"/>
+</resultMap>
+
+
+
+
+
+
+
+		
+
+</mapper>

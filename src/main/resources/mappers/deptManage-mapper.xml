@@ -238,7 +238,7 @@ AND APPLY_CODE = #{applyCode}
 		</if>
 	</when>
 </choose>
-
+ORDER BY APPLY_NO DESC
 </select>
 
 

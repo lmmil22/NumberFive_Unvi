@@ -50,6 +50,11 @@ function changeTakeOffStatus(applyNo, processStatus, stuNo){
 		    }
 		});
 	}
+	//라디오 박스 클릭하고 취소했을 때 기존값으로 돌아가도록 구현
+	else{
+		event.preventDefault();
+	}
+
 }
 //by수경 복학 승인대기/승인완료 클릭 시 라디오 값 변경(단일 변경)
 function changeComebackStatus(applyNo, processStatus, stuNo){
@@ -74,6 +79,13 @@ function changeComebackStatus(applyNo, processStatus, stuNo){
 		    }
 		});
 	}
+	
+	//라디오 박스 클릭하고 취소했을 때 기존값으로 돌아가도록 구현
+	else{
+		event.preventDefault();
+	}
+	
+	
 }
 
 //휴학신청 테이블 제목줄 체크박스
