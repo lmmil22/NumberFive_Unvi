@@ -311,8 +311,7 @@
 		) VALUES (
 		(SELECT 'ENROLLMENT_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ENROLLMENT_NO, 12))),0)+1,3,0) FROM ENROLLMENT)
 	, #{lecNo}
-	, 'STU_001'
-	)
+	, 'STU_001')
 	</insert>
 
 	<!-- 수강 참여 인원 증가  -->
@@ -435,7 +434,7 @@
 	
 	
 	</select>
-	
+
 
 	 <!-- 점수등록할 강의의 학생들 목록 조회  -->
  	<select id="selectLecEnrollStuList" resultMap="stuGrade">
@@ -461,10 +460,6 @@
 		</if> -->
 	</select> 
 	
-	<!-- 점수 입력해줄 학생 조회  -->
-	
-	
-	 	
 	<!-- 수강신청시 등록되는 학생점수  -->
 	 <insert id="settingStuGrade">
 		INSERT INTO STU_GRADE(
@@ -477,6 +472,20 @@
 		  	, #{stuNo}
 		)
 	</insert>
+
+	<update id="udpateGrade">
+	UPDATE STU_GRADE
+	SET GRADE = #{grade} 
+	WHERE STU_NO = #{stuNo} 
+	
+	</update>
+	
+	
+	
+
+
+
+
 
 
 	<!-- grade목록조회 -->	

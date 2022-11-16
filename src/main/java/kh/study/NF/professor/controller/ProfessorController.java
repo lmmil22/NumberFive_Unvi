@@ -270,5 +270,22 @@ public class ProfessorController {
 		return list;
 	}
 	
+	//업데이트 되면 진행되는 ajax
+	@ResponseBody
+	@PostMapping("/updateGradeAjax")
+	public void updateGradeAjax(StuGradeVO stuGradeVO) {
+		
+		professorService.updateGrade(stuGradeVO);
+
+	}
+	
+	@GetMapping("cal")
+	public String calList() {
+		
+		return "content/professor/cal";
+		
+	}
+	
+	
 	
 }

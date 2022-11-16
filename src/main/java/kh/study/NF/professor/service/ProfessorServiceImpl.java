@@ -137,6 +137,11 @@ public class ProfessorServiceImpl implements ProfessorService{
 		return sqlSession.selectList("professorMapper.gradeList");
 	}
 
+	//학생 점수 업데이트
+	@Override
+	public void updateGrade(StuGradeVO stuGradeVO) {
+		sqlSession.update("professorMapper.udpateGrade",stuGradeVO);
+	}
 	
 	
 	

@@ -66,4 +66,8 @@ public interface ProfessorService {
 	 //점수입력을 위한 점수조회
 	 List<GradeVO> selectGrade();
 	 
+	 //학생 점수 업데이트
+	 
+	 void updateGrade(StuGradeVO stuGradeVO);
+	 
 }
