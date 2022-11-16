@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" 
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<!-- by 유빈 -->
 <div th:fragment="top">
 
 <div class="container">
-
+	<!-- 인증과 권한이 없는 누구에게나 표시되는 탑 메뉴바 -->
+	<header sec:authorize="isAnonymous()"  class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/member/homeLogin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span><img src="/images/nf Logo.png" width="30%;" height="30%;"/></span> 
+        <span class="fs-4" >NFU University</span>
+      </a>
+		<!--by 유빈  탑에 넣은 숏버전 이미지 삽입할 때 <img width="30%" height="30%" src="/images/LFU logo short ver.png " /> -->
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/member/intro" class="nav-link active" aria-current="page">학교 소개</a></li>
+       <!--  <li class="nav-item"><a href="/proF/viewLecList" class="nav-link">강의관리</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">학적관리</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">신청내역조회</a></li>
+        <li class="nav-item"><a href="/board/list" class="nav-link">게시판</a></li> -->
+      </ul>
+    </header>
+    
 	<!-- 학생의 경우 top 멤뉴바 -->
     <header sec:authorize="hasRole('ROLE_STUDENT')"  class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <a href="/member/homeLogin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
@@ -28,6 +44,7 @@
         <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
         <span class="fs-4" >NFU University</span>
       </a>
+        
 		<!--by 유빈  탑에 넣은 숏버전 이미지 삽입할 때 <img width="30%" height="30%" src="/images/LFU logo short ver.png " /> -->
       <ul class="nav nav-pills">
         <li class="nav-item"><a href="/member/myinfo" class="nav-link active" aria-current="page">회원 정보 관리</a></li>
@@ -76,7 +93,7 @@
 			[ <span sec:authentication="name"></span>	] <span th:text="${#authentication.authorities}"> </span> 님 
 			<!-- 로그아웃 컨트롤러는 시큐리티에서 자동으로 호출되기때문에 컨트롤러나 form태그 작성 불필요 -->
 			<!-- 단순히 a태그나 버튼으로 경로이동만 시켜주면 된다! --> 
-			<button th:onclick="location.href='@{/logout}';" sec:authorize="isAuthenticated()" type="submit"  class="btn btn-light">LOGOUT</button>
+			<button onclick="location.href='/logout';" sec:authorize="isAuthenticated()" type="submit"  class="btn btn-light">LOGOUT</button>
 		</div>
 	</div>
 </div>

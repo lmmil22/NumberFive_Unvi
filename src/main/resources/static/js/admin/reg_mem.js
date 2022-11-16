@@ -29,6 +29,7 @@ function checkValid(){
 	let memNameTag = document.querySelector('#memName');
 	let memAddrTag = document.querySelector('#memAddr');
 	let memAddrDetailTag = document.querySelector('#memAddrDetail');
+	//let memRoleTag = document.querySelector('#memRole');
 	
 	// --비밀번호 유효성검사
 	//조건: 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하
@@ -57,30 +58,36 @@ function checkValid(){
 			if(memNoTag.value == ''){
 				str = '학번 및 교번은 필수입력입니다.';
 				
-				//$(memNoTag).next().remove();
 				str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
 				memNoTag.insertAdjacentHTML('afterend', str);
 				//이름
 				if(memNameTag.value == ''){
 					str = '이름은 필수입력입니다.';
 					
-					//$(memNameTag).next().remove();
 					str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
 					memNameTag.insertAdjacentHTML('afterend', str);
 					//주소
 					if(memAddrTag.value == ''){
 						str = '주소는 필수입력입니다.';
 						
-						//$(memAddrTag).next().remove();
 						str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
 						memAddrTag.insertAdjacentHTML('afterend', str);
 						//상세주소
 						if(memAddrDetailTag.value == ''){
 							str = '상세주소는 필수입력입니다.';
 							
-							//$(memAddrDetailTag).next().remove();
 							str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
 							memAddrDetailTag.insertAdjacentHTML('afterend', str);
+							
+							/*//회원권한
+							if(memRoleTag.value == ''){
+								str = '회원권한은 필수입력 입니다.';
+								
+								str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
+								memRoleTag.insertAdjacentHTML('afterend', str);
+								
+								return ;	
+							}*/
 							
 							return ;	
 						}

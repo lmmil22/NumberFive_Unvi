@@ -40,7 +40,7 @@ public class MemberController {
 	private PasswordEncoder encoder;
 //-------------------------------------------------------------------------------------------///	
 	
-	//회원가입(shop )
+	//[홈화면 모달창]회원가입
 	@PostMapping("/join")
 	public String join(@Valid MemberVO memberVO, BindingResult bindingResult, Model model) {
 		// !! validation 체크 (데이터 유효성 검증)
@@ -54,6 +54,7 @@ public class MemberController {
                   System.out.println(e.getDefaultMessage());
              }
 		}
+		// 기본값을 student로 주기.
 		memberVO.setMemRole(MemRole.STUDENT.toString());
 		//암호화 작업2 -주석풀기 
 		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
@@ -128,7 +129,7 @@ public class MemberController {
 	@GetMapping("/afterLogin")
 	public String afterLogin1(boolean isLoginFail, Model model) {
 		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
-		System.out.println("_______________로그인 성공시 false값 떠라 -->" + isLoginFail);
+		System.out.println("_______________로그인 성공시 false!!! -->" + isLoginFail);
 		model.addAttribute("isLoginFail",isLoginFail);
 		
 		return "content/common/after_Login";
@@ -160,6 +161,7 @@ public class MemberController {
 		
 		return "content/common/my_info";
 	}
+//-------------------------------------------------------------------------------------------//
 
 	//상세조회 후 회원정보수정
 	@PostMapping("/updateMemInfo")
@@ -168,16 +170,17 @@ public class MemberController {
 	}
 //-------------------------------------------------------------------------------------------//
 	
-	// 관리자모드 - 회원등록양식페이지이동
+	// [관리자모드] - 회원등록양식페이지이동
 	@GetMapping("/regMemForm")
 	public String regMemForm(MemberVO memberVO, boolean isLoginFail, Model model ) {
 		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
-		System.out.println("____________지금 로그인 실패니???_________" + isLoginFail);
+		System.out.println("____________false 면, 로그인 성공!_________" + isLoginFail);
 		model.addAttribute("isLoginFail",isLoginFail);
 		return "content/admin/reg_mem";
 	}
+//-------------------------------------------------------------------------------------------//
 	
-	//관리자모드 - 회원등록 실제 페이지 이동
+	//[관리자모드] - 회원등록 실제 페이지 이동
 	@PostMapping("/regMem")
 	public String regMem(@Valid MemberVO memberVO, BindingResult bindingResult, Model model) {
 		// !! validation 체크 (데이터 유효성 검증)
@@ -191,33 +194,35 @@ public class MemberController {
                   System.out.println(e.getDefaultMessage());
              }
 		}
-		memberVO.setMemRole(MemRole.STUDENT.toString());
+		//memberVO.setMemRole(MemRole.STUDENT.toString());
+		
 		//암호화 작업2 -주석풀기 
 		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+		
 		//회원가입 
 		memberService.join(memberVO);
+		
 		return "redirect:/member/afterLogin";
 	}	
 	
-	
-	
-	
-	
-
-	
-	
 //-------------------------------------------------------------------------------------------//
-	// 로그인 실패시
-	@GetMapping("/loginFail")
-	public String loginFail( ) {
-		
-		return "content/member/login";
+	@GetMapping("/intro")
+	public String intro() {
+		return "content/common/intro";
 	}
+//-------------------------------------------------------------------------------------------//
+	// 로그인 실패시(시큐리티 설정시 혹시몰라 주석처리함)
+	/*
+	 * @GetMapping("/loginFail") public String loginFail( ) {
+	 * 
+	 * return "content/member/login"; }
+	 */
+//-------------------------------------------------------------------------------------------//
 	
-	// 접근거부시
-	@GetMapping("/accessDenied")
-	public String accessDenied( ) {
-		
-		return "content/member/accessDenied";
-	}
+	// 접근거부시(시큐리티 설정시 혹시몰라 주석처리함)
+	/*
+	 * @GetMapping("/accessDenied") public String accessDenied( ) {
+	 * 
+	 * return "content/member/accessDenied"; }
+	 */
 }

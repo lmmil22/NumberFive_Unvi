@@ -19,19 +19,19 @@
 	<div sec:authorize="hasRole('ROLE_STUDENT')" >
 		<script type="text/javascript">
 			alert('로그인 인증 성공');
-			location.href='/member/afterLogin';
+			location.href='/member/afterLogin'; //일단 모두 afterLogin으로 이동
 		</script>
 	</div> 
 	<div sec:authorize="hasRole('ROLE_ADMIN')" >
 		<script type="text/javascript">
 			alert('관리자 인증 성공');
-			location.href='/admin/adminLogin';
+			location.href='/member/afterLogin'; //일단 모두 afterLogin으로 이동
 		</script>
 	</div>
 	<div sec:authorize="hasRole('ROLE_PROFESSOR')" >
 		<script type="text/javascript">
 			alert('교수 인증 성공');
-			location.href='/professor/professorLogin';
+			location.href='/member/afterLogin'; //일단 모두 afterLogin으로 이동
 		</script>
 	</div>
 </div>

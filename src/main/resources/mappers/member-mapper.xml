@@ -18,7 +18,7 @@
 		<result column="MEM_ROLE" 			property="memRole"/>
 	</resultMap>  
 	
-<!-- 회원가입 -->
+<!-- [관리자모드] 회원 등록(이미지포함) -->
 	<insert id="join">
 		INSERT INTO MEMBER 
 				(
@@ -29,6 +29,11 @@
 					,MEM_ADDR
 					,MEM_ADDR_DETAIL
 					
+					,MEM_TELL
+					,MEM_IMAGE
+					,MEM_GENDER
+					,MEM_BIRTH
+					,MEM_ROLE
 				)
 		VALUES (
 					#{memNo}
@@ -37,6 +42,12 @@
 					,#{memEmail}
 					,#{memAddr}
 					,#{memAddrDetail}
+					
+					,#{memTell}
+					,#{memImage}
+					,#{memGender}
+					,#{memBirth}
+					,#{memRole}
 					
 				)
 	</insert>

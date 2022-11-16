@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/base_layout}">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{}">
+</th:block>
+<div layout:fragment="content">
+
+<div>
+	 intro 학교 소개 페이지입니다.
+</div>
+<div>
+	<!-- <img width="100%" height="100%" src="/images/Howard University.png" /> -->
+	
+	<video id="video1" muted="muted" playsinline="" controls autoplay>
+		<source src="/images/Harvard University _ 8K Campus Drone Tour.mp4" type="video/mp4" >
+	</video>
+</div>
+
+</div>
+</html>

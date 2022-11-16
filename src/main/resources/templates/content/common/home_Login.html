@@ -16,20 +16,18 @@
 	<div class="row">
 	
 		<div class="col-7"> 
-			<span> 학교 이미지 영역
-		    	<img src="/images/nf Logo.png" />
+			<span> 
+			<!-- <img width="1300px;" height="900px;" src="/images/Howard University.png"  style="opacity: 0.85;"/> -->				
+			 <img width="1300px;" height="900px;" src="/images/Howard University.png" /> 				
+		    	<!-- <img src="/images/nf Logo.png" /> -->
 			</span> 
 		 </div>
 		 
 		<!--  로그인 폼 영역 -->
-		<div class="col-5">
-		<!-- 로그인이 안되면 뜨고 아니면 안뜨도록해보자. -->
-		<!-- <th:block if="${#authentication.authenticated eq False}">
-		 	 로그인 및 회원가입이 필요합니다. -->
-		 	 
+		<div class="col-5" >
 			<div style="padding-top: 30%; padding-right: 20%">
-				
-				<form method="post" action="/member/homeLogin"  th:object="${memberVO}">
+				<!-- 로그인이 되어있다면 로그인 폼이 보이지않도록하기 -->
+				<form sec:authorize="isAnonymous()" method="post" action="/member/homeLogin"  th:object="${memberVO}" style="background-color: opacity;">
 					<div class="form-floating mb-3">
 					  <input name="username" type="text" class="form-control" id="floatingInput" placeholder="학번 혹은 교직원 번호를 입력하세요">
 					  <label for="floatingInput"> 학번 / 교번 </label>
@@ -60,9 +58,6 @@
 			</div>
 			</th:block>
 			
-			<!-- <th:block if="${#authentication.authenticated ne False}">
-				현재 회원님은 로그인이 되어있습니다. 홈페이지를 이용해주시길 바랍니다.
-			</th:block> -->
 			
 		</div>
 		<!-- 로그인 폼 영역 끝 -->
@@ -166,7 +161,7 @@
       <div class="modal-body">
       <!--  너비 조정-->
       <!-- col-12 / col-6 :  한 줄 너비 총 크기 12이기때문에 12분등 중 어느만큼 사용하는건지 -->
-	  	<form id="joinFormTag" class="row g-3" th:action="@{/member/join}" method="post" th:object="${memberVO}">
+	  	<form  id="joinFormTag" class="row g-3" th:action="@{/member/join}" method="post" th:object="${memberVO}">
 		  	<!-- class값은 고정 건드리면 안됨. 부트스트랩사용하기위한 의미 -->
 		    <!-- for태그와 id태그 이름은 같게 하도록 -->
 		  <div class="col-12">
@@ -225,6 +220,7 @@
 
 <!-- 주소 API  -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" th:src="@{/js/common/home_Login.js}"></script>
 
