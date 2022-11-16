@@ -36,112 +36,125 @@ public class EmpController {
 	@Resource(name = "studentService")
 	private StudentService studentService;
 	
-	//by수경 휴학,복학 관리자 페이지
-	@GetMapping("/takeOffReturnUniv") //requestMapping으로 바꿀 것
+	//by수경 휴학, 복학 신청 관리자 페이지
+	@RequestMapping("/takeOffReturnUniv") 
 	public String takeOffReturnUniv(Model model, @RequestParam Map<String, String> paramMap) {
-		//휴학, 복학, 전과, 복전 신청 목록 조회
-		List<DeptManageVO> applyList = empService.applyList();
 		
-		//by수경 휴학과 복학 신청 개수 구하기
-		int takeOff =0; int comeback= 0;
-		//휴학 목록을 저장할 리스트
-		List<DeptManageVO> takeOffList = new ArrayList<>();
-		//복학 목록을 저장할 리스트
-		List<DeptManageVO> comebackList = new ArrayList<>();
-		
-		for(DeptManageVO applyInfo : applyList) {
-			//휴학
-			if(applyInfo.getApplyCode().equals(ApplyCode.takeOff.toString())) {
-				//휴학 데이터 수  +  1
-				takeOff++;
-				//휴학 신청 목록에 데이터 추가
-				takeOffList.add(applyInfo);
-			}
-			//복학
-			else if(applyInfo.getApplyCode().equals(ApplyCode.comeback.toString())) {
-				//복학 데이터 수  +  1
-				comeback++;
-				//복학 신청 목록에 데이터 추가
-				comebackList.add(applyInfo);
-			}
-		}
+		//휴학 신청 목록 조회
+		paramMap.put("applyCode", ApplyCode.takeOff.toString());
+		List<DeptManageVO> takeOffList = empService.applyList(paramMap);
+
+		//복학 신청 목록 조회
+		paramMap.put("applyCode", ApplyCode.comeback.toString());
+		List<DeptManageVO> comebackList = empService.applyList(paramMap);
+
 		//html로 데이터 넘기기
 		model.addAttribute("takeOffList", takeOffList);
 		model.addAttribute("comebackList", comebackList);
 		
-		//현재 날짜
-		String nowDate = DeptManageCalendar.nowDate();
+		//by수경 검색 조건에서 사용할 paramMap
 		
-		//한달 전 날짜
-		String aMonthAgo = DeptManageCalendar.aMonthAgo();
+		//휴학에서 사용할 현재 날짜
+		String takeOffUniv_nowDate = DeptManageCalendar.nowDate();
+		//복학에서 사용할 현재 날짜
+		String comeback_nowDate = DeptManageCalendar.nowDate();
 		
-		//넘어오는 fromDate가 없다면 한달 전 날짜로 set 하겠다
-		if(paramMap.get("fromDate")==null) {
-			
-			paramMap.put("fromDate", aMonthAgo);
+		//휴학에서 사용할 한달 전 날짜
+		String takeOffUniv_aMonthAgo = DeptManageCalendar.aMonthAgo();
+		//복학에서 사용할 한달 전 날짜
+		String comeback_aMonthAgo = DeptManageCalendar.aMonthAgo();
+		
+		//휴학 검색창에서 넘어오는 fromDate가 없다면 한달 전 날짜로 set 하겠다
+		if(paramMap.get("takeOffUniv_fromDate")==null) {
+			paramMap.put("takeOffUniv_fromDate", takeOffUniv_aMonthAgo);
 		}
 		
-		if(paramMap.get("toDate")==null) {
-			paramMap.put("toDate", nowDate);
+		//복학 검색창에서 넘어오는 fromDate가 없다면 한달 전 날짜로 set 하겠다
+		if(paramMap.get("comeback_fromDate")==null) {
+			paramMap.put("comeback_fromDate", comeback_aMonthAgo);
 		}
-		//paramMap 데이터 넘기기
+		
+		//휴학 검색창에서 넘어오는 toDate가 없다면 현재 날짜로 set 하겠다
+		if(paramMap.get("takeOffUniv_toDate")==null) {
+			paramMap.put("takeOffUniv_toDate", takeOffUniv_nowDate);
+		}
+		//복학 검색창에서 넘어오는 toDate가 없다면 현재 날짜로 set 하겠다
+		if(paramMap.get("comeback_toDate")==null) {
+			paramMap.put("comeback_toDate", comeback_nowDate);
+		}
+		
+		//paramMap에 담긴 데이터 html로 넘기기
 		model.addAttribute("paramMap", paramMap);
 		
-		
 		return "content/deptManage/takeOffReturnUniv";
+	
 	}
 	
 	//by수경 전과, 복수전공 관리자 페이지
-	@GetMapping("/changeAddMajor")
+	@RequestMapping("/changeAddMajor")
 	public String changeAddMajor(Model model, @RequestParam Map<String, String> paramMap) {
-		//휴학, 복학, 전과, 복전 신청 목록 조회
-		List<DeptManageVO> applyList = empService.applyList();
-	
-		//by수경 전과, 복수전공 신청 개수 구하기
-		int doubleMajor=0; int changeMajor = 0;
-
-		//전과 목록을 담을 리스트
-		List<DeptManageVO> changeMajorList = new ArrayList<>();
-		//복수전공 목록을 담을 리스트
-		List<DeptManageVO> doubleMajorList = new ArrayList<>();
 		
-		for(DeptManageVO applyInfo :applyList) {
-			//전과
-			if(applyInfo.getApplyCode().equals(ApplyCode.changeMajor.toString())) {
-				//전과 데이터 수 
-				changeMajor++;
-				//전과 신청 리스트에 담기
-				changeMajorList.add(applyInfo);
-			}
-			//복수전공
-			else if(applyInfo.getApplyCode().equals(ApplyCode.doubleMajor.toString())) {
-				//복수전공 데이터 수 
-				doubleMajor++;
-				//복수전공 신청 리스트에 담기
-				doubleMajorList.add(applyInfo);
-			}
-		}
+//		System.out.println("메소드 시작과 동시에 받아오는 paramMap 데이터 출력");
+//		for(String key : paramMap.keySet()) {
+//			System.out.println("key = " + key + " / value = " + paramMap.get(key));
+//		}
+//		System.out.println("-------paramMap 데이터 출력 끝--------------------");
+		
+		
+		//전과 신청 목록 조회
+		paramMap.put("applyCode", ApplyCode.changeMajor.toString());
+		List<DeptManageVO> changeMajorList = empService.applyList(paramMap);
+
+		//복수전공 신청 목록 조회
+		paramMap.put("applyCode", ApplyCode.doubleMajor.toString());
+		List<DeptManageVO> doubleMajorList = empService.applyList(paramMap);
+		
 		//html로 데이터 넘기기
 		model.addAttribute("changeMajorList", changeMajorList);
 		model.addAttribute("doubleMajorList", doubleMajorList);
 		
+		//by수경 검색 조건에서 사용할 parameter값
 		
-		//현재 날짜
-		String nowDate = DeptManageCalendar.nowDate();
+		//전과에 사용하는 현재 날짜
+		String changeMajor_nowDate = DeptManageCalendar.nowDate();
+		//복수전공에 사용하는 현재 날짜
+		String doubleMajor_nowDate = DeptManageCalendar.nowDate();
 		
-		//한달 전 날짜
-		String aMonthAgo = DeptManageCalendar.aMonthAgo();
+		//전과에 사용하는 한달 전 날짜
+		String changeMajor_aMonthAgo = DeptManageCalendar.aMonthAgo();
+		//복수전공에 사용하는 한달 전 날짜
+		String doubleMajor_aMonthAgo = DeptManageCalendar.aMonthAgo();
 		
-			//넘어오는 fromDate가 없다면 한달 전 날짜로 set 하겠다
-			if(paramMap.get("fromDate")==null) {
-				
-				paramMap.put("fromDate", aMonthAgo);
-			}
-			
-			if(paramMap.get("toDate")==null) {
-				paramMap.put("toDate", nowDate);
-			}
-		//paramMap 데이터 넘기기
+		//전과 목록 검색에서 넘어오는 fromDate가 없다면 한달 전 날짜로 set 하겠다
+		if(paramMap.get("changeMajor_fromDate")==null) {
+			paramMap.put("changeMajor_fromDate", changeMajor_aMonthAgo);
+		}
+		
+		//복수전공 목록 검색에서 넘어오는 fromDate가 없다면 한달 전 날짜로 set 하겠다
+		if(paramMap.get("doubleMajor_fromDate")==null) {
+			paramMap.put("doubleMajor_fromDate", doubleMajor_aMonthAgo);
+		}
+		
+		
+		//전과 목록 검색에서 넘어오는 toDate가 없다면 현재 날짜로 set 하겠다
+		if(paramMap.get("changeMajor_toDate")==null) {
+			paramMap.put("changeMajor_toDate", changeMajor_nowDate);
+		}
+		
+		//복수전공 목록 검색에서 넘어오는 toDate가 없다면 현재 날짜로 set 하겠다
+		if(paramMap.get("doubleMajor_toDate")==null) {
+			paramMap.put("doubleMajor_toDate", doubleMajor_nowDate);
+		}
+		
+		
+//		System.out.println("메소드 마지막에 세팅된 paramMap 데이터 출력");
+//		for(String key : paramMap.keySet()) {
+//			System.out.println("key = " + key + " / value = " + paramMap.get(key));
+//		}
+//		System.out.println("-------paramMap 데이터 출력 끝--------------------");
+		
+		
+		//paramMap에 담긴 데이터 html로 넘기기
 		model.addAttribute("paramMap", paramMap);
 		
 		return "content/deptManage/changeAddMajor";

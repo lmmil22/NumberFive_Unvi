@@ -274,3 +274,25 @@ function acceptDoubleMajor(){
 function home(){
 	location.href = '/emp/changeAddMajor';
 }
+
+
+//by수경 전과, 복수전공 조건 검색에서 search버튼 클릭 시 클릭 시 실행될 form태그
+function search(){
+	//조건 검색창이 두개이기 때문에 각각 form설정하면 하나 실행 시 다른 하나는 리셋되기 때문에 모두 form에 감싼다
+	
+	//전과 조건 검색창에서 데이터 검색 시
+	document.querySelector('#search_changeMajor_fromDate').value = document.querySelector('#changeMajor_fromDate').value;
+	document.querySelector('#search_changeMajor_toDate').value = document.querySelector('#changeMajor_toDate').value;
+	document.querySelector('#search_changeMajor_status').value = document.querySelector('.changeMajor_status:checked').value;
+	
+	//복수전공 조건 검색창에서 데이터 검색 시
+	document.querySelector('#search_doubleMajor_fromDate').value = document.querySelector('#doubleMajor_fromDate').value;
+	document.querySelector('#search_doubleMajor_toDate').value = document.querySelector('#doubleMajor_toDate').value;
+	document.querySelector('#search_doubleMajor_status').value = document.querySelector('.doubleMajor_status:checked').value;
+	
+	//form태그를 실행한다.
+	document.querySelector('#searchForm').submit();
+}
+
+
+

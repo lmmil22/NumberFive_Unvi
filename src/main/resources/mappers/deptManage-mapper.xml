@@ -189,18 +189,58 @@ SELECT APPLY_NO
 	 												FROM STU 
 	 												WHERE STU_NO = D.STU_NO))AS MEM_NAME
 FROM DEPT_MANAGE D
-WHERE 1=1
-<if test="fromDate != null and !fromDate.equals('')">
-AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
-</if>
-<if test="toDate != null and !toDate.equals('')">
-AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
-</if>
-<if test="processStatus !=null and !processStatus.equals('')">
-AND ITEM_STATUS = #{itemStatus}
-</if>
+WHERE 1 = 1
+AND APPLY_CODE = #{applyCode}
+<!-- 검색조건 기능 추가로 인하여 choose when을 사용하여 각 케이스별로 분리하여 데이터 받은 후 쿼리 실행 되도록 함-->
+<choose>
+	<when test="applyCode.equals('changeMajor')">
+		<if test="changeMajor_fromDate != null and !changeMajor_fromDate.equals('')">
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt;= #{changeMajor_fromDate}
+		</if>
+		<if test="changeMajor_toDate != null and !changeMajor_toDate.equals('')">
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt;= #{changeMajor_toDate}
+		</if>
+		<if test="changeMajor_status !=null and !changeMajor_status.equals('')">
+			AND PROCESS_STATUS = #{changeMajor_status}
+		</if>
+	</when>
+	<when test="applyCode.equals('doubleMajor')">
+		<if test="doubleMajor_fromDate != null and !doubleMajor_fromDate.equals('')">
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt;= #{doubleMajor_fromDate}
+		</if>
+		<if test="doubleMajor_toDate != null and !doubleMajor_toDate.equals('')">
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt;= #{doubleMajor_toDate}
+		</if>
+		<if test="doubleMajor_status !=null and !doubleMajor_status.equals('')">
+			AND PROCESS_STATUS = #{doubleMajor_status}
+		</if>
+	</when>
+	<when test="applyCode.equals('takeOff')">
+		<if test="takeOffUniv_fromDate != null and !takeOffUniv_fromDate.equals('')">
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt;= #{takeOffUniv_fromDate}
+		</if>
+		<if test="takeOffUniv_toDate != null and !takeOffUniv_toDate.equals('')">
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt;= #{takeOffUniv_toDate}
+		</if>
+		<if test="takeOffUniv_status !=null and !takeOffUniv_status.equals('')">
+			AND PROCESS_STATUS = #{takeOffUniv_status}
+		</if>
+	</when>
+	<when test="applyCode.equals('comeback')">
+		<if test="comeback_fromDate != null and !comeback_fromDate.equals('')">
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt;= #{comeback_fromDate}
+		</if>
+		<if test="comeback_toDate != null and !comeback_toDate.equals('')">
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt;= #{comeback_toDate}
+		</if>
+		<if test="comeback_status !=null and !comeback_status.equals('')">
+			AND PROCESS_STATUS = #{comeback_status}
+		</if>
+	</when>
+</choose>
 
 </select>
+
 
 <!--by수경 학생이 복학, 휴학, 전과, 복수전공 신청 시 이미 신청내역 있는지 확인 -->
 <select id="checkApply" resultMap="deptManage">

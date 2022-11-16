@@ -239,4 +239,23 @@ function formSubmit(){
 }
 
 
+//by수경 복학, 휴학 조건 검색에서 search버튼 클릭 시 클릭 시 실행될 form태그
+function search(){
+	//조건 검색창이 두개이기 때문에 각각 form설정하면 하나 실행 시 다른 하나는 리셋되기 때문에 모두 form에 감싼다
+	
+	//복학 조건 검색창에서 데이터 검색 시
+	document.querySelector('#search_takeOffUniv_fromDate').value = document.querySelector('#takeOffUniv_fromDate').value;
+	document.querySelector('#search_takeOffUniv_toDate').value = document.querySelector('#takeOffUniv_toDate').value;
+	document.querySelector('#search_takeOffUniv_status').value = document.querySelector('.takeOffUniv_status:checked').value;
+	
+	//휴학 조건 검색창에서 데이터 검색 시
+	document.querySelector('#search_comeback_fromDate').value = document.querySelector('#comeback_fromDate').value;
+	document.querySelector('#search_comeback_toDate').value = document.querySelector('#comeback_toDate').value;
+	document.querySelector('#search_comeback_status').value = document.querySelector('.comeback_status:checked').value;
+	
+	//form태그를 실행한다.
+	document.querySelector('#searchForm').submit();
+}
+
+
 

@@ -12,12 +12,23 @@
 
 <!--by수경 학생의 전과, 복수전공 신청 목록 관리자 페이지 -->
 <!--관리자는 승인대기 버튼 클릭 시 해당 학생의 신청내역을 볼 수 있고
-승인버튼 클릭 시 승인대기 ->승인완료 변경되도록 구현 -->
+승인버튼 클릭 시 승인대기 ->승인완료 변경되도록 구현, 체크박스를 통한 일괄 승인 구현-->
 <div layout:fragment ="content">
 <th:block layout:fragment ="css">
 	<link rel ="stylesheet" th:href="@{/css/applyModal.css}">
 </th:block>
-	<div class="row justify-content-center">
+<!--by수경 조건 검색에 사용할 form -->
+<form th:action="@{/emp/changeAddMajor}" method="post" id="searchForm">
+	<input type="hidden" name="changeMajor_fromDate" id="search_changeMajor_fromDate" value="">
+	<input type="hidden" name="changeMajor_toDate" id="search_changeMajor_toDate" value="">
+	<input type="hidden" name="changeMajor_status" id="search_changeMajor_status" value="">
+	
+	<input type="hidden" name="doubleMajor_fromDate" id="search_doubleMajor_fromDate" value="">
+	<input type="hidden" name="doubleMajor_toDate" id="search_doubleMajor_toDate" value="">
+	<input type="hidden" name="doubleMajor_status" id="search_doubleMajor_status" value="">
+</form>
+
+<div class="row justify-content-center">
 <!--by수경 전과신청 현황 테이블  -->
 		<div class="row mt-3">	
 			<div class="col mb-2">
@@ -32,30 +43,35 @@
 		               <td colspan="3">
 		                  <div class="row">
 		                     <div class="col-6">
-		                        <input class="form-control" type="date" name="fromDate" th:value="${paramMap['fromDate']}" >
+		                        <input class="form-control" type="date" name="changeMajor_fromDate" id="changeMajor_fromDate" 
+		                        th:value="${paramMap['changeMajor_fromDate']}" >
 		                     </div>
 		                     <div class="col-6">
-		                        <input class="form-control" type="date" name="toDate" th:value="${paramMap['toDate']}" >
+		                        <input class="form-control" type="date" name="changeMajor_toDate" id="changeMajor_toDate" 
+		                        th:value="${paramMap['changeMajor_toDate']}" >
 		                     </div>
 		                  </div>
 		               </td>
 		               <td class="searchTitle">처리상태</td>
 		               <td colspan="3">
 		                  <div class="form-check form-check-inline">		
-		                    <input class="form-check-input" type="radio" >
-		                    <label class="form-check-label" for="" >전체</label>
+		                    <input class="form-check-input changeMajor_status" type="radio" name="changeMajor_status" value="" 
+		                    th:checked="${paramMap['changeMajor_status'] == null or paramMap['changeMajor_status'] == ''}">
+		                    <label class="form-check-label" for="">전체</label>
 		                  </div>
 		                     <div class="form-check form-check-inline">
-		                    <input class="form-check-input" type="radio" >
+		                    <input class="form-check-input changeMajor_status" type="radio" name="changeMajor_status" value="waiting" 
+		                    th:checked="${paramMap['changeMajor_status'] == 'waiting'}">
 		                    <label class="form-check-label" for="">승인대기</label>
 		                  </div>
 		                     <div class="form-check form-check-inline">
-		                    <input class="form-check-input" type="radio">
+		                    <input class="form-check-input changeMajor_status" type="radio" name="changeMajor_status" value="accept" 
+		                    th:checked="${paramMap['changeMajor_status'] == 'accept'}">
 		                    <label class="form-check-label" for="">승인완료</label>
 		                  </div>
 		               </td>
 		               <td>
-		                  <button class="btn btn-primary" style="height: 45px;" type="button">Search</button>
+		                  <button class="btn btn-primary" style="height: 45px;" type="button" th:onclick="search();">Search</button>
 		               </td>
 		            </tr>
 		         </table>
@@ -97,7 +113,8 @@
 					      <td th:text="${changeMajor.toColl}"></td>
 					      <td th:text="${changeMajor.toDept}"></td>
 					      <td th:text="${changeMajor.applyDate}"></td>
-					      <td th:onclick="showChangeMajorApply([[${changeMajor.stuNo}]], [[${changeMajor.applyNo}]]);" data-bs-toggle="modal" data-bs-target="#changeMajorModal">
+					      <td th:onclick="showChangeMajorApply([[${changeMajor.stuNo}]], [[${changeMajor.applyNo}]]);" 
+					      data-bs-toggle="modal" data-bs-target="#changeMajorModal">
 					      	<th:block th:if="${changeMajor.processStatus eq 'waiting'}">
 					      		<button type="button" class="btn btn-primary">승인<p>대기</button>
 					      	</th:block>
@@ -112,7 +129,7 @@
 				<div class="row mt-5">
 					<div class="col text-center">
 						<form th:action="@{/emp/changeAllAccept}" method="post" id="changeForm">
-							<input type="button" value="일괄승인" th:onclick="changeAllAccept();"  class="btn btn-primary">
+							<input type="button" value="일괄승인" th:onclick="changeAllAccept();" class="btn btn-primary">
 							<input type="hidden" name="applyNos" value="" id="changeInput1">
 							<input type="hidden" name="stuNos" value="" id="changeInput2">
 						</form>
@@ -134,30 +151,35 @@
 		               <td colspan="3">
 		                  <div class="row">
 		                     <div class="col-6">
-		                        <input class="form-control" type="date" name="fromDate" th:value="${paramMap['fromDate']}" >
+		                        <input class="form-control" type="date" name="doubleMajor_fromDate" id="doubleMajor_fromDate" 
+		                        th:value="${paramMap['doubleMajor_fromDate']}" >
 		                     </div>
 		                     <div class="col-6">
-		                        <input class="form-control" type="date" name="toDate" th:value="${paramMap['toDate']}" >
+		                        <input class="form-control" type="date" name="doubleMajor_toDate" id="doubleMajor_toDate" 
+		                        th:value="${paramMap['doubleMajor_toDate']}" >
 		                     </div>
 		                  </div>
 		               </td>
 		               <td class="searchTitle">처리상태</td>
 		               <td colspan="3">
 		                  <div class="form-check form-check-inline">		
-		                    <input class="form-check-input" type="radio" >
-		                    <label class="form-check-label" for="" >전체</label>
+		                    <input class="form-check-input doubleMajor_status" type="radio" name="doubleMajor_status" value="" 
+		                    th:checked="${paramMap['doubleMajor_status'] == null or paramMap['doubleMajor_status'] == ''}">
+		                    <label class="form-check-label" for="">전체</label>
 		                  </div>
 		                     <div class="form-check form-check-inline">
-		                    <input class="form-check-input" type="radio" >
+		                    <input class="form-check-input doubleMajor_status" type="radio" name="doubleMajor_status" value="waiting" 
+		                    th:checked="${paramMap['doubleMajor_status'] == 'waiting'}">
 		                    <label class="form-check-label" for="">승인대기</label>
 		                  </div>
 		                     <div class="form-check form-check-inline">
-		                    <input class="form-check-input" type="radio">
+		                    <input class="form-check-input doubleMajor_status" type="radio" name="doubleMajor_status" value="accept" 
+		                    th:checked="${paramMap['doubleMajor_status'] == 'accept'}">
 		                    <label class="form-check-label" for="">승인완료</label>
 		                  </div>
 		               </td>
 		               <td>
-		                  <button class="btn btn-primary" style="height: 45px;" type="button">Search</button>
+		                  <button class="btn btn-primary" style="height: 45px;" type="button" th:onclick="search();">Search</button>
 		               </td>
 		            </tr>
 		         </table>
@@ -224,6 +246,8 @@
 			</div>		
 		</div>		
 	</div>
+	
+	
 	
 	<!--by수경 전과 신청 현황에서 신청현황 클릭 시 뜨는 전과 신청서 -->
 	<div class="modal fade" id="changeMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
@@ -484,8 +508,6 @@
 	    </div>
 	  </div>
 	</div>		
-	
-			
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
 <script type="text/javascript" th:src="@{/js/deptManage/changeAddMajor.js}"></script>	

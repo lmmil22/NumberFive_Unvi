@@ -16,6 +16,17 @@
 <th:block layout:fragment ="css">
 	<link rel ="stylesheet" th:href="@{/css/applyModal.css}">
 </th:block>
+<!--by수경 검색조건에서 검색버튼 클릭 시 실행될 form태그 -->
+<form th:action="@{/emp/takeOffReturnUniv}" method="post" id="searchForm">
+	<input type="hidden" name="takeOffUniv_fromDate" id="search_takeOffUniv_fromDate" value="">
+	<input type="hidden" name="takeOffUniv_toDate" id="search_takeOffUniv_toDate" value="">
+	<input type="hidden" name="takeOffUniv_status" id="search_takeOffUniv_status" value="">
+	
+	<input type="hidden" name="comeback_fromDate" id="search_comeback_fromDate" value="">
+	<input type="hidden" name="comeback_toDate" id="search_comeback_toDate" value="">
+	<input type="hidden" name="comeback_status" id="search_comeback_status" value="">
+
+</form>
 <!--by수경 복학신청 현황 테이블  -->
 	<div class="row justify-content-center">
 		<div class="row mt-3">	
@@ -32,30 +43,35 @@
 		               <td colspan="3">
 		                  <div class="row">
 		                     <div class="col-6">
-		                        <input class="form-control" type="date" name="fromDate" th:value="${paramMap['fromDate']}" >
+		                        <input class="form-control" type="date" name="comeback_fromDate" id="comeback_fromDate" 
+		                        th:value="${paramMap['comeback_fromDate']}" >
 		                     </div>
 		                     <div class="col-6">
-		                        <input class="form-control" type="date" name="toDate" th:value="${paramMap['toDate']}" >
+		                        <input class="form-control" type="date" name="comeback_toDate" id="comeback_toDate" 
+		                        th:value="${paramMap['comeback_toDate']}" >
 		                     </div>
 		                  </div>
 		               </td>
 		               <td class="searchTitle">처리 상태</td>
-		               <td colspan="3" th:each="comeback:${comebackList}">				
+		               <td colspan="3">				
 		                  <div class="form-check form-check-inline">			
-		                    <input class="form-check-input" type="radio" name="processStatus" id="" value="" th:checked="${paramMap[''] == null or paramMap['itemStatus'] eq ''}" >
+		                    <input class="form-check-input comeback_status" type="radio" name="comeback_status" value="" 
+		                    th:checked="${paramMap['comeback_status'] == null or paramMap['comeback_status'] == ''}" >
 		                    <label class="form-check-label">전체</label>
 		                  </div>
 		                     <div class="form-check form-check-inline">
-		                    <input class="form-check-input" type="radio" name="processStatus" id="" value="waiting" th:checked="${paramMap['itemStatus'] eq 'ON_SALE'}">
+		                    <input class="form-check-input comeback_status" type="radio" name="comeback_status" value="waiting" 
+		                    th:checked="${paramMap['comeback_status'] eq 'waiting'}">
 		                    <label class="form-check-label">승인대기</label>
 		                  </div>
 		                  <div class="form-check form-check-inline">
-		                    <input class="form-check-input" type="radio" name="processStatus" id="" value="accept" th:checked="${paramMap['itemStatus'] eq 'ON_SALE'}">
+		                    <input class="form-check-input comeback_status" type="radio" name="comeback_status" value="accept" 
+		                    th:checked="${paramMap['comeback_status'] eq 'accept'}">
 		                    <label class="form-check-label">승인완료</label>
 		                  </div>
 		               </td>
 		               <td>
-		                  <button class="btn btn-primary" style="height: 45px;" type="button">Search</button>
+		                  <button class="btn btn-primary" style="height: 45px;" type="button" th:onclick="search();">Search</button>
 		               </td>
 		            </tr>
 		         </table>
@@ -136,30 +152,35 @@
 		               <td colspan="3">
 		                  <div class="row">
 		                     <div class="col-6">
-		                        <input class="form-control" type="date" name="fromDate" th:value="${paramMap['fromDate']}" >
+		                        <input class="form-control" type="date" name="takeOffUniv_fromDate" id="takeOffUniv_fromDate" 
+		                        th:value="${paramMap['takeOffUniv_fromDate']}" >
 		                     </div>
 		                     <div class="col-6">
-		                        <input class="form-control" type="date" name="toDate" th:value="${paramMap['toDate']}" >
+		                        <input class="form-control" type="date" name="takeOffUniv_toDate" id="takeOffUniv_toDate" 
+		                        th:value="${paramMap['takeOffUniv_toDate']}" >
 		                     </div>
 		                  </div>
 		               </td>
 		               <td class="searchTitle">처리상태</td>
 		               <td colspan="3">
 		                  <div class="form-check form-check-inline">		
-		                    <input class="form-check-input" type="radio" >
+		                    <input class="form-check-input takeOffUniv_status" type="radio" name="takeOffUniv_status" value=""
+		                    th:checked="${paramMap['takeOffUniv_status'] == null or paramMap['takeOffUniv_status'] == ''}">
 		                    <label class="form-check-label" for="" >전체</label>
 		                  </div>
 		                     <div class="form-check form-check-inline">
-		                    <input class="form-check-input" type="radio" >
+		                    <input class="form-check-input takeOffUniv_status" type="radio" name="takeOffUniv_status" value="waiting"
+		                    th:checked="${paramMap['takeOffUniv_status'] == 'waiting'}">
 		                    <label class="form-check-label" for="">승인대기</label>
 		                  </div>
 		                     <div class="form-check form-check-inline">
-		                    <input class="form-check-input" type="radio">
+		                    <input class="form-check-input takeOffUniv_status" type="radio" name="takeOffUniv_status" value="accept"
+		                    th:checked="${paramMap['takeOffUniv_status'] == 'accept'}">
 		                    <label class="form-check-label" for="">승인완료</label>
 		                  </div>
 		               </td>
 		               <td>
-		                  <button class="btn btn-primary" style="height: 45px;" type="button">Search</button>
+		                  <button class="btn btn-primary" style="height: 45px;" type="button" onclick="search();">Search</button>
 		               </td>
 		            </tr>
 		         </table>

@@ -1,7 +1,7 @@
 package kh.study.NF.emp.service;
 
 import java.util.List;
-
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ public class EmpServiceImpl implements EmpService{
 
 	//by 수경 학생의 복학, 휴학, 전과, 복수전공 신청 내역 관리자가 목록조회
 	@Override
-	public List<DeptManageVO> applyList() {
-		return sqlSession.selectList("deptManageMapper.applyList");
+	public List<DeptManageVO> applyList(Map<String, String> map) {
+		return sqlSession.selectList("deptManageMapper.applyList", map);
 	}
 	
 	//by수경 학생이 복학, 휴학, 전과, 복수전공 현재 학기에 신청내역 있는지 확인(수정예정)
