@@ -114,6 +114,7 @@ public class MemberController {
 	    	// 여기서부터 프로젝트 다시 시작하면된다. 현재상태 : 업데이트쿼리문이 실행되지 않는 상태이다...
 	    	// 그러면 회원가입을 진행하고 시큐리티 암호화작업들어가면서 비밀번호 생성해보자. 
 	    	
+	    	//주석풀기
 	    	// 아래처럼 암호화된 비밀번호를 넣어서 업데이트해야한다.
 			memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 

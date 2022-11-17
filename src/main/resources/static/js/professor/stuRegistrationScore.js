@@ -95,15 +95,22 @@ function prepareRegGrade(selectedTd, btn){
 		success: function(result) {
 			
 			//에이작스로 점수 들고오고 성공 부분에 넣어준다 
-			//
+			
+			//기존의 성적
+			const origin_grade = $(selectedTd).text(); //입력되어있던걸 변경할때 셀렉트값에 기존에 선택한게 보여야하기 때문
 			
 			$(selectedTd).empty();
 			
 			let str = '';
 			
 			str += `<select>`;
-			for(const grade of result){
-			str += `<option value="${grade.grade}" >${grade.grade}</option>`;
+			for(const grade of result){ //체크한 값이 보이도록 하기위해서 
+				if(grade.grade == origin_grade){
+					str += `<option value="${grade.grade}" selected>${grade.grade}</option>`;
+				}
+				else{
+					str += `<option value="${grade.grade}">${grade.grade}</option>`;
+				}
 			}
 			str += `</select>`;
 
@@ -120,6 +127,8 @@ function prepareRegGrade(selectedTd, btn){
 function regGrade(selectedTd, btn ,stuNo){
 	
 	//const grade = selectedTd.querySelector('option:selected').value;
+	//td 등 안에있는 텍스트를 빼고 싶을대는 text 인것이고 
+	// value = input 등에 있는 벨류속성값을 빼주는것이다 
 	const grade = $(selectedTd).find('option:selected').val(); //선택된 자식의 벨류값이다 
 	//alert(stuNo);
 	//alert(grade);
