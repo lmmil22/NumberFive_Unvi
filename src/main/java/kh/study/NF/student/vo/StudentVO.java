@@ -3,6 +3,7 @@ package kh.study.NF.student.vo;
 import groovy.transform.ToString;
 import kh.study.NF.dept.vo.ColleageVO;
 import kh.study.NF.dept.vo.DeptVO;
+import kh.study.NF.emp.vo.StatusInfoVO;
 import kh.study.NF.member.vo.MemberVO;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,9 @@ public class StudentVO {
 	private DeptVO deptVO;
 	private ColleageVO collVO;
 	private DoubleMajorVO doubleMajorVO;
+	//by수경 학사경고/제적을 위한 1:1
+	private StatusInfoVO statusInfoVO;
+	
 	
 
 

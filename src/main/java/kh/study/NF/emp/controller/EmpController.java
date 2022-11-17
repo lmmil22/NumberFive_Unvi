@@ -20,6 +20,7 @@ import kh.study.NF.config.Student.AcceptApply;
 import kh.study.NF.config.Student.ApplyCode;
 import kh.study.NF.config.Student.DeptManageCalendar;
 import kh.study.NF.dept.service.DeptService;
+import kh.study.NF.dept.vo.DeptVO;
 import kh.study.NF.emp.service.EmpService;
 import kh.study.NF.emp.vo.DeptManageVO;
 import kh.study.NF.student.service.StudentService;
@@ -433,7 +434,21 @@ public class EmpController {
 		  model.addAttribute("collList", deptService.selectCollList());
 		  model.addAttribute("deptList", deptService.selectDeptList());
 		  
+		  //전체 학생 목록
+		  model.addAttribute("stuList", empService.selectAllStu());
+		  
 		  
 		  return "content/statusInfo/AcademicProbation";
 	  }
+	  
+	  //by수경 학사경고 페이지 전공대학 클릭 시 전공학과 변경되도록 ajax
+	  @ResponseBody
+	  @PostMapping("/deptListAjax")
+	  public List<DeptVO> deptListAjax(String collNo){
+		  
+		  return deptService.getDeptList(collNo);
+	  }
+	  
+	  
+	  
 }

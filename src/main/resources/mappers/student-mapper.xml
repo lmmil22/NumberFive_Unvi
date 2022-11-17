@@ -15,11 +15,12 @@
 <result column="STU_SEM" property="stuSem"/>
 <result column="STU_STATUS" property="stuStatus"/>
 <result column="MEM_NO" property="memNo"/>
-<!--by수경 1:1관계 전공대학, 전공학과, 복수전공-->
+<!--by수경 1:1관계 전공대학, 전공학과, 복수전공, 학사경고/제적-->
 <association property="memberVO" resultMap="member"/>
 <association property="deptVO" resultMap="professorMapper.dept"/>
 <association property="collVO" resultMap="professorMapper.coll"/>
 <association property="doubleMajorVO" resultMap="doubleMajor"/>
+<association property="statusInfoVO" resultMap="statusInfoMapper.StatusInfo"/>
 </resultMap>
 
 <!--by수경 member테이블의 mapper입니다. -->

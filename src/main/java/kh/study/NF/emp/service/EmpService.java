@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kh.study.NF.emp.vo.DeptManageVO;
+import kh.study.NF.student.vo.StudentVO;
 
 //by수경 학생의 복학, 휴학, 전과, 복수전공신청에 대한 관리자 영역
 public interface EmpService {
@@ -31,5 +32,7 @@ public interface EmpService {
 	
 	//by수경 전과/복수전공신청 단일 승인
 	void acceptChangeDoubleMajor(DeptManageVO deptManageVO);
-
+	
+	//by수경 학사경고 페이지에서 전체 학생 조회하기
+	List<StudentVO> selectAllStu();
 }

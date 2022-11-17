@@ -108,7 +108,7 @@ public class StudentController {
 	}
 	
 	
-	//by수경 학생이 학교를 전과 신청버튼 클릭 시 실행되는 메소드
+	//by수경 학생이 전과 신청버튼 클릭 시 실행되는 메소드
 	@ResponseBody
 	@PostMapping("/applyChangeMajorAjax")
 	public void applyChangeMajor(Model model, DeptManageVO deptManageVO) {
@@ -119,7 +119,7 @@ public class StudentController {
 		
 
 	}
-	//by수경 학생이 학교를 복수전공 신청버튼 클릭 시 실행되는 메소드
+	//by수경 학생이 복수전공 신청버튼 클릭 시 실행되는 메소드
 	@ResponseBody
 	@PostMapping("/applyAddMajorAjax")
 	public void applyAddMajor(Model model, DeptManageVO deptManageVO) {

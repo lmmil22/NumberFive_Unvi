@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.study.NF.emp.vo.DeptManageVO;
+import kh.study.NF.student.vo.StudentVO;
 //by수경 학생의 복학, 휴학, 전과, 복수전공신청에 대한 관리자 영역
 @Service("empService")
 public class EmpServiceImpl implements EmpService{
@@ -64,6 +65,13 @@ public class EmpServiceImpl implements EmpService{
 	public void acceptChangeDoubleMajor(DeptManageVO deptManageVO) {
 		sqlSession.update("deptManageMapper.acceptChangeDoubleMajor", deptManageVO);
 		
+	}
+	
+	//by수경 학사경고 페이지에서 전체 학생 조회하기
+	@Override
+	public List<StudentVO> selectAllStu() {
+		
+		return sqlSession.selectList("statusInfoMapper.selectAllStu");
 	}
 
 }

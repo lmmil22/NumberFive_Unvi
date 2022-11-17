@@ -18,4 +18,8 @@ public class StatusInfoVO {
 	private String approvalDate;
 	private String ingStatus;
 	
+	//by수경 1:1 관계 association
+	private AcademicProbationVO academicProbationVO;
+	private StuOutVO stuOutVO;
+	
 }

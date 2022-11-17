@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>[NFU]학사경고 관리자 페이지</title>
 </head>
 <body>
 
@@ -17,7 +17,7 @@
 			<table class="table align-middle text-center">
 				<tr>
 					<td>소속대학</td>
-					<td colspan="3"> 
+					<td> 
 						<select class="form-select" th:onchange="changeColl();" id="coll">
 							<option selected value="">전체</option>
 							<th:block th:each=" coll : ${collList}">
@@ -26,7 +26,7 @@
 						</select>
 					</td>
 					<td>소속학과</td>
-					<td colspan="2"> 
+					<td> 
 						<select class="form-select deptList" id="dept">
 							<option selected value="">전체</option>
 							<th:block th:each=" dept : ${deptList}">
@@ -38,28 +38,148 @@
 				</tr>
 				<tr>
 					<td>학적</td>
-					<td><select class="form-select" ><option selected value="">전체</option></select></td>
-					<td>학년</td>
-					<td><select class="form-select" ><option selected value="">전체</option></select></td>
+					<td>
+						<select class="form-select" >
+							<option selected value="" >전체</option>
+							<option value="comeback">재학</option>
+							<option value="takeOff">휴학</option>
+						</select>
+					</td>
 					<td>성명</td>
-					<td colspan="2"> <input type="text"> </td>
+					<td> <input class ="form-control" type="text" name="memName"> </td>
 				</tr>
 			</table>
 		학생목록
 			<table class="table align-middle text-center">
 				<tr>
 					<td>학번</td>
-					<td>학년</td>
 					<td>이름</td>
 					<td>소속대학</td>
 					<td>소속학과</td>
 					<td>학사경고</td>
+					<td>제적</td>
 				</tr>
-				<tr></tr>
+				<tr th:each="stu:${stuList}">
+					<td th:text="${stu.stuNo}" data-bs-toggle="modal" data-bs-target="#probationModal"></td>
+					<td th:text="${stu.memberVO.memName}"></td>
+					<td th:text="${stu.collNo}"></td>
+					<td th:text="${stu.deptNo}"></td>
+					<td th:text="${stu.statusInfoVO.statusNo}"></td>
+					<td> <input type="button" value="제적처리"> </td>
+				</tr>
 			</table>
 		</div>
 	</div>
 	
+	<!--by수경 학생 학번 클릭 시 나타날 학사경고 창 -->
+	<div class="modal fade" id="probationModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title" id="probationModal_apply">학사경고</h4>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+			<div class="row">
+				<div class="col-12">
+					<table class="table">
+						<tr>
+							<th>이름</th>  
+						    <td>
+						    	<div id="probationModal_name"></div>
+						    </td>
+						    <th>생년월일</th>  
+					        <td>
+					        	<div id="probationModal_birth"></div>
+					        </td>  
+					        <td rowspan="3" colspan="2"></td>
+					        
+						</tr>
+						<tr>
+							<th>연락처</th>  
+					        <td colspan="3">
+					        	<div id="probationModal_tell"></div>
+					        </td>
+						</tr>
+						<tr>
+							<th>주소</th>
+							<td colspan="3"></td>
+						</tr>
+						
+						<tr>  
+					  	    <th>학번</th>   
+						    <td>
+						    	<div id="probationModal_no"></div>
+						    </td>  
+					   	    <th>학년</th>   
+					   	    <td>
+					   	    	<div id="probationModal_grade"></div>
+					   	    </td> 
+					   	   	<th>상태</th>  
+						    <td>
+						    	<div id="probationModal_status"></div>
+						    </td>  
+						</tr> 
+						<tr>  
+					  	    <th>전공대학</th>   
+						    <td colspan="2">
+						    	<div id="probationModal_coll"></div>
+						    </td>  
+					   	    <th>전공학과</th>   
+					   	    <td colspan="2">
+					   	    	<div id="probationModal_dept"></div>
+					   	    </td>  
+						</tr> 
+						
+						<tr>
+							<th>경고학기</th>
+							<td colspan="5">
+								<input type="text" value="2022"> 년도 
+								<select class="form-select form-select-sm">
+									<option value="1">1</option>
+									<option value="2">2</option>
+								</select> 학기
+							</td>
+						</tr>				
+						<tr>
+							<th>경고사유</th>
+							<td colspan="5">
+								<select class="form-select">
+									<option>학칙위반</option>
+									<option>평균학점 미달</option>
+									<option>등록금 미납</option>
+									<option>이수학점 미달</option>
+									<option>부정행위</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6">누적 경고 내역</td>
+						</tr>				
+						<tr>
+							<td colspan="2">일자</td>
+							<td colspan="4">사유</td>
+						</tr>				
+					</table>
+
+				</div>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="probationModal_btn" 
+	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       		th:onclick="acceptProbation();">승인하기</button>
+	        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" 
+	        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>	
+<script type="text/javascript" th:src="@{/js/probation/academicProbation.js}"></script>		
 </div>
 
 
