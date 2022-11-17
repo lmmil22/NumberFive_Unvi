@@ -238,7 +238,7 @@ public class ProfessorController {
 		professorService.deleteStuLec(enrollmentVO);
 	}
 	
-	//점수 등록 페이지로 이동 
+	//by 지아 점수 등록 페이지로 이동 
 	@GetMapping("/scoreManagement")
 	public String scoreManagement( Model model ,String empNo) {
 		
@@ -251,7 +251,7 @@ public class ProfessorController {
 		
 	}
 	
-	//선택한 강의의 학생 조회 
+	//by 지아 선택한 강의의 학생 조회 
 	@ResponseBody
 	@PostMapping("/selectLecStuAjax")
 	public List<StuGradeVO> selectLecStuAjax(String lecNo , Model model) {
@@ -260,7 +260,7 @@ public class ProfessorController {
 		
 	return list;
 	}
-	//선택한 강의의 학생 정보 조회 점수등록
+	// by 지아 선택한 강의 학생 정보 조회 점수등록
 	@ResponseBody
 	@PostMapping("/setScoreAjax")
 	public List<GradeVO> setScoreAjax(Model model) {
@@ -270,15 +270,23 @@ public class ProfessorController {
 		return list;
 	}
 	
-	//업데이트 되면 진행되는 ajax
+	//by 지아 업데이트 되면 진행되는 ajax
 	@ResponseBody
 	@PostMapping("/updateGradeAjax")
-	public void updateGradeAjax(StuGradeVO stuGradeVO) {
+	public String updateGradeAjax(StuGradeVO stuGradeVO , String stuNo , String grade) {
 		
+		stuGradeVO.setGrade(grade);
+		stuGradeVO.setStuNo(stuNo);
 		professorService.updateGrade(stuGradeVO);
+		
+		return grade;
 
 	}
 	
+	
+	
+	
+	//공지사항 틀 
 	@GetMapping("cal")
 	public String calList() {
 		

@@ -479,10 +479,6 @@
 	WHERE STU_NO = #{stuNo} 
 	
 	</update>
-	
-	
-	
-
 
 
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<!--  By 지아-->
+<mapper namespace="adminMapper">
+	
+	
+	
+<!-- 회원이 내정보 조회 
+	<select id="selectMemDetail" resultMap="memberMapper.member">
+	SELECT 
+	MEM_NO 
+    , MEM_PW 
+    , MEM_NAME 
+    , MEM_EMAIL 
+    , MEM_ADDR 
+    , MEM_ADDR_DETAIL 
+    , MEM_TELL 
+    , MEM_IMAGE 
+    , MEM_GENDER 
+    , MEM_BIRTH 
+    , MEM_ROLE
+	FROM MEMBER
+	WHERE MEM_NO = #{memNo}
+	
+	
+	
+	
+	
+	</select> -->
+	
+	
+	
+	
+
+
+</mapper>
+
+
+
+
+
+
