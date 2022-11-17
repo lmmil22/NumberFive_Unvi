@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/base_layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	
+<div layout:fragment="content">
+		<div class="mb-3" >
+		  <label for="exampleFormControlspan1" class="form-label">글 번호 :</label>
+		<th:block th:text="${board.boardNo}"></th:block> 
+		</div>
+		
+		<div class="mb-3">
+		  <label for="exampleFormControlspan1" class="form-label"> 작성자 :</label>
+		  	<th:block th:text="${board.memNo}"></th:block> 
+		</div>
+		
+		<div class="mb-3">
+		  <label for="exampleFormControlspan1" class="form-label"> 작성일 :</label>
+		  <th:block th:text="${board.boardCreateDate}"></th:block> 
+		</div>
+		
+		<div class="mb-3">
+		  <label for="exampleFormControlspan1" class="form-label">글제목 :</label>
+	  		  <th:block th:text="${board.boardTitle}"></th:block> 
+		</div>
+		
+		<div class="mb-3">
+		  <label for="exampleFormControlTextarea1" class="form-label">글내용 :</label>
+		  	<div th:text="${board.content}"></div>
+		</div>
+		
+		
+<!-- 게시글 상세보기 클릭시, 관리자이거나 글작성자 경우, 글수정, 글삭제 버튼 노출 -->
+		<!-- 세션 정보는 삭제해야 시큐리티 적용했을 때 오류발생하지 않는다!!!             -->
+		<!-- 게시글 작성자 데이터 불러오기                                -->
+		<!-- <div th:text="${board.memberId}"></div>                      -->
+		<!-- 로그인 인증자 아이디 정보 불러오기                           -->
+		<!-- <div sec:authentication="name"></div>                        -->
+		<!-- 위 두개가 일치한다면, 글수정및삭제 버튼 보이기               -->
+		<!-- 게시글 작성자와 로그인 인증자 아이디값이 같다면 버튼이 화면에 노출 -->
+			<!-- <div th:if="${board.memberId == #authentication.name}" >
+					<button type="button" class="btn btn-light"  th:onclick="|location.href='@{/board/update(boardNum=${board.boardNum})}'|">수정</button>
+					<button type="button" class="btn btn-danger" th:onclick="|location.href='@{/board/delete(boardNum=${board.boardNum})}'|">삭제</button>
+			</div> -->
+			<!-- 로그인 인증자가 관리자 권한을 가지고 있다면, 버튼 화면에 노출 -->
+			<!-- <div sec:authorize="hasRole('ROLE_Y')">	
+					<button type="button" class="btn btn-light"  th:onclick="|location.href='@{/board/update(boardNum=${board.boardNum})}'|">수정</button>
+					<button type="button" class="btn btn-danger" th:onclick="|location.href='@{/board/delete(boardNum=${board.boardNum})}'|">삭제</button>
+			</div>	 -->
+			<!-- 관리자 권한이 아닌사람이 첫번째 매개변수에 포함이 되는가? -->
+			<!-- 결과값은 t/f 참과 거짓으로 나온다. -->
+			<!-- <div th:text="${#authentication.authorities}"></div>'권한' 데이터 // [ROLE_N] -->
+			<!-- <div th:text="${#strings.contains(#authentication.authorities,'ROLE_N')}"></div>true -->
+			
+			<!-- 위의 두 조건을 or로 충족시키는 if문을 요약하여 만들어 사용해보자. -->
+			<!-- 작성자 아이디값 과 로그인 인증자의 아이디값이 같거나 관리자라면 수정,삭제 버튼이 뜨도록 만든다. -->
+		<div align="center">
+			<span th:if="${board.memNo == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_Y')}"> 
+				<button type="button" class="btn btn-light"  th:onclick="|location.href='@{/board/update(boardNo=${board.boardNo})}'|">수정</button>
+				<button type="button" class="btn btn-danger" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">삭제</button>
+			</span>
+			<span>
+				<button type="button" class="btn btn-dark" th:onclick="@{location.href='/board/list';}">뒤로가기</button>
+			</span>
+		</div>
+
+</div>
+
+</html>

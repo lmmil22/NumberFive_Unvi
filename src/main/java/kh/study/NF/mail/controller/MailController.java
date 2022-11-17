@@ -24,8 +24,8 @@ public class MailController {
 
 	// 이메일 인증 
 	@GetMapping("/sendMail")
-	public String sendMail(Model model) {
-		mailService.sendMdail();
+	public String sendMail(String memEmail,Model model) {
+		mailService.sendMdail(memEmail);
 		
 		return "content/test/test11";
 	}

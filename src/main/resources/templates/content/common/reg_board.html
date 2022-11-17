@@ -1,0 +1,39 @@
+<!-- by 유빈 -->
+<!-- finalBoard 프로젝트 소스 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/base_layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	
+<div layout:fragment="content">
+	<div class="row justify-content-center">
+	<!-- 제목줄 -->
+	<div class="col-12" align="center"> <h1>BOARD FORM</h1> </div>
+	<!-- 내용줄 -->
+	<div class="col-12" > 
+		<form th:action="@{/board/reg}" method="post" th:object="${boardVO}">
+			<div class="mb-3">
+				<!--  시큐리티 사용하기위해서는 session 을 삭제해야 오류가 발생하지 않는다!-->
+				<label for="exampleFormControlInput1" class="form-label">작성자 :</label> 
+				<span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
+			</div>
+			<div class="mb-3">
+				<label for="exampleFormControlInput1" class="form-label" >글 제목 :</label> 
+				<input type="text" class="form-control" th:field="*{boardTitle}" placeholder="제목을 입력하세요">
+				<div class="hasError" th:if="${#fields.hasErrors('boardTitle')}" th:errors="*{boardTitle}" ></div>
+			</div>
+			<div class="mb-3">
+				<label for="exampleFormControlTextarea1" class="form-label">글 내용 :</label>
+				<textarea class="form-control" th:field="*{boardContent}" rows="3" placeholder="내용을 입력하세요"></textarea>
+				<div class="hasError" th:if="${#fields.hasErrors('boardContent')}" th:errors="*{boardContent}" ></div>
+			</div>
+			<div align="center">
+				<button class="btn btn-light" type="submit" th:onclick="@{location.href='/board/reg';}">글등록</button>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>
+
+</html>

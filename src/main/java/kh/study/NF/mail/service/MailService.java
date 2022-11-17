@@ -15,13 +15,13 @@ public class MailService {
     @Autowired
     public JavaMailSender javaMailSender;
     
-    public void sendMdail() {
+    public void sendMdail(String memEmail) {
     	
     	// 수신 대상을 담을 arrayList 생성
     	ArrayList<String> toUerList = new ArrayList<>();
     	
     	//수신 대상 추가
-    	toUerList.add("numberfive.zys@gmail.com"); //내게쓰기 보안설정 한 이메일 -> 수신가능 
+    	toUerList.add(memEmail); //내게쓰기 보안설정 한 이메일 -> 수신가능 
     	
     	//수신 대상 개수
     	int toUserSize = toUerList.size();
@@ -53,17 +53,19 @@ public class MailService {
  	                break;
  	        }
  	    }
+ 	    //출력확인
+ 	    System.out.println("________________임시비밀번호 생성 확인____________" + key.toString());
+ 	   
  	    // 암호화 키 이메일 내용에 넣기 
     	simpleMessage.setText("[임시 비밀번호 안내]" 
     							+ "회원님의 임시 발급된 비밀번호를 안내해드립니다. "
     							+ " < "+ key.toString() + " > "
     							+ "해당 임시비밀번호로 다시 로그인해주십시오.");
     	
-    	System.out.println("XXXXXXXXXXXXXXXXX 임시비밀번호 생성 " + key.toString());
     	
     	// 메일 발송
         javaMailSender.send(simpleMessage);
-        System.out.println("WWWWWWWWWWWWWWWWWWWWW 메일발송 성공");
+        System.out.println("__________________메일발송 성공__________________");
     }
  ////////////////////////////////////////////////////////////////////////
 

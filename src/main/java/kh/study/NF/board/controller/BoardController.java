@@ -22,10 +22,9 @@ import kh.study.NF.board.vo.BoardVO;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-
 	@Resource(name = "boardService")
 	private BoardService boardService;
-	
+////////////////////////////////////////////////////////////////	
 	//게시글 목록페이지
 	@RequestMapping("/list")
 	public String select(Model model,BoardVO boardVO) {
@@ -36,15 +35,20 @@ public class BoardController {
 	// 글쓰러가기-양식페이지로이동
 	@GetMapping("/reg")
 	public String reg(BoardVO boardVO) {
-		return"content/board/reg_board";
+		return"content/common/reg_board";
 	}
+	
 	// 실제 글 등록
 	@PostMapping("/reg")
 	public String reg(@Valid BoardVO boardVO, BindingResult bindingResult, Model model
 						,Authentication authentication){
+		
 		User user = (User) authentication.getPrincipal();
-		boardVO.setBoardWriter(user.getUsername());
+		
+		boardVO.setMemNo(user.getUsername());//시큐리티 로그인 아이디(학번,교번)을 memNo으로 넣어주기
+		
 		boardService.insertBoard(boardVO);
+		System.out.println("___________매퍼 게시글등록 실행 됐다___________");
 		
 		// 주의! 순서중요하다. 유효성체크 먼저 한 후, 로그인정보값 boardVO에 넣어주기 !!
 		if (bindingResult.hasErrors()) {
@@ -63,7 +67,7 @@ public class BoardController {
 		model.addAttribute("board", boardService.selectDetailBoard(boardNum));
 		
 		System.out.println("게시판상세조회");
-		return "content/board/board_detail";
+		return "content/common/board_detail";
 		
 	}
 	
@@ -83,7 +87,7 @@ public class BoardController {
 		boardVO.setBoardCreateDate(result.getBoardCreateDate());
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX//
 		// 일단 주석처리함 위에 USER UTIL완료되면 넣기 
-		//boardVO.setMemberId(result.getMem());
+		boardVO.setMemNo(result.getMemNo());
 		
 		
 		//-----(방법2) model사용할 때-------------------------------------------------//

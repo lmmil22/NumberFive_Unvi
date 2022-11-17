@@ -40,7 +40,7 @@ public class MemberController {
 	private PasswordEncoder encoder;
 //-------------------------------------------------------------------------------------------///	
 	
-	//[홈화면 모달창]회원가입
+	//[홈화면 모달창] 회원가입
 	@PostMapping("/join")
 	public String join(@Valid MemberVO memberVO, BindingResult bindingResult, Model model) {
 		// !! validation 체크 (데이터 유효성 검증)
@@ -56,10 +56,13 @@ public class MemberController {
 		}
 		// 기본값을 student로 주기.
 		memberVO.setMemRole(MemRole.STUDENT.toString());
+		
 		//암호화 작업2 -주석풀기 
 		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+		
 		//회원가입 
 		memberService.join(memberVO);
+		
 		return "content/common/join_result";
 	}
 //-------------------------------------------------------------------------------------------///	
@@ -85,7 +88,7 @@ public class MemberController {
 	// 이메일로 비밀번호 찾기 (ajax.ver) -> 모달 ajax사용 (ajaxlogin이라는 버튼을 클릭시)
 	//@ResponseBody //ajax사용할때(단,리턴값은 필요한 데이터만! html페이지가 아님!)
 	@PostMapping("/checkAndSendEmail")
-	public String ajaxLogin( MemberVO memberVO) {
+	public String ajaxLogin( MemberVO memberVO,String memEmail) {
 		//비밀번호 찾기 쿼리문이용해서 회원존재확인하기.
 		MemberVO loginInfo = memberService.findPw(memberVO);
 		
@@ -100,8 +103,10 @@ public class MemberController {
 	    	ArrayList<String> toUerList = new ArrayList<>();
 	    	
 	    	//수신 대상 추가
-	    	toUerList.add(memberVO.getMemEmail());//조회한 회원의 이메일가져오기. get
-	    	mailService.sendMdail();
+	    	toUerList.add(memEmail);
+	    	//메일 발송
+	    	mailService.sendMdail(memEmail);
+	    	
 	    	System.out.println("________________ 이메일 발송 성공_________________");
 	    	
 	    	// 여기까지 11/11 완료된 상태
@@ -110,17 +115,19 @@ public class MemberController {
 	    	// 그러면 회원가입을 진행하고 시큐리티 암호화작업들어가면서 비밀번호 생성해보자. 
 	    	
 	    	// 아래처럼 암호화된 비밀번호를 넣어서 업데이트해야한다.
-			 memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+			memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 
 	    	// 임시발급비밀번호로 업데이트하기
 	    	memberService.updatePw(memberVO);
+	    	
 	    	return "content/common/reLogin";
 			
 		} 
-		System.out.println("_____________현재 로그인 상태는?___________________ "+ loginInfo);
+		System.out.println("_____________현재 로그인 상태는?___________________ "+ loginInfo);//null
+		
 		// 바로 loginInfo를 주지않고 삼항연산자 사용한다
 		//return loginInfo == null? false :true;//자료형 boolean
-		return "redirect:/member/afterLogin";
+		return "redirect:/member/afterLogin";//login상태가 null일때
 	}
 //-------------------------------------------------------------------------------------------///	
 	
