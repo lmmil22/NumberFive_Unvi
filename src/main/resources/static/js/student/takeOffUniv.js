@@ -45,35 +45,53 @@ function applyTakeOffUniv(){
 
 //by수경 휴학신청 form태그 실행을 위한 모달창 실행
 function applyResult(){
+	//동의합니다 체크박스
+	const agreeCheckBox= document.querySelector('#agreeCheckBox');
+	//동의합니다 체크박스에 체크표시가 되어 있다면
+	const isChecked = agreeCheckBox.checked;
+	
+	//체크되어 있는것이 true라면 ajax실행
+	if(isChecked){
 		
-	const stuNo = document.querySelector('#stuNo').value;
-	const fromColl = document.querySelector('#collNo').value;
-	const fromDept = document.querySelector('#deptNo').value;
-	const applyReason = document.querySelector('#applyReason').value;
-	const applyCode = document.querySelector('#applyCode').value;
+		const stuNo = document.querySelector('#stuNo').value;
+		const fromColl = document.querySelector('#collNo').value;
+		const fromDept = document.querySelector('#deptNo').value;
+		const applyReason = document.querySelector('#applyReason').value;
+		const applyCode = document.querySelector('#applyCode').value;
+			
+		$.ajax({
+			url: '/stu/applyTakeOffUnivAjax', //요청경로
+			type: 'post',
+			data: {
+				'stuNo': stuNo, 'fromColl': fromColl,
+				'fromDept': fromDept, 'applyReason': applyReason,
+				'applyCode': applyCode
+			}, //필요한 데이터
+	
+			success: function(result) {
+	
+				//모달창 소스
+				const modal = new bootstrap.Modal('#applyResultModal');
+				//모달 보여주기
+				modal.show();
+			},
+	
+			error: function() {
+				alert('실패');
+			}
+		});
+	}
+	//by수경 만약 동의합니다에 체크하지 않았다면 alert창 실행
+	else{
+		alert('휴학 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.');
 		
-	$.ajax({
-		url: '/stu/applyTakeOffUnivAjax', //요청경로
-		type: 'post',
-		data: {
-			'stuNo': stuNo, 'fromColl': fromColl,
-			'fromDept': fromDept, 'applyReason': applyReason,
-			'applyCode': applyCode
-		}, //필요한 데이터
-
-		success: function(result) {
-
-			//모달창 소스
-			const modal = new bootstrap.Modal('#applyResultModal');
-			//모달 보여주기
-			modal.show();
-
-		},
-
-		error: function() {
-			alert('실패');
-		}
-	});
+		//휴학 유의사항 모달창 다시 뜨도록 설정
+		//모달창 소스
+		const modal = new bootstrap.Modal('#takeOffUnivModal');
+		//모달 보여주기
+		modal.show();
+		return;
+	}	
 
 }
 //by수경 신청현황을 보여주는 페이지로 이동

@@ -72,6 +72,21 @@ function applyChangeMajor(){
 		alert('전과 사유는 필수 입력 사항입니다. \n전과 사유를 작성하여 주십시오.');
 		return;
 	}
+	
+	//by수경 전공대학과 전공학과를 선택하지 않았다면
+	const coll = document.querySelector('#coll').value
+	if(coll == ''){
+		alert('전공대학을 선택하여 주십시오.')
+		return;
+	}
+	
+	const dept = document.querySelector('#dept').value;
+	if(dept == ''){
+		alert('전공학과를 선택하여 주십시오.')
+		return;
+	}
+	
+	
 
 	//by수경 모든 정보가 입력되었을 때 전과 유의사항 모달창
 	//모달창 소스
@@ -84,36 +99,54 @@ function applyChangeMajor(){
 //by수경 신청 쿼리 실행
 function applyResult(){
 	
-	const stuNo = document.querySelector('#stuNo').value;
-	const fromColl = document.querySelector('#collNo').value;
-	const fromDept = document.querySelector('#deptNo').value;
-	const applyReason = document.querySelector('#applyReason').value;
-	const applyCode = document.querySelector('#applyCode').value;
-	const toColl = document.querySelector('#coll').value;
-	const toDept = document.querySelector('#dept').value;
+	//동의합니다 체크박스
+	const agreeCheckBox= document.querySelector('#agreeCheckBox');
+	//동의합니다 체크박스에 체크표시가 되어 있다면
+	const isChecked = agreeCheckBox.checked;
 	
-	$.ajax({
-		url: '/stu/applyChangeMajorAjax', //요청경로
-		type: 'post',
-		data: {
-			'stuNo': stuNo, 'fromColl': fromColl,'fromDept': fromDept, 
-			'applyReason': applyReason, 'applyCode': applyCode,
-			'toColl':toColl, 'toDept':toDept
-		}, //필요한 데이터
-
-		success: function(result) {
-
-			//모달창 소스
-			const modal = new bootstrap.Modal('#applyResultModal');
-			//모달 보여주기
-			modal.show();
-		},
-
-		error: function() {
-			alert('실패');
-		}
-	});
+	//동의합니다에 체크되어 있다면
+	if(isChecked){
 	
+		const stuNo = document.querySelector('#stuNo').value;
+		const fromColl = document.querySelector('#collNo').value;
+		const fromDept = document.querySelector('#deptNo').value;
+		const applyReason = document.querySelector('#applyReason').value;
+		const applyCode = document.querySelector('#applyCode').value;
+		const toColl = document.querySelector('#coll').value;
+		const toDept = document.querySelector('#dept').value;
+		
+		$.ajax({
+			url: '/stu/applyChangeMajorAjax', //요청경로
+			type: 'post',
+			data: {
+				'stuNo': stuNo, 'fromColl': fromColl,'fromDept': fromDept, 
+				'applyReason': applyReason, 'applyCode': applyCode,
+				'toColl':toColl, 'toDept':toDept
+			}, //필요한 데이터
+	
+			success: function(result) {
+	
+				//모달창 소스
+				const modal = new bootstrap.Modal('#applyResultModal');
+				//모달 보여주기
+				modal.show();
+			},
+	
+			error: function() {
+				alert('실패');
+			}
+		});
+	}
+	
+	//by수경 동의합니다에 체크하지 않았다면 alert창 실행
+	else{
+		alert('전과 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.');
+		//모달창 소스
+		const modal = new bootstrap.Modal('#changeMajorModal');
+		//모달 보여주기
+		modal.show();
+		return;
+	}
 }
 
 //by수경 신청현황을 보여주는 페이지로 이동
