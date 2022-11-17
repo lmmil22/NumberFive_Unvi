@@ -12,6 +12,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -219,12 +221,14 @@ public class ProfessorController {
 	//by 지아 수강 신청 클릭시 진행되는 ajax 
 	@ResponseBody
 	@PostMapping("/insertEnrollAjax")
-	public void insertEnrollAjax(EnrollmentVO enrollmentVO , String lecNo , StuGradeVO stuGradeVO) {
-		//시큐리티로 사용시 변경해줘야한다 
-		enrollmentVO.setStuNo("STU_003");
-		stuGradeVO.setLecNo(lecNo);
-		stuGradeVO.setStuNo("STU_003");
+	public void insertEnrollAjax(Authentication authentication ,EnrollmentVO enrollmentVO , String lecNo , StuGradeVO stuGradeVO) {
+		User user = (User)authentication.getPrincipal();
 		
+		//시큐리티로 사용시 변경해줘야한다 
+		enrollmentVO.setStuNo(user.getUsername());
+		stuGradeVO.setLecNo(lecNo);
+		stuGradeVO.setStuNo(user.getUsername());
+		//수정후 주석 지우기 
 		professorService.insertEnroll(enrollmentVO, stuGradeVO, lecNo);
 		
 		
@@ -233,8 +237,10 @@ public class ProfessorController {
 	//by 지아 수강 취소를 누르면 
 	@ResponseBody
 	@PostMapping("/deleteEnrollAjax")
-	public void deleteEnrollAjax(EnrollmentVO enrollmentVO) {
-		
+	public void deleteEnrollAjax(EnrollmentVO enrollmentVO, Authentication authentication) {
+		//????????? 취소 안됨,,,
+		//User user = (User)authentication.getPrincipal();
+		//enrollmentVO.setStuNo(user.getUsername());
 		professorService.deleteStuLec(enrollmentVO);
 	}
 	
@@ -242,7 +248,8 @@ public class ProfessorController {
 	@GetMapping("/scoreManagement")
 	public String scoreManagement( Model model ,String empNo) {
 		
-		empNo = "EMP_001";
+		//empNo = "EMP_001";
+		//해당 교수가 등록된 것만 보여야한다 ??
 		
 		model.addAttribute("lecList", professorService.selectProFLecList(empNo));
 		
