@@ -13,10 +13,11 @@
 	<!-- 내용줄 -->
 	<div class="col-12" > 
 		<form th:action="@{/board/reg}" method="post" th:object="${boardVO}">
+		<input type="hidden" name="memNo">
 			<div class="mb-3">
 				<!--  시큐리티 사용하기위해서는 session 을 삭제해야 오류가 발생하지 않는다!-->
 				<label for="exampleFormControlInput1" class="form-label">작성자 :</label> 
-				<span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
+				<span sec:authorize="isAuthenticated()" sec:authentication="name" ></span>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label" >글 제목 :</label> 

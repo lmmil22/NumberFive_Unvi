@@ -8,7 +8,7 @@ public interface BoardService {
 	void insertBoard(BoardVO boardVO);
 	
 	List<BoardVO> selectBoard();
-	BoardVO selectDetailBoard(int boardNum);
+	BoardVO selectDetailBoard(String boardNo);
 	void update(BoardVO boardVO);
-	void delete(int boardNum);
+	void delete(String boardNo);
 }

@@ -14,7 +14,6 @@
 <input type="hidden" id="isLoginFail" th:value="${isLoginFail}">
 
 	<div class="row">
-	
 		<div class="col-7"> 
 			<span> 
 			<!-- <img width="1300px;" height="900px;" src="/images/Howard University.png"  style="opacity: 0.85;"/> -->				
@@ -48,7 +47,8 @@
 						<div class="row mt-3 mb-2" >
 							<div class="col">
 								<div align="center">
-						    		<button type="submit" class="btn btn-outline-primary" > 로그인 </button>
+						    		<button type="submit" class="btn btn-outline-primary" id="loginIdTag"> 로그인 </button>
+						    		<button type="button" id="alertStart" class="btn btn-outline-primary" > swalTEST </button>
 						    		<button data-bs-toggle="modal" data-bs-target="#join_modal" type="button" class="btn btn-outline-primary" > 회원가입 </button>
 								</div>
 							</div>
@@ -221,6 +221,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript" th:src="@{/js/common/home_Login.js}"></script>
 
 </div>

@@ -13,47 +13,46 @@
 		<result column="REPLY_CNT" 			property="replyCnt"/>
 		<result column="IS_SECRERT" 		property="isSecrert"/>
 		<result column="IS_NOTICE" 			property="isNotice"/>
-		<result column="MEM_NO" 			property="memNo"/>
 	</resultMap>
 
 	<!-- 게시글등록 -->	
 	 <insert id="insertBoard">
-		INSERT INTO BOARD (BOARD_NO , BOARD_TITLE , BOARD_CONTENT , MEM_NO )
+		INSERT INTO BOARD (BOARD_NO , BOARD_TITLE , BOARD_CONTENT , BOARD_WRITER )
 		VALUES(
 			( SELECT  NVL ( MAX (BOARD_NO) , 0 ) + 1  FROM BOARD) 
 			, #{boardTitle} 
 			, #{boardContent}
-			, #{memNo}
+			, #{boardWriter}
 			)
 	</insert> 
 	
 	<!-- 게시글목록조회 -->
 	 <select id="selectBoard" resultMap="board">
-		SELECT BOARD_NO,BOARD_TITLE,BOARD_CONTENT,MEM_NO,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE
+		SELECT BOARD_NO,BOARD_TITLE,BOARD_CONTENT,BOARD_WRITER,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE
 		FROM BOARD
 		ORDER BY BOARD_NO DESC
 	</select> 
 	
 	<!-- 게시글 상세조회 -->
 	<select id="selectDetailBoard" resultMap="board">
-		SELECT BOARD_NO,BOARD_TITLE,BOARD_CONTENT,MEM_NO,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE
+		SELECT BOARD_NO,BOARD_TITLE,BOARD_CONTENT,BOARD_WRITER,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE
 		FROM BOARD
 		WHERE BOARD_NO = #{boardNo}
 	</select> 
 	
 	<!-- 글수정 -->
-	<!--  <update id="update" >
-	UPDATE BOARD
-	SET TITLE = #{title}
-		,CONTENT = #{content}
-	WHERE BOARD_NUM = #{boardNum}
-	</update>  -->
+	<update id="update" >
+		UPDATE BOARD
+		SET BOARD_TITLE = #{boardTitle}
+			,BOARD_CONTENT = #{boardContent}
+		WHERE BOARD_NO = #{boardNo}
+	</update>  
 	
 	<!-- 글삭제 -->
-	<!--  <delete id="delete">
-	DELETE BOARD
-	WHERE BOARD_NUM = #{boardNum}
-	</delete>  -->
+    <delete id="delete">
+		DELETE BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</delete>  
 
 </mapper> 
 

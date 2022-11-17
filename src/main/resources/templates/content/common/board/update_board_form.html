@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/base_layout}">
+	
+<div layout:fragment="content">
+	<form  th:action="@{/board/update}" method="post" th:object="${boardVO}" >
+		<!-- 문제점 해결 -->
+		<!-- (유의) input태그에서 th:text를 사용하면 input태그밖에 값이 화면에 보여진다.
+		form태그는 값이 입력되는 값을 넘겨주기 때문에 th:block이 아닌 input으로 넘겨야한다!!!  아니면 데이터를 들고가지못함
+		input태그는 창이 입력받기때문에 글번호가 수정될수없도록 readonly값으로 속성을 둬야한다 -->
+		
+		<!-- 글번호는 히든값으로 넘겨준다 pk이기때문에 상세보기가려면 필요하기때문이다! -->
+
+		<input type="hidden" th:field="*{boardNum}" readonly>
+		<div class="mb-3">
+		  <label for="exampleFormControlInput1" class="form-label"> 작성자 :</label>
+		<th:block th:text="*{memberId}" th:field="*{memberId}"></th:block>
+		</div>
+		
+		<div class="mb-3">
+		  <label for="exampleFormControlInput1" class="form-label"> 작성일 :</label>
+		<th:block th:text="*{createDate}" th:field="*{createDate}"></th:block>
+		</div>
+		
+		<div class="mb-3">
+		  <label for="exampleFormControlInput1" class="form-label">글제목 :</label>
+		  <input th:field="*{title}"  type="text" class="form-control" id="exampleFormControlInput1" >
+		</div>
+		
+		<div class="mb-3">
+		  <label for="exampleFormControlTextarea1" class="form-label">글내용 :</label>
+		  <textarea th:field="*{content}" th:text="${content}" class="form-control" id="exampleFormControlTextarea1" rows="3" ></textarea>
+		</div>
+		<div align="center">
+			<button type="submit" class="btn btn-light">수정완료</button>
+		</div>
+	</form>
+</div>
+
+</html>
