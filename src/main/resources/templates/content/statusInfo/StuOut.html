@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout ="http://www.ultrap.net.nz/thymeleaf/layout"	
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/base_layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>[NFU]제적 현황 관리자 페이지</title>
+</head>
+<body>
+
+<div layout:fragment ="content">
+	<div class="row justify-content-center">
+		<div class="col mt-5">
+		제적 학생조회
+			<table class="table align-middle text-center">
+				<tr>
+					<td>소속대학</td>
+					<td> 
+						<select class="form-select" th:onchange="changeColl();" id="coll" name="collNo">
+							<option th:selected="${paramMap['collNo'] == null or paramMap['collNo'] eq ''}" value="" >전체</option>
+							<th:block th:each=" coll : ${collList}">
+								<option th:value="${coll.collNo}" th:text="${coll.collName}" th:selected="${paramMap['collNo'] eq coll.collNo}"></option>
+							</th:block>
+						</select>
+					</td>
+					<td>소속학과</td>
+					<td> 
+						<select class="form-select deptList" id="dept" name="deptNo">
+							<option th:selected="${paramMap['deptNo'] == null or paramMap['deptNo'] eq ''}"  value="">전체</option>
+							<th:block th:each=" dept : ${deptList}">
+								<option th:value="${dept.deptNo}" th:text="${dept.deptName}" th:selected="${paramMap['deptNo'] eq dept.deptNo}"></option>
+							</th:block>
+						</select> 
+					</td>
+					<td rowspan="2">  <button class="btn btn-primary" style="height: 90px;" type="submit">Search</button> </td>
+				</tr>
+				<tr>
+					<td>학적</td>
+					<td>
+						<select class="form-select" >
+							<option th:selected="${paramMap['stuStatus'] == null or paramMap['stuStatus'] eq ''}" value="" >전체</option>
+							<option th:selected="${paramMap['stuStatus'] eq '재학'}" value="재학">재학</option>
+							<option th:selected="${paramMap['stuStatus'] eq '휴학'}" value="휴학">휴학</option>
+						</select>
+					</td>
+					<td>성명</td>
+					<td> <input class ="form-control" type="text" name="memName"> </td>
+				</tr>
+			</table>
+		학생목록
+			<table class="table align-middle text-center">
+				<tr>
+					<td>학번</td>
+					<td>이름</td>
+					<td>소속대학</td>
+					<td>소속학과</td>
+				</tr>
+				<tr th:each="stuOut:${stuOutList}">
+					<td th:text="${stu.stuNo}" data-bs-toggle="modal" data-bs-target="#stuOutModal"></td>
+					<td th:text="${stu.memberVO.memName}"></td>
+					<td th:text="${stu.collNo}"></td>
+					<td th:text="${stu.deptNo}"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<!--by수경 학생 학번 클릭 시 나타날 제적 모달창 -->
+	<div class="modal fade" id="stuOutModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title" id="stuOutModal_apply">제적</h4>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+			<div class="row">
+				<div class="col-12">
+					<table class="table">
+						<tr>
+							<th>이름</th>  
+						    <td>
+						    	<div id="stuOutModal_name"></div>
+						    </td>
+						    <th>생년월일</th>  
+					        <td>
+					        	<div id="stuOutModal_birth"></div>
+					        </td>  
+					        <td rowspan="3" colspan="2"></td>
+					        
+						</tr>
+						<tr>
+							<th>연락처</th>  
+					        <td colspan="3">
+					        	<div id="stuOutModal_tell"></div>
+					        </td>
+						</tr>
+						<tr>
+							<th>주소</th>
+							<td colspan="3"></td>
+						</tr>
+						
+						<tr>  
+					  	    <th>학번</th>   
+						    <td>
+						    	<div id="stuOutModal_no"></div>
+						    </td>  
+					   	    <th>학년</th>   
+					   	    <td>
+					   	    	<div id="stuOutModal_grade"></div>
+					   	    </td> 
+					   	   	<th>상태</th>  
+						    <td>
+						    	<div id="stuOutModal_status"></div>
+						    </td>  
+						</tr> 
+						<tr>  
+					  	    <th>전공대학</th>   
+						    <td colspan="2">
+						    	<div id="stuOutModal_coll"></div>
+						    </td>  
+					   	    <th>전공학과</th>   
+					   	    <td colspan="2">
+					   	    	<div id="stuOutModal_dept"></div>
+					   	    </td>  
+						</tr> 
+						
+						<tr>
+							<td colspan="6">누적 경고 내역</td>
+						</tr>				
+						<tr>
+							<td colspan="2">일자</td>
+							<td colspan="4">사유</td>
+						</tr>				
+					</table>
+
+				</div>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" 
+	        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">확인</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>	
+<script type="text/javascript" th:src="@{/js/probation/stuOut.js}"></script>	
+</div>
+
+
+</body>
+</html>

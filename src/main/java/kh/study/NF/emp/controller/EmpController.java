@@ -428,15 +428,18 @@ public class EmpController {
 	  }
 	  
 	  //by수경 학사경고 페이지로 이동
-	  @GetMapping("/probation")
-	  public String academicProbation(Model model) {
+	  @RequestMapping("/probation")
+	  public String academicProbation(Model model, @RequestParam Map<String, String> paramMap) {
+		  		  
 		  //소속학과, 소속대학 select box 데이터 
 		  model.addAttribute("collList", deptService.selectCollList());
 		  model.addAttribute("deptList", deptService.selectDeptList());
 		  
 		  //전체 학생 목록
-		  model.addAttribute("stuList", empService.selectAllStu());
+		  model.addAttribute("stuList", empService.selectAllStu(paramMap));
 		  
+		  //검색 조건 paramMap 넘기기
+		  model.addAttribute("paramMap", paramMap);
 		  
 		  return "content/statusInfo/AcademicProbation";
 	  }
@@ -444,9 +447,24 @@ public class EmpController {
 	  //by수경 학사경고 페이지 전공대학 클릭 시 전공학과 변경되도록 ajax
 	  @ResponseBody
 	  @PostMapping("/deptListAjax")
-	  public List<DeptVO> deptListAjax(String collNo){
+	  public List<DeptVO> deptListAjax(@RequestParam Map<String, String> paramMap){
 		  
-		  return deptService.getDeptList(collNo);
+		  return empService.getDeptList(paramMap);
+	  }
+	  
+	  //by수경 제적페이지로 이동
+	  @RequestMapping("/stuOut")
+	  public String stuOut(Model model, @RequestParam Map<String, String> paramMap) {
+		  //제적학생 목록 불러오기
+		  model.addAttribute("stuOutList", empService.selectStuOutList());
+		  
+		  //소속학과, 소속대학 select box 데이터 
+		  model.addAttribute("collList", deptService.selectCollList());
+		  model.addAttribute("deptList", deptService.selectDeptList());
+		  
+		  model.addAttribute("paramMap", paramMap);
+		  
+		  return "content/statusInfo/stuOut";
 	  }
 	  
 	  

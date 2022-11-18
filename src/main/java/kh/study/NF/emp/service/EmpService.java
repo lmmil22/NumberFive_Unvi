@@ -3,7 +3,10 @@ package kh.study.NF.emp.service;
 import java.util.List;
 import java.util.Map;
 
+import kh.study.NF.dept.vo.ColleageVO;
+import kh.study.NF.dept.vo.DeptVO;
 import kh.study.NF.emp.vo.DeptManageVO;
+import kh.study.NF.emp.vo.StuOutVO;
 import kh.study.NF.student.vo.StudentVO;
 
 //by수경 학생의 복학, 휴학, 전과, 복수전공신청에 대한 관리자 영역
@@ -34,5 +37,11 @@ public interface EmpService {
 	void acceptChangeDoubleMajor(DeptManageVO deptManageVO);
 	
 	//by수경 학사경고 페이지에서 전체 학생 조회하기
-	List<StudentVO> selectAllStu();
+	List<StudentVO> selectAllStu(Map<String, String> paramMap);
+	
+	//by수경 전공학과 목록
+	List<DeptVO> getDeptList(Map<String, String> paramMap);
+	
+	//by수경 제적학생 목록조회
+	List<StuOutVO> selectStuOutList();
 }

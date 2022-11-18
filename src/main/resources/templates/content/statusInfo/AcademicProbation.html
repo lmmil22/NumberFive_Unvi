@@ -14,41 +14,44 @@
 	<div class="row justify-content-center">
 		<div class="col mt-5">
 		학사경고 학생조회
-			<table class="table align-middle text-center">
-				<tr>
-					<td>소속대학</td>
-					<td> 
-						<select class="form-select" th:onchange="changeColl();" id="coll">
-							<option selected value="">전체</option>
-							<th:block th:each=" coll : ${collList}">
-								<option th:value="${coll.collNo}" th:text="${coll.collName}"></option>
-							</th:block>
-						</select>
-					</td>
-					<td>소속학과</td>
-					<td> 
-						<select class="form-select deptList" id="dept">
-							<option selected value="">전체</option>
-							<th:block th:each=" dept : ${deptList}">
-								<option th:value="${dept.deptNo}" th:text="${dept.deptName}"></option>
-							</th:block>
-						</select> 
-					</td>
-					<td rowspan="2">  <button class="btn btn-primary" style="height: 90px;" type="submit">Search</button> </td>
-				</tr>
-				<tr>
-					<td>학적</td>
-					<td>
-						<select class="form-select" >
-							<option selected value="" >전체</option>
-							<option value="comeback">재학</option>
-							<option value="takeOff">휴학</option>
-						</select>
-					</td>
-					<td>성명</td>
-					<td> <input class ="form-control" type="text" name="memName"> </td>
-				</tr>
-			</table>
+			<form th:action="@{/emp/probation}" method="post">
+				<table class="table align-middle text-center">
+					<tr>
+						<td>소속대학</td>
+						<td> 
+							<select class="form-select" th:onchange="changeColl();" id="coll" name="collNo">
+								<option th:selected="${paramMap['collNo'] == null or paramMap['collNo'] eq ''}" value="">전체</option>
+								<th:block th:each=" coll : ${collList}">
+									<option th:value="${coll.collNo}" th:text="${coll.collName}" th:selected="${paramMap['collNo'] eq coll.collNo}"></option>
+								</th:block>
+							</select>
+						</td>
+						<td>소속학과</td>
+						<td> 
+							<select class="form-select deptList" id="dept" name="deptNo">
+								<option th:selected="${paramMap['deptNo'] == null or paramMap['deptNo'] eq ''}"  value="">전체</option>
+								<th:block th:each="dept : ${deptList}">
+									<option th:value="${dept.deptNo}" th:text="${dept.deptName}" th:selected="${paramMap['deptNo'] eq dept.deptNo}"></option>
+								</th:block>
+							</select> 
+						</td>
+						<td rowspan="2"> <button class="btn btn-primary" style="height: 90px;" type="submit">Search</button> </td>
+					</tr>
+					<tr>
+						<td>학적</td>
+						<td>
+							<select class="form-select" name="stuStatus">
+								<option th:selected="${paramMap['stuStatus'] == null or paramMap['stuStatus'] eq ''}" value="" >전체</option>
+								<option value="재학" th:selected="${paramMap['stuStatus'] eq '재학'}">재학</option>
+								<option value="휴학" th:selected="${paramMap['stuStatus'] eq '휴학'}">휴학</option>
+							</select>
+						</td>
+						<td>성명</td>
+						<td><input class ="form-control" type="text" name="memName" value=""></td>
+					</tr>
+				</table>
+			</form>
+			
 		학생목록
 			<table class="table align-middle text-center">
 				<tr>
@@ -62,10 +65,22 @@
 				<tr th:each="stu:${stuList}">
 					<td th:text="${stu.stuNo}" data-bs-toggle="modal" data-bs-target="#probationModal"></td>
 					<td th:text="${stu.memberVO.memName}"></td>
-					<td th:text="${stu.collNo}"></td>
-					<td th:text="${stu.deptNo}"></td>
-					<td th:text="${stu.statusInfoVO.statusNo}"></td>
-					<td> <input type="button" value="제적처리"> </td>
+					<td th:text="${stu.collVO.collName}"></td>
+					<td th:text="${stu.deptVO.deptName}"></td>
+					<td>
+						<span th:text="${stu.statusInfoVO.statusNo}"></span> 회
+					</td>
+					<td> 
+						<th:block th:if="${stu.statusInfoVO.statusNo >= '3'}">
+							<input type="button" class="btn btn-primary" value="제적처리"> 
+						</th:block>
+						<th:block th:if="${stu.statusInfoVO.statusNo >= '0'}">
+							<input type="button" class="btn btn-primary" disabled value="제적처리"> 
+						</th:block>
+						<th:block th:unless="${stu.statusInfoVO.stuOutVO.stuOutNo == null}">
+							<input type="button" class="btn btn-primary" disabled value="제적완료"> 
+						</th:block>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -157,6 +172,12 @@
 							<td colspan="6">누적 경고 내역</td>
 						</tr>				
 						<tr>
+						<!-- 경고 내역 없다면 내용없다고 뜨고, 있다면 일자와 사유 뜨도록 구성 -->
+							<th:block>
+								
+							</th:block>
+							<th:block>
+							</th:block>
 							<td colspan="2">일자</td>
 							<td colspan="4">사유</td>
 						</tr>				

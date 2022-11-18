@@ -6,7 +6,7 @@
 <mapper namespace="statusInfoMapper">
 
 <!-- by수경 stutusInfo resultMap -->
-<resultMap type="kh.study.NF.emp.vo.StatusInfoVO" id="StatusInfo">
+<resultMap type="kh.study.NF.emp.vo.StatusInfoVO" id="statusInfo">
 <id column="STATUS_NO" property="statusNo"/>
 <result column="STU_NO" property="stuNo"/>
 <result column="NOW_STATUS" property="nowStatus"/>
@@ -19,15 +19,15 @@
 <association property="stuOutVO" resultMap="StuOut"/>
 </resultMap>
 	
-<!--by수경 stuOut resultMap 학사경고 -->
-<resultMap type="kh.study.NF.emp.vo.StuOutVO" id="StuOut">
+<!--by수경 stuOut resultMap 제적 -->
+<resultMap type="kh.study.NF.emp.vo.StuOutVO" id="stuOut">
 <id column="STU_OUT_NO" property="stuOutNo"/>
 <result column="STU_NO" property="stuNo"/>
 <result column="STU_OUT_DATE" property="stuOutDate"/>
 <result column="STU_OUT_REASON" property="stuOutReason"/>
 </resultMap>
 
-<!--by수경 academicProbation resultMap 제적 -->
+<!--by수경 academicProbation resultMap 학사경고 -->
 <resultMap type="kh.study.NF.emp.vo.AcademicProbationVO" id="probation">
 <id column="PROB_NO" property="probNo"/>
 <result column="STU_NO" property="stuNo"/>
@@ -38,15 +38,32 @@
 </resultMap>
 
 
-<!--by수경 전체 학생 조회하기 -->
-<select id="selectAllStu" resultMap="studentMapper.student">
+<!--by수경 학사경고 페이지 전체 학생 조회하기 -->
+<select id="selectAllStu" resultMap="studentMapper.student" parameterType="hashMap">
 	SELECT (SELECT MEM_NAME FROM MEMBER WHERE MEM_NO = S.MEM_NO) AS MEM_NAME
 		 , STU_NO
-		 , (SELECT COLL_NAME FROM COLLEAGE WHERE COLL_NO = S.COLL_NO) AS COLL_NO
-		 , (SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO = S.DEPT_NO) AS DEPT_NO
+		 , (SELECT COLL_NAME FROM COLLEAGE WHERE COLL_NO = S.COLL_NO) AS COLL_NAME
+		 , (SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO = S.DEPT_NO) AS DEPT_NAME
+		 , COLL_NO
+		 , DEPT_NO
 		 , STU_STATUS
-		 , (SELECT STATUS_NO FROM STATUS_INFO WHERE STU_NO = S.STU_NO)AS STATUS_NO
+		 , (SELECT COUNT(STATUS_NO) FROM STATUS_INFO WHERE STU_NO = S.STU_NO)AS STATUS_NO
+		 , (SELECT STU_OUT_NO FROM STU_OUT WHERE STU_NO = S.STU_NO) AS STU_OUT_NO
 	FROM STU S
+	WHERE 1 = 1
+	<if test="collNo != null and !collNo.equals('')">
+		AND COLL_NO = #{collNo}
+	</if>
+	<if test="deptNo != null and !deptNo.equals('')">
+		AND DEPT_NO = #{deptNo}
+	</if>
+	<if test="stuStatus != null and !stuStatus.equals('')">
+		AND STU_STATUS = #{stuStatus}
+	</if>
+	<if test="memName != null and !memName.equals('')">
+		AND MEM_NAME = #{memName}
+	</if>
+
 	ORDER BY STU_NO DESC
 </select>
 
@@ -59,7 +76,7 @@
 		 , STU_STATUS
 		 , (SELECT MEM_TELL FROM MEMBER WHERE MEM_NO = S.MEM_NO)AS MEM_TELL
 		 , (SELECT TO_CHAR(MEM_BIRTH, 'YYYY"년"MM"월"DD"일"') FROM MEMBER WHERE MEM_NO = S.MEM_NO) AS MEM_BIRTH
-		 , (SELECT TH_CHAR(PROB_DATE, 'YYYY"년"MM"월"DD"일"') FROM STATUS_INFO WHERE STU_NO = S.STU_NO)AS PROB_DATE
+		 , (SELECT TH_CHAR(PROB_DATE, 'YYYY"년"MM"월"DD"일"') FROM STATUS_INFO WHERE STU_NO = #{stuNo})AS PROB_DATE
 		 , (SELECT PROB_REASON FROM STATUS_INFO WHERE STU_NO = S.STU_NO)AS PROB_REASON
 		 , (TO_CHAR(STU_YEAR)||'학년'||' '||TO_CHAR(STU_SEM)||'학기')AS STU_YEAR
 		 , MEM_NO
@@ -73,7 +90,6 @@
 <selectKey resultType="String" keyProperty="probNo" order="BEFORE">
 SELECT 'PROB_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(PROB_NO,6))), 0)+1, 3, 0) 
 FROM ACADEMIC PROBATION
-
 </selectKey>
 	
 	INSERT INTO ACADEMIC PROBATION(PROB_NO
@@ -90,13 +106,13 @@ FROM ACADEMIC PROBATION
 
 </insert>
 
-<!--by수경 statusInfo에 데이터 삽입하기 -->
+<!--by수경 statusInfo에 데이터 삽입하기(학사경고/제적 모두 넣기) -->
 <insert id="insertStatusInfo">
-
 <selectKey resultType="String" keyProperty="statusNo" order="BEFORE">
 SELECT 'STATUS_NO_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(STATUS_NO,11))), 0)+1, 3, 0) 
 FROM STATUS_INFO
 </selectKey>
+
 	INSERT INTO STATUS_INFO( STATUS_NO
 						   , STU_NO
 						   , NOW_STATUS
@@ -111,12 +127,62 @@ FROM STATUS_INFO
 
 </insert>
 
+<!--by수경 stu-out 제적 데이터 삽입하기 (학사경고 3회 이상일 때) -->
+<insert id="insertStuOut">
+<selectKey resultType="String" keyProperty="stuOutNo" order="BEFORE">
+SELECT 'STU_OUT_NO_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(STU_OUT_NO,12))), 0)+1, 3, 0) 
+FROM STU_OUT
+</selectKey>
+
+	INSERT INTO STU_OUT (STU_OUT_NO
+					   , STU_NO
+					   , STU_OUT_REASON
+			 )VALUES( #{stuOutNo}
+			 		, #{stuNo}
+			 		, #{stuOutDate}
+			 		, #{stuOutReason}
+	)
+</insert>
+
+<!--by수경 검색조건에서 전공대학 데이터 넣었을 때 전공학과가 나오는 ajax -->
+<select id="getDeptList" resultMap="professorMapper.dept" parameterType="hashMap">
+	SELECT 
+	 	D.DEPT_NO 
+    	, DEPT_NAME
+   		, C.COLL_NO
+   		, COLL_NAME
+   		
+    FROM  DEPT D , COLLEAGE C
+    WHERE D.COLL_NO = C.COLL_NO
+    <if test="collNo != null and !collNo.equals('')">
+    AND D.COLL_NO = #{collNo}
+    </if>
+	ORDER BY COLL_NO
+
+</select>
 
 
+<!--by수경 제적학생 목록 -->
+<select id="selectStuOutList" resultMap="stuOut" parameterType="hashMap">
+	SELECT STU_OUT_NO
+		 , STU_NO 
+		 , STU_OUT_DATE
+		 , STU_OUT_REASON
+	FROM STU_OUT
+	WHERE 1 = 1
+	<if test="collNo != null and !collNo.equals('')">
+		AND COLL_NO = #{collNo}
+	</if>
+	<if test="deptNo != null and !deptNo.equals('')">
+		AND DEPT_NO = #{deptNo}
+	</if>
+	<if test="stuStatus != null and !stuStatus.equals('')">
+		AND STU_STATUS = #{stuStatus}
+	</if>
+	<if test="memName != null and !memName.equals('')">
+		AND MEM_NAME = #{memName}
+	</if>
 
-
-
-
-		
+</select>
 
 </mapper>

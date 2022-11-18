@@ -113,12 +113,20 @@
 				      <td th:text="${comeback.fromDept}"></td>
 				      <td th:text="${comeback.applyDate}"></td>
 				      <td>
-				      	<span>
+				      	<span th:if="${comeback.processStatus eq 'waiting'}">
 				      		<input type="radio" th:name="|processStatus_${status.count}|" th:onclick="changeComebackStatus([[${comeback.applyNo}]], 'waiting',[[${comeback.stuNo}]]);"
 				      		value="waiting" th:checked="${comeback.processStatus eq 'waiting'}"> 
 				      		<label class="form-check-label" for="flexRadioDefault1">승인대기 </label>
 				      		<input type="radio" th:name="|processStatus_${status.count}|" th:onclick="changeComebackStatus([[${comeback.applyNo}]], 'accept',[[${comeback.stuNo}]]);"
 				      		value="accept" th:checked="${comeback.processStatus eq 'accept'}" > 
+				      		<label class="form-check-label" for="flexRadioDefault1">승인완료 </label>
+				      	</span>
+				      	<span th:if="${comeback.processStatus eq 'accept'}">
+				      		<input type="radio" th:name="|processStatus_${status.count}|" th:onclick="changeComebackStatus([[${comeback.applyNo}]], 'waiting',[[${comeback.stuNo}]]);"
+				      		value="waiting" th:checked="${comeback.processStatus eq 'waiting'}" disabled> 
+				      		<label class="form-check-label" for="flexRadioDefault1">승인대기 </label>
+				      		<input type="radio" th:name="|processStatus_${status.count}|" th:onclick="changeComebackStatus([[${comeback.applyNo}]], 'accept',[[${comeback.stuNo}]]);"
+				      		value="accept" th:checked="${comeback.processStatus eq 'accept'}" disabled> 
 				      		<label class="form-check-label" for="flexRadioDefault1">승인완료 </label>
 				      	</span>
 				      </td>
@@ -220,11 +228,19 @@
 					      <td th:text="${takeOff.fromDept}"></td>
 					      <td th:text="${takeOff.applyDate}"></td>
 					      <td>
-					      	<span>
+					      	<span th:if="${takeOff.processStatus eq 'waiting'}">
 					      		<input type="radio" th:name="|processStatus_${status.count}|" value="waiting"
 					      		th:checked="${takeOff.processStatus eq 'waiting'}" th:onclick="changeTakeOffStatus([[${takeOff.applyNo}]], 'waiting',[[${takeOff.stuNo}]]);"> 
 					      		<label class="form-check-label" for="flexRadioDefault1">승인대기</label>
 					      		<input type="radio" th:name="|processStatus_${status.count}|" value="accept" 
+					      		th:checked="${takeOff.processStatus eq 'accept'}" th:onclick="changeTakeOffStatus([[${takeOff.applyNo}]], 'accept',[[${takeOff.stuNo}]]);"> 
+					      		<label class="form-check-label" for="flexRadioDefault1">승인완료</label>
+				      		</span>
+					      	<span th:if="${takeOff.processStatus eq 'accept'}">
+					      		<input type="radio" th:name="|processStatus_${status.count}|" value="waiting" disabled
+					      		th:checked="${takeOff.processStatus eq 'waiting'}" th:onclick="changeTakeOffStatus([[${takeOff.applyNo}]], 'waiting',[[${takeOff.stuNo}]]);"> 
+					      		<label class="form-check-label" for="flexRadioDefault1">승인대기</label>
+					      		<input type="radio" th:name="|processStatus_${status.count}|" value="accept" disabled
 					      		th:checked="${takeOff.processStatus eq 'accept'}" th:onclick="changeTakeOffStatus([[${takeOff.applyNo}]], 'accept',[[${takeOff.stuNo}]]);"> 
 					      		<label class="form-check-label" for="flexRadioDefault1">승인완료</label>
 				      		</span>

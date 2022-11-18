@@ -1,4 +1,3 @@
-
 //by수경 검색조건 검색 후 새로고침 했을 때 전공대학과 전공학과 불러오기
 const collNo = document.querySelector('#coll').value;
 
