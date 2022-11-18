@@ -29,9 +29,9 @@
 //by 지아 
 //수강 신청 취소시 진행 
 function deleteLecEnroll(stuNo , lecNo){
-	const result = confirm('정말 삭제 할까요?')
+	const result = confirm('정말 취소 할까요?')
 	//alert(lecNo);
-	
+	if(result){
 	//ajax start
 	 $.ajax({
 		 url: '/proF/deleteEnrollAjax', //요청경로
@@ -48,6 +48,6 @@ function deleteLecEnroll(stuNo , lecNo){
 		 }
 	 });
 	//ajax end
-	
+	}
 }
 	

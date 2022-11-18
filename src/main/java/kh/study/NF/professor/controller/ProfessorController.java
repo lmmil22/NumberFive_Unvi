@@ -200,9 +200,13 @@ public class ProfessorController {
 	
 	//수강신청시 진행 
 	@GetMapping("/enrollList")
-	public String enrollList(Model model, EnrollmentVO enrollmentVO) {
+	public String enrollList(Model model, EnrollmentVO enrollmentVO , Authentication authentication) {
 		//로그인 임시 코드, 로그인 구현 시 소스 변경 필요
-		enrollmentVO.setStuNo("STU_003");
+		//enrollmentVO.setStuNo("STU_003");
+		
+		//소스변경 완료 
+		User user = (User)authentication.getPrincipal();
+		enrollmentVO.setStuNo(user.getUsername());
 		
 		//이미 수강신청한 lec_no 목록 조회
 		List<String> emrolledList = professorService.selectEnrollmentLecNoList(enrollmentVO.getStuNo());
@@ -224,11 +228,11 @@ public class ProfessorController {
 	public void insertEnrollAjax(Authentication authentication ,EnrollmentVO enrollmentVO , String lecNo , StuGradeVO stuGradeVO) {
 		User user = (User)authentication.getPrincipal();
 		
-		//시큐리티로 사용시 변경해줘야한다 
+		//시큐리티로 변경완료 
 		enrollmentVO.setStuNo(user.getUsername());
 		stuGradeVO.setLecNo(lecNo);
 		stuGradeVO.setStuNo(user.getUsername());
-		//수정후 주석 지우기 
+		
 		professorService.insertEnroll(enrollmentVO, stuGradeVO, lecNo);
 		
 		
@@ -237,17 +241,18 @@ public class ProfessorController {
 	//by 지아 수강 취소를 누르면 
 	@ResponseBody
 	@PostMapping("/deleteEnrollAjax")
-	public void deleteEnrollAjax(EnrollmentVO enrollmentVO, Authentication authentication) {
-		//????????? 취소 안됨,,,
-		//User user = (User)authentication.getPrincipal();
-		//enrollmentVO.setStuNo(user.getUsername());
+	public void deleteEnrollAjax(EnrollmentVO enrollmentVO) {
+
 		professorService.deleteStuLec(enrollmentVO);
 	}
 	
 	//by 지아 점수 등록 페이지로 이동 
 	@GetMapping("/scoreManagement")
-	public String scoreManagement( Model model ,String empNo) {
+	public String scoreManagement( Authentication authentication ,Model model ,String empNo) {
 		
+		User user = (User)authentication.getPrincipal();
+		empNo = user.getUsername();
+		System.out.println(empNo);
 		//empNo = "EMP_001";
 		//해당 교수가 등록된 것만 보여야한다 ??
 		
