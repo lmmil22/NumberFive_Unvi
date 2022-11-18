@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @ToString
 public class BoardVO {
-//디비 실제 컬럼명	
+// < 디비 실제 컬럼명 >	
 //	BOARD_NO
 //	BOARD_TITLE
 //	BOARD_CONTENT

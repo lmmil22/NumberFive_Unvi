@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/base_layout}">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/menu.css}">
+</th:block>
+	
+<div align="center" layout:fragment="content">
+<h1> 관리자모드 - 게시판 카테고리 등록 및 목록조회 </h1>
+	
+				<h3> 카테고리등록 </h3>
+<form th:action="@{/board/regCate}" method="post" th:object="${boardCategoryVO}">
+	 <div  class="row justify-center-center" style="width: 80%;">
+		<div class="col-5">
+		<div>
+			<span>카테고리명</span>
+			<span><input class="form-control" th:field="*{cateNo}" type="text"></span>
+		</div>
+		</div>
+		<div class="col-5" >
+		<div>
+			<span>사용여부</span>
+			<span>
+				<select th:field="*{isUse}" class="form-control">
+					<option value="사용중" selected>사용중</option>
+					<option value="미사용">미사용</option>
+				</select>
+			</span>
+		</div>
+		</div>
+		<div class="col-2" style="padding: 20px; padding-top: 30px;" >
+			<button type="submit" class="btn btn-primary">등록</button>
+		</div>
+	</div>
+</form>
+	
+	 <div class="row ">
+		<div class="col">
+			<div align="center">
+				<h3>카테고리 목록</h3>
+			</div>
+			<div>
+				<table class="table table-striped table-hover" >
+					<tr>
+						<th>카테고리번호</th>
+						<th>카테고리명</th>
+						<th>사용여부</th>
+					</tr>
+					 <tbody>
+						<th:block th:if="${#lists.size(cateList) != 0}">
+							<tr th:each="cate : ${cateList}">
+								<td th:text="${cate.cateNo}"></td>
+								<td th:text="${cate.cateName}"></td>
+								<td th:text="${cate.isUse}"></td>
+							</tr>
+						</th:block>
+						<th:block th:unless="${#lists.size(cateList) != 0}">
+								<td colspan="3" align="center">조회된 카테고리목록이 없습니다.</td>
+						</th:block>
+					</tbody> 
+					
+				</table>
+			</div>
+		</div>
+	</div> 
+	
+</div>
+</html>

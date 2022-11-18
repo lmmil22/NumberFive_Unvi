@@ -42,19 +42,13 @@
 		   		</span>
 		      </a>
 	     </div> 
-	     
 	     <div class="col-8">
-			<!--by 유빈  탑에 넣은 숏버전 이미지 삽입할 때 <img width="30%" height="30%" src="/images/LFU logo short ver.png " /> -->
 	      <ul class="nav nav-pills">
 	        <li class="nav-item"><a href="/member/intro" class="nav-link active" aria-current="page">학교 소개</a></li>
-	       <!--  <li class="nav-item"><a href="/proF/viewLecList" class="nav-link">강의관리</a></li>
-	        <li class="nav-item"><a href="#" class="nav-link">학적관리</a></li>
-	        <li class="nav-item"><a href="#" class="nav-link">신청내역조회</a></li>
-	        <li class="nav-item"><a href="/board/list" class="nav-link">게시판</a></li> -->
+	        <li class="nav-item"><a href="/board/list" class="nav-link">공통 게시판</a></li>
 	      </ul>
 	      </div>
 		</div>
-		
 	    </header>
 	    
 		<!-- 학생의 경우 top 메뉴바 -->
@@ -72,16 +66,16 @@
 	        <li class="nav-item"><a href="/proF/viewLecList" class="nav-link">강의관리</a></li>
 	        <li class="nav-item"><a href="#" class="nav-link">학적관리</a></li>
 	        <li class="nav-item"><a href="#" class="nav-link">신청내역조회</a></li>
-	        <li class="nav-item"><a href="/board/list" class="nav-link">게시판</a></li>
+	        <li class="nav-item"><a href="/board/list" class="nav-link">공통 게시판</a></li>
 	      </ul>
 	    </header>
 	    
-		<!-- 교직원(관리자)경우 top 멤뉴바 -->
+		<!-- 교직원(관리자)경우 top 메뉴바 -->
 	    <header sec:authorize="hasRole('ROLE_ADMIN')"  class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
 	      <a href="/member/homeLogin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
 	        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
 	        <span class="fs-4" >
-			        <img src="/images/nfLogoTOP.png" width="15%;" height="10%;"/>
+				<img src="/images/nfLogoTOP.png" width="15%;" height="10%;"/>
 		    </span>
 	      </a>
 	        
@@ -89,9 +83,9 @@
 	      <ul class="nav nav-pills">
 	        <li class="nav-item"><a href="/member/myinfo" class="nav-link active" aria-current="page">회원 정보 관리</a></li>
 	        <li class="nav-item"><a href="/member/regMemForm" class="nav-link">회원등록</a></li>
-	        <li class="nav-item"><a href="#" class="nav-link">관리</a></li>
+	        <li class="nav-item"><a href="/board/boardAdmin" class="nav-link">관리자_게시판</a></li>
 	        <li class="nav-item"><a href="#" class="nav-link">신청내역조회</a></li>
-	        <li class="nav-item"><a href="/board/list" class="nav-link">게시판</a></li>
+	        <li class="nav-item"><a href="/board/list" class="nav-link">공통 게시판</a></li>
 	      </ul>
 	    </header>
 	    

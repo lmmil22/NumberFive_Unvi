@@ -1,5 +1,4 @@
 // by 유빈
-
 package kh.study.NF.board.controller;
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kh.study.NF.board.service.BoardService;
+import kh.study.NF.board.vo.BoardCategoryVO;
 import kh.study.NF.board.vo.BoardVO;
 
 @Controller
@@ -24,7 +24,9 @@ import kh.study.NF.board.vo.BoardVO;
 public class BoardController {
 	@Resource(name = "boardService")
 	private BoardService boardService;
-////////////////////////////////////////////////////////////////	
+///////////////////////////////////////////////////////////////////////////////////////////////////
+	//--------------------------- [공통 권한 게시판 영역]  --------------------------------------//
+	
 	//게시글 목록페이지
 	@RequestMapping("/list")
 	public String select(Model model,BoardVO boardVO) {
@@ -83,7 +85,6 @@ public class BoardController {
 		boardVO.setBoardContent(result.getBoardContent());
 		boardVO.setBoardTitle(result.getBoardTitle());
 		boardVO.setBoardCreateDate(result.getBoardCreateDate());
-		// 위에 USER UTIL완료되면 넣기 
 		boardVO.setBoardWriter(result.getBoardWriter());
 		
 		return "content/common/board/update_board_form";
@@ -103,4 +104,28 @@ public class BoardController {
 		boardService.delete(boardNo);
 		return "redirect:/board/list";
 	}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//---------------------------- [관리자모드 게시판 영역] -------------------------------------//
+	//관리자 게시판 페이지이동(카테고리등록 +  카테고리목록조회)
+	@GetMapping("/boardAdmin")
+	public String boardAdmin(Model model, BoardCategoryVO boardCategoryVO) {
+		//카테고리목록조회
+		model.addAttribute("cateList", boardService.selectBoardCate());
+		return "content/admin/board_admin";
+	}
+	//카테고리등록
+	@PostMapping("/regCate")
+	public String regCate(BoardCategoryVO boardCategoryVO) {
+		boardService.insertBoardCate(boardCategoryVO);
+		return"redirect:/board/boardAdmin";
+	}
+	
+	//카테고리목록조회
+	@GetMapping("/cateList")
+	public String cateList(Model model) {
+		//카테고리목록조회
+		model.addAttribute("cateList", boardService.selectBoardCate());
+		return "content/admin/board_admin";
+	}
+	
 }
