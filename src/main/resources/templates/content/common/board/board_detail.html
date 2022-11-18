@@ -6,27 +6,27 @@
 	
 <div layout:fragment="content">
 		<div class="mb-3" >
-		  <label for="exampleFormControlspan1" class="form-label">글 번호 :</label>
+		  <label for="exampleFormControlspan1" class="form-label">글 번호 : </label>
 		<th:block th:text="${board.boardNo}"></th:block> 
 		</div>
 		
 		<div class="mb-3">
-		  <label for="exampleFormControlspan1" class="form-label"> 작성자 :</label>
+		  <label for="exampleFormControlspan1" class="form-label"> 작성자 : </label>
 		  	<th:block th:text="${board.memNo}"></th:block> 
 		</div>
 		
 		<div class="mb-3">
-		  <label for="exampleFormControlspan1" class="form-label"> 작성일 :</label>
+		  <label for="exampleFormControlspan1" class="form-label"> 작성일 : </label>
 		  <th:block th:text="${board.boardCreateDate}"></th:block> 
 		</div>
 		
 		<div class="mb-3">
-		  <label for="exampleFormControlspan1" class="form-label">글제목 :</label>
+		  <label for="exampleFormControlspan1" class="form-label">글제목 : </label>
 	  		  <th:block th:text="${board.boardTitle}"></th:block> 
 		</div>
 		
 		<div class="mb-3">
-		  <label for="exampleFormControlTextarea1" class="form-label">글내용 :</label>
+		  <label for="exampleFormControlTextarea1" class="form-label">글내용 : </label>
 		  	<div th:text="${board.content}"></div>
 		</div>
 		

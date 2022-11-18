@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.NF.mail.service.MailService;
+import kh.study.NF.member.vo.MemberVO;
 // by 유빈 : 이메일 기능 
 @Controller
 @RequestMapping("/mail")
@@ -24,8 +25,8 @@ public class MailController {
 
 	// 이메일 인증 
 	@GetMapping("/sendMail")
-	public String sendMail(String memEmail,Model model) {
-		mailService.sendMdail(memEmail);
+	public String sendMail(String memEmail,Model model,MemberVO memberVO) {
+		mailService.sendMdail(memEmail, memberVO);
 		
 		return "content/test/test11";
 	}

@@ -45,4 +45,11 @@ public class MemberServiceImpl implements MemberService{
 	public void updatePw(MemberVO memberVO) {
 		 sqlSession.update("memberMapper.updatePw",memberVO);
 	}
+	// 이메일 및 학번/교번 유효성 검사
+	@Override
+	public String selectIsValidMem(MemberVO memberVO) {
+		String ss = sqlSession.selectOne("memberMapper.selectIsValidMem",memberVO);
+		
+		return ss;
+	}
 }

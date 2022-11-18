@@ -32,6 +32,7 @@ public class BoardVO {
 	
 	private String boardWriter;//memNo FK걸려있다.
 	private String boardCreateDate;
+	
 	private int boardReadCnt;
 	private String cateNo;
 	private int replyCnt;

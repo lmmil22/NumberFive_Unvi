@@ -36,7 +36,10 @@ public class BoardController {
 	
 	// 글쓰러가기-양식페이지로이동
 	@GetMapping("/reg")
-	public String reg(BoardVO boardVO) {
+	public String reg(@Valid BoardVO boardVO, BindingResult bindingResult, Model model
+			,Authentication authentication,BoardCategoryVO boardCategoryVO) {
+		//카테고리 목록조회(사용중인!)
+		model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
 		return"content/common/board/reg_board";
 	}
 	
@@ -56,7 +59,7 @@ public class BoardController {
 		// 주의! 순서중요하다. 유효성체크 먼저 한 후, 로그인정보값 boardVO에 넣어주기 !!
 		if (bindingResult.hasErrors()) {
 			System.out.println("에러발생!!!!");
-
+			
 			//주의!!! 컨트롤러(redirect)가 아닌 html페이지로 가야 데이터가 남아있는다
 			return"content/common/board/reg_board";
 		}

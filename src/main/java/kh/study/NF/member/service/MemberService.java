@@ -21,4 +21,7 @@ public interface MemberService {
 	
 	//이매일로 전송된 비밀번호로 업데이트
 	void updatePw(MemberVO memberVO);
+	
+	// 이메일 및 학번/교번 유효성 검사
+	String selectIsValidMem(MemberVO memberVO);
 }

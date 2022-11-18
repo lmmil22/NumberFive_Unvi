@@ -72,15 +72,19 @@
 	AND   MEM_EMAIL = #{memEmail}
   </select>  
 
-<!-- 이메일로 임시비밀번호 전송 전,본인 이메일과 본인 이름의 회원이 존재하는지 체크하고, 임시비밀번호로 업데이트  -->	
+<!-- 이메일로 임시비밀번호 업데이트  -->	
  <update id="updatePw">
 	UPDATE MEMBER
 	SET MEM_PW = #{memPw}
 	WHERE MEM_NO = #{memNo}
-	AND   MEM_EMAIL = #{memEmail}
 </update> 
-
-
+<!-- 이메일과 학번/교번 유무 유효성검사 -->
+	<select id="selectIsValidMem" resultType="String">
+		SELECT MEM_NO
+		FROM MEMBER
+		WHERE MEM_NO = #{memNo}
+		AND MEM_EMAIL = #{memEmail}
+	</select>
 <!-- 회원 목록조회-->
 	<select id="selectMemberList" resultMap="member">
 	   SELECT 

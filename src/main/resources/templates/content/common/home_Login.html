@@ -1,18 +1,14 @@
 <!-- by 유빈 -->
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org"	
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{layout/base_layout}"> 
-
 <th:block layout:fragment="css"> <!-- css 정의된 부분이 바뀌면서가져올것이다  -->
 <!-- <link rel="stylesheet"  th:href="@{}"> 외부 css 파일 불러오겠다  rel은 고정-->
 </th:block>
-
 <div layout:fragment="content"> 
 <input type="hidden" id="isLoginFail" th:value="${isLoginFail}">
-
 	<div class="row">
 		<div class="col-7"> 
 			<span> 
@@ -21,7 +17,6 @@
 		    	<!-- <img src="/images/nf Logo.png" /> -->
 			</span> 
 		 </div>
-		 
 		<!--  로그인 폼 영역 -->
 		<div class="col-5" >
 			<div style="padding-top: 30%; padding-right: 20%">
@@ -39,11 +34,8 @@
 						<!--<a id="findPwId"  style="font-style: italic; font-weight: lighter; " data-bs-toggle="modal" data-bs-target="#login_modal" > 이메일로 비밀번호 찾기</a>-->
 					  	<!-- 내가 가져온 소스 -->
 					  	<a id="findPwId"  style="font-style: italic; font-weight: lighter; " data-bs-toggle="modal" data-bs-target="#myModal" > 이메일로 비밀번호 찾기</a>
-						
 						<!-- 로그인 성공시 넘어가는 페이지경로 :onclick="location.href='/mail/sendMail';" -->		
 					</div>
-					
-					
 						<div class="row mt-3 mb-2" >
 							<div class="col">
 								<div align="center">
@@ -53,12 +45,9 @@
 								</div>
 							</div>
 						</div>
-					
 				</form>
 			</div>
 			</th:block>
-			
-			
 		</div>
 		<!-- 로그인 폼 영역 끝 -->
 	</div>
@@ -118,7 +107,7 @@
                 </div>
                 <div class="modal-body" style="padding:30px 40px;">
                     <div style="color: #ac2925">
-                        <center>입력된 정보로 임시 비밀번호가 전송됩니다.</center>
+                        <center> 입력된 정보로 임시 비밀번호가 전송됩니다. </center>
                     </div>
                     <hr>
                     <form role="form" th:action="@{/member/checkAndSendEmail}" method="post" >

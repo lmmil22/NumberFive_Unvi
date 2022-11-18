@@ -28,12 +28,20 @@
 			, BOARD_TITLE 
 			, BOARD_CONTENT 
 			, BOARD_WRITER 
+			
+			, CATE_NO
+			, IS_SECRERT
+			, IS_NOTICE
 			) 
 		VALUES(
 			( SELECT  NVL ( MAX (BOARD_NO) , 0 ) + 1  FROM BOARD) 
 			, #{boardTitle} 
 			, #{boardContent}
 			, #{boardWriter}
+			
+			, #{cateNo}
+			, #{isSecrert}
+			, #{isNotice}
 			)
 	</insert> 
 	
@@ -49,26 +57,30 @@
 	</select> 
 	
 	<!-- 게시글 상세조회 -->
-	<!-- <select id="selectDetailBoard" resultMap="board">
-		SELECT BOARD_NO,BOARD_TITLE,BOARD_CONTENT,BOARD_WRITER,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE
+	 <select id="selectDetailBoard" resultMap="board">
+		SELECT   BOARD_NO
+				,BOARD_TITLE
+				,BOARD_CONTENT
+				,BOARD_WRITER
+				,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE
 		FROM BOARD
 		WHERE BOARD_NO = #{boardNo}
-	</select>  -->
+	</select>  
 	
-	<!-- 글수정 -->
-	<!-- <update id="update" >
+	<!-- 게시글수정 -->
+	 <update id="update" >
 		UPDATE BOARD
-		SET BOARD_TITLE = #{boardTitle}
+		SET  BOARD_TITLE   = #{boardTitle}
 			,BOARD_CONTENT = #{boardContent}
 		WHERE BOARD_NO = #{boardNo}
-	</update>   -->
+	</update>   
 	
 	<!-- 글삭제 -->
-    <!-- <delete id="delete">
+     <delete id="delete">
 		DELETE BOARD
 		WHERE BOARD_NO = #{boardNo}
 	</delete>  
- -->
+
  <!-- ///////////////////관리자 모드 게시판//////////////////////////////// -->
 	<!--카테고리목록조회 -->
 	<select id="selectBoardCate" resultMap="cate">
@@ -76,6 +88,16 @@
 			 , CATE_NAME
 			 , IS_USE
 		FROM BOARD_CATEGORY
+		ORDER BY CATE_NO
+	</select> 
+	
+	<!--카테고리 사용중인 목록조회 -->
+	<select id="selectBoardCateUse" resultMap="cate">
+		SELECT CATE_NO
+			 , CATE_NAME
+			 , IS_USE
+		FROM BOARD_CATEGORY
+		where IS_USE='Y'
 		ORDER BY CATE_NO
 	</select> 
 	

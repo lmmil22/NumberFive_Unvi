@@ -54,6 +54,11 @@ public class BoardServiceImpl implements BoardService{
 	public void insertBoardCate(BoardCategoryVO boardCategoryVO) {
 		sqlSession.insert("boardMapper.insertBoardCate",boardCategoryVO);
 	}
+	//사용중인 카테고리 목록조회
+	@Override
+	public List<BoardCategoryVO> selectBoardCateUse() {
+		return sqlSession.selectList("boardMapper.selectBoardCateUse");
+	}
 	
 	
 }

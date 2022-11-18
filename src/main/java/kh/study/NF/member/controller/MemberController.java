@@ -92,6 +92,12 @@ public class MemberController {
 		//비밀번호 찾기 쿼리문이용해서 회원존재확인하기.
 		MemberVO loginInfo = memberService.findPw(memberVO);
 		
+		
+		System.out.println(loginInfo+"___________________________________");
+		System.out.println(loginInfo+"___________________________________");
+		System.out.println(loginInfo+"___________________________________");
+		System.out.println(loginInfo+"___________________________________");
+		
 		// 로그인 정보 시큐리티로(암호화) 이용
 		if(loginInfo != null) {
 			System.out.println("____________현재 로그인 상태는?______________ "+ loginInfo);
@@ -105,7 +111,7 @@ public class MemberController {
 	    	//수신 대상 추가
 	    	toUerList.add(memEmail);
 	    	//메일 발송
-	    	mailService.sendMdail(memEmail);
+	    	mailService.sendMdail(memEmail,memberVO);
 	    	
 	    	System.out.println("________________ 이메일 발송 성공_________________");
 	    	
@@ -116,19 +122,19 @@ public class MemberController {
 	    	
 	    	//주석풀기
 	    	// 아래처럼 암호화된 비밀번호를 넣어서 업데이트해야한다.
-			memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+			//memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 
 	    	// 임시발급비밀번호로 업데이트하기
-	    	memberService.updatePw(memberVO);
+	    	//memberService.updatePw(memberVO);
 	    	
 	    	return "content/common/reLogin";
 			
 		} 
-		System.out.println("_____________현재 로그인 상태는?___________________ "+ loginInfo);//null
+		System.out.println("  ________________  현재 로그인 상태는?  ___________________   " + loginInfo);//null
 		
 		// 바로 loginInfo를 주지않고 삼항연산자 사용한다
 		//return loginInfo == null? false :true;//자료형 boolean
-		return "redirect:/member/afterLogin";//login상태가 null일때
+		return "redirect:/member/homeLogin";//login상태가 null일때
 	}
 //-------------------------------------------------------------------------------------------///	
 	
@@ -140,7 +146,7 @@ public class MemberController {
 		System.out.println("_______________로그인 성공시 false!!! -->" + isLoginFail);
 		model.addAttribute("isLoginFail",isLoginFail);
 		
-		return "content/common/after_Login";
+		return "content/common/home_Login";
 	}
 //-------------------------------------------------------------------------------------------///	
 	

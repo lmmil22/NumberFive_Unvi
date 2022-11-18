@@ -63,9 +63,6 @@ function sendEmail(loginInfo) {
 
 //----------------------------- 이벤트 정의 -----------------------------------//
 
-
-
-
 //// 로그인 실패여부로 모달창을 띄워주는 기능
 function isLoginFail(){
 	const isLoginFail = document.querySelector('#isLoginFail').value;
@@ -102,7 +99,7 @@ join_modal.addEventListener('hidden.bs.modal', function(event) {//모달이 완�
 //////////////////로그인 모달이 닫히면 실행되는 이벤트////////////////////////////////
 
 // 회원가입 유효성처리한다고 일단 주석처리함 오류나서
-//login_modal.addEventListener('hidden.bs.modal', function(event) {
+// login_modal.addEventListener('hidden.bs.modal', function(event) {
 //	login_modal.querySelector('form').reset();
 //});
 
@@ -117,6 +114,9 @@ $('.modal').on('hidden.bs.modal', function (e) {
     });
 
     $("#checkEmail").click(function () {
+	alert('이메일을 발송했습니다. 확인해주세요.');
+	
+	
         let userEmail = $("#userEmail").val();
         let userName = $("#userName").val();
 
@@ -215,7 +215,6 @@ function checkValid(){
 						if(memAddrDetailTag.value == ''){
 							str = '상세주소는 필수입력입니다.';
 							
-							//$(memAddrDetailTag).next().remove();
 							str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
 							memAddrDetailTag.insertAdjacentHTML('afterend', str);
 							

@@ -17,14 +17,14 @@
 		<div class="col-5">
 		
 			<span>카테고리명</span>
-			<span><input class="form-control" th:field="*{cateName}" type="text"></span>
+			<span><input class="form-control" th:field="*{cateName}" type="text" placeholder="카테고리명을 입력하세요."></span>
 		</div>
 		<div class="col-5" >
 			<span>사용여부</span>
 			<span>
 				<select th:field="*{isUse}" class="form-control">
-					<option value="사용중" selected>사용중</option>
-					<option value="미사용">미사용</option>
+					<option value="Y" selected>사용중</option>
+					<option value="N">미사용</option>
 				</select>
 			</span>
 		</div>
