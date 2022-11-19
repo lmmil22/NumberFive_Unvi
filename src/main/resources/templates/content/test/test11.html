@@ -1,4 +1,4 @@
-
+<!-- 풀캘린더 테스트  -->
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org"	
@@ -8,11 +8,33 @@
 
 <th:block layout:fragment="css"> <!-- css 정의된 부분이 바뀌면서가져올것이다  -->
 <!-- <link rel="stylesheet"  th:href="@{}"> 외부 css 파일 불러오겠다  rel은 고정
- -->
+ --><link href='fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
+  <script src='fullcalendar-5.11.3/lib/main.js'></script>
 </th:block>
 
 <div layout:fragment="content"> 
 	테스트 중입니다 
+	
+	 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+      });
+      calendar.render();
+    });
+
+  </script>
+
+
+  <h1>MyCalendar</h1>
+  <div id='calendar'></div>
+
 </div>
 
 </html>
+
+
+
+
+
