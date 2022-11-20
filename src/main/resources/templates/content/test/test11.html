@@ -1,16 +1,18 @@
 <!-- 풀캘린더 테스트  -->
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org"	
+<html lang='en' xmlns:th="http://www.thymeleaf.org"	
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{layout/base_layout}"> 
 
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <th:block layout:fragment="css"> <!-- css 정의된 부분이 바뀌면서가져올것이다  -->
 <!-- <link rel="stylesheet"  th:href="@{}"> 외부 css 파일 불러오겠다  rel은 고정
- --><link href='fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
-  <script src='fullcalendar-5.11.3/lib/main.js'></script>
+ --><link  th:href="@{resources/fullcalendar-5.11.3/lib/main.css}" rel='stylesheet' />
+  
 </th:block>
+  <script src='resources/fullcalendar-5.11.3/lib/main.js'></script>
 
 <div layout:fragment="content"> 
 	테스트 중입니다 
@@ -18,7 +20,8 @@
 	 <script>
     document.addEventListener('DOMContentLoaded', function() {
       var calendarEl = document.getElementById('calendar');
-      var calendar = new FullCalendar.Calendar(calendarEl, {
+      var calendar = new FullCalend.calendar
+      (calendarEl, {
         initialView: 'dayGridMonth',
       });
       calendar.render();
@@ -33,8 +36,4 @@
 </div>
 
 </html>
-
-
-
-
 
