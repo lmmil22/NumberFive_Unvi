@@ -16,7 +16,7 @@
 <result column="ING_STATUS" property="ingStatus"/>
 <!-- by수경 1:1관계 (학사경고/제적) -->
 <association property="academicProbationVO" resultMap="probation"/>
-<association property="stuOutVO" resultMap="StuOut"/>
+<association property="stuOutVO" resultMap="stuOut"/>
 </resultMap>
 	
 <!--by수경 stuOut resultMap 제적 -->

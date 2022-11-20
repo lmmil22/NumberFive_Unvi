@@ -20,7 +20,7 @@
 <association property="deptVO" resultMap="professorMapper.dept"/>
 <association property="collVO" resultMap="professorMapper.coll"/>
 <association property="doubleMajorVO" resultMap="doubleMajor"/>
-<association property="statusInfoVO" resultMap="statusInfoMapper.StatusInfo"/>
+<association property="statusInfoVO" resultMap="statusInfoMapper.statusInfo"/>
 </resultMap>
 
 <!--by수경 member테이블의 mapper입니다. -->
