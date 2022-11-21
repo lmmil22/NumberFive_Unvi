@@ -8,19 +8,27 @@
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <th:block layout:fragment="css"> <!-- css 정의된 부분이 바뀌면서가져올것이다  -->
-<!-- <link rel="stylesheet"  th:href="@{}"> 외부 css 파일 불러오겠다  rel은 고정
- --><link  th:href="@{resources/fullcalendar-5.11.3/lib/main.css}" rel='stylesheet' />
-  
 </th:block>
-  <script src='resources/fullcalendar-5.11.3/lib/main.js'></script>
+<!-- <link rel="stylesheet"  th:href="@{}"> 외부 css 파일 불러오겠다  rel은 고정
+ --><link  href='/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
+  
 
 <div layout:fragment="content"> 
 	테스트 중입니다 
 	
+
+
+  <h1>MyCalendar</h1>
+  <div id='calendar'></div>
+  
+  
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src='/fullcalendar-5.11.3/lib/main.js'></script>
+  <link  href='/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
 	 <script>
     document.addEventListener('DOMContentLoaded', function() {
       var calendarEl = document.getElementById('calendar');
-      var calendar = new FullCalend.calendar
+      var calendar =  new FullCalendar.Calendar
       (calendarEl, {
         initialView: 'dayGridMonth',
       });
@@ -28,10 +36,6 @@
     });
 
   </script>
-
-
-  <h1>MyCalendar</h1>
-  <div id='calendar'></div>
 
 </div>
 
