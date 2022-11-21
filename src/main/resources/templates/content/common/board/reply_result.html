@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/base_layout}">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{}">
+</th:block>
+<div layout:fragment="content">
+<script type="text/javascript">
+alert('댓글을 등록했습니다.');
+location.href='/board/list';
+</script>
+</div>
+</html>

@@ -5,11 +5,11 @@ import javax.validation.constraints.NotBlank;
 import groovy.transform.ToString;
 import lombok.Getter;
 import lombok.Setter;
-
+//by 유빈
 @Getter
 @Setter
 @ToString
-public class BoardVO {
+public class BoardVO extends PageVO{
 // < 디비 실제 컬럼명 >	
 //	BOARD_NO
 //	BOARD_TITLE

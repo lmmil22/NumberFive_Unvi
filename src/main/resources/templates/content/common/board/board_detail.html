@@ -13,7 +13,7 @@
 		
 		<div class="mb-3">
 		  <label for="exampleFormControlspan1" class="form-label"> 작성자 : </label>
-		  	<th:block th:text="${board.memNo}"></th:block> 
+		  	<th:block th:text="${board.boardWriter}"></th:block> 
 		</div>
 		
 		<div class="mb-3">
@@ -22,25 +22,79 @@
 		</div>
 		
 		<div class="mb-3">
+			<label for="exampleFormControlTextarea1" class="form-label">카테고리 :</label>
+			<select class="form-control" name="cateNo" >
+				<th:block th:each="cate : ${cateUsedList}">
+					<option th:text="${cate.cateName}" th:value="${cate.cateNo}" ></option>
+				</th:block>
+			</select>
+		</div>
+			
+		<div class="mb-3">
 		  <label for="exampleFormControlspan1" class="form-label">글제목 : </label>
 	  		  <th:block th:text="${board.boardTitle}"></th:block> 
 		</div>
 		
 		<div class="mb-3">
 		  <label for="exampleFormControlTextarea1" class="form-label">글내용 : </label>
-		  	<div th:text="${board.content}"></div>
+		  	<div th:text="${board.boardContent}"></div>
 		</div>
 		
 		<div align="center">
-			<span th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_Y')}"> 
+			<span th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
 				<button type="button" class="btn btn-light"  th:onclick="|location.href='@{/board/update(boardNo=${board.boardNo})}'|">수정</button>
-				<button type="button" class="btn btn-danger" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">삭제</button>
+				<!-- 스왈사용안하고 바로 할때 -->
+				<!--<button type="button" class="btn btn-danger"  th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">삭제</button>-->				
+				<!--  스왈사용 할때 -->
+				<button id="isDeleteTag" type="button" class="btn btn-danger"  onclick="isDelete()">삭제</button>
 			</span>
 			<span>
 				<button type="button" class="btn btn-dark" th:onclick="@{location.href='/board/list';}">뒤로가기</button>
 			</span>
 		</div>
+		
+		
+	<!-- 댓글영역 -->		
+	<div class="row">
+		<div class="col">
+				<!-- 로그인한 작성자의 댓글 등록 창 -->	
+			<div class="replyDiv">
+				<div class="replyform">
+					<form th:action="@{/board/insertReply}" method="post">
+						<input type="hidden" name="boardNo" value="${board.boardNo}">			
+						<div>
+							<textarea rows="5" cols="230" name="replyContent"></textarea>
+						</div>
+						<div align="center">
+							<input type="submit" value="등록">
+						</div>
+					</form>
+				</div>
+			<!-- !!!!!!!!!!!11/21까지 완료함!!!!!댓글 목록창 -->
+				<div class="replyList">
+					<!-- <c:forEach var="reply" items="${replyList}">
+						<div>댓글 하나의 div
+								<div>${reply.writer }</div>
+								<div>${reply.createDate }</div>
+								<div>${reply.content}</div>
+								<c:if test="${sessionScope.loginInfo.isAdmin eq 'Y' or sessionScope.loginInfo.memId eq reply.writer}">
+									<div>
+										<input type="button" value="삭제" onclick="location.href='deleteReply.re?boardNum=${board.boardNum}&replyNum=${reply.replyNum}';"> 
+									</div>
+								</c:if>
+						</div>
+					</c:forEach> -->
+				</div>
+		</div>
+	</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script type="text/javascript" th:src="@{/js/common/board_detail.js}"></script>
 
 </div>
-
 </html>

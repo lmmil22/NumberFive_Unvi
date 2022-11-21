@@ -13,6 +13,8 @@
 		<result column="REPLY_CNT" 			property="replyCnt"/>
 		<result column="IS_SECRERT" 		property="isSecrert"/>
 		<result column="IS_NOTICE" 			property="isNotice"/>
+		<!-- 테이블에 추가??? : 비밀글 비밀번호?? -->
+		<!-- <result column="BOARD_PW" 		property="boardPw"/> -->
 	</resultMap>
 	
  <resultMap type="kh.study.NF.board.vo.BoardCategoryVO" id="cate">
@@ -34,7 +36,7 @@
 			, IS_NOTICE
 			) 
 		VALUES(
-			( SELECT  NVL ( MAX (BOARD_NO) , 0 ) + 1  FROM BOARD) 
+			( SELECT  NVL ( MAX (TO_NUMBER(BOARD_NO)) , 0 ) + 1  FROM BOARD) 
 			, #{boardTitle} 
 			, #{boardContent}
 			, #{boardWriter}
@@ -44,17 +46,68 @@
 			, #{isNotice}
 			)
 	</insert> 
-	
+
+<!-- 키워드검색기능 + 게시판목록조회 -->
+	<!-- Board 게시판 소스 참고  -->
+	<select id="selectBoardList" resultMap="board">
+			SELECT ROW_NUM
+			    , BOARD_NO
+			    , BOARD_TITLE
+			    , BOARD_WRITER
+			    , BOARD_CREATE_DATE
+			    , IS_SECRERT
+				, IS_NOTICE
+				,CATE_NO
+				,BOARD_READ_CNT
+				,REPLY_CNT
+			FROM 
+			(
+			    SELECT ROWNUM AS ROW_NUM
+			        , BOARD_NO
+				    , BOARD_TITLE
+				    , BOARD_WRITER
+				    , BOARD_CREATE_DATE
+				    , IS_SECRERT
+					, IS_NOTICE
+					,CATE_NO
+					,BOARD_READ_CNT
+					,REPLY_CNT
+			    FROM
+			    (
+			    	SELECT BOARD_NO 
+							, BOARD_TITLE
+						    , BOARD_WRITER
+						    , BOARD_CREATE_DATE
+						    , IS_SECRERT
+							, IS_NOTICE
+							,CATE_NO
+							,BOARD_READ_CNT
+							,REPLY_CNT
+					FROM BOARD
+					<if test="searchValue != null and !searchValue.equals('')">
+					WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+					</if>
+					ORDER BY TO_NUMBER(BOARD_NO) DESC
+			    )
+			)
+			WHERE ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
+			
+		</select>
+	<!-- 끝 -->		
+
+
 	<!-- 게시글목록조회 -->
-	 <select id="selectBoard" resultMap="board">
+	 <!-- <select id="selectBoard" resultMap="board">
 		SELECT   BOARD_NO
 				,BOARD_TITLE
 				,BOARD_CONTENT
 				,BOARD_WRITER
 				,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE
+				,IS_SECRERT
+				,IS_NOTICE
 		FROM BOARD
 		ORDER BY BOARD_NO DESC
-	</select> 
+	</select>  -->
 	
 	<!-- 게시글 상세조회 -->
 	 <select id="selectDetailBoard" resultMap="board">
@@ -71,7 +124,11 @@
 	 <update id="update" >
 		UPDATE BOARD
 		SET  BOARD_TITLE   = #{boardTitle}
+			<!-- ,BOARD_NO = #{boardNo} -->
 			,BOARD_CONTENT = #{boardContent}
+			,CATE_NO = #{cateNo}
+			,IS_SECRERT = #{isSecrert}
+			,IS_NOTICE = #{isNotice}
 		WHERE BOARD_NO = #{boardNo}
 	</update>   
 	
@@ -80,6 +137,24 @@
 		DELETE BOARD
 		WHERE BOARD_NO = #{boardNo}
 	</delete>  
+
+	<!-- 전체 데이터(게시글) 수 조회 -->
+	<select id="selectBoardCnt" resultType="int">
+		SELECT COUNT(BOARD_NO)
+		FROM BOARD
+	</select>
+	
+<!-- 해당 게시글 조회수 증가 : 이클립스-->
+	<update id="updateReadCnt">
+		UPDATE BOARD
+		SET
+		BOARD_READ_CNT = BOARD_READ_CNT + 1
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+
+
+
+
 
  <!-- ///////////////////관리자 모드 게시판//////////////////////////////// -->
 	<!--카테고리목록조회 -->

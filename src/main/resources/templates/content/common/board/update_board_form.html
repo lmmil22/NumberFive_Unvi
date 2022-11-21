@@ -5,35 +5,87 @@
 	
 <div layout:fragment="content">
 	<form  th:action="@{/board/update}" method="post" th:object="${boardVO}" >
-		<!-- 문제점 해결 -->
-		<!-- (유의) input태그에서 th:text를 사용하면 input태그밖에 값이 화면에 보여진다.
-		form태그는 값이 입력되는 값을 넘겨주기 때문에 th:block이 아닌 input으로 넘겨야한다!!!  아니면 데이터를 들고가지못함
-		input태그는 창이 입력받기때문에 글번호가 수정될수없도록 readonly값으로 속성을 둬야한다 -->
-		
-		<!-- 글번호는 히든값으로 넘겨준다 pk이기때문에 상세보기가려면 필요하기때문이다! -->
 
-		<input type="hidden" th:field="*{boardNum}" readonly>
+		 <input type="hidden" th:field="*{boardNo}" readonly> 
+		
+		<!-- <div class="mb-3">
+		  <label for="exampleFormControlInput1" class="form-label"> 글번호 </label>
+		[<th:block th:text="*{boardNo}" th:field="*{boardNo}"></th:block>]
+		</div> -->
+		
 		<div class="mb-3">
 		  <label for="exampleFormControlInput1" class="form-label"> 작성자 :</label>
-		<th:block th:text="*{memberId}" th:field="*{memberId}"></th:block>
+		<th:block th:text="*{boardWriter}" th:field="*{boardWriter}"></th:block>
 		</div>
 		
 		<div class="mb-3">
 		  <label for="exampleFormControlInput1" class="form-label"> 작성일 :</label>
-		<th:block th:text="*{createDate}" th:field="*{createDate}"></th:block>
+		<th:block th:text="*{boardCreateDate}" th:field="*{boardCreateDate}"></th:block>
 		</div>
 		
 		<div class="mb-3">
+			<label for="exampleFormControlTextarea1" class="form-label">카테고리 :</label>
+			<select class="form-control" name="cateNo" >
+				<th:block th:each="cate : ${cateUsedList}">
+					<option th:text="${cate.cateName}" th:value="${cate.cateNo}"  ></option>
+				</th:block>
+			</select>
+		</div> 
+		
+		<!-- 비밀글여부 -->
+			<div class="col-6">
+				<div class="row">
+					<div class="col-4">
+						<label for="exampleFormControlTextarea1" class="form-label">비밀글여부 :</label>
+					</div>
+					<div class="col-4">
+						  <div class="form-check">
+							  <input value="Y" class="form-check-input" type="radio" name="isSecrert" >
+							  <label class="form-check-label" for="flexRadioDefault2">예</label>
+						  </div>
+					</div>
+					<div class="col-4">
+						<div class="form-check">
+						  <input value="N" class="form-check-input" type="radio" name="isSecrert"  checked>
+						  <label class="form-check-label" for="flexRadioDefault1">아니오</label>
+						</div>  
+					</div>
+				</div>
+			</div>
+			<!-- 비밀글 여부 끝 -->
+				
+			<!-- 공지글 여부 -->
+			<div class="col-6">
+				<div class="row">
+					<div class="col-4">
+						<label for="exampleFormControlTextarea1" class="form-label">공지글여부 :</label>
+					</div>
+					<div class="col-4">
+						  <div class="form-check">
+							  <input value="Y" class="form-check-input" type="radio" name="isNotice"  >
+							  <label class="form-check-label" for="flexRadioDefault2">예</label>
+						  </div>
+					</div>
+					<div class="col-4">
+						<div class="form-check">
+						  <input value="N" class="form-check-input" type="radio" name="isNotice"  checked>
+						  <label class="form-check-label" for="flexRadioDefault1">아니오</label>
+						</div>  
+					</div>
+				</div>
+			</div>
+			<!-- 공지글 여부 끝 -->
+		<div class="mb-3">
 		  <label for="exampleFormControlInput1" class="form-label">글제목 :</label>
-		  <input th:field="*{title}"  type="text" class="form-control" id="exampleFormControlInput1" >
+		  <input th:field="*{boardTitle}"  type="text" class="form-control" id="exampleFormControlInput1" >
 		</div>
 		
 		<div class="mb-3">
 		  <label for="exampleFormControlTextarea1" class="form-label">글내용 :</label>
-		  <textarea th:field="*{content}" th:text="${content}" class="form-control" id="exampleFormControlTextarea1" rows="3" ></textarea>
+		  <textarea th:field="*{boardContent}" th:text="${boardContent}" class="form-control" id="exampleFormControlTextarea1" rows="3" ></textarea>
 		</div>
 		<div align="center">
-			<button type="submit" class="btn btn-light">수정완료</button>
+			<button type="submit" class="btn btn-light">수정확인</button>
 		</div>
 	</form>
 </div>

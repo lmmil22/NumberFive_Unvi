@@ -7,48 +7,236 @@
 	<link rel="stylesheet" th:href="@{}">
 </th:block>
 <div layout:fragment="content">
-<!-- 제목/내용 셀렉트박스 선택  + 키워드검색 -->
-<div class="row" style="background-color: yellow; text-align: center;">
-	<div class="col">제목/내용 셀렉트박스 선택  + 키워드검색 영역 </div>
-</div> 
-
-<div class="row mt-5">
-	<div class="col">
-	<table class="table table-hover ">
-		<thead class="table-light">
-			<tr>
-				<td>글번호</td>
-				<td>글제목</td>
-				<td>작성일</td>
-				<td>작성자</td>
-			</tr>
-		  </thead>
-		  <tbody>
-		  <th:block th:if="${#lists.size('boardList') == 0}">
-			<tr>
-				<td colspan="4"> 게시글이 없습니다.</td>
-			</tr>
-			</th:block>
-			<!--  boardListr가져올때 홀따옴표 감싸서 가져오기 주의!!!! -->
-			  <th:block th:unless="${#lists.size('boardList') == 0}" >
-				<tr th:each="board : ${boardList}">
-					<td th:text="${board.boardNo}"></td>
-					<td>
-						<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="${board.boardTitle}"></a>
-					</td>
-					<td th:text="${board.boardCreateDate}"></td>
-					<td th:text="${board.boardWriter}"></td>
-				</tr>
-			  </th:block>
-			</tbody>
-	</table>	
+<!-- board 게시판 제목줄 -->
+	<div align="center" class="row">
+		<div class="col">
+			<h1>B O A R D</h1>
+		</div>
 	</div>
 	
-	<!--로그인하면 글쓰기 등록버튼 -->
-	 <div align="center">
-		<button  sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-success" th:onclick="@{location.href='/board/reg';}">글쓰기</button>
-	</div> 
-</div>
+<!-- 제목/내용 셀렉트박스 선택  + 키워드검색 -->
+	<!--  부트스트랩 검색기능 -->
+	<div class="row mt-5 mb-3">
+		<div class="col">
+		<form th:action="@{/board/list}" method="post">
+			<div align="center" id="search-container">
+				<nav class="row navbar bg-light">
+				<div class="col-2 container-fluid "></div><!--열맞추기용 -->
+				<div class="col-3 container-fluid ">
+					<select name="searchKeyword" class="form-select" aria-label="Default select example">
+					  <!-- value값을 두개가져오니까 split을 사용해서 배열을 for문으로 돌려서 데이터 추출? -->
+					  <!-- <option value="BOARD_TITLE,BOARD_WRITER" th:selected="${boardVO.searchKeyword == 'BOARD_TITLE'  }">전체</option> -->
+					  <option value="BOARD_TITLE" th:selected="${boardVO.searchKeyword == 'BOARD_TITLE'}">제목</option>
+					  <option value="BOARD_WRITER" th:selected="${boardVO.searchKeyword == 'BOARD_WRITER'}">작성자</option>
+					</select>
+				</div>
+				<div class="col-1 container-fluid"></div>
+				<div class="col-3 container-fluid">
+				      <input name="searchValue"  th:value="${boardVO.searchValue}" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+				</div>
+			    <div class="col-3 container-fluid">
+				      <button class="btn btn-outline-success" type="submit">검색</button>
+			    </div>
+				</nav>
+			</div>
+		</form>
+		</div>
+	</div>
+	
+	<!--  부트스트랩 기능 끝 -->
+
+<!-- 부트스트랩 : 게시판 종류별 메뉴클릭 탭 바 (카테고리별) -->
+<!-- <ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled">Disabled</a>
+  </li>
+</ul>	 -->
+
+
+
+<!-- 부산대학교 학생지원시스템 레퍼런스 : 게시판 종류별 메뉴클릭 탭 바 (카테고리별) -->
+	<div class="col-xl-7 order-xl-last">
+		<section class="sec-1 sec-smart-board">
+			<!-- 탭 -->
+			<ul class="nav nav-tabs" id="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" id="board-tab-1" data-toggle="tab" href="#board-tabpanel-1" data-selected="true" data-lang="" title="선택됨" >학생지원시스템공지</a>
+					<div class="tab-content">
+						<!-- '학생지원' 탭 패널 -->
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="board-tab-2" data-toggle="tab" href="#board-tabpanel-2" data-selected="false" onclick="f_pnuNotice('10');return false;" onkeypress="this.onclick;" data-lang="">대학공지</a>
+					<div class="tab-content">
+						<!-- '대학공지' 탭 패널 -->
+						<div class="tab-pane fade" id="board-tabpanel-2" aria-labelledby="board-tab-2">
+							<p class="non-info mb" data-lang="">조회된 게시물이 없습니다.</p>
+							
+						</div>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="board-tab-3" data-toggle="tab" href="#board-tabpanel-3" data-selected="false" onclick="f_getDepartConfig('10');return false;" onkeypress="this.onclick;" data-lang="">학과공지</a>
+					<div class="tab-content">
+						<!-- '학과공지' 탭 패널 -->
+						<div class="tab-pane fade" id="board-tabpanel-3" aria-labelledby="board-tab-3">
+							<!-- <a class="more-link" href="#none" aria-label="더보기" title="더보기"></a> -->
+							<p class="non-info mb" data-lang="">로그인이 필요한 서비스 입니다.</p>
+						</div>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="board-tab-4" data-toggle="tab" href="#board-tabpanel-4" data-selected="false" onclick="f_mainBbsList('4','000000000000062','10');return false;" onkeypress="this.onclick;" data-lang="">장학공지</a>
+					<div class="tab-content">
+						<!-- '장학공지' 탭 패널 -->
+						<div class="tab-pane fade" id="board-tabpanel-4" aria-labelledby="board-tab-4">
+							<p class="non-info mb" data-lang="">조회된 게시물이 없습니다.</p>
+						</div>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="board-tab-5" data-toggle="tab" href="#board-tabpanel-5" data-selected="false" onclick="f_mainBbsList('5','000000000000384','10');return false;" onkeypress="this.onclick;">Q&amp;A</a>
+					<div class="tab-content">
+						<!-- 'Q&A' 탭 패널 -->
+						
+						<div class="tab-pane fade" id="board-tabpanel-5" aria-labelledby="board-tab-5">
+							<p class="non-info mb" data-lang="">조회된 게시물이 없습니다.</p>
+						</div>	
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="board-tab-6" data-toggle="tab" href="#board-tabpanel-6" data-selected="false" onclick="f_mainBbsList('6','000000000000385','10');return false;" onkeypress="this.onclick;">FAQ</a>
+					<div class="tab-content">
+						<!-- 'FAQ' 탭 패널 -->
+						
+						<div class="tab-pane fade" id="board-tabpanel-6" aria-labelledby="board-tab-6">
+							<p class="non-info mb" data-lang="">조회된 게시물이 없습니다.</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</section>
+	</div>
+<!--   -->
+
+<!-- 게시판 글머리 영역 -->
+	<div class="row">
+		<div class="col">
+		<table class="table table-hover ">
+			<thead class="table-light">
+				<tr>
+					<td>
+						<!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+						  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+						</svg> -->
+					</td>
+					<td>글번호</td>
+					<td>글제목</td>
+					<td>작성일</td>
+					<td>작성자</td>
+					<td>조회수</td>
+					<td>댓글수</td>
+				</tr>
+			  </thead>
+			  <tbody>
+			  <th:block th:if="${#lists.size('boardList') == 0}">
+				<tr>
+					<td colspan="7"> 게시된 등록글이 없습니다.</td>
+				</tr>
+				</th:block>
+				<!--  boardListr가져올때 홀따옴표 감싸서 가져오기 주의!!!! -->
+				  <th:block th:unless="${#lists.size('boardList') == 0}" >
+					<tr th:each="board : ${boardList}">
+						<td>
+							<th:block th:if="${board.isSecrert eq'Y'}">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+								  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+								</svg> 
+							</th:block>
+							<th:block th:unless="${board.isSecrert eq'Y'}">
+								 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
+								  <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z"/>
+								</svg> 
+							</th:block>
+						</td>
+						<td th:text="${board.boardNo}"></td>
+						<td>
+							<!-- 비밀글 일 때 -->
+							<!-- 본인 작성 비밀글이 아닌경우, warning창 띄우기 -->
+							<th:block th:if="${board.isSecrert eq 'Y'}">
+								<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
+									<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="${board.boardTitle}" ></a>
+								</th:block >
+								<th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> <!-- 게시글작성자와 로그인한 학번/교번과 일치하면 -->
+									<a id="warning" onclick="isSecrert()" th:text="${board.boardTitle}" ></a>
+								</th:block>
+							</th:block>
+							
+							<!-- 비밀글이 아닐때 -->
+							<th:block th:unless="${board.isSecrert eq 'Y'}">
+								<a  th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="${board.boardTitle}" ></a>
+							</th:block>
+							
+						</td>
+						<td th:text="${board.boardCreateDate}"></td>
+						<td th:text="${board.boardWriter}"></td>
+						
+						<td th:text="${board.boardReadCnt}"></td>
+						<td th:text="${board.replyCnt}"></td>
+					</tr>
+				  </th:block>
+				</tbody>
+		</table>	
+		</div>
+		
+		
+		
+		<!-- 부트스트랩 페이징처리 -->
+		<div class="row" align="center">
+			<div class="col">
+				<nav aria-label="Page navigation example">
+				  <ul class="pagination">
+				   <th:block th:if="${boardVO.prev}">
+				    	<li class="page-item">
+					   		 <a class="page-link" th:text="prev" th:href="@{/board/list(nowPage=${boardVO.beginPage-1})}"></a>
+					    </li>
+				    </th:block>
+				    <th:block th:each="pageNum : ${#numbers.sequence(boardVO.beginPage, boardVO.endPage)}">
+					    <li class="page-item">
+					    	<a class="page-link" th:text="${pageNum}" th:href="@{/board/list(nowPage=${pageNum})}"></a>
+					    </li>	
+				   </th:block>
+				    <th:block th:if="${boardVO.next}">
+					    <li class="page-item">
+					   		<a class="page-link" th:text="next" th:href="@{/board/list(nowPage=${boardVO.endPage+1})}"></a>
+					   </li>
+				   </th:block>
+				  </ul>
+				</nav>
+			</div>
+		</div>
+		<!-- 부트스트랩 끝 -->
+
+		<!--로그인하면 글쓰기 등록버튼 -->
+		 <div class="row" align="center">
+		 	<div class="col">
+				<button  sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-success" th:onclick="@{location.href='/board/reg';}">글쓰기</button>
+		 	</div>
+		</div> 
+	</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script type="text/javascript" th:src="@{/js/common/board_list.js}"></script>
 
 </div>
 </html>
