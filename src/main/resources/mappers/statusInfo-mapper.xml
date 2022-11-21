@@ -37,7 +37,6 @@
 <result column="MEM_NO" property="memNo"/>
 </resultMap>
 
-
 <!--by수경 학사경고 페이지 전체 학생 조회하기 -->
 <select id="selectAllStu" resultMap="studentMapper.student" parameterType="hashMap">
 	SELECT (SELECT MEM_NAME FROM MEMBER WHERE MEM_NO = S.MEM_NO) AS MEM_NAME
@@ -49,7 +48,7 @@
 		 , STU_STATUS
 		 , (SELECT COUNT(STATUS_NO) FROM STATUS_INFO WHERE STU_NO = S.STU_NO)AS STATUS_NO
 		 , (SELECT STU_OUT_NO FROM STU_OUT WHERE STU_NO = S.STU_NO) AS STU_OUT_NO
-	FROM STU S
+	FROM STU S 
 	WHERE 1 = 1
 	<if test="collNo != null and !collNo.equals('')">
 		AND COLL_NO = #{collNo}
@@ -61,9 +60,8 @@
 		AND STU_STATUS = #{stuStatus}
 	</if>
 	<if test="memName != null and !memName.equals('')">
-		AND MEM_NAME = #{memName}
+		AND (SELECT UPPER(MEM_NAME) FROM MEMBER WHERE MEM_NO = S.MEM_NO) LIKE UPPER('%'||#{memName}||'%')
 	</if>
-
 	ORDER BY STU_NO DESC
 </select>
 
@@ -76,12 +74,13 @@
 		 , STU_STATUS
 		 , (SELECT MEM_TELL FROM MEMBER WHERE MEM_NO = S.MEM_NO)AS MEM_TELL
 		 , (SELECT TO_CHAR(MEM_BIRTH, 'YYYY"년"MM"월"DD"일"') FROM MEMBER WHERE MEM_NO = S.MEM_NO) AS MEM_BIRTH
-		 , (SELECT TH_CHAR(PROB_DATE, 'YYYY"년"MM"월"DD"일"') FROM STATUS_INFO WHERE STU_NO = #{stuNo})AS PROB_DATE
-		 , (SELECT PROB_REASON FROM STATUS_INFO WHERE STU_NO = S.STU_NO)AS PROB_REASON
-		 , (TO_CHAR(STU_YEAR)||'학년'||' '||TO_CHAR(STU_SEM)||'학기')AS STU_YEAR
+		 , (SELECT MEM_ADDR ||''|| MEM_ADDR_DETAIL FROM MEMBER WHERE MEM_NO = S.MEM_NO) AS MEM_ADDR
+		 , (SELECT TO_CHAR(PROB_DATE, 'YYYY"년"MM"월"DD"일"') FROM ACADEMIC_PROBATION WHERE STU_NO = S.STU_NO)AS PROB_DATE
+		 , (SELECT PROB_REASON FROM ACADEMIC_PROBATION WHERE STU_NO = S.STU_NO)AS PROB_REASON
+		 , (SELECT TO_CHAR(STU_YEAR)||'학년'||' '||TO_CHAR(STU_SEM)||'학기' FROM STU WHERE STU_NO =S.STU_NO) AS STU_YEAR
 		 , MEM_NO
 	FROM STU S
-	WHERE STU_N0 = #{stuNo}
+	WHERE STU_NO = #{stuNo}
 </select>
 
 <!-- by수경 학사경고 승인 시 학사경고 테이블에 넣을 데이터 -->
@@ -168,21 +167,21 @@ FROM STU_OUT
 		 , STU_NO 
 		 , STU_OUT_DATE
 		 , STU_OUT_REASON
-	FROM STU_OUT
+	FROM STU_OUT S
 	WHERE 1 = 1
 	<if test="collNo != null and !collNo.equals('')">
-		AND COLL_NO = #{collNo}
+		AND (SELECT COLL_NO FROM STU WHERE STU_NO = S.STU_NO) = #{collNo}
 	</if>
 	<if test="deptNo != null and !deptNo.equals('')">
-		AND DEPT_NO = #{deptNo}
+		AND (SELECT DEPT_NO FROM STU WHERE STU_NO = S.STU_NO) = #{deptNo}
 	</if>
 	<if test="stuStatus != null and !stuStatus.equals('')">
-		AND STU_STATUS = #{stuStatus}
+		AND (SELECT STU_STATUS FROM STU WHERE STU_NO = S.STU_NO) = #{stuStatus}
 	</if>
 	<if test="memName != null and !memName.equals('')">
-		AND MEM_NAME = #{memName}
+		AND (SELECT UPPER(MEM_NAME) FROM MEMBER WHERE MEM_NO = (SELECT MEM_NO FROM STU WHERE STU_NO = S.STU_NO)) LIKE UPPER('%'||#{memName}||'%')
 	</if>
-
+	ORDER BY STU_NO DESC
 </select>
 
 </mapper>

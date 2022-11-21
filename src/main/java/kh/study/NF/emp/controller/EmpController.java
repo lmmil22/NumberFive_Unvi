@@ -452,6 +452,14 @@ public class EmpController {
 		  return empService.getDeptList(paramMap);
 	  }
 	  
+	  //by수경 학사경고 학생 신상정보 데이터 뽑기 ajax
+	  @ResponseBody
+	  @PostMapping("/probationStuInfoAjax")
+	  public StudentVO probationStuInfoAjax(String stuNo) {
+		  
+		  return empService.probationStuInfo(stuNo);
+	  }
+	  
 	  //by수경 제적페이지로 이동
 	  @RequestMapping("/stuOut")
 	  public String stuOut(Model model, @RequestParam Map<String, String> paramMap) {
@@ -462,6 +470,7 @@ public class EmpController {
 		  model.addAttribute("collList", deptService.selectCollList());
 		  model.addAttribute("deptList", deptService.selectDeptList());
 		  
+		  //검색 조건 paramMap 넘기기
 		  model.addAttribute("paramMap", paramMap);
 		  
 		  return "content/statusInfo/stuOut";

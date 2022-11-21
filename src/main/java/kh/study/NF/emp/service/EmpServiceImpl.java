@@ -91,5 +91,12 @@ public class EmpServiceImpl implements EmpService{
 		return sqlSession.selectList("statusInfoMapper.selectStuOutList");
 	}
 	
+	//by수경 학사경고 모달창 학생 기본정보 데이터 출력 
+	@Override
+	public StudentVO probationStuInfo(String stuNo) {
+		
+		return sqlSession.selectOne("statusInfoMapper.probationStuInfo", stuNo);
+	}
+	
 
 }

@@ -39,3 +39,31 @@ function changeColl(){
 	});
 
 }
+
+//by수경 학생 학번 클릭 시 나타날 학사경고 창 데이터
+function stuInfo(stuNo){
+	$.ajax({
+	   url: '/emp/probationStuInfoAjax', //요청경로
+	    type: 'post',
+	    data:{'stuNo':stuNo}, //필요한 데이터
+	    success: function(result) {
+	     document.querySelector('#probationModal_name').innerText = result.memberVO.memName;
+	     document.querySelector('#probationModal_birth').innerText = result.memberVO.memBirth;
+	     document.querySelector('#probationModal_tell').innerText = result.memberVO.memTell;
+	     document.querySelector('#probationModal_addr').innerText = result.memberVO.memAddr;
+	     document.querySelector('#probationModal_no').innerText = result.stuNo;
+	     document.querySelector('#probationModal_grade').innerText = result.stuYear;
+	     document.querySelector('#probationModal_status').innerText = result.stuStatus;
+	     document.querySelector('#probationModal_coll').innerText = result.collNo;
+	     document.querySelector('#probationModal_dept').innerText = result.deptNo;
+	     document.querySelector('#probationModal_date').innerText = result.statusInfoVO.academicProbationVO.probDate;
+	     document.querySelector('#probationModal_reason').innerText = result.statusInfoVO.academicProbationVO.probReason;
+
+	    },
+	    error: function(){
+	       alert('실패');
+	    }
+	});
+
+	
+}

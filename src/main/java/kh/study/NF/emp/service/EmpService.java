@@ -44,4 +44,7 @@ public interface EmpService {
 	
 	//by수경 제적학생 목록조회
 	List<StuOutVO> selectStuOutList();
+	
+	//by수경 학사경고 모달창 학생 기본정보 데이터 출력 
+	StudentVO probationStuInfo(String stuNo);
 }

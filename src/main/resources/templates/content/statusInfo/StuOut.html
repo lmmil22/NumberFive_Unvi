@@ -5,6 +5,15 @@
 	layout:decorate="~{layout/base_layout}">
 
 <head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<!--by수경 카카오톡 공유하기로 메세지 전송을 위한 태그 추가  -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.1/kakao.min.js"
+  integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNWf/" crossorigin="anonymous">
+</script>
+<script>
+  Kakao.init('b37d7c04ed213ae63f82c2037f5b5a6a'); // 사용하려는 앱의 JavaScript 키 입력
+</script>
 <meta charset="UTF-8">
 <title>[NFU]제적 현황 관리자 페이지</title>
 </head>
@@ -14,6 +23,7 @@
 	<div class="row justify-content-center">
 		<div class="col mt-5">
 		제적 학생조회
+		<form th:action="@{/emp/stuOut}" method="post">
 			<table class="table align-middle text-center">
 				<tr>
 					<td>소속대학</td>
@@ -46,9 +56,11 @@
 						</select>
 					</td>
 					<td>성명</td>
-					<td> <input class ="form-control" type="text" name="memName"> </td>
+					<td> <input class ="form-control" type="text" name="memName" th:value="${paramMap['memName']}"> </td>
 				</tr>
 			</table>
+		</form>	
+		
 		학생목록
 			<table class="table align-middle text-center">
 				<tr>
@@ -56,12 +68,14 @@
 					<td>이름</td>
 					<td>소속대학</td>
 					<td>소속학과</td>
+					<td>SNS</td>
 				</tr>
 				<tr th:each="stuOut:${stuOutList}">
 					<td th:text="${stu.stuNo}" data-bs-toggle="modal" data-bs-target="#stuOutModal"></td>
 					<td th:text="${stu.memberVO.memName}"></td>
 					<td th:text="${stu.collNo}"></td>
 					<td th:text="${stu.deptNo}"></td>
+					<td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
 				</tr>
 			</table>
 		</div>

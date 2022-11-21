@@ -47,7 +47,7 @@
 							</select>
 						</td>
 						<td>성명</td>
-						<td><input class ="form-control" type="text" name="memName" value=""></td>
+						<td><input class ="form-control" type="text" name="memName" th:value="${paramMap['memName']}"></td>
 					</tr>
 				</table>
 			</form>
@@ -63,7 +63,7 @@
 					<td>제적</td>
 				</tr>
 				<tr th:each="stu:${stuList}">
-					<td th:text="${stu.stuNo}" data-bs-toggle="modal" data-bs-target="#probationModal"></td>
+					<td th:text="${stu.stuNo}" data-bs-toggle="modal" data-bs-target="#probationModal" th:onclick="stuInfo([[${stu.stuNo}]]);"></td>
 					<td th:text="${stu.memberVO.memName}"></td>
 					<td th:text="${stu.collVO.collName}"></td>
 					<td th:text="${stu.deptVO.deptName}"></td>
@@ -118,7 +118,10 @@
 						</tr>
 						<tr>
 							<th>주소</th>
-							<td colspan="3"></td>
+							<td colspan="3">
+								<div id="probationModal_addr"></div>
+								
+							</td>
 						</tr>
 						
 						<tr>  
@@ -178,8 +181,12 @@
 							</th:block>
 							<th:block>
 							</th:block>
-							<td colspan="2">일자</td>
-							<td colspan="4">사유</td>
+							<td colspan="2">
+								<div id="probationModal_date"></div>
+							</td>
+							<td colspan="4">
+								<div id ="probationModal_reason"></div>
+							</td>
 						</tr>				
 					</table>
 
