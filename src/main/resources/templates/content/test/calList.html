@@ -28,9 +28,53 @@
 	 <script>
     document.addEventListener('DOMContentLoaded', function() {
       var calendarEl = document.getElementById('calendar');
+      var request = $.ajax({
+          url: "/calendar/event",
+          method: "GET",
+        });
+        request.done(function(data){
+          var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: data
+          });
+          calendar.render();		
+    });
+
+  </script>
+
+</div>
+
+</html>
+<!-- 
+<div layout:fragment="content"> 
+	테스트 중입니다 
+	
+
+
+  <h1>MyCalendar</h1>
+  <div id='calendar'></div>
+  
+  
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src='/fullcalendar-5.11.3/lib/main.js'></script>
+  <link  href='/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
+	 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
       var calendar =  new FullCalendar.Calendar
       (calendarEl, {
         initialView: 'dayGridMonth',
+        events : [
+            {
+            title: '물주기',
+            start: '2022-11-01'
+            },
+            {
+            title: '뚜껑 닫기',
+            start: '2022-11-03',
+            end: '2022-11-05'
+            }
+        ]
       });
       calendar.render();
     });
@@ -40,4 +84,4 @@
 </div>
 
 </html>
-
+ -->

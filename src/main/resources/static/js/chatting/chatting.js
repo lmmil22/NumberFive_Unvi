@@ -1,5 +1,3 @@
-/*//by 지아 채팅 사용을 위한 js입니다 
-
 window.addEventListener("keyup", e => {
   const key = document.getElementById(e.key);
   if(e.key=='Enter'){
@@ -100,4 +98,4 @@ function onMessage(msg) {
       }
     }
 }
-})*/
+})
