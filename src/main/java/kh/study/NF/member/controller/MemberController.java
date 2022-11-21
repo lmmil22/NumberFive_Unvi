@@ -127,7 +127,7 @@ public class MemberController {
 	    	// 임시발급비밀번호로 업데이트하기
 	    	//memberService.updatePw(memberVO);
 	    	
-	    	return "content/common/reLogin";
+	    	return "content/common/home_Login";
 			
 		} 
 		System.out.println("  ________________  현재 로그인 상태는?  ___________________   " + loginInfo);//null
@@ -140,13 +140,22 @@ public class MemberController {
 	
 	// ajax로 이메일 임시비밀번호 발급 후 이동 페이지 
 	// 이전 shop에서 이름만->ajaxlogin 메소드 가져온것임.
-	@GetMapping("/afterLogin")
+	@PostMapping("/afterLogin")
 	public String afterLogin1(boolean isLoginFail, Model model) {
 		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
 		System.out.println("_______________로그인 성공시 false!!! -->" + isLoginFail);
 		model.addAttribute("isLoginFail",isLoginFail);
 		
 		return "content/common/home_Login";
+	}
+//----------------------------------------------------------------------------------------------//	
+	// 관리자 로그인 후 페이지 이동
+	@GetMapping("/adminLogin")
+	public String adminLogin(boolean isLoginFail) {
+		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
+		System.out.println("_______________로그인 성공시 false!!! -->" + isLoginFail);
+		
+		return "content/common/after_Login";
 	}
 //-------------------------------------------------------------------------------------------///	
 	

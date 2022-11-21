@@ -23,7 +23,7 @@ public class AdminController {
 	
 	
 	
-	//
+	//by 지아
 	@GetMapping("/memDetail")
 	public String memDetail(Model model , String memNo) {
 		
@@ -31,6 +31,7 @@ public class AdminController {
 		
 		return "";
 	}
-	
+//---------------------------------------------------------------------//	
+	//by 유빈
 	
 }

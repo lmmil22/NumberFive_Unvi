@@ -48,7 +48,7 @@ function sendEmail(loginInfo) {
 				alert(result);
 				if(result) {/*loginInfo 값이 null아니면(false)*/
 					alert('로그인 성공!!!');
-					location.href='/member/afterLogin';
+					location.href='/member/homeLogin';
 				}
 				else{
 					alert('로그인 실패!!!');
@@ -108,7 +108,7 @@ join_modal.addEventListener('hidden.bs.modal', function(event) {//모달이 완�
 
 /////////////////////////////////////////////////////////////////////////
 // 내가 갖고온 소스 (스프링부트로 이메일로 임시비밀번호 찾기 )
-$('.modal').on('hidden.bs.modal', function (e) {
+/*$('.modal').on('hidden.bs.modal', function (e) {
         console.log('modal close');
         $(this).find('form')[0].reset()
     });
@@ -151,7 +151,7 @@ $('.modal').on('hidden.bs.modal', function (e) {
                 }
             }
         })
-    })
+    })*/
     
     
 

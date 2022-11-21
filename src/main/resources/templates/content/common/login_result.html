@@ -35,7 +35,7 @@
 	<div sec:authorize="hasRole('ROLE_ADMIN')" >
 		<script type="text/javascript">
 			alert('관리자 인증 성공');
-			location.href='/member/afterLogin'; //일단 모두 afterLogin으로 이동
+			location.href='/member/adminLogin'; //일단 모두 adminLogin으로 이동
 		</script>
 	</div>
 	<div sec:authorize="hasRole('ROLE_PROFESSOR')" >
