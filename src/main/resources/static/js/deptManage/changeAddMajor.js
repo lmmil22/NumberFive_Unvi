@@ -109,8 +109,14 @@ function changeAllAccept(){
 	const checkedBoxes = document.querySelectorAll('.check1:checked');
 	
 		if(checkedBoxes.length == 0){
-			alert('선택한 내역이 없습니다. \n확인 후 다시 시도하여 주시길 바랍니다.');
-			return;
+			$().ready(function () {
+	                Swal.fire({
+	                    icon: 'warning',
+	                    title: '선택한 내역이 없습니다.',
+	                    text: '확인 후 다시 시도하여 주시길 바랍니다.',
+		             });
+		        });
+				return;
 		}
 	
 	//여러 체크박스가 선택되었다면
@@ -179,9 +185,15 @@ function doubleAllAccept(){
 	const checkedBoxes = document.querySelectorAll('.check2:checked');
 	
 		if(checkedBoxes.length == 0){
-			alert('선택한 내역이 없습니다. \n확인 후 다시 시도하여 주시길 바랍니다.');
-			return;
-		}
+			$().ready(function () {
+	            Swal.fire({
+	                icon: 'warning',
+	                title: '선택한 내역이 없습니다.',
+	                text: '확인 후 다시 시도하여 주시길 바랍니다.',
+	             });
+		   });
+		   return;
+	   }
 	
 	//여러 체크박스가 선택되었다면
 	//applyNo 데이터 가져오기
@@ -294,5 +306,17 @@ function search(){
 	document.querySelector('#searchForm').submit();
 }
 
+//by수경 카카오톡 메세지 전송
+function sendKakao(){
+		
+	Kakao.Share.sendCustom({
+	  templateId: 86153,
+	  templateArgs: {
+	    title: '제목 영역입니다.',
+	    description: '설명 영역입니다.',
+	  },
+	
+	});
 
+}
 

@@ -5,6 +5,17 @@
    layout:decorate="~{layout/base_layout}">
 
 <head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<!--by수경 카카오톡 공유하기로 메세지 전송을 위한 태그 추가  -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.1/kakao.min.js"
+  integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNWf/" crossorigin="anonymous">
+</script>
+<script>
+  Kakao.init('b37d7c04ed213ae63f82c2037f5b5a6a'); // 사용하려는 앱의 JavaScript 키 입력
+</script>
+
+
 <meta charset="UTF-8">
 <title>[NFU]복학/휴학신청 접수현황</title>
 </head>
@@ -92,7 +103,7 @@
 					  <th>전공학과</th>
 					  <th>신청일</th>
 					  <th>승인여부</th>
-					  <th>처리일</th>
+					  <th>SNS</th>
 				    </tr>
 				    <th:block th:if="${#lists.size(comebackList) == 0}">
 				    <tr>
@@ -130,7 +141,9 @@
 				      		<label class="form-check-label" for="flexRadioDefault1">승인완료 </label>
 				      	</span>
 				      </td>
-					  <td th:text="${comeback.approvalDate}"></td>
+					  <td th:onclick="sendKakao();">
+					  	<img src="/images/kakao.png">
+					  </td>
 					</tr>
 					</th:block>
 				   
@@ -208,7 +221,7 @@
 					  <th>전공학과</th>
 					  <th>신청일</th>
 					  <th>승인여부</th>
-					  <th>처리일</th>
+					  <th>SNS</th>
 				    </tr>
 				     <th:block th:if="${#lists.size(takeOffList) == 0}">
 					    <tr>
@@ -245,7 +258,7 @@
 					      		<label class="form-check-label" for="flexRadioDefault1">승인완료</label>
 				      		</span>
 					      </td>
-					       <td th:text="${takeOff.approvalDate}"></td>
+					       <td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
 						</tr>
 					</th:block>
 				</table>

@@ -54,7 +54,13 @@ function applyAddMajor(){
 		data: {'stuNo':stuNo,'applyCode':applyCode}, //필요한 데이터
 		success: function(result) {
 			if(result){
-				alert('이미 신청하셨습니다. \n신청내역 페이지로 이동합니다.');
+				$().ready(function () {
+	                Swal.fire({
+	                    icon: 'warning',
+	                    title: '이미 신청하셨습니다.',
+	                    text: '신청내역 페이지로 이동합니다.',
+		             });
+		        });
 				location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
 				return;
 			}
@@ -64,27 +70,46 @@ function applyAddMajor(){
 		}
 	});
 	
-	//by수경 복수전공 신청사유 공백 및 빈칸 방지
-	
-	const textArea = document.querySelector('textarea').value;
-	//alert(textArea);
-
-	if(textArea.replace(/\s| /gi, "").length == 0){
-		alert('복수전공 신청 사유는 필수 입력 사항입니다. \n복수전공 신청 사유를 작성하여 주십시오.');
-		return;
-	}
 	//by수경 전공대학과 전공학과를 선택하지 않았다면
 	//전공대학
 	const coll = document.querySelector('#coll').value
 	if(coll == ''){
-		alert('전공대학을 선택하여 주십시오.')
+		$().ready(function () {
+            Swal.fire({
+                icon: 'warning',
+                title: '전공대학/전공학과 선택',
+                text: '복수전공 대학과 학과를 선택하여 주십시오.',
+             });
+	    });
 		return;
 	}
 	//전공학과 
 	const dept = document.querySelector('#dept').value;
 	
 	if(dept == ''){
-		alert('전공학과를 선택하여 주십시오.')
+		$().ready(function () {
+            Swal.fire({
+                icon: 'warning',
+                title: '전공대학/전공학과 선택',
+                text: '복수전공 대학과 학과를 선택하여 주십시오.',
+             });
+	    });
+		return;
+	}
+	
+	//by수경 복수전공 신청사유 공백 및 빈칸 방지
+	
+	const textArea = document.querySelector('textarea').value;
+	//alert(textArea);
+
+	if(textArea.replace(/\s| /gi, "").length == 0){
+		$().ready(function () {
+            Swal.fire({
+                icon: 'warning',
+                title: '복수전공 신청 사유는 필수 입력사항',
+                text: '복수전공 신청 사유를 작성하여 주십시오.',
+             });
+	    });
 		return;
 	}
 
@@ -137,7 +162,15 @@ function applyResult(){
 	}
 	//동의하기에 체크가 되어 있지 않다면 alert창 실행
 	else{
-		alert('복수전공 신청 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.');
+		
+		$().ready(function () {
+            Swal.fire({
+                icon: 'warning',
+                title: '동의버튼 클릭',
+                text: '복수전공 신청 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.',
+             });
+        });     
+		
 		//모달창 소스
 		const modal = new bootstrap.Modal('#addMajorModal');
 		//모달 보여주기

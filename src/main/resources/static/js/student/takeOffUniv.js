@@ -16,7 +16,13 @@ function applyTakeOffUniv(){
 		data: {'stuNo':stuNo,'applyCode':applyCode}, //필요한 데이터
 		success: function(result) {
 			if(result){
-				alert('이미 신청하셨습니다. \n신청내역 페이지로 이동합니다.');
+				$().ready(function () {
+	                Swal.fire({
+	                    icon: 'warning',
+	                    title: '이미 신청하셨습니다.',
+	                    text: '신청내역 페이지로 이동합니다.',
+		             });
+		        });
 				location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
 				return;
 			}
@@ -31,7 +37,14 @@ function applyTakeOffUniv(){
 	//alert(textArea);
 
 	if(textArea.replace(/\s| /gi, "").length == 0){
-		alert('휴학 사유는 필수 입력 사항입니다. \n휴학 사유를 작성하여 주십시오.');
+		
+		$().ready(function () {
+            Swal.fire({
+                icon: 'warning',
+                title: '휴학 사유는 필수 입력사항',
+                text: '휴학 사유를 작성하여 주십시오.',
+             });
+	    });
 		return;
 	}
 	
@@ -83,7 +96,13 @@ function applyResult(){
 	}
 	//by수경 만약 동의합니다에 체크하지 않았다면 alert창 실행
 	else{
-		alert('휴학 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.');
+		$().ready(function () {
+            Swal.fire({
+                icon: 'warning',
+                title: '동의버튼 클릭',
+                text: '휴학 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.',
+             });
+        });     
 		
 		//휴학 유의사항 모달창 다시 뜨도록 설정
 		//모달창 소스

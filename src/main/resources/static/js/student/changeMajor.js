@@ -54,7 +54,13 @@ function applyChangeMajor(){
 		data: {'stuNo':stuNo,'applyCode':applyCode}, //필요한 데이터
 		success: function(result) {
 			if(result){
-				alert('이미 신청하셨습니다. \n신청내역 페이지로 이동합니다.');
+				$().ready(function () {
+	                Swal.fire({
+	                    icon: 'warning',
+	                    title: '이미 신청하셨습니다.',
+	                    text: '신청내역 페이지로 이동합니다.',
+		             });
+		        });
 				location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
 				return;
 			}
@@ -64,28 +70,47 @@ function applyChangeMajor(){
 		}
 	});
 	
-	//by수경 전과사유 공백 및 빈칸 방지
-	const textArea = document.querySelector('textarea').value;
-	//alert(textArea);
-
-	if(textArea.replace(/\s| /gi, "").length == 0){
-		alert('전과 사유는 필수 입력 사항입니다. \n전과 사유를 작성하여 주십시오.');
-		return;
-	}
-	
 	//by수경 전공대학과 전공학과를 선택하지 않았다면
-	const coll = document.querySelector('#coll').value
+	const coll = document.querySelector('#coll').value;
 	if(coll == ''){
-		alert('전공대학을 선택하여 주십시오.')
+		$().ready(function () {
+            Swal.fire({
+                icon: 'warning',
+                title: '전공대학/전공학과 선택',
+                text: '변경할 전공대학과 학과를 선택하여 주십시오.',
+             });
+	    });
 		return;
 	}
 	
 	const dept = document.querySelector('#dept').value;
 	if(dept == ''){
-		alert('전공학과를 선택하여 주십시오.')
+		$().ready(function () {
+            Swal.fire({
+                icon: 'warning',
+                title: '전공대학/전공학과 선택',
+                text: '변경할 전공대학과 학과를 선택하여 주십시오.',
+             });
+	    });
 		return;
 	}
 	
+	
+	//by수경 전과사유 공백 및 빈칸 방지
+	const textArea = document.querySelector('textarea').value;
+	//alert(textArea);
+
+	if(textArea.replace(/\s| /gi, "").length == 0){
+		
+		$().ready(function () {
+            Swal.fire({
+                icon: 'warning',
+                title: '전과 사유는 필수 입력사항',
+                text: '전과 사유를 작성하여 주십시오.',
+             });
+        });     
+		return;
+	}
 	
 
 	//by수경 모든 정보가 입력되었을 때 전과 유의사항 모달창
@@ -140,7 +165,15 @@ function applyResult(){
 	
 	//by수경 동의합니다에 체크하지 않았다면 alert창 실행
 	else{
-		alert('전과 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.');
+		
+		$().ready(function () {
+            Swal.fire({
+                icon: 'warning',
+                title: '동의버튼 클릭',
+                text: '전과 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.',
+             });
+        });     
+
 		//모달창 소스
 		const modal = new bootstrap.Modal('#changeMajorModal');
 		//모달 보여주기

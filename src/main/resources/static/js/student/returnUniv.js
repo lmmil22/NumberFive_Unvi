@@ -16,7 +16,13 @@ function applyReturnUniv(){
 		data: {'stuNo':stuNo,'applyCode':applyCode}, //필요한 데이터
 		success: function(result) {
 			if(result){
-				alert('이미 신청하셨습니다. \n신청내역 페이지로 이동합니다.');
+				$().ready(function () {
+	                Swal.fire({
+	                    icon: 'warning',
+	                    title: '이미 신청하셨습니다.',
+	                    text: '신청내역 페이지로 이동합니다.',
+		             });
+		        });
 				location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
 				return;
 			}
@@ -74,7 +80,13 @@ function applyResult(){
 	
 	//by수경 동의합니다에 체크하지 않았다면 alert창 실행
 	else{
-		alert('복학 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.');
+		$().ready(function () {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: '동의버튼 클릭',
+	            text: '복학 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.',
+	         });
+	    });  
 		
 		//모달창 소스
 		const modal = new bootstrap.Modal('#returnUnivModal');

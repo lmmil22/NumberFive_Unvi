@@ -29,31 +29,42 @@ function stuInfo(stuNo){
 
 //by수경 휴학 승인대기/승인완료 클릭 시 라디오 값 변경(단일 변경)
 function changeTakeOffStatus(applyNo, processStatus, stuNo){
-	
-	const result = confirm('신청내역을 승인하시겠습니까?');
-	
-	if(result){
-		
-		$.ajax({
-		   url: '/emp/changeTakeOffStatusAjax', //요청경로
-		    type: 'post',
-		    data:{'applyNo':applyNo, 'processStatus':processStatus
-		    	 ,'stuNo':stuNo}, //필요한 데이터
-		    success: function(result) {
-			    //모달창 소스
-				const modal = new bootstrap.Modal('#resultModal');
-				//모달 보여주기
-				modal.show();
-		    },
-		    error: function(){
-		       alert('실패');
-		    }
-		});
-	}
-	//라디오 박스 클릭하고 취소했을 때 기존값으로 돌아가도록 구현
-	else{
-		event.preventDefault();
-	}
+	$().ready(function () {
+        Swal.fire({
+            title: '승인하기',
+            text: "신청내역을 승인하시겠습니까?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '승인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+				$.ajax({
+				   url: '/emp/changeTakeOffStatusAjax', //요청경로
+				    type: 'post',
+				    data:{'applyNo':applyNo, 'processStatus':processStatus
+				    	 ,'stuNo':stuNo}, //필요한 데이터
+				    success: function(result) {
+					    //모달창 소스
+						const modal = new bootstrap.Modal('#resultModal');
+						//모달 보여주기
+						modal.show();
+				    },
+				    error: function(){
+				      alert('실패');
+			    	}	
+				});
+
+            }
+            //라디오 박스 클릭하고 취소했을 때 기존값으로 돌아가도록 구현
+            else{
+				event.preventDefault();
+			}
+            
+        })
+     });
 
 }
 //by수경 복학 승인대기/승인완료 클릭 시 라디오 값 변경(단일 변경)
@@ -128,8 +139,14 @@ function takeOffAllAccept(){
 	const checkedBoxes = document.querySelectorAll('.check2:checked');
 	
 		if(checkedBoxes.length == 0){
-			alert('선택한 내역이 없습니다. \n확인 후 다시 시도하여 주시길 바랍니다.');
-			return;
+			$().ready(function () {
+	                Swal.fire({
+	                    icon: 'warning',
+	                    title: '선택한 내역이 없습니다.',
+	                    text: '확인 후 다시 시도하여 주시길 바랍니다.',
+		             });
+		        });
+				return;
 		}
 	
 	//여러 체크박스가 선택되었다면
@@ -202,8 +219,15 @@ function comebackAllAccept(){
 	
 	if(checkedBoxes.length == 0){
 		
-		alert('선택한 내역이 없습니다. \n확인 후 다시 시도하여 주시길 바랍니다.');
+		$().ready(function () {
+            Swal.fire({
+                icon: 'warning',
+                title: '선택한 내역이 없습니다.',
+                text: '확인 후 다시 시도하여 주시길 바랍니다.',
+             });
+		 });
 		return;
+	
 	}
 	
 	//여러 체크박스가 선택되었다면
@@ -269,5 +293,16 @@ function search(){
 	document.querySelector('#searchForm').submit();
 }
 
+//by수경 카카오톡 메세지 전송
+function sendKakao(){
+		
+	Kakao.Share.sendCustom({
+	  templateId: 86153,
+	  templateArgs: {
+	    title: '제목 영역입니다.',
+	    description: '설명 영역입니다.',
+	  },
+	
+	});
 
-
+}

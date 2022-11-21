@@ -5,6 +5,15 @@
    layout:decorate="~{layout/base_layout}">
 
 <head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<!--by수경 카카오톡 공유하기로 메세지 전송을 위한 태그 추가  -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.1/kakao.min.js"
+  integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNWf/" crossorigin="anonymous">
+</script>
+<script>
+  Kakao.init('b37d7c04ed213ae63f82c2037f5b5a6a'); // 사용하려는 앱의 JavaScript 키 입력
+</script>
 <meta charset="UTF-8">
 <title>[NFU]전과/복수전공신청 접수현황</title>
 </head>
@@ -86,13 +95,13 @@
 					  <th>이 름</th>
 					  <th>학 번</th>
 					  <th>학 년</th>
-					  <th>소속전공대학</th>
-					  <th>소속전공학과</th>
+					  <th>전공대학</th>
+					  <th>전공학과</th>
 					  <th>변경전공대학</th>
 					  <th>변경전공학과</th>
 					  <th>신청일</th>
 					  <th>승인여부</th>
-					  <th>처리일</th>
+					  <th>SNS</th>
 				    </tr>
 				   <th:block th:if="${#lists.size(changeMajorList) == 0}">
 					    <tr>
@@ -122,7 +131,7 @@
 					      		<button type="button" class="btn btn-primary">승인<p>완료</button>
 					      	</th:block>
 					      </td>
-					      <td th:text="${changeMajor.approvalDate}"></td>
+					      <td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
 						</tr>
 					</th:block>
 				</table>
@@ -194,13 +203,13 @@
 					  <th>이 름</th>
 					  <th>학 번</th>
 					  <th>학 년</th>
-					  <th>소속전공대학</th>
-					  <th>소속전공학과</th>
+					  <th>전공대학</th>
+					  <th>전공학과</th>
 					  <th>복수전공대학</th>
 					  <th>복수전공학과</th>
 					  <th>신청일</th>
 					  <th>승인여부</th>
-					  <th>처리일</th>
+					  <th>SNS</th>
 				    </tr>
 				    
 				    <th:block th:if="${#lists.size(doubleMajorList) == 0}">
@@ -230,7 +239,7 @@
 					      		<button type="button" class="btn btn-primary">승인<p>완료</button>
 					      	</th:block>
 				      </td>
-				      <td th:text="${doubleMajor.approvalDate}"></td>
+				      <td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
 					</tr>
 					</th:block>
 				</table>
