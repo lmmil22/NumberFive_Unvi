@@ -6,14 +6,6 @@
 
 <head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<!--by수경 카카오톡 공유하기로 메세지 전송을 위한 태그 추가  -->
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.1/kakao.min.js"
-  integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNWf/" crossorigin="anonymous">
-</script>
-<script>
-  Kakao.init('b37d7c04ed213ae63f82c2037f5b5a6a'); // 사용하려는 앱의 JavaScript 키 입력
-</script>
 <meta charset="UTF-8">
 <title>[NFU]제적 현황 관리자 페이지</title>
 </head>
@@ -49,7 +41,7 @@
 				<tr>
 					<td>학적</td>
 					<td>
-						<select class="form-select" >
+						<select class="form-select" name="stuStatus">
 							<option th:selected="${paramMap['stuStatus'] == null or paramMap['stuStatus'] eq ''}" value="" >전체</option>
 							<option th:selected="${paramMap['stuStatus'] eq '재학'}" value="재학">재학</option>
 							<option th:selected="${paramMap['stuStatus'] eq '휴학'}" value="휴학">휴학</option>
@@ -68,14 +60,18 @@
 					<td>이름</td>
 					<td>소속대학</td>
 					<td>소속학과</td>
-					<td>SNS</td>
+					<td>학적</td>
+					<td>제적일자</td>
+					<td>제적사유</td>
 				</tr>
 				<tr th:each="stuOut:${stuOutList}">
-					<td th:text="${stu.stuNo}" data-bs-toggle="modal" data-bs-target="#stuOutModal"></td>
-					<td th:text="${stu.memberVO.memName}"></td>
-					<td th:text="${stu.collNo}"></td>
-					<td th:text="${stu.deptNo}"></td>
-					<td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
+					<td th:text="${stuOut.stuNo}" data-bs-toggle="modal" data-bs-target="#stuOutModal"></td>
+					<td th:text="${stuOut.studentVO.memberVO.memName}"></td>
+					<td th:text="${stuOut.studentVO.collVO.collName}"></td>
+					<td th:text="${stuOut.studentVO.deptVO.deptName}"></td>
+					<td th:text="${stuOut.studentVO.stuStatus}"></td>
+					<td th:text="${stuOut.stuOutDate}"></td>
+					<td th:text="${stuOut.stuOutReason}"></td>
 				</tr>
 			</table>
 		</div>
@@ -103,7 +99,6 @@
 					        	<div id="stuOutModal_birth"></div>
 					        </td>  
 					        <td rowspan="3" colspan="2"></td>
-					        
 						</tr>
 						<tr>
 							<th>연락처</th>  
@@ -111,11 +106,6 @@
 					        	<div id="stuOutModal_tell"></div>
 					        </td>
 						</tr>
-						<tr>
-							<th>주소</th>
-							<td colspan="3"></td>
-						</tr>
-						
 						<tr>  
 					  	    <th>학번</th>   
 						    <td>
@@ -140,13 +130,19 @@
 					   	    	<div id="stuOutModal_dept"></div>
 					   	    </td>  
 						</tr> 
+					</table>
 						
+						<table class="table text-center">
 						<tr>
 							<td colspan="6">누적 경고 내역</td>
 						</tr>				
 						<tr>
-							<td colspan="2">일자</td>
-							<td colspan="4">사유</td>
+							<td colspan="2">
+								<div id="probationModal_date"></div>
+							</td>
+							<td colspan="4">
+								<div id ="probationModal_reason"></div>
+							</td>
 						</tr>				
 					</table>
 

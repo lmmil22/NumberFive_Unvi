@@ -5,7 +5,9 @@ import java.util.Map;
 
 import kh.study.NF.dept.vo.ColleageVO;
 import kh.study.NF.dept.vo.DeptVO;
+import kh.study.NF.emp.vo.AcademicProbationVO;
 import kh.study.NF.emp.vo.DeptManageVO;
+import kh.study.NF.emp.vo.StatusInfoVO;
 import kh.study.NF.emp.vo.StuOutVO;
 import kh.study.NF.student.vo.StudentVO;
 
@@ -43,8 +45,20 @@ public interface EmpService {
 	List<DeptVO> getDeptList(Map<String, String> paramMap);
 	
 	//by수경 제적학생 목록조회
-	List<StuOutVO> selectStuOutList();
+	List<StuOutVO> selectStuOutList(Map<String, String> paramMap);
 	
 	//by수경 학사경고 모달창 학생 기본정보 데이터 출력 
 	StudentVO probationStuInfo(String stuNo);
+	
+	//by수경 학사경고 승인하기
+	void insertProbation(AcademicProbationVO probationVO);
+	
+	//by수경 statusInfo에 데이터 삽입하기(학사경고/제적 모두 넣기)
+	void insertStatusInfo (StatusInfoVO statusInfoVO);
+	
+	//by수경 stu-out 제적 데이터 삽입하기
+	void insertStuOut (StuOutVO stuOutVO);
+	
+	//by수경 학사경고 일자/사유 목록 
+	List<AcademicProbationVO> probationReason(String stuNo);
 }

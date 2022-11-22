@@ -54,14 +54,19 @@ function applyAddMajor(){
 		data: {'stuNo':stuNo,'applyCode':applyCode}, //필요한 데이터
 		success: function(result) {
 			if(result){
-				$().ready(function () {
-	                Swal.fire({
-	                    icon: 'warning',
-	                    title: '이미 신청하셨습니다.',
-	                    text: '신청내역 페이지로 이동합니다.',
-		             });
-		        });
-				location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
+				
+				 Swal.fire({
+				  title: '이미 신청하셨습니다.',
+				  text: "신청내역 페이지로 이동합니다.",
+				  icon: 'warning',
+				  confirmButtonColor: '#3085d6',
+				  confirmButtonText: '확인'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+				    location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
+				  }
+				})
+				
 				return;
 			}
 		},

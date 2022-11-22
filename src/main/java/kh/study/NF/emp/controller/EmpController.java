@@ -19,10 +19,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kh.study.NF.config.Student.AcceptApply;
 import kh.study.NF.config.Student.ApplyCode;
 import kh.study.NF.config.Student.DeptManageCalendar;
+import kh.study.NF.config.Student.Probation;
 import kh.study.NF.dept.service.DeptService;
 import kh.study.NF.dept.vo.DeptVO;
 import kh.study.NF.emp.service.EmpService;
+import kh.study.NF.emp.vo.AcademicProbationVO;
 import kh.study.NF.emp.vo.DeptManageVO;
+import kh.study.NF.emp.vo.StatusInfoVO;
+import kh.study.NF.emp.vo.StuOutVO;
+import kh.study.NF.emp.vo.StuinfoAndProbationListVO;
 import kh.study.NF.student.service.StudentService;
 import kh.study.NF.student.vo.StudentVO;
 
@@ -440,6 +445,7 @@ public class EmpController {
 		  
 		  //검색 조건 paramMap 넘기기
 		  model.addAttribute("paramMap", paramMap);
+
 		  
 		  return "content/statusInfo/AcademicProbation";
 	  }
@@ -455,16 +461,37 @@ public class EmpController {
 	  //by수경 학사경고 학생 신상정보 데이터 뽑기 ajax
 	  @ResponseBody
 	  @PostMapping("/probationStuInfoAjax")
-	  public StudentVO probationStuInfoAjax(String stuNo) {
+	  public StuinfoAndProbationListVO probationStuInfoAjax(String stuNo) {
+		  StudentVO stuInfo = empService.probationStuInfo(stuNo);
+		  List<AcademicProbationVO> probationList = empService.probationReason(stuNo);
+		  //두가지 데이터를 담을 VO를 새로 만들어서 두개의 데이터를 가져간다.
+		  StuinfoAndProbationListVO vo = new StuinfoAndProbationListVO();
+		  vo.setStuInfo(stuInfo);
+		  vo.setProbationList(probationList);
 		  
-		  return empService.probationStuInfo(stuNo);
+		  return vo; 
 	  }
+	  //by수경 제적처리 학생 신상정보 데이터 뽑기 ajax
+	  @ResponseBody
+	  @PostMapping("/stuOutStuInfoAjax")
+	  public StuinfoAndProbationListVO stuOutStuInfoAjax(String stuNo) {
+		  StudentVO stuInfo = empService.probationStuInfo(stuNo);
+		  List<AcademicProbationVO> probationList = empService.probationReason(stuNo);
+		  //두가지 데이터를 담을 VO를 새로 만들어서 두개의 데이터를 가져간다.
+		  StuinfoAndProbationListVO vo = new StuinfoAndProbationListVO();
+		  vo.setStuInfo(stuInfo);
+		  vo.setProbationList(probationList);
+		  
+		  return vo; 
+	  }
+	  
+	  
 	  
 	  //by수경 제적페이지로 이동
 	  @RequestMapping("/stuOut")
 	  public String stuOut(Model model, @RequestParam Map<String, String> paramMap) {
 		  //제적학생 목록 불러오기
-		  model.addAttribute("stuOutList", empService.selectStuOutList());
+		  model.addAttribute("stuOutList", empService.selectStuOutList(paramMap));
 		  
 		  //소속학과, 소속대학 select box 데이터 
 		  model.addAttribute("collList", deptService.selectCollList());
@@ -476,6 +503,42 @@ public class EmpController {
 		  return "content/statusInfo/stuOut";
 	  }
 	  
+	  //by수경 학사경고 승인하기 ajax
+	  @ResponseBody
+	  @PostMapping("/acceptProbationAjax")
+	  public void acceptProbationAjax(AcademicProbationVO probationVO, StatusInfoVO statusInfoVO) {
+		  
+		  //학사경고 테이블에 데이터 insert
+		  empService.insertProbation(probationVO);
+		  
+		  //statusInfo 테이블에 데이터 insert
+		  statusInfoVO.setStuNo(probationVO.getStuNo());
+		  //deptManageCalendar 메소드에서 현재 날짜 데이터 가져오기
+		  String nowDate = DeptManageCalendar.nowDateToString();
+		  statusInfoVO.setApprovalDate(nowDate);
+		  statusInfoVO.setNowStatus(Probation.PROBATION.toString());
+		  statusInfoVO.setAfterStatus(Probation.PROBATION.toString());
+		  statusInfoVO.setIngStatus(AcceptApply.accept.toString());
+		  empService.insertStatusInfo(statusInfoVO);
+	  }
 	  
+	  //by수경 제적처리 ajax
+	  @ResponseBody
+	  @PostMapping("/acceptStuOutAjax")
+	  public void acceptStuOutAjax(StuOutVO stuOutVO, StatusInfoVO statusInfoVO) {
+		  //제적 테이블에 데이터 insert
+		  empService.insertStuOut(stuOutVO);
+		  
+		  //statusInfo 테이블에 데이터 insert 
+		  //deptManageCalendar 메소드에서 현재 날짜 데이터 가져오기
+		  String nowDate = DeptManageCalendar.nowDateToString();
+		  statusInfoVO.setApprovalDate(nowDate);
+		  statusInfoVO.setNowStatus(Probation.PROBATION.toString());
+		  statusInfoVO.setAfterStatus(Probation.STU_OUT.toString());
+		  statusInfoVO.setIngStatus(AcceptApply.accept.toString());
+		  statusInfoVO.setStuNo(stuOutVO.getStuNo());
+		  empService.insertStatusInfo(statusInfoVO);
+		  
+	  }
 	  
 }

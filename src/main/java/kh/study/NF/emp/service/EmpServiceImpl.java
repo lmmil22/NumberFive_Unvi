@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import kh.study.NF.dept.vo.ColleageVO;
 import kh.study.NF.dept.vo.DeptVO;
+import kh.study.NF.emp.vo.AcademicProbationVO;
 import kh.study.NF.emp.vo.DeptManageVO;
+import kh.study.NF.emp.vo.StatusInfoVO;
 import kh.study.NF.emp.vo.StuOutVO;
 import kh.study.NF.student.vo.StudentVO;
 //by수경 학생의 복학, 휴학, 전과, 복수전공신청에 대한 관리자 영역
@@ -86,9 +88,9 @@ public class EmpServiceImpl implements EmpService{
 	
 	//by수경 제적학생 목록조회
 	@Override
-	public List<StuOutVO> selectStuOutList() {
+	public List<StuOutVO> selectStuOutList(Map<String, String> paramMap) {
 		
-		return sqlSession.selectList("statusInfoMapper.selectStuOutList");
+		return sqlSession.selectList("statusInfoMapper.selectStuOutList",paramMap );
 	}
 	
 	//by수경 학사경고 모달창 학생 기본정보 데이터 출력 
@@ -96,6 +98,33 @@ public class EmpServiceImpl implements EmpService{
 	public StudentVO probationStuInfo(String stuNo) {
 		
 		return sqlSession.selectOne("statusInfoMapper.probationStuInfo", stuNo);
+	}
+	
+	//by수경 학사경고 승인하기
+	@Override
+	public void insertProbation(AcademicProbationVO probationVO) {
+		sqlSession.insert("statusInfoMapper.insertProbation", probationVO);
+		
+	}
+	
+	//by수경 statusInfo에 데이터 삽입하기(학사경고/제적 모두 넣기)
+	@Override
+	public void insertStatusInfo(StatusInfoVO statusInfoVO) {
+
+		sqlSession.insert("statusInfoMapper.insertStatusInfo", statusInfoVO);
+	}
+	
+	//by수경 stu-out 제적 데이터 삽입하기
+	@Override
+	public void insertStuOut(StuOutVO stuOutVO) {
+		sqlSession.insert("statusInfoMapper.insertStuOut", stuOutVO);
+	}
+
+	//by수경 학사경고 일자/사유 목록 
+	@Override
+	public List<AcademicProbationVO> probationReason(String stuNo) {
+
+		return sqlSession.selectList("statusInfoMapper.probationReason",stuNo);
 	}
 	
 
