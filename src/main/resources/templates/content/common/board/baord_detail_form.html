@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/base_layout}">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{}">
+</th:block>
+<div layout:fragment="content">
 <!-- by 유빈 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
@@ -75,7 +83,7 @@
 	
 	
 	<!-- 댓글 목록창 -->
-	 <div class="row mt-5" style="background-color: #EFF5F5;">
+	 <div class="row mt-5" style="background-color:gray ;">
 		<div class="col">
 			<div class="replyList"> 
 				
@@ -85,35 +93,16 @@
 				
 				 <th:block th:unless="${#lists.size('replyList') == 0}"> 
 						<th:block th:each="reply : ${replyList}">
-							<div class="row">
-								<div class="col-9">
-									<div class="row">
-										<div class="col-6">
-											<span th:text="| 작성자 : ${reply.replyWriter}|"  ></span>
-										</div>
-										<div class="col-6">
-											<span th:text="| 작성일 : ${reply.replyCreateDate}|" ></span>
-										</div>
-									</div>
-									<div class="col-12" th:text="| 내용 : ${reply.replyContent}|"  ></div>
-								</div>
-	
-								<div class="col-3" style="padding: 5px;;">
-									<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
-										<div align="right">
-											<input type="button" value="수정" th:onclick="|location.href='@{/board/updateReply(replyNo=${reply.replyNo})}'|">  
-											<input type="button" value="삭제" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">  
-										</div>
-							 		</th:block> 
-									<th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
-										<div align="right">
-											댓글확인만가능
-										</div>
-							 		</th:block> 
-								</div>
-							</div>
-						 	
+							<div th:text="${reply.replyWriter}"  ></div>  
+							<div th:text="${reply.replyCreateDate}" ></div>
+							<div th:text="${reply.replyContent}"  ></div>
+							<div th:text="${reply.replyWriter}"  ></div>  
 						 </th:block>  
+						 <th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
+								<div>
+									<input type="button" value="수정확인" th:onclick="|location.href='@{/board/update(boardNo=${board.boardNo})}'|">  
+								</div>
+						 </th:block> 
 						 <th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
 						</th:block> 
 				</th:block> 
@@ -131,5 +120,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript" th:src="@{/js/common/board_detail.js}"></script>
 
+</div>
+</html>
 </div>
 </html>

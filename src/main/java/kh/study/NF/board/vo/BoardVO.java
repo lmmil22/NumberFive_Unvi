@@ -1,5 +1,7 @@
 package kh.study.NF.board.vo;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 
 import groovy.transform.ToString;
@@ -10,7 +12,7 @@ import lombok.Setter;
 @Setter
 @ToString
 public class BoardVO extends PageVO{
-// < 디비 실제 컬럼명 >	
+// 테이블명:  BOARD 
 //	BOARD_NO
 //	BOARD_TITLE
 //	BOARD_CONTENT
@@ -39,4 +41,6 @@ public class BoardVO extends PageVO{
 	private String isSecrert;
 	private String isNotice;
 	
+	private List<ReplyVO> replyList;
+
 }

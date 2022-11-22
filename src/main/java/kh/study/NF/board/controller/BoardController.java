@@ -92,21 +92,23 @@ public class BoardController {
 	//게시글 상세조회
 	@GetMapping("/detail")
 	public String selectDetail(@RequestParam(required = false) String boardNo,Model model,ReplyVO  replyVO) {
+		//게시글 목록조회
 		model.addAttribute("board", boardService.selectDetailBoard(boardNo));
-			//사용중인 카테고리 목록조회
-			model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
-			//댓글목록조회
-			boardService.selectReplyList(boardNo);
+		//사용중인 카테고리 목록조회
+		model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
+		
+		//---------------[게시글 댓글 기능]--------------------------//
+		//댓글목록조회
+		model.addAttribute("replyList",boardService.selectReplyList(boardNo));
+		
+		//조회수증가-이클립스
+		boardService.updateReadCnt(boardNo);
+		//댓글목록조회-이클립스
+		//List<ReplyVO> replyList = boardService.selectReplyList(boardNo);
+		//model.addAttribute("replyList", replyList);
+		//------------------------------------------------------------//
 			
-			//---------------[게시글 댓글 기능]--------------------------//
-			//조회수증가-이클립스
-			boardService.updateReadCnt(boardNo);
-			//댓글목록조회-이클립스
-			List<ReplyVO> replyList = boardService.selectReplyList(boardNo);
-			model.addAttribute("replyList", replyList);
-			//------------------------------------------------------------//
-			
-		System.out.println("___________게시판상세조회이동_______________");
+		System.out.println("___________게시판상세조회 페이지로 이동_______________");
 		return "content/common/board/board_detail";
 	}
 	
@@ -131,7 +133,7 @@ public class BoardController {
 		return "content/common/board/update_board_form";
 	}
 	
-	// 글수정 등록
+	// 게시글 수정 실제 등록
 	@PostMapping("/update")
 	public String update(BoardVO boardVO) {
 		 boardService.update(boardVO);
@@ -174,8 +176,14 @@ public class BoardController {
 //-----------------------------------------[게시판 댓글 영역]------------------------------------------------------//
 	//댓글 등록
 	@PostMapping("/insertReply")
-	public String insertReply(ReplyVO replyVO) {
+	public String insertReply(String boardNo, ReplyVO replyVO, Authentication authentication) {
+		
+		User user = (User) authentication.getPrincipal();
+		replyVO.setReplyWriter(user.getUsername());
+		replyVO.setBoardNo(boardNo);
+		System.out.println("댓글등록중_______________________");
 		boardService.insertReply(replyVO);
+		
 		return"content/common/board/reply_result";
 	}
 	//댓글 삭제 
@@ -185,9 +193,27 @@ public class BoardController {
 		System.out.println("___게시글 상세조회 후 댓글 삭제버튼 클릭함___");
 		return "redirect:/board/detail";
 	}
-	// 댓글 목록조회 페이지--> 게시글 상세조회 페이지에서 
-	//댓글 수정 양식페이지이동--> 게시글 수정양식페이지와 같은페이지
-	
-	// 댓글수정 실제 등록--> 게시글 실제 등록 페이지와 같은 페이지
 
+	// 댓글수정하러가기
+	@GetMapping("/updateReply")
+	public String updateReply(ReplyVO replyVO,int replyNo,Model model) {//매개변수는 커맨드객체 or model 값 둘 중 하나만 사용가능하다
+		
+		ReplyVO result =  boardService.selectDetailReply(replyNo);
+		
+		replyVO.setBoardNo(result.getBoardNo());
+		replyVO.setIsSecret(result.getIsSecret());
+		replyVO.setReplyContent(result.getReplyContent());
+		replyVO.setReplyCreateDate(result.getReplyCreateDate());
+		replyVO.setReplyWriter(result.getReplyWriter());
+		replyVO.setReplyNo(result.getReplyNo());
+		
+		
+		return "content/common/board/baord_detail_form";
+	}
+	// 게시글 수정 실제 등록
+	@PostMapping("/updateReply")
+	public String updateReply(ReplyVO replyVO) {
+		 boardService.updateReply(replyVO);
+		 return "content/common/board/update_result";//수정확인 후,alert창 띄워보기
+	}
 }

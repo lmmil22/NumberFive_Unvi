@@ -75,18 +75,21 @@ public class BoardServiceImpl implements BoardService{
 	public void deleteReply(int replyNo) {
 		sqlSession.delete("replyMapper.deleteReply",replyNo);
 	}
-	
-	//???댓글상세조회???
-	@Override
-	public ReplyVO selectReply(int replyNo) {
-		return sqlSession.selectOne("replyMapper.selectReply",replyNo);
-	}
+	 //댓글상세조회
+	 @Override 
+	 public ReplyVO selectDetailReply(int replyNo) { 
+		 return sqlSession.selectOne("replyMapper.selectDetailReply",replyNo); 
+	 }
 	//???댓글조회수증가????
+	/*
+	 * @Override public void updateReadCnt(int replyNo) {
+	 * sqlSession.update("replyMapper.updateReadCnt",replyNo); }
+	 */	
+	//댓글수정
 	@Override
-	public void updateReadCnt(int replyNo) {
-		sqlSession.update("replyMapper.updateReadCnt",replyNo);
-	}	
-	
+	public void updateReply(ReplyVO replyVO) {
+		 sqlSession.update("boardMapper.updateReply", replyVO);
+	}
 	
 	
 //------------------------------ [ 관리자 모드 게시판 ] ------------------------------------//	
@@ -105,6 +108,7 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardCategoryVO> selectBoardCateUse() {
 		return sqlSession.selectList("boardMapper.selectBoardCateUse");
 	}
+	
 	
 	
 }

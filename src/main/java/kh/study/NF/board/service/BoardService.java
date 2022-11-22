@@ -40,8 +40,10 @@ public interface BoardService {
 	List<ReplyVO> selectReplyList(String boardNo);
 	//댓글 삭제
 	void deleteReply(int replyNo);
-	//댓글 상세보기
-	ReplyVO selectReply(int replyNo);
-	//댓글 조회수 증가
-	void updateReadCnt(int replyNo);
+	//????댓글 조회수 증가
+	//void updateReadCnt(int replyNo);
+	//댓글수정
+	void updateReply(ReplyVO replyVO);
+	//댓글상세조회
+	ReplyVO selectDetailReply(int replyNo);
 }

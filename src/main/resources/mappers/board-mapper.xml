@@ -13,16 +13,17 @@
 		<result column="REPLY_CNT" 			property="replyCnt"/>
 		<result column="IS_SECRERT" 		property="isSecrert"/>
 		<result column="IS_NOTICE" 			property="isNotice"/>
-		<!-- 테이블에 추가??? : 비밀글 비밀번호?? -->
+
 		<!-- <result column="BOARD_PW" 		property="boardPw"/> -->
 	</resultMap>
 	
- <resultMap type="kh.study.NF.board.vo.BoardCategoryVO" id="cate">
-	<id column="CATE_NO" property="cateNo"/>
-	<result column="CATE_NAME" property="cateName"/>
-	<result column="IS_USE" property="isUse"/>
-</resultMap> 
-
+	<!-- 게시판 카테고리 -->
+	 <resultMap type="kh.study.NF.board.vo.BoardCategoryVO" id="cate">
+		<id column="CATE_NO" property="cateNo"/>
+		<result column="CATE_NAME" property="cateName"/>
+		<result column="IS_USE" property="isUse"/>
+	</resultMap> 
+	
 	<!-- 게시글등록 -->	
 	 <insert id="insertBoard">
 		INSERT INTO BOARD 
@@ -47,7 +48,7 @@
 			)
 	</insert> 
 
-<!-- 키워드검색기능 + 게시판목록조회 -->
+<!-- 키워드검색기능 + 게시판목록조회 + 공지사항은 고정(union all사용)-->
 	<!-- Board 게시판 소스 참고  -->
 	<select id="selectBoardList" resultMap="board">
 			SELECT ROW_NUM
@@ -85,8 +86,54 @@
 							,REPLY_CNT
 					FROM BOARD
 					<if test="searchValue != null and !searchValue.equals('')">
+						WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+					</if>
+					WHERE IS_NOTICE='Y'
+					ORDER BY TO_NUMBER(BOARD_NO) DESC
+			    )
+			)
+			WHERE ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
+			
+			UNION ALL  
+			
+			SELECT ROW_NUM
+			    , BOARD_NO
+			    , BOARD_TITLE
+			    , BOARD_WRITER
+			    , BOARD_CREATE_DATE
+			    , IS_SECRERT
+				, IS_NOTICE
+				,CATE_NO
+				,BOARD_READ_CNT
+				,REPLY_CNT
+			FROM 
+			(
+			    SELECT ROWNUM AS ROW_NUM
+			        , BOARD_NO
+				    , BOARD_TITLE
+				    , BOARD_WRITER
+				    , BOARD_CREATE_DATE
+				    , IS_SECRERT
+					, IS_NOTICE
+					,CATE_NO
+					,BOARD_READ_CNT
+					,REPLY_CNT
+			    FROM
+			    (
+			    	SELECT BOARD_NO 
+							, BOARD_TITLE
+						    , BOARD_WRITER
+						    , BOARD_CREATE_DATE
+						    , IS_SECRERT
+							, IS_NOTICE
+							,CATE_NO
+							,BOARD_READ_CNT
+							,REPLY_CNT
+					FROM BOARD
+					<if test="searchValue != null and !searchValue.equals('')">
 					WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
 					</if>
+					 where IS_NOTICE='N'
 					ORDER BY TO_NUMBER(BOARD_NO) DESC
 			    )
 			)
@@ -192,6 +239,7 @@
 			, #{isUse}
 		)
 	</insert>
+	
 </mapper> 
 
 
