@@ -155,7 +155,7 @@ public class MemberController {
 		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
 		System.out.println("_______________로그인 성공시 false!!! -->" + isLoginFail);
 		
-		return "content/common/after_Login";
+		return "redirect:/member/homeLogin";
 	}
 //-------------------------------------------------------------------------------------------///	
 	

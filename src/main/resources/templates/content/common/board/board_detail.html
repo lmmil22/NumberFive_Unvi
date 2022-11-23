@@ -6,54 +6,83 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	
 <div layout:fragment="content">
-		 <div class="mb-3" >
-		  <label for="exampleFormControlspan1" class="form-label">글 번호 : </label>
-		<th:block th:text="${board.boardNo}"></th:block> 
-		</div>
-		
-		<div class="mb-3">
-		  <label for="exampleFormControlspan1" class="form-label"> 작성자 : </label>
-		  	<th:block th:text="${board.boardWriter}"></th:block> 
-		</div>
-		
-		<div class="mb-3">
-		  <label for="exampleFormControlspan1" class="form-label"> 작성일 : </label>
-		  <th:block th:text="${board.boardCreateDate}"></th:block> 
-		</div>
-		
-		<div class="mb-3">
-			<label for="exampleFormControlTextarea1" class="form-label">카테고리 :</label>
-			<select class="form-control" name="cateNo" >
-				<th:block th:each="cate : ${cateUsedList}">
-					<option th:text="${cate.cateName}" th:value="${cate.cateNo}" ></option>
-				</th:block>
-			</select>
-		</div>
-			
-		<div class="mb-3">
-		  <label for="exampleFormControlspan1" class="form-label">글제목 : </label>
-	  		  <th:block th:text="${board.boardTitle}"></th:block> 
-		</div>
-		
-		<div class="mb-3">
-		  <label for="exampleFormControlTextarea1" class="form-label">글내용 : </label>
-		  	<div th:text="${board.boardContent}"></div>
-		</div>
-		
-		<div align="center">
-			<span th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
-				<button type="button" class="btn btn-light"  th:onclick="|location.href='@{/board/update(boardNo=${board.boardNo})}'|">수정</button>
-				<!-- 스왈사용안하고 바로 할때 -->
-				<button type="button" class="btn btn-danger"  th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">삭제</button>				
-				 <!-- 스왈사용 할때 -->
-				<button id="isDeleteTag" type="button" class="btn btn-danger"  onclick="isDelete()">삭제S</button>
-			</span>
-			<span>
-				<button type="button" class="btn btn-dark" th:onclick="@{location.href='/board/list';}">뒤로가기</button>
-			</span>
-		</div>
-		
-		
+
+<!-- 게시글 상세 조회 영역 -->
+<div class="row mt-3 mb-3"> 
+	<!-- 제목줄 -->
+	<div class="col-12">
+		<h1>게시글 상세 내용</h1>
+	</div>
+	<!-- 첫번째 줄 -->
+	
+	
+	
+	<!--  -->
+	  <div class="mb-3 row">
+	    <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+	    <div class="col-sm-10">
+	      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+	    </div>
+	  </div>
+	  <div class="mb-3 row">
+	    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+	    <div class="col-sm-10">
+	      <input type="password" class="form-control" id="inputPassword">
+	    </div>
+	  </div>
+  
+	<!--  -->
+	 <div class="col-4 mb-3" >
+	  <label for="exampleFormControlspan1" class="form-label">글 번호 : </label>
+	  <th:block th:text="${board.boardNo}"></th:block> 
+	</div>
+	<div class="col-4 mb-3">
+	  <label for="exampleFormControlspan1" class="form-label"> 작성자 : </label>
+	  	<th:block th:text="${board.boardWriter}"></th:block> 
+	</div>
+	<div class="col-4 mb-3">
+	  <label for="exampleFormControlspan1" class="form-label"> 작성일 : </label>
+	  <th:block th:text="${board.boardCreateDate}"></th:block> 
+	</div>
+	
+	<!-- 두번째 줄 -->		
+	 <div class="col-6 mb-3">
+	 	<span>카테고리 :</span>
+		<th:block th:each="cate : ${cateUsedList}">
+			<span th:text=" ${cate.cateName}" th:value="${cate.cateNo}" ></span>
+		</th:block>
+	</div> 
+	<div class="col-6 mb-3">
+	</div> 
+	<!-- 세번째 줄 -->
+	<div class="col-12 mb-3">
+	  <label for="exampleFormControlspan1" class="form-label">글제목 : </label>
+  		  <th:block th:text=" ${board.boardTitle}"></th:block> 
+	</div>
+	
+	<!-- 네번째 줄  -->
+	<div class="col-12 mb-3">
+	  <label for="exampleFormControlTextarea1" class="form-label">글내용 : </label>
+	  	<div th:text="${board.boardContent}"></div>
+	</div>
+
+	<!-- 게시글 버튼 영역 -->
+	<div align="center">
+		<span th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
+			<button type="button" class="btn btn-light"  th:onclick="|location.href='@{/board/update(boardNo=${board.boardNo})}'|">수정</button>
+			<!-- 스왈사용안하고 바로 할때 -->
+			<button type="button" class="btn btn-danger"  th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">삭제</button>				
+			 <!-- 스왈사용 할때 -->
+			<button id="isDeleteTag" type="button" class="btn btn-danger"  onclick="isDelete()">삭제S</button>
+		</span>
+		<span>
+			<button type="button" class="btn btn-dark" th:onclick="@{location.href='/board/list';}">뒤로가기</button>
+		</span>
+	</div>
+</div> 
+<!-- end -->
+
+	<!-- 댓글 영역 -->	
 	<h1>댓글 영역</h1> 		
 	<div class="row mt-5">
 		<div class="col">
@@ -83,37 +112,39 @@
 					<div> 작성된 댓글이 없습니다.</div>
 				</th:block> 
 				
-				 <th:block th:unless="${#lists.size('replyList') == 0}"> 
-						<th:block th:each="reply : ${replyList}">
-							<div class="row">
-								<div class="col-9">
-									<div class="row">
-										<div class="col-6">
-											<span th:text="| 작성자 : ${reply.replyWriter}|"  ></span>
+				
+				 <!-- submit 수정 버튼이 있을 때 :<form th:action="@{/board/updateReply}" method="post"> -->
+					 <th:block th:unless="${#lists.size('replyList') == 0}"> 
+							<th:block th:each="reply : ${replyList}">
+								<div class="row">
+									<div class="col-9">
+										<div class="row">
+											<div class="col-6">
+												<span th:text="| 작성자 : ${reply.replyWriter}|"  ></span>
+											</div>
+											<div class="col-6">
+												<span th:text="| 작성일 : ${reply.replyCreateDate}|" ></span>
+											</div>
 										</div>
-										<div class="col-6">
-											<span th:text="| 작성일 : ${reply.replyCreateDate}|" ></span>
-										</div>
+										<div class="col-12" th:text="| 내용 : ${reply.replyContent}|"  ></div>
 									</div>
-									<div class="col-12" th:text="| 내용 : ${reply.replyContent}|"  ></div>
+									<div class="col-3" style="padding: 5px;;">
+										<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
+											<div align="right">
+												<input type="button" value="수정" th:onclick="|location.href='@{/board/updateReply(replyNo=${reply.replyNo})}'|">   
+												<input type="button" value="삭제" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">  
+											</div>
+								 		</th:block> 
+										<th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
+											<div align="right">
+												댓글확인만가능
+											</div>
+								 		</th:block> 
+									</div>
 								</div>
-	
-								<div class="col-3" style="padding: 5px;;">
-									<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
-										<div align="right">
-											<input type="button" value="수정" th:onclick="|location.href='@{/board/updateReply(replyNo=${reply.replyNo})}'|">  
-											<input type="button" value="삭제" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">  
-										</div>
-							 		</th:block> 
-									<th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
-										<div align="right">
-											댓글확인만가능
-										</div>
-							 		</th:block> 
-								</div>
-							</div>
-						 	
-						 </th:block>  
+							 </th:block>  
+						 <!-- </form>	 -->
+						 
 						 <th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
 						</th:block> 
 				</th:block> 

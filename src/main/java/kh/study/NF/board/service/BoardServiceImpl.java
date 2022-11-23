@@ -22,11 +22,11 @@ public class BoardServiceImpl implements BoardService{
 	public void insertBoard(BoardVO boardVO) {
 		sqlSession.insert("boardMapper.insertBoard",boardVO);
 	}
-	//게시글 목록 조회
-	@Override
-	public List<BoardVO> selectBoard() {
-		return sqlSession.selectList("boardMapper.selectBoard");
-	}
+	//게시글 목록 조회(미사용)
+	/*
+	 * @Override public List<BoardVO> selectBoard() { return
+	 * sqlSession.selectList("boardMapper.selectBoard"); }
+	 */
 	//게시글 목록 조회 + 키워드검색기능 (board 프로젝트 참고)
 	@Override
 	public List<BoardVO> selectBoardList(BoardVO boardVO) {
@@ -89,6 +89,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void updateReply(ReplyVO replyVO) {
 		 sqlSession.update("boardMapper.updateReply", replyVO);
+	}
+	//댓글수 조회
+	@Override
+	public int selectReplyCnt(String boardNo) {
+		return sqlSession.selectOne("replyMapper.selectReplyCnt",boardNo); 
 	}
 	
 	

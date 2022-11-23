@@ -33,26 +33,25 @@ public class BoardController {
 	//게시글 목록페이지
 	@RequestMapping("/list")
 	public String select(Model model,BoardVO boardVO,String boardNo) {
-		
 		System.out.println("SearchKeyword=" + boardVO.getSearchKeyword());
 		System.out.println("searchValue=" + boardVO.getSearchValue());
 		
 		//페이징처리때문에[3.4.5번]
 		//3.전체 데이커(게시글) 수를 먼저 가져오기 
-		//이때문에 mapper에서 또 조회쿼리문 생성한것
-		int totalCnt = boardService.selectBoardCnt();
-
 		//4.db에서 쿼리문 메소드기능 실행한 값(totalCnt)을 totalDataCnt에 넣어주기
-		boardVO.setTotalDataCnt(totalCnt);
-		
+		boardVO.setTotalDataCnt(boardService.selectBoardCnt());
+		System.out.println("_________________게시판 총 갯수 조회 쿼리문 실행성공_______________");
 		//5.페이지 정보 세팅(목록조회전)
 		boardVO.setPageInfo();
-		
+		System.out.println("_________________게시판 페이징 정보 실행 성공_______________");
+		System.out.println("_____boardVO 추출_____"+ boardVO);
+
+		//+)댓글수 조회
+		//boardVO.setReplyCnt(boardService.selectReplyCnt(boardNo));
 		//2.게시글 목록 조회(한줄요약)
 		model.addAttribute("boardList",boardService.selectBoardList(boardVO));
+		System.out.println("_________________게시판 목록 조회 성공_______________");
 		
-		//내가만든 게시판목록조회
-		//model.addAttribute("boardList",boardService.selectBoard());
 		
 		return "content/common/board/board_list";
 	}
@@ -92,6 +91,7 @@ public class BoardController {
 	//게시글 상세조회
 	@GetMapping("/detail")
 	public String selectDetail(@RequestParam(required = false) String boardNo,Model model,ReplyVO  replyVO) {
+		System.out.println("___________게시판상세조회 페이지로 이동 !!! _______________");
 		//게시글 목록조회
 		model.addAttribute("board", boardService.selectDetailBoard(boardNo));
 		//사용중인 카테고리 목록조회
@@ -107,8 +107,7 @@ public class BoardController {
 		//List<ReplyVO> replyList = boardService.selectReplyList(boardNo);
 		//model.addAttribute("replyList", replyList);
 		//------------------------------------------------------------//
-			
-		System.out.println("___________게시판상세조회 페이지로 이동_______________");
+		System.out.println("______________________상세조회 쿼리문 모두 실행 완료______________________________");
 		return "content/common/board/board_detail";
 	}
 	
@@ -116,11 +115,6 @@ public class BoardController {
 	// 글수정하러가기
 	@GetMapping("/update")
 	public String update(BoardVO boardVO , String boardNo,Model model) {//매개변수는 커맨드객체 or model 값 둘 중 하나만 사용가능하다
-		//(주의)수정 전에는 어떤 글을 수정할 것인지 "상세조회" 반드시 먼저해준다!!!
-		
-		//-----(방법1) 커맨드 객체 사용할 때---------------------------------//
-		// 커맨드객체를 사용하기때문에 update_form html파일에서 th:object와 th:field 사용가능하다
-		// 그리고 id,name,value 속성값이 자동생성 가능하다는 장점이 있다.
 		BoardVO result =  boardService.selectDetailBoard(boardNo);
 		boardVO.setBoardNo(result.getBoardNo());
 		boardVO.setBoardContent(result.getBoardContent());
@@ -194,9 +188,31 @@ public class BoardController {
 		return "redirect:/board/detail";
 	}
 
-	// 댓글수정하러가기
+	// 댓글수정하러가기(양식페에지이동)
 	@GetMapping("/updateReply")
-	public String updateReply(ReplyVO replyVO,int replyNo,Model model) {//매개변수는 커맨드객체 or model 값 둘 중 하나만 사용가능하다
+	public String updateReply(ReplyVO replyVO,int replyNo,Model model
+							  ,@RequestParam(required = false) String boardNo) {
+		System.out.println("___________게시판상세조회 댓글수정 양식 페이지로 이동 !!! _______________");
+		//게시글 목록조회
+		model.addAttribute("board", boardService.selectDetailBoard(boardNo));
+		System.out.println("___________게시판 게시글 총 목록조회 쿼리문 완료 _______________");
+		//사용중인 카테고리 목록조회
+		model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
+		System.out.println("___________사용중 카테고리 목록조회 쿼리문 완료 _______________");
+		//댓글목록조회
+		model.addAttribute("replyList",boardService.selectReplyList(boardNo));
+		System.out.println("___________댓글 전체 목록조회 쿼리문 완료 _______________");
+		//수정전 선택된 댓글 상세조회
+		model.addAttribute("replyUpdate", boardService.selectDetailReply(replyNo));
+		System.out.println("___________댓글상세조회 쿼리문 완료 _______________");
+
+		System.out.println("___________이제 댓글 수정 post매핑으로 이동 _______________");
+		
+		return "content/common/board/baord_detail_form";//댓글수정페이지
+	}
+	// 게시글 수정 실제 등록
+	@PostMapping("/updateReply")
+	public String updateReply(ReplyVO replyVO,int replyNo) {
 		
 		ReplyVO result =  boardService.selectDetailReply(replyNo);
 		
@@ -206,14 +222,9 @@ public class BoardController {
 		replyVO.setReplyCreateDate(result.getReplyCreateDate());
 		replyVO.setReplyWriter(result.getReplyWriter());
 		replyVO.setReplyNo(result.getReplyNo());
+
+		boardService.updateReply(replyVO);
 		
-		
-		return "content/common/board/baord_detail_form";
-	}
-	// 게시글 수정 실제 등록
-	@PostMapping("/updateReply")
-	public String updateReply(ReplyVO replyVO) {
-		 boardService.updateReply(replyVO);
 		 return "content/common/board/update_result";//수정확인 후,alert창 띄워보기
 	}
 }

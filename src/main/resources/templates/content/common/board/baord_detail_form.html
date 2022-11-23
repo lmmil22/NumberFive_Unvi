@@ -1,3 +1,4 @@
+<!-- by 유빈 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
@@ -5,15 +6,11 @@
 <th:block layout:fragment="css">
 	<link rel="stylesheet" th:href="@{}">
 </th:block>
+
 <div layout:fragment="content">
-<!-- by 유빈 -->
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/base_layout}"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	
-<div layout:fragment="content">
+<!-- 게시글 상세 조회 영역 -->
+<div class="row mt-3 mb-3"> 
+	<div class="col">
 		 <div class="mb-3" >
 		  <label for="exampleFormControlspan1" class="form-label">글 번호 : </label>
 		<th:block th:text="${board.boardNo}"></th:block> 
@@ -54,14 +51,17 @@
 				<!-- 스왈사용안하고 바로 할때 -->
 				<button type="button" class="btn btn-danger"  th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">삭제</button>				
 				 <!-- 스왈사용 할때 -->
-				<button id="isDeleteTag" type="button" class="btn btn-danger"  onclick="isDelete()">삭제S</button>
+				<button id="isDeleteTag" type="button" class="btn btn-danger"  onclick="isDelete()">삭제SWAL</button>
 			</span>
 			<span>
 				<button type="button" class="btn btn-dark" th:onclick="@{location.href='/board/list';}">뒤로가기</button>
 			</span>
 		</div>
-		
-		
+	</div> 
+</div>		
+<!-- end -->	
+
+	<!-- 댓글 영역 -->	
 	<h1>댓글 영역</h1> 		
 	<div class="row mt-5">
 		<div class="col">
@@ -82,7 +82,7 @@
 	</div> 
 	
 	
-	<!-- 댓글 목록창 -->
+	<!-- 댓글 목록 영역 -->
 	 <div class="row mt-5" style="background-color:gray ;">
 		<div class="col">
 			<div class="replyList"> 
@@ -109,18 +109,13 @@
 			</div>
 		</div> 
 	</div>		
-</div>		
-			
-
-
+	
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript" th:src="@{/js/common/board_detail.js}"></script>
 
-</div>
-</html>
 </div>
 </html>
