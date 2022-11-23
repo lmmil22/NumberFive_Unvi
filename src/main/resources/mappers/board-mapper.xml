@@ -14,7 +14,8 @@
 		<result column="IS_SECRERT" 		property="isSecrert"/>
 		<result column="IS_NOTICE" 			property="isNotice"/>
 
-		<!-- <result column="BOARD_PW" 		property="boardPw"/> -->
+		<result column="ROW_NUM" 		property="rowNum"/> 
+		<!-- <result column="BOARD_PW" 		property="boardPw"/>  -->
 	</resultMap>
 	
 	<!-- 게시판 카테고리 -->

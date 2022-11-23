@@ -1,6 +1,5 @@
 // by 유빈
 package kh.study.NF.board.controller;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -29,7 +28,6 @@ public class BoardController {
 	private BoardService boardService;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 	//--------------------------- [공통 권한 게시판 영역]  --------------------------------------//
-	
 	//게시글 목록페이지
 	@RequestMapping("/list")
 	public String select(Model model,BoardVO boardVO,String boardNo) {
@@ -44,20 +42,19 @@ public class BoardController {
 		//5.페이지 정보 세팅(목록조회전)
 		boardVO.setPageInfo();
 		System.out.println("_________________게시판 페이징 정보 실행 성공_______________");
-		System.out.println("_____boardVO 추출_____"+ boardVO);
-
-		//+)댓글수 조회
-		//boardVO.setReplyCnt(boardService.selectReplyCnt(boardNo));
+		System.out.println("_____boardVO 추출_____" + boardVO);
+		
 		//2.게시글 목록 조회(한줄요약)
 		model.addAttribute("boardList",boardService.selectBoardList(boardVO));
 		System.out.println("_________________게시판 목록 조회 성공_______________");
+		
 		return "content/common/board/board_list";
 	}
 	
 	// 글쓰러가기-양식페이지로이동
 	@GetMapping("/reg")
 	public String reg(@Valid BoardVO boardVO, BindingResult bindingResult, Model model
-			,Authentication authentication,BoardCategoryVO boardCategoryVO) {
+						,Authentication authentication,BoardCategoryVO boardCategoryVO) {
 		//카테고리 목록조회(사용중인!)
 		model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
 		return"content/common/board/reg_board";
@@ -168,14 +165,22 @@ public class BoardController {
 //-----------------------------------------[게시판 댓글 영역]------------------------------------------------------//
 	//댓글 등록
 	@PostMapping("/insertReply")
-	public String insertReply( BindingResult bindingResult,Model model,
-			String boardNo, @Valid ReplyVO replyVO, Authentication authentication) {
+	public String insertReply( @Valid ReplyVO replyVO,BindingResult bindingResult,Model model,
+			 					Authentication authentication) {
 		
-		User user = (User) authentication.getPrincipal();
+		User user = (User)authentication.getPrincipal();
 		replyVO.setReplyWriter(user.getUsername());
-		replyVO.setBoardNo(boardNo);
-		System.out.println("댓글등록중_______________________");
+		replyVO.setBoardNo(replyVO.getBoardNo());
+
+		if(bindingResult.hasErrors()) {
+			System.out.println("1111");
+			return "redirect:/board/detail?boardNo=" + replyVO.getBoardNo();
+		}
+		
+		
 		boardService.insertReply(replyVO);
+		
+		System.out.println("댓글등록쿼리실행완료_______________________");
 		
 		return"content/common/board/reply_result";
 	}
@@ -221,6 +226,7 @@ public class BoardController {
 //		replyVO.setReplyCreateDate(result.getReplyCreateDate());
 //		replyVO.setReplyWriter(result.getReplyWriter());
 //		replyVO.setReplyNo(result.getReplyNo());
+		
 		System.out.println(replyVO.getReplyNo());
 		System.out.println("@@@@@@@@@@@@@@@"+replyVO.getReplyContent());
 		

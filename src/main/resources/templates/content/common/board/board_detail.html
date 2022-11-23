@@ -88,7 +88,7 @@
 			<!-- 스왈사용안하고 바로 할때 -->
 			<button type="button" class="btn btn-danger"  th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">삭제</button>				
 			 <!-- 스왈사용 할때 -->
-			<button id="isDeleteTag" type="button" class="btn btn-danger"  onclick="isDelete()">삭제S</button>
+			<button id="isDeleteTag" type="button" class="btn btn-danger"  onclick="goDelete()">삭제S</button>
 		</span>
 		<span>
 			<button type="button" class="btn btn-light" th:onclick="@{location.href='/board/list';}">뒤로가기</button>
@@ -99,29 +99,26 @@
 
 	  
 	<!-- 전체 댓글 영역 -->	
-<div class="row ">
-<div class="col">
-
 	<!-- 댓글총갯수  영역 -->
 	<div align="left" class="row">
-		<div class="col-12" style="font-size: 0.9rem; font-style: italic;"> ※ 총 <span th:text="${board.replyCnt}"></span> 개의 댓글이 작성되었습니다.</div>
+		<div class="col-12" style="font-size: 0.9rem; font-style: italic;"> ※ 총 <span th:text="${#lists.size(replyList)}"></span>개의 댓글이 작성되었습니다.</div>
 	</div>
 
 	<!-- 댓글작성가능영역 -->
-	<form th:action="@{/board/insertReply}" method="post" ><!-- th:object="${ReplyVO}" -->
+	<form th:action="@{/board/insertReply}" method="post" th:object="${replyVO}"><!-- th:object="${ReplyVO}" -->
 	<div class="row ">
 		<!-- 로그인한 작성자의 댓글 등록 창	 --> 
 			<div class="col-10" >
 				<input type="hidden" name="boardNo" th:value="${board.boardNo}">			
 	   			<textarea type="text" cols="5" rows="2" name="replyContent" class="form-control" placeholder="로그인 후 댓글 작성가능합니다."></textarea>
-				<!-- <div class="hasError" th:if="${#fields.hasErrors('replyContent')}" th:errors="*{replyContent}"></div> -->
+				<div class="hasError" th:if="${#fields.hasErrors('replyContent')}" th:errors="*{replyContent}"></div> 
 			</div>
-			<div class="col-2" align="left" >
-				<button sec:authorize="isAuthenticated()" class="btn btn-light" type="submit" style="height: 58px; width: 70px;">등록</button>
+			<div class="col-2" style="padding: 5px; padding-left: 45px;" >
+				<button sec:authorize="isAuthenticated()" class="btn btn-light" type="submit" >등록</button>
 			</div>
 	</div>
 	</form>
-
+<h/ >
 
 
 
@@ -188,96 +185,92 @@
 
 
 
- <hr />
+<hr />
 	<!-- 댓글 목록창 -->
 	 <div class="row " >
 		<div class="col">
 			<div class="replyList"> 
-				
-				 <th:block th:if="${#lists.size('replyList') == 0}">
-					<div> 작성된 댓글이 없습니다.</div>
-				</th:block> 
-				<!-- 네이버 뉴스 댓글영역 가져온 소스  -->
-				<th:block th:each="reply : ${replyList}">
-				<div class="u_cbox_comment_box u_cbox_type_profile">
-					<div class="u_cbox_area">
-						<div class="u_cbox_info">
-							<div class="mt-5 u_cbox_thumb u_cbox_naver">
-								<span class="u_cbox_thumb_wrap">
-									<span class="u_cbox_thumb_mask"></span>
-									<span style="font-size: 0.89rem; display: block; " class="u_cbox_nick" th:text="| [ ${reply.replyWriter} ] 님의 댓글 |" ></span>
-									<span style="font-size: 0.89rem;"  class="u_cbox_date" data-value="2022-11-23T13:33:55+0900" th:text="| 작성일 : ${reply.replyCreateDate}|" ></span>
-								</span>
-							</div>
-							
-							<div class="row">
-							<form action="/board/updateReply" method="post" class="updateForm">
-								<input type="hidden" name="replyNo" th:value="${reply.replyNo}">
-								<div class="col-10 u_cbox_thumb u_cbox_naver">
-									<div class="input-group">
-									  <span class="input-group-text"><img width="50px;" height="50px;" src= "https://static.nid.naver.com/images/web/user/default.png?type=f132_132" alt="프로필 이미지" class="u_cbox_img_profile" onerror="cbox.Util.onImageError(this);"></span>
-									  <div class="form-control replyContent">
-										  <textarea readonly th:text="${reply.replyContent}" class="form-control textarea" aria-label="With textarea"></textarea>
-									  </div>
-									</div>
+					
+					 <th:block th:if="${#lists.size(replyList) == 0}">
+						<div> 작성된 댓글이 없습니다.</div>
+					</th:block> 
+					
+					<th:block th:each="reply : ${replyList}">
+					<div class="u_cbox_comment_box u_cbox_type_profile">
+						<div class="u_cbox_area">
+							<div class="u_cbox_info">
+								<div class="mt-1 u_cbox_thumb u_cbox_naver">
+									<span class="u_cbox_thumb_wrap">
+										<span class="u_cbox_thumb_mask"></span>
+										<span style="font-size: 0.89rem;  " class="u_cbox_nick" th:text="| 작성자 : [ ${reply.replyWriter} ]  |" ></span> &nbsp; &nbsp; 
+										<span style="font-size: 0.89rem;"  class="u_cbox_date" data-value="2022-11-23T13:33:55+0900" th:text="| 작성일 : ${reply.replyCreateDate}|" ></span>
+									</span>
 								</div>
-								<div class="col-2" style="padding: 5px;;">
-									<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
-										<div align="left">
-											<input class="btn btn-light" type="button"  value="버튼1" onclick="goUpdate();">
-											<input id="regBtn"  class="btn btn-light" type="submit" value="수정" >   
-											<input class="btn btn-light" type="button" value="삭제" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">  
+								
+								<form action="/board/updateReply" method="post" class="updateForm">
+								<div class="row">
+									<input type="hidden" name="replyNo" th:value="${reply.replyNo}">
+									<div class="col-10 ">
+										<div class="input-group">
+											 <span class="input-group-text"><img width="50px;" height="50px;" src= "https://static.nid.naver.com/images/web/user/default.png?type=f132_132" alt="프로필 이미지" class="u_cbox_img_profile" onerror="cbox.Util.onImageError(this);"></span>
+											 <div class="form-control replyContent">
+											 	[[${reply.replyContent}]]
+											 </div>
 										</div>
-							 		</th:block> 
+									</div>
+									<div class="col-2" style="padding: 7px;">
+										<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
+											<div style="padding: 5px;">
+												<input class="btn btn-light" type="button"  value="수정" onclick="goUpdate(this);">
+												<input class="btn btn-light" type="button" value="삭제" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">  
+											</div>
+								 		</th:block> 
+									</div>
 								</div>
 								</form>
+								
 							</div>
-							
 						</div>
 					</div>
-				</div>
-			</th:block>
-				 <!-- submit 수정 버튼이 있을 때 :<form th:action="@{/board/updateReply}" method="post"> -->
-					 <!-- <th:block th:unless="${#lists.size('replyList') == 0}"> 
-							<th:block th:each="reply : ${replyList}">
-								<div class="row">
-									<div class="col-9">
-										<div class="row">
-											<div class="col-6">
-												<span th:text="| 작성자 : ${reply.replyWriter}|"  ></span>
+				</th:block>
+					 <!-- submit 수정 버튼이 있을 때 :<form th:action="@{/board/updateReply}" method="post"> -->
+						 <!-- <th:block th:unless="${#lists.size('replyList') == 0}"> 
+								<th:block th:each="reply : ${replyList}">
+									<div class="row">
+										<div class="col-9">
+											<div class="row">
+												<div class="col-6">
+													<span th:text="| 작성자 : ${reply.replyWriter}|"  ></span>
+												</div>
+												<div class="col-6">
+													<span th:text="| 작성일 : ${reply.replyCreateDate}|" ></span>
+												</div>
 											</div>
-											<div class="col-6">
-												<span th:text="| 작성일 : ${reply.replyCreateDate}|" ></span>
-											</div>
+											<div class="col-12" th:text="| 내용 : ${reply.replyContent}|"  ></div>
 										</div>
-										<div class="col-12" th:text="| 내용 : ${reply.replyContent}|"  ></div>
+										<div class="col-3" style="padding: 5px;;">
+											<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
+												<div align="right">
+													<input type="button" value="수정" th:onclick="|location.href='@{/board/updateReply(replyNo=${reply.replyNo})}'|">   
+													<input type="button" value="삭제" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">  
+												</div>
+									 		</th:block> 
+											<th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
+												<div align="right">
+													
+												</div>
+									 		</th:block> 
+										</div>
 									</div>
-									<div class="col-3" style="padding: 5px;;">
-										<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
-											<div align="right">
-												<input type="button" value="수정" th:onclick="|location.href='@{/board/updateReply(replyNo=${reply.replyNo})}'|">   
-												<input type="button" value="삭제" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">  
-											</div>
-								 		</th:block> 
-										<th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
-											<div align="right">
-												
-											</div>
-								 		</th:block> 
-									</div>
-								</div>
-							 </th:block>   -->
-						 <!-- </form>	 -->
-						 
-						 <th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
-						</th:block> 
-				</th:block> 
-			</div>
-		</div> 
-	</div>		
-	
-</div>		
-</div>			
+								 </th:block>   -->
+							 <!-- </form>	 -->
+							 
+							 <th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
+							</th:block> 
+					</th:block> 
+				</div>
+			</div> 
+		</div>		
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
