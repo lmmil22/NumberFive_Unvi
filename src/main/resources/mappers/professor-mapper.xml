@@ -478,12 +478,12 @@
 		  	, #{stuNo}
 		)
 	</insert>
-
+	<!-- 학생 점수 변경  -->
 	<update id="udpateGrade">
 	UPDATE STU_GRADE
 	SET GRADE = #{grade} 
 	WHERE STU_NO = #{stuNo} AND LEC_NO = #{lecNo}
-	
+	<!-- 학생이 선택한 강의만 변경 -->
 	</update>
 
 

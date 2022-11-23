@@ -290,7 +290,6 @@ public class ProfessorController {
 	@ResponseBody
 	@PostMapping("/updateGradeAjax")
 	public String updateGradeAjax(StuGradeVO stuGradeVO , String stuNo , String grade) {
-		
 		stuGradeVO.setGrade(grade);
 		stuGradeVO.setStuNo(stuNo);
 		professorService.updateGrade(stuGradeVO);
