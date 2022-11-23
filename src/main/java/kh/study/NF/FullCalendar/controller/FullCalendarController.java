@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.NF.FullCalendar.service.CalendarService;
-
+//by 지아 학사일정 관련 controller입니다
 @Controller
 @RequestMapping("/calendar")
 public class FullCalendarController {

@@ -482,7 +482,7 @@
 	<update id="udpateGrade">
 	UPDATE STU_GRADE
 	SET GRADE = #{grade} 
-	WHERE STU_NO = #{stuNo} 
+	WHERE STU_NO = #{stuNo} AND LEC_NO = #{lecNo}
 	
 	</update>
 

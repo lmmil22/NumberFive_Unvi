@@ -66,7 +66,8 @@
 									<tr th:each="lec : ${lecList}">
 										<td scope="row" th:text="${lec.lecNo}">1</td>
 										<td>
-											<a th:href="@{/proF/viewLecPdf(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a>
+										<!-- <a href="/download/미술감상 및 비평(2) 학습자료.pdf">파일 다운로드</a> -->
+											<!-- <a th:href="@{/proF/viewLecPdf(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a> -->
 										</td>
 										<td th:text="${lec.lecScore}"></td>
 										<td th:text="${lec.collNo}"></td>

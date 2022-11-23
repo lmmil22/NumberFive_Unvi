@@ -1,4 +1,4 @@
-<!-- 풀캘린더 테스트  -->
+<!--by 지아 학사공지 풀캘린더입니다   -->
 <!DOCTYPE html>
 
 <html lang='en' xmlns:th="http://www.thymeleaf.org"	
@@ -13,8 +13,8 @@
  --><link  href='/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
   
 
-<div layout:fragment="content"> 
-	테스트 중입니다 
+<!--<div layout:fragment="content"> 
+ 	테스트 중입니다 
 	
 
 
@@ -44,9 +44,51 @@
 
 </div>
 
-</html>
-<!-- 
-<div layout:fragment="content"> 
+</html> -->
+
+ <div layout:fragment="content"> 
+	변수 테스트 중
+	
+
+
+  <h1>MyCalendar</h1>
+  <div id='calendar'></div>
+  
+  
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src='/fullcalendar-5.11.3/lib/main.js'></script>
+  <link  href='/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
+	 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+    	    googleCalendarApiKey: '개인 api id',
+    	    eventSources: [
+    	    {
+    	          googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
+    	          className: '국가공휴일',
+    	          color: '#be5683', //rgb,#ffffff 등의 형식으로 할 수 있어요.
+    	          //textColor: 'black' 
+    	        },
+
+
+    	    ]
+    	  });
+    	  calendar.render();
+    	});
+    	</script>
+    	<style>
+    	#calendar{
+    	   width:60%;
+    	   margin:20px auto;
+    	}
+    	</style>
+    	 
+    	 
+    	 
+    	</html>
+
+<!--  <div layout:fragment="content">  가장 기본적으로 그려짐
 	테스트 중입니다 
 	
 
@@ -83,5 +125,4 @@
 
 </div>
 
-</html>
- -->
+</html>  -->
