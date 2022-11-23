@@ -25,8 +25,6 @@
 <result column="STU_NO" property="stuNo"/>
 <result column="STU_OUT_DATE" property="stuOutDate"/>
 <result column="STU_OUT_REASON" property="stuOutReason"/>
-<!--by수경 1:1관계  -->
-<association property="studentVO" resultMap="studentMapper.student"/>
 </resultMap>
 
 <!--by수경 academicProbation resultMap 학사경고 -->
@@ -49,7 +47,7 @@
 		 , DEPT_NO
 		 , STU_STATUS
 		 , (SELECT COUNT(PROB_NO) FROM ACADEMIC_PROBATION WHERE STU_NO = S.STU_NO)AS PROB_NO
-		 , (SELECT COUNT(STU_OUT_NO) FROM STU_OUT WHERE STU_NO = S.STU_NO) AS STU_OUT_NO
+		 , (SELECT AFTER_STATUS FROM STATUS_INFO WHERE STU_NO = S.STU_NO) AS AFTER_STATUS
 	FROM STU S 
 	WHERE 1 = 1
 	<if test="collNo != null and !collNo.equals('')">
@@ -67,7 +65,7 @@
 	ORDER BY STU_NO DESC
 </select>
 
-<!--by수경 학사경고 모달창 학생 기본정보 데이터 출력 -->
+<!--by수경 학사경고/제적 모달창 학생 기본정보 데이터 출력 -->
 <select id="probationStuInfo" resultMap="studentMapper.student">
 	SELECT STU_NO
 		 , (SELECT MEM_NAME FROM MEMBER WHERE MEM_NO = S.MEM_NO) AS MEM_NAME
@@ -79,6 +77,8 @@
 		 , (SELECT MEM_ADDR ||''|| MEM_ADDR_DETAIL FROM MEMBER WHERE MEM_NO = S.MEM_NO) AS MEM_ADDR
 		 , (SELECT TO_CHAR(STU_YEAR)||'학년'||' '||TO_CHAR(STU_SEM)||'학기' FROM STU WHERE STU_NO =S.STU_NO) AS STU_YEAR
 		 , MEM_NO
+		 , (SELECT COUNT(PROB_NO) FROM ACADEMIC_PROBATION WHERE STU_NO = S.STU_NO)AS PROB_NO
+		 , (SELECT AFTER_STATUS FROM STATUS_INFO WHERE STU_NO = S.STU_NO) AS AFTER_STATUS
 	FROM STU S
 	WHERE STU_NO = #{stuNo}
 </select>
@@ -115,7 +115,7 @@ FROM ACADEMIC_PROBATION
 
 </insert>
 
-<!--by수경 statusInfo에 데이터 삽입하기(학사경고/제적 모두 넣기) -->
+<!--by수경 statusInfo에 데이터 삽입하기 (제적 시에만 데이터 넣기) -->
 <insert id="insertStatusInfo">
 <selectKey resultType="String" keyProperty="statusNo" order="BEFORE">
 SELECT 'STATUS_NO_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(STATUS_NO,11))), 0)+1, 3, 0) 
@@ -138,7 +138,7 @@ FROM STATUS_INFO
 
 </insert>
 
-<!--by수경 stu-out 제적 데이터 삽입하기 (학사경고 3회 이상일 때) -->
+<!--by수경 stu-out 제적 데이터 삽입하기 (학사경고 3회일 때) -->
 <insert id="insertStuOut">
 <selectKey resultType="String" keyProperty="stuOutNo" order="BEFORE">
 SELECT 'STU_OUT_NO_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(STU_OUT_NO,12))), 0)+1, 3, 0) 
@@ -171,9 +171,15 @@ FROM STU_OUT
 
 </select>
 
+<!--by수경 제적 학생의 stuStatus 상태 변경 쿼리 -->
+<update id="changeStuStatus">
+	UPDATE STU 
+	SET STU_STATUS = '제적'
+	WHERE STU_NO = #{stuNo}
+</update>
 
 <!--by수경 제적학생 목록 -->
-<select id="selectStuOutList" resultMap="stuOut" parameterType="hashMap">
+<select id="selectStuOutList" resultMap="studentMapper.student" parameterType="hashMap">
 	SELECT STU_OUT_NO
 		 , STU_NO 
 		 , TO_CHAR(STU_OUT_DATE,'YYYY"년"MM"월"DD"일"') AS STU_OUT_DATE

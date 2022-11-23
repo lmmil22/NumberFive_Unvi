@@ -65,21 +65,21 @@
 					<td>제적사유</td>
 				</tr>
 				<tr th:each="stuOut:${stuOutList}">
-					<td th:text="${stuOut.stuNo}" data-bs-toggle="modal" data-bs-target="#stuOutModal"></td>
-					<td th:text="${stuOut.studentVO.memberVO.memName}"></td>
-					<td th:text="${stuOut.studentVO.collVO.collName}"></td>
-					<td th:text="${stuOut.studentVO.deptVO.deptName}"></td>
-					<td th:text="${stuOut.studentVO.stuStatus}"></td>
-					<td th:text="${stuOut.stuOutDate}"></td>
-					<td th:text="${stuOut.stuOutReason}"></td>
+					<td th:text="${stuOut.stuNo}" data-bs-toggle="modal" data-bs-target="#stuOutModal" th:onclick="stuInfo([[${stuOut.stuNo}]]);"></td>
+					<td th:text="${stuOut.memberVO.memName}"></td>
+					<td th:text="${stuOut.collVO.collName}"></td>
+					<td th:text="${stuOut.deptVO.deptName}"></td>
+					<td th:text="${stuOut.stuStatus}"></td>
+					<td th:text="${stuOut.statusInfoVO.stuOutVO.stuOutDate}"></td>
+					<td th:text="${stuOut.statusInfoVO.stuOutVO.stuOutReason}"></td>
 				</tr>
 			</table>
 		</div>
 	</div>
 	
 	<!--by수경 학생 학번 클릭 시 나타날 제적 모달창 -->
-	<div class="modal fade" id="stuOutModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
+	<div class="modal fade bd-example-modal-lg" id="stuOutModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h4 class="modal-title" id="stuOutModal_apply">제적</h4>
@@ -88,51 +88,55 @@
 	      <div class="modal-body">
 			<div class="row">
 				<div class="col-12">
-					<table class="table">
+					<table class="table text-center">
 						<tr>
-							<th>이름</th>  
-						    <td>
-						    	<div id="stuOutModal_name"></div>
+						    <td colspan="4">
+						    	<span id="stuOutModal_name"></span>
+						    	(<span id="stuOutModal_no"></span> , 
+						    	<span id="stuOutModal_birth"></span>)
 						    </td>
-						    <th>생년월일</th>  
-					        <td>
-					        	<div id="stuOutModal_birth"></div>
-					        </td>  
-					        <td rowspan="3" colspan="2"></td>
+					        <td rowspan="3" colspan="2">
+					        	<img src="/images/학생2.jpg" width="200px;" height="200px;">
+					        </td>
+						</tr>
+						<tr>
+							<th>주소</th>
+							<td colspan="3" align="left">
+								<div id="stuOutModal_addr"></div>
+							</td>
 						</tr>
 						<tr>
 							<th>연락처</th>  
-					        <td colspan="3">
+					        <td colspan="3" align="left">
 					        	<div id="stuOutModal_tell"></div>
 					        </td>
 						</tr>
+					</table>
+						
+					<table class="table text-center">
 						<tr>  
-					  	    <th>학번</th>   
-						    <td>
-						    	<div id="stuOutModal_no"></div>
-						    </td>  
 					   	    <th>학년</th>   
 					   	    <td>
 					   	    	<div id="stuOutModal_grade"></div>
 					   	    </td> 
-					   	   	<th>상태</th>  
+					   	   	<th>학적</th>  
 						    <td>
 						    	<div id="stuOutModal_status"></div>
 						    </td>  
 						</tr> 
 						<tr>  
 					  	    <th>전공대학</th>   
-						    <td colspan="2">
+						    <td>
 						    	<div id="stuOutModal_coll"></div>
 						    </td>  
 					   	    <th>전공학과</th>   
-					   	    <td colspan="2">
+					   	    <td>
 					   	    	<div id="stuOutModal_dept"></div>
 					   	    </td>  
 						</tr> 
 					</table>
 						
-						<table class="table text-center">
+						<table class="table text-center stuOutTb">
 						<tr>
 							<td colspan="6">누적 경고 내역</td>
 						</tr>				
@@ -150,7 +154,7 @@
 			</div>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" 
+	        <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" 
 	        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">확인</button>
 	      </div>
 	    </div>

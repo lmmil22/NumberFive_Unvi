@@ -59,6 +59,9 @@ public interface EmpService {
 	//by수경 stu-out 제적 데이터 삽입하기
 	void insertStuOut (StuOutVO stuOutVO);
 	
+	//by수경 제적 시 stuStatus update 쿼리 실행
+	void changeStuStatus (String stuNo);
+	
 	//by수경 학사경고 일자/사유 목록 
 	List<AcademicProbationVO> probationReason(String stuNo);
 }

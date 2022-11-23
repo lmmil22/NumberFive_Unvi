@@ -462,11 +462,11 @@ public class EmpController {
 	  @ResponseBody
 	  @PostMapping("/probationStuInfoAjax")
 	  public StuinfoAndProbationListVO probationStuInfoAjax(String stuNo) {
-		  StudentVO stuInfo = empService.probationStuInfo(stuNo);
+		  StudentVO studentVO = empService.probationStuInfo(stuNo);
 		  List<AcademicProbationVO> probationList = empService.probationReason(stuNo);
 		  //두가지 데이터를 담을 VO를 새로 만들어서 두개의 데이터를 가져간다.
 		  StuinfoAndProbationListVO vo = new StuinfoAndProbationListVO();
-		  vo.setStuInfo(stuInfo);
+		  vo.setStudentVO(studentVO);
 		  vo.setProbationList(probationList);
 		  
 		  return vo; 
@@ -475,17 +475,15 @@ public class EmpController {
 	  @ResponseBody
 	  @PostMapping("/stuOutStuInfoAjax")
 	  public StuinfoAndProbationListVO stuOutStuInfoAjax(String stuNo) {
-		  StudentVO stuInfo = empService.probationStuInfo(stuNo);
+		  StudentVO studentVO = empService.probationStuInfo(stuNo);
 		  List<AcademicProbationVO> probationList = empService.probationReason(stuNo);
 		  //두가지 데이터를 담을 VO를 새로 만들어서 두개의 데이터를 가져간다.
 		  StuinfoAndProbationListVO vo = new StuinfoAndProbationListVO();
-		  vo.setStuInfo(stuInfo);
+		  vo.setStudentVO(studentVO);
 		  vo.setProbationList(probationList);
 		  
 		  return vo; 
 	  }
-	  
-	  
 	  
 	  //by수경 제적페이지로 이동
 	  @RequestMapping("/stuOut")
@@ -506,20 +504,13 @@ public class EmpController {
 	  //by수경 학사경고 승인하기 ajax
 	  @ResponseBody
 	  @PostMapping("/acceptProbationAjax")
-	  public void acceptProbationAjax(AcademicProbationVO probationVO, StatusInfoVO statusInfoVO) {
+	  public void acceptProbationAjax(AcademicProbationVO probationVO, boolean isChecked) {
+		  //체크박스 선택유무가 true/false로 나뉘기에 boolean으로 가져온다.
+		  System.out.println("11111" + isChecked);
 		  
 		  //학사경고 테이블에 데이터 insert
 		  empService.insertProbation(probationVO);
 		  
-		  //statusInfo 테이블에 데이터 insert
-		  statusInfoVO.setStuNo(probationVO.getStuNo());
-		  //deptManageCalendar 메소드에서 현재 날짜 데이터 가져오기
-		  String nowDate = DeptManageCalendar.nowDateToString();
-		  statusInfoVO.setApprovalDate(nowDate);
-		  statusInfoVO.setNowStatus(Probation.PROBATION.toString());
-		  statusInfoVO.setAfterStatus(Probation.PROBATION.toString());
-		  statusInfoVO.setIngStatus(AcceptApply.accept.toString());
-		  empService.insertStatusInfo(statusInfoVO);
 	  }
 	  
 	  //by수경 제적처리 ajax
@@ -538,6 +529,9 @@ public class EmpController {
 		  statusInfoVO.setIngStatus(AcceptApply.accept.toString());
 		  statusInfoVO.setStuNo(stuOutVO.getStuNo());
 		  empService.insertStatusInfo(statusInfoVO);
+		  
+		  //stu 테이블에 stuStatus 상태 update
+		  empService.changeStuStatus(stuOutVO.getStuNo());
 		  
 	  }
 	  
