@@ -60,7 +60,10 @@ function stuInfo(stuNo){
 		    document.querySelector('#probationModal_coll').innerText = result.studentVO.collNo;
 		    document.querySelector('#probationModal_dept').innerText = result.studentVO.deptNo;
 		    document.querySelector('#probationModal_memNo').value = result.studentVO.memNo;
-
+		    //이메일 보내기를 위하여 히든으로 가져갈 데이터 
+		    document.querySelector('#probationModal_memEmail').value = result.studentVO.memberVO.memEmail;
+			
+			
 	     	let str ='';
 	     	str += '<tr>';
 	     	str += '<td colspan="6">누적 경고 내역</td>';
@@ -84,7 +87,7 @@ function stuInfo(stuNo){
 			
 			//승인하기 버튼을 이미 제적인 학생에게는 안보이도록 구현
 			//기존 버튼부분을 지워준다
-			$('.modal-footer').children().eq(0).remove();
+			$('.probation_div').children().eq(0).remove();
 			let str1 = '';
 			
 			//승인 버튼 새로 그리기
@@ -97,7 +100,7 @@ function stuInfo(stuNo){
 				str1 += '<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="statusInfo_afterStatus" data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;" onclick="acceptProbation();">승인하기</button>';
 			}
 			//modal-footer클래스 앞에 만들겠다.
-			$('.modal-footer').prepend(str1);
+			$('.probation_div').prepend(str1);
 
 	    },
 	    error: function(){
@@ -167,12 +170,15 @@ function acceptProbation(){
 	const probReason = document.querySelector('#probReason').value;
 	const semNo = document.querySelector('#semNo').value;
 	const memNo = document.querySelector('#probationModal_memNo').value;
-
+	const memEmail = document.querySelector('#probationMailChkBox').value;
+	const memName = document.querySelector('#probationModal_name').innerText;
+	
 		$.ajax({
 		   url: '/emp/acceptProbationAjax', //요청경로
 		    type: 'post',
 		    data:{'stuNo':stuNo,'probReason':probReason,
-		    'semNo':semNo, 'memNo':memNo, 'isChecked':isChecked}, //필요한 데이터
+		    'semNo':semNo, 'memNo':memNo, 'isChecked':isChecked,
+		    'memEmail':memEmail, 'memName':memName}, //필요한 데이터
 		    success: function(result) {	
             
 	            Swal.fire({

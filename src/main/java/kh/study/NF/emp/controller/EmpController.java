@@ -28,6 +28,7 @@ import kh.study.NF.emp.vo.DeptManageVO;
 import kh.study.NF.emp.vo.StatusInfoVO;
 import kh.study.NF.emp.vo.StuOutVO;
 import kh.study.NF.emp.vo.StuinfoAndProbationListVO;
+import kh.study.NF.member.vo.MemberVO;
 import kh.study.NF.student.service.StudentService;
 import kh.study.NF.student.vo.StudentVO;
 
@@ -504,9 +505,14 @@ public class EmpController {
 	  //by수경 학사경고 승인하기 ajax
 	  @ResponseBody
 	  @PostMapping("/acceptProbationAjax")
-	  public void acceptProbationAjax(AcademicProbationVO probationVO, boolean isChecked) {
+	  public void acceptProbationAjax(AcademicProbationVO probationVO, boolean isChecked,
+			  						  MemberVO memberVO) {
 		  //체크박스 선택유무가 true/false로 나뉘기에 boolean으로 가져온다.
 		  System.out.println("11111" + isChecked);
+		  if(isChecked) {
+			  
+		  }
+		  
 		  
 		  //학사경고 테이블에 데이터 insert
 		  empService.insertProbation(probationVO);
