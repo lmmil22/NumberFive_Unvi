@@ -1,4 +1,6 @@
 package kh.study.NF.board.vo;
+import javax.validation.constraints.NotBlank;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +20,10 @@ public class ReplyVO {
 	
 	private int replyNo;//
 	private String boardNo;// 주의) 사용할땐 to_number로!! 
+	
+	@NotBlank(message = "내용은 필수 입력사항입니다")
     private String replyContent;
+	
 	private String replyWriter; //--mem_no 학번/교번 
 	private String isSecret;//--디폴트 N //Y
 	private String replyCreateDate;

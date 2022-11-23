@@ -51,8 +51,6 @@ public class BoardController {
 		//2.게시글 목록 조회(한줄요약)
 		model.addAttribute("boardList",boardService.selectBoardList(boardVO));
 		System.out.println("_________________게시판 목록 조회 성공_______________");
-		
-		
 		return "content/common/board/board_list";
 	}
 	
@@ -170,7 +168,8 @@ public class BoardController {
 //-----------------------------------------[게시판 댓글 영역]------------------------------------------------------//
 	//댓글 등록
 	@PostMapping("/insertReply")
-	public String insertReply(String boardNo, ReplyVO replyVO, Authentication authentication) {
+	public String insertReply( BindingResult bindingResult,Model model,
+			String boardNo, @Valid ReplyVO replyVO, Authentication authentication) {
 		
 		User user = (User) authentication.getPrincipal();
 		replyVO.setReplyWriter(user.getUsername());
@@ -212,16 +211,19 @@ public class BoardController {
 	}
 	// 게시글 수정 실제 등록
 	@PostMapping("/updateReply")
-	public String updateReply(ReplyVO replyVO,int replyNo) {
+	public String updateReply(ReplyVO replyVO) {
 		
-		ReplyVO result =  boardService.selectDetailReply(replyNo);
+//		ReplyVO result =  boardService.selectDetailReply(replyNo);
+//		
+//		replyVO.setBoardNo(result.getBoardNo());
+//		replyVO.setIsSecret(result.getIsSecret());
+//		replyVO.setReplyContent(result.getReplyContent());
+//		replyVO.setReplyCreateDate(result.getReplyCreateDate());
+//		replyVO.setReplyWriter(result.getReplyWriter());
+//		replyVO.setReplyNo(result.getReplyNo());
+		System.out.println(replyVO.getReplyNo());
+		System.out.println("@@@@@@@@@@@@@@@"+replyVO.getReplyContent());
 		
-		replyVO.setBoardNo(result.getBoardNo());
-		replyVO.setIsSecret(result.getIsSecret());
-		replyVO.setReplyContent(result.getReplyContent());
-		replyVO.setReplyCreateDate(result.getReplyCreateDate());
-		replyVO.setReplyWriter(result.getReplyWriter());
-		replyVO.setReplyNo(result.getReplyNo());
 
 		boardService.updateReply(replyVO);
 		
