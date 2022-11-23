@@ -116,7 +116,7 @@
             start: '2022-11-03',
             end: '2022-11-05'
             }
-        ]
+        ]//아웃풋? 관련 함수 사용 // MAP 사용 한달치 데이터 조회해서 MAP 사용하고 포문돌려서 뽑아줘야한다 
       });
       calendar.render();
     });
@@ -126,3 +126,21 @@
 </div>
 
 </html>  -->
+
+  <script>
+    var calendarEl = document.getElementById('calendar');
+    var request = $.ajax({
+      url: "/calendar/event",
+      method: "GET",
+    });
+    request.done(function(data){
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: data
+      });
+      calendar.render();		
+    });
+  </script>
+
+
+

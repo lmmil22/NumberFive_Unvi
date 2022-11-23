@@ -26,8 +26,9 @@ public class FullCalendarController {
 	
 	@GetMapping("/event") //ajax 데이터 전송 URL
     public @ResponseBody List<Map<String, Object>> getEvent(){
+		//List<Map<String, Object>>의 자료형으로 보낼시 자동으로 JSON으로 변경이 된다.
 	  
 		return calendarService.getEventList();
 	 }
-
+	
 }
