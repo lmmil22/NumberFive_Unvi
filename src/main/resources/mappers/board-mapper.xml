@@ -83,7 +83,9 @@
 							, IS_NOTICE
 							,CATE_NO
 							,BOARD_READ_CNT
-							,REPLY_CNT
+							,(SELECT COUNT(REPLY_NO)
+							  FROM BOARD_REPLY
+							  WHERE BOARD_NO =BOARD.BOARD_NO) AS REPLY_CNT
 					FROM BOARD
 					<if test="searchValue != null and !searchValue.equals('')">
 						WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
@@ -128,7 +130,9 @@
 							, IS_NOTICE
 							,CATE_NO
 							,BOARD_READ_CNT
-							,REPLY_CNT
+							,(SELECT COUNT(REPLY_NO)
+							  FROM BOARD_REPLY
+							  WHERE BOARD_NO =BOARD.BOARD_NO) AS REPLY_CNT
 					FROM BOARD
 					<if test="searchValue != null and !searchValue.equals('')">
 					WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
@@ -143,7 +147,7 @@
 	<!-- 끝 -->		
 
 
-	<!-- 게시글목록조회 -->
+	<!-- (미사용 플젝마지막때 삭제하기 )게시글목록조회 -->
 	 <!-- <select id="selectBoard" resultMap="board">
 		SELECT   BOARD_NO
 				,BOARD_TITLE

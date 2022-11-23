@@ -11,10 +11,9 @@ public interface BoardService {
 //--------------- [ 공통 게시판 ] -----------------------------//
 	// 글등록
 	void insertBoard(BoardVO boardVO);
-	
-	// 글 목록조회
-	List<BoardVO> selectBoard();
-	// 목록조회(Board 소스)
+	// 글 목록조회(미사용)
+	//List<BoardVO> selectBoard();
+	// 게시글목록조회(Board 소스)
 	List<BoardVO> selectBoardList(BoardVO boardVO);
 	// 상세조회
 	BoardVO selectDetailBoard(String boardNo);
@@ -46,4 +45,7 @@ public interface BoardService {
 	void updateReply(ReplyVO replyVO);
 	//댓글상세조회
 	ReplyVO selectDetailReply(int replyNo);
+	//댓글수 조회
+	int selectReplyCnt(String boardNo);
+	
 }
