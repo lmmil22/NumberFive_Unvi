@@ -170,7 +170,6 @@
 							</th:block>
 						</td>
 						<td th:text="${board.boardNo}"></td>
-						
 						<td >
 							<th:block th:if="${board.isNotice eq'Y'}">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-megaphone" viewBox="0 0 16 16">
@@ -181,7 +180,6 @@
 								
 							</th:block>
 						</td>
-						
 						<td>
 							<!-- 비밀글 일 때 -->
 							<!-- 본인 작성 비밀글이 아닌경우, warning창 띄우기 -->
@@ -193,16 +191,13 @@
 									<a id="warning" onclick="isSecrert()" th:text="${board.boardTitle}" ></a>
 								</th:block>
 							</th:block>
-							
 							<!-- 비밀글이 아닐때 -->
 							<th:block th:unless="${board.isSecrert eq 'Y'}">
 								<a  th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="${board.boardTitle}" ></a>
 							</th:block>
-							
 						</td>
 						<td th:text="${board.boardCreateDate}"></td>
 						<td th:text="${board.boardWriter}"></td>
-						
 						<td th:text="${board.boardReadCnt}"></td>
 						 <td th:text="${board.replyCnt}"></td> 
 					</tr>

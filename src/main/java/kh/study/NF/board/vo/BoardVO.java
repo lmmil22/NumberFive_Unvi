@@ -41,6 +41,8 @@ public class BoardVO extends PageVO{
 	private String isSecrert;
 	private String isNotice;
 	
+	
+	
 	private List<ReplyVO> replyList;
 
 }

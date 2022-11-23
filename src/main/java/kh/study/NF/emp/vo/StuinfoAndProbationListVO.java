@@ -11,6 +11,6 @@ import lombok.ToString;
 @Getter
 @ToString
 public class StuinfoAndProbationListVO {
-	private StudentVO stuInfo;
+	private StudentVO studentVO;
 	private List<AcademicProbationVO> probationList;
 }

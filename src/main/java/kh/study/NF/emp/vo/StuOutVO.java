@@ -14,7 +14,5 @@ public class StuOutVO {
 	private String stuNo;
 	private String stuOutDate;
 	private String stuOutReason;
-	
-	//by수경 1:1 관계 association
-	private StudentVO studentVO;
+
 }

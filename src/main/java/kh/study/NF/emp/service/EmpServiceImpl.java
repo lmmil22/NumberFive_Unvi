@@ -127,5 +127,13 @@ public class EmpServiceImpl implements EmpService{
 		return sqlSession.selectList("statusInfoMapper.probationReason",stuNo);
 	}
 	
+	//by수경 제적 시 stuStatus update 쿼리 실행
+	@Override
+	public void changeStuStatus(String stuNo) {
+		
+		sqlSession.update("statusInfoMapper.changeStuStatus", stuNo);
+		
+	}
+	
 
 }

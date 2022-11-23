@@ -42,7 +42,6 @@ function changeColl(){
 
 //by수경 학생 학번 클릭 시 나타날 학사경고 창 데이터
 function stuInfo(stuNo){
-	
 	$.ajax({
 	   url: '/emp/probationStuInfoAjax', //요청경로
 	    type: 'post',
@@ -51,17 +50,17 @@ function stuInfo(stuNo){
 			//학사경고 사유/날짜 부분의 데이터를 지운다
 			$('.probationTb').empty();
 		
-			document.querySelector('#probationModal_name').innerText = result.stuInfo.memberVO.memName;
-		    document.querySelector('#probationModal_birth').innerText = result.stuInfo.memberVO.memBirth;
-		    document.querySelector('#probationModal_tell').innerText = result.stuInfo.memberVO.memTell;
-		    document.querySelector('#probationModal_addr').innerText = result.stuInfo.memberVO.memAddr;
-		    document.querySelector('#probationModal_no').innerText = result.stuInfo.stuNo;
-		    document.querySelector('#probationModal_grade').innerText = result.stuInfo.stuYear;
-		    document.querySelector('#probationModal_status').innerText = result.stuInfo.stuStatus;
-		    document.querySelector('#probationModal_coll').innerText = result.stuInfo.collNo;
-		    document.querySelector('#probationModal_dept').innerText = result.stuInfo.deptNo;
-		    document.querySelector('#probationModal_memNo').value = result.stuInfo.memNo;
-	     
+			document.querySelector('#probationModal_name').innerText = result.studentVO.memberVO.memName;
+		    document.querySelector('#probationModal_birth').innerText = result.studentVO.memberVO.memBirth;
+		    document.querySelector('#probationModal_tell').innerText = result.studentVO.memberVO.memTell;
+		    document.querySelector('#probationModal_addr').innerText = result.studentVO.memberVO.memAddr;
+		    document.querySelector('#probationModal_no').innerText = result.studentVO.stuNo;
+		    document.querySelector('#probationModal_grade').innerText = result.studentVO.stuYear;
+		    document.querySelector('#probationModal_status').innerText = result.studentVO.stuStatus;
+		    document.querySelector('#probationModal_coll').innerText = result.studentVO.collNo;
+		    document.querySelector('#probationModal_dept').innerText = result.studentVO.deptNo;
+		    document.querySelector('#probationModal_memNo').value = result.studentVO.memNo;
+
 	     	let str ='';
 	     	str += '<tr>';
 	     	str += '<td colspan="6">누적 경고 내역</td>';
@@ -71,15 +70,34 @@ function stuInfo(stuNo){
 	     	for(const probation of result.probationList){
 		     	str += '<tr>';
 		     	str += '<td colspan="2">';
-		     	str += `<div id="probationModal_date">${probation.probDate}</div>`;
+		     	str += `<div>${probation.probDate}</div>`;
 		     	str += '</td>';
 		     	str += '<td colspan="4">';
-		     	str += `<div id ="probationModal_reason">${probation.probReason}</div>`;
+		     	str += `<div>${probation.probReason}</div>`;
 		     	str += '</td>';
 		     	str += '</tr>';
 			}
+			//메일 보내기 체크박스 그려준다
+			str += `<tr><td colspan="6"><span><input type="checkbox" id = "probationMailChkBox"></span> 학사경고 알림 메일 발송하기<td></tr>`
 			//해당 클래스 뒤에 데이터를 넣어준다.
 			$('.probationTb').append(str);
+			
+			//승인하기 버튼을 이미 제적인 학생에게는 안보이도록 구현
+			//기존 버튼부분을 지워준다
+			$('.modal-footer').children().eq(0).remove();
+			let str1 = '';
+			
+			//승인 버튼 새로 그리기
+			//만약 학생의 afterStatus가 STU_OUT이라면 display=none으로 안보이도록 구현
+			if(result.studentVO.statusInfoVO.afterStatus == 'STU_OUT'){
+				str1 += '<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="statusInfo_afterStatus" data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem; display:none;" onclick="acceptProbation();">승인하기</button>';
+			}
+			//만약 학생의 afterStatus가 NULL이라면
+			else{
+				str1 += '<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="statusInfo_afterStatus" data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;" onclick="acceptProbation();">승인하기</button>';
+			}
+			//modal-footer클래스 앞에 만들겠다.
+			$('.modal-footer').prepend(str1);
 
 	    },
 	    error: function(){
@@ -88,8 +106,9 @@ function stuInfo(stuNo){
 	});
 }
 
-//by수경 제적처리 버튼 시 나타날 제적 창 학생 데이터
+//by수경 제적처리 버튼 클릭 시 나타날 제적 창 학생 데이터
 function stuOut(stuNo){
+	
 	$.ajax({
 	   url: '/emp/stuOutStuInfoAjax', //요청경로
 	    type: 'post',
@@ -98,15 +117,16 @@ function stuOut(stuNo){
 			//학사경고 사유/날짜 부분의 데이터를 지운다
 			$('.stuOutTb').empty();
 		
-			document.querySelector('#stuOut_name').innerText = result.stuInfo.memberVO.memName;
-		    document.querySelector('#stuOut_birth').innerText = result.stuInfo.memberVO.memBirth;
-		    document.querySelector('#stuOut_tell').innerText = result.stuInfo.memberVO.memTell;
-		    document.querySelector('#stuOut_addr').innerText = result.stuInfo.memberVO.memAddr;
-		    document.querySelector('#stuOut_no').innerText = result.stuInfo.stuNo;
-		    document.querySelector('#stuOut_grade').innerText = result.stuInfo.stuYear;
-		    document.querySelector('#stuOut_status').innerText = result.stuInfo.stuStatus;
-		    document.querySelector('#stuOut_coll').innerText = result.stuInfo.collNo;
-		    document.querySelector('#stuOut_dept').innerText = result.stuInfo.deptNo;
+			document.querySelector('#stuOut_name').innerText = result.studentVO.memberVO.memName;
+		    document.querySelector('#stuOut_birth').innerText = result.studentVO.memberVO.memBirth;
+		    document.querySelector('#stuOut_tell').innerText = result.studentVO.memberVO.memTell;
+		    document.querySelector('#stuOut_addr').innerText = result.studentVO.memberVO.memAddr;
+		    document.querySelector('#stuOut_no').innerText = result.studentVO.stuNo;
+		    document.querySelector('#stuOut_grade').innerText = result.studentVO.stuYear;
+		    document.querySelector('#stuOut_status').innerText = result.studentVO.stuStatus;
+		    document.querySelector('#stuOut_coll').innerText = result.studentVO.collNo;
+		    document.querySelector('#stuOut_dept').innerText = result.studentVO.deptNo;
+		   
 	     
 	     	let str = '';
 	     	str += '<tr>';
@@ -117,13 +137,14 @@ function stuOut(stuNo){
 	     	for(const probation of result.probationList){
 		     	str += '<tr>';
 		     	str += '<td colspan="2">';
-		     	str += `<div id="probationModal_date">${probation.probDate}</div>`;
+		     	str += `<div>${probation.probDate}</div>`;
 		     	str += '</td>';
 		     	str += '<td colspan="4">';
-		     	str += `<div id ="probationModal_reason">${probation.probReason}</div>`;
+		     	str += `<div>${probation.probReason}</div>`;
 		     	str += '</td>';
 		     	str += '</tr>';
 			}
+			
 			//해당 클래스 뒤에 데이터를 넣어준다.
 			$('.stuOutTb').append(str);
 
@@ -136,6 +157,12 @@ function stuOut(stuNo){
 
 //by수경 학사경고 승인하기 버튼 클릭
 function acceptProbation(){
+	
+	//메일보내기 체크박스 버튼이 체크 되어 있다면 메일 발송되도록 구현
+	const probationMailChkBox = document.querySelector('#probationMailChkBox');
+	const isChecked = probationMailChkBox.checked;
+	
+	//학사경고 쿼리에 필요한 데이터 보내기
 	const stuNo = document.querySelector('#probationModal_no').innerText;
 	const probReason = document.querySelector('#probReason').value;
 	const semNo = document.querySelector('#semNo').value;
@@ -145,7 +172,7 @@ function acceptProbation(){
 		   url: '/emp/acceptProbationAjax', //요청경로
 		    type: 'post',
 		    data:{'stuNo':stuNo,'probReason':probReason,
-		    'semNo':semNo, 'memNo':memNo}, //필요한 데이터
+		    'semNo':semNo, 'memNo':memNo, 'isChecked':isChecked}, //필요한 데이터
 		    success: function(result) {	
             
 	            Swal.fire({
@@ -187,6 +214,7 @@ function acceptStuOut(){
 				}).then((result) => {
 				  if (result.isConfirmed) {
 				    sendKakao();
+				    location.href = '/emp/probation';
 				  }
 				})
 
@@ -197,7 +225,7 @@ function acceptStuOut(){
 	});
 }
 
-//by수경 카카오톡 메세지 공유하기
+//by수경 카카오톡 메시지 공유하기
 function sendKakao(){
 		
 	Kakao.Share.sendCustom({

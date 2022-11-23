@@ -9,30 +9,52 @@
 
 <!-- 게시글 상세 조회 영역 -->
 <div class="row mt-3 mb-3"> 
+	<!-- 게시글상세내용 영역 -->
 	<!-- 제목줄 -->
-	<div class="col-12">
+	<div class="col-12 mb-5">
 		<h1>게시글 상세 내용</h1>
 	</div>
-	<!-- 첫번째 줄 -->
-	
-	
-	
-	<!--  -->
-	  <div class="mb-3 row">
-	    <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+
+	<!-- 부트스트랩 게시글 디자인 템플릿 사용시  -->
+	  <!-- 부트스트랩)게시글 상세내용 영역  -->
+	  <!-- <div class="mt-3 mb-3 row">
+		  <div class="col-3">
+		    <span for="staticEmail" class="col-sm-2 col-form-span">글번호</span>
+		    <span class="col-sm-10">
+		      <input type="text" readonly class="form-control-plaintext" id="staticEmail" th:value="${board.boardNo}">
+		    </span>
+		  </div>
+		   <div class="col-3">
+		   <span for="staticEmail" class="col-sm-2 col-form-span">작성자</span>
+		    <div class="col-sm-10">
+		      	<input type="text" readonly class="form-control-plaintext" id="staticEmail" th:value="${board.boardWriter}">
+		    </div>
+		  </div>
+		   <div class="col-3">
+		   <span for="staticEmail" class="col-sm-2 col-form-span">작성일</span>
+		    <div class="col-sm-10">
+		      	<input type="text" readonly class="form-control-plaintext" id="staticEmail" th:value="${board.boardCreateDate}">
+		    </div>
+		  </div>
+		   <div class="col-3">
+		   <span for="staticEmail" class="col-sm-2 col-form-span">카테고리</span>
+		    <div class="col-sm-10" th:each="cate : ${cateUsedList}">
+		      	<input type="text" readonly class="form-control-plaintext" id="staticEmail" th:text=" ${cate.cateName}"  >
+		    </div>
+		  </div>
+	  </div> -->
+
+	  <!-- div class="mt-3 mb-3 row">
+	    <label for="staticEmail" class="col-sm-2 col-form-label">글번호</label>
 	    <div class="col-sm-10">
-	      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+	      <th:block th:each="cate : ${cateUsedList}">
+	      	<input type="text" readonly class="form-control-plaintext" id="staticEmail" th:value="${board.boardNo}">
+		</th:block>
 	    </div>
-	  </div>
-	  <div class="mb-3 row">
-	    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-	    <div class="col-sm-10">
-	      <input type="password" class="form-control" id="inputPassword">
-	    </div>
-	  </div>
-  
-	<!--  -->
-	 <div class="col-4 mb-3" >
+	  </div> -->
+	  
+    <!-- 첫번째 줄 -->
+	 <div class="col-4 mb-3 " >
 	  <label for="exampleFormControlspan1" class="form-label">글 번호 : </label>
 	  <th:block th:text="${board.boardNo}"></th:block> 
 	</div>
@@ -44,23 +66,16 @@
 	  <label for="exampleFormControlspan1" class="form-label"> 작성일 : </label>
 	  <th:block th:text="${board.boardCreateDate}"></th:block> 
 	</div>
-	
+	<hr />
 	<!-- 두번째 줄 -->		
-	 <div class="col-6 mb-3">
-	 	<span>카테고리 :</span>
+	 <div class="col-12 mb-2 ">
+	 	 <label for="exampleFormControlspan1" class="form-label">글제목 : </label>
 		<th:block th:each="cate : ${cateUsedList}">
-			<span th:text=" ${cate.cateName}" th:value="${cate.cateNo}" ></span>
+			<span th:text=" | [ ${cate.cateName} ] ${board.boardTitle}|" th:value="${cate.cateNo} " ></span>
 		</th:block>
 	</div> 
-	<div class="col-6 mb-3">
-	</div> 
-	<!-- 세번째 줄 -->
-	<div class="col-12 mb-3">
-	  <label for="exampleFormControlspan1" class="form-label">글제목 : </label>
-  		  <th:block th:text=" ${board.boardTitle}"></th:block> 
-	</div>
-	
-	<!-- 네번째 줄  -->
+	<hr />
+	<!-- 세번째 줄  -->
 	<div class="col-12 mb-3">
 	  <label for="exampleFormControlTextarea1" class="form-label">글내용 : </label>
 	  	<div th:text="${board.boardContent}"></div>
@@ -76,45 +91,154 @@
 			<button id="isDeleteTag" type="button" class="btn btn-danger"  onclick="isDelete()">삭제S</button>
 		</span>
 		<span>
-			<button type="button" class="btn btn-dark" th:onclick="@{location.href='/board/list';}">뒤로가기</button>
+			<button type="button" class="btn btn-light" th:onclick="@{location.href='/board/list';}">뒤로가기</button>
 		</span>
 	</div>
 </div> 
 <!-- end -->
 
-	<!-- 댓글 영역 -->	
-	<h1>댓글 영역</h1> 		
-	<div class="row mt-5">
-		<div class="col">
-			<!-- 로그인한 작성자의 댓글 등록 창	 --> 
-			<div class="replyDiv">
-				<div class="replyform">
-					<form th:action="@{/board/insertReply}" method="post">
-						<input type="hidden" name="boardNo" th:value="${board.boardNo}">			
-						<div>
-							<textarea rows="5" cols="230" name="replyContent"></textarea>
-						</div>
-						<div align="center">
-							<button class="btn btn-primary" type="submit" >등록</button>
-						</div>
-					</form>
-				</div>
-		</div>
-	</div> 
-	
-	
+	  
+	<!-- 전체 댓글 영역 -->	
+<div class="row ">
+<div class="col">
+
+	<!-- 댓글총갯수  영역 -->
+	<div align="left" class="row">
+		<div class="col-12" style="font-size: 0.9rem; font-style: italic;"> ※ 총 <span th:text="${board.replyCnt}"></span> 개의 댓글이 작성되었습니다.</div>
+	</div>
+
+	<!-- 댓글작성가능영역 -->
+	<form th:action="@{/board/insertReply}" method="post" ><!-- th:object="${ReplyVO}" -->
+	<div class="row ">
+		<!-- 로그인한 작성자의 댓글 등록 창	 --> 
+			<div class="col-10" >
+				<input type="hidden" name="boardNo" th:value="${board.boardNo}">			
+	   			<textarea type="text" cols="5" rows="2" name="replyContent" class="form-control" placeholder="로그인 후 댓글 작성가능합니다."></textarea>
+				<!-- <div class="hasError" th:if="${#fields.hasErrors('replyContent')}" th:errors="*{replyContent}"></div> -->
+			</div>
+			<div class="col-2" align="left" >
+				<button sec:authorize="isAuthenticated()" class="btn btn-light" type="submit" style="height: 58px; width: 70px;">등록</button>
+			</div>
+	</div>
+	</form>
+
+
+
+
+
+
+
+<!-- <span class="u_cbox_info_main">
+<span class="u_cbox_name">
+<span class="u_cbox_name_area">
+<span class="u_cbox_nick_area">
+</span>
+</span>
+</span>
+<span class="u_cbox_ico_arrow">
+</span>
+</span>
+
+<span class="u_cbox_info_sub">
+<span class="u_cbox_work_sub">
+<a href="#" class="u_cbox_btn_open" data-action="list#toggleButtons" data-param="@event">
+<span class="u_cbox_ico_open"></span>
+ </a>
+ <span class="u_cbox_work_box">
+<span class="u_cbox_work_inner">
+<a href="#" class="u_cbox_btn_follow" data-action="followRelation#requestFollow" data-param="commentNo:'775771204144333237',profileImageSrc:'https://static.nid.naver.com/images/web/user/default.png?type=f132_132',nickName:'yang****',maskedId:'yang****',objectId:'news648,0000011908'" data-log="RPC.follow1">
+<span class="u_cbox_ico_follow"></span>
+<a href="#" class="u_cbox_btn_userreport" data-action="report#openLayer" data-param="objectId:'news648,0000011908',commentNo:'775771204144333237'" data-log="RPC.fold">
+<span class="u_cbox_ico_block"></span>
+<a href="#" class="u_cbox_btn_userblock" data-action="userBlock#requestBlock" data-param="commentNo:'775771204144333237',objectId:'news648,0000011908',nickName:'yang****',maskedId:'yang****',idNo:'16UVE'">
+<span class="u_cbox_ico_block"></span>
+</a></span></span></span></span></div> 
+<div class="u_cbox_text_wrap">
+
+</span>
+<span class="u_cbox_ico_exclamation" style="display:none;"></span>
+<span class="u_cbox_delete_contents" style="display:none;">내가 차단한 이용자의 댓글입니다.</span>
+</div>
+<div class="u_cbox_info_base">
+<span class="u_cbox_date" data-value="2022-11-23T13:33:55+0900" th:text="| 작성일 : ${reply.replyCreateDate}|" ></span>
+</div>
+<div class="u_cbox_tool"><a href="#" role="button" aria-expanded="false" class="u_cbox_btn_reply" data-action="reply#toggle" data-param="775771204144333237" data-log="RPC.replyopen#RPC.replyclose">
+<strong class="u_cbox_reply_txt">답글</strong>
+<span class="u_cbox_reply_cnt u_vc" th:text=" ${board.replyCnt}" >replyCnt  갯수넣기?????</span>
+</a>
+<div class="u_cbox_recomm_set">
+<strong class="u_vc">공감/비공감</strong>
+<a href="#" data-action="vote" data-param="mine:false,commentNo:'775771204144333237',voteStatus:'SYMPATHY',objectId:'news648,0000011908',ticket:'news'" data-log="RPC.sym#RPC.unsym" class="u_cbox_btn_recomm">
+<span class="u_cbox_ico_recomm">공감</span>
+<em class="u_cbox_cnt_recomm">1</em></a>
+<a href="#" data-action="vote" data-param="mine:false,commentNo:'775771204144333237',voteStatus:'ANTIPATHY',objectId:'news648,0000011908',ticket:'news'" data-log="RPC.dis#RPC.undis" class="u_cbox_btn_unrecomm">
+<span class="u_cbox_ico_unrecomm">비공감</span>
+<em class="u_cbox_cnt_unrecomm">0</em></a></div></div>
+<span class="u_cbox_comment_frame"><span class="u_cbox_ico_tip"></span>
+<span class="u_cbox_comment_frame_top">
+<span class="u_cbox_comment_bg_r"></span>
+<span class="u_cbox_comment_bg_l"></span></span>
+<span class="u_cbox_comment_frame_bottom">
+<span class="u_cbox_comment_bg_r"></span>
+<span class="u_cbox_comment_bg_l"></span></span></span> -->
+
+<!--  -->	 
+
+
+
+
+
+ <hr />
 	<!-- 댓글 목록창 -->
-	 <div class="row mt-5" style="background-color: #EFF5F5;">
+	 <div class="row " >
 		<div class="col">
 			<div class="replyList"> 
 				
 				 <th:block th:if="${#lists.size('replyList') == 0}">
 					<div> 작성된 댓글이 없습니다.</div>
 				</th:block> 
-				
-				
+				<!-- 네이버 뉴스 댓글영역 가져온 소스  -->
+				<th:block th:each="reply : ${replyList}">
+				<div class="u_cbox_comment_box u_cbox_type_profile">
+					<div class="u_cbox_area">
+						<div class="u_cbox_info">
+							<div class="mt-5 u_cbox_thumb u_cbox_naver">
+								<span class="u_cbox_thumb_wrap">
+									<span class="u_cbox_thumb_mask"></span>
+									<span style="font-size: 0.89rem; display: block; " class="u_cbox_nick" th:text="| [ ${reply.replyWriter} ] 님의 댓글 |" ></span>
+									<span style="font-size: 0.89rem;"  class="u_cbox_date" data-value="2022-11-23T13:33:55+0900" th:text="| 작성일 : ${reply.replyCreateDate}|" ></span>
+								</span>
+							</div>
+							
+							<div class="row">
+							<form action="/board/updateReply" method="post" class="updateForm">
+								<input type="hidden" name="replyNo" th:value="${reply.replyNo}">
+								<div class="col-10 u_cbox_thumb u_cbox_naver">
+									<div class="input-group">
+									  <span class="input-group-text"><img width="50px;" height="50px;" src= "https://static.nid.naver.com/images/web/user/default.png?type=f132_132" alt="프로필 이미지" class="u_cbox_img_profile" onerror="cbox.Util.onImageError(this);"></span>
+									  <div class="form-control replyContent">
+										  <textarea readonly th:text="${reply.replyContent}" class="form-control textarea" aria-label="With textarea"></textarea>
+									  </div>
+									</div>
+								</div>
+								<div class="col-2" style="padding: 5px;;">
+									<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
+										<div align="left">
+											<input class="btn btn-light" type="button"  value="버튼1" onclick="goUpdate();">
+											<input id="regBtn"  class="btn btn-light" type="submit" value="수정" >   
+											<input class="btn btn-light" type="button" value="삭제" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">  
+										</div>
+							 		</th:block> 
+								</div>
+								</form>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</th:block>
 				 <!-- submit 수정 버튼이 있을 때 :<form th:action="@{/board/updateReply}" method="post"> -->
-					 <th:block th:unless="${#lists.size('replyList') == 0}"> 
+					 <!-- <th:block th:unless="${#lists.size('replyList') == 0}"> 
 							<th:block th:each="reply : ${replyList}">
 								<div class="row">
 									<div class="col-9">
@@ -137,12 +261,12 @@
 								 		</th:block> 
 										<th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
 											<div align="right">
-												댓글확인만가능
+												
 											</div>
 								 		</th:block> 
 									</div>
 								</div>
-							 </th:block>  
+							 </th:block>   -->
 						 <!-- </form>	 -->
 						 
 						 <th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
@@ -151,8 +275,9 @@
 			</div>
 		</div> 
 	</div>		
+	
 </div>		
-			
+</div>			
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

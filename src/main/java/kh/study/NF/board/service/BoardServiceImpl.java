@@ -88,7 +88,7 @@ public class BoardServiceImpl implements BoardService{
 	//댓글수정
 	@Override
 	public void updateReply(ReplyVO replyVO) {
-		 sqlSession.update("boardMapper.updateReply", replyVO);
+		 sqlSession.update("replyMapper.updateReply", replyVO);
 	}
 	//댓글수 조회
 	@Override

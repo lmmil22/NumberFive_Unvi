@@ -68,6 +68,7 @@
 					<td>이름</td>
 					<td>소속대학</td>
 					<td>소속학과</td>
+					<td>학적</td>
 					<td>학사경고</td>
 					<td>제적</td>
 				</tr>
@@ -76,14 +77,16 @@
 					<td th:text="${stu.memberVO.memName}"></td>
 					<td th:text="${stu.collVO.collName}"></td>
 					<td th:text="${stu.deptVO.deptName}"></td>
+					<td th:text="${stu.stuStatus}"></td>
 					<td>
 						<span th:text="${stu.statusInfoVO.academicProbationVO.probNo}"></span> 회
 					</td>
 					<td> 
-						<th:block th:if="${stu.statusInfoVO.academicProbationVO.probNo >'2' and stu.statusInfoVO.stuOutVO.stuOutNo == null}">
+						<th:block th:if="${stu.statusInfoVO.afterStatus == null and stu.statusInfoVO.academicProbationVO.probNo > '2'}">
 							<input type="button" class="btn btn-primary" value="제적처리" data-bs-toggle="modal" data-bs-target="#stuOutModal" th:onclick="stuOut([[${stu.stuNo}]]);"> 
 						</th:block>
-						<th:block th:if="${stu.statusInfoVO.stuOutVO.stuOutNo == '1'}">
+						
+						<th:block th:unless="${stu.statusInfoVO.afterStatus == null}">
 							<input type="button" class="btn btn-primary" disabled value="제적완료"> 
 						</th:block>
 					</td>
@@ -107,9 +110,8 @@
 						<tr>
 						    <td colspan="4">
 						    	<span id="probationModal_name"></span>
-						    	(<span id="probationModal_no"></span> ,
+						    	(<span id="probationModal_no"></span> , 
 						    	<span id="probationModal_birth"></span>)
-					    
 						    </td>
 					        <td rowspan="3" colspan="2">
 					        	<img src="/images/학생2.jpg" width="200px;" height="200px;">
@@ -135,7 +137,7 @@
 					   	    <td>
 					   	    	<div id="probationModal_grade"></div>
 					   	    </td> 
-					   	   	<th>상태</th>  
+					   	   	<th>학적</th>  
 						    <td>
 						    	<div id="probationModal_status"></div>
 						    </td>  
@@ -205,20 +207,16 @@
 			</div>
 	      </div>
 	      <div class="modal-footer">
-		      <th:block>
-		      	<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="probationModal_btn" 
-		       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-		       		th:onclick="acceptProbation();">승인하기</button>
-		      </th:block>
-		      
-<!-- 		      <th:block>
-		      	<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="probationModal_btn" 
-		       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-		       		disabled>승인하기</button>
-		      </th:block> -->
-	        
-	        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" 
-	        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">취소</button>
+	      	<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="statusInfo_afterStatus"
+	      		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	      		th:onclick="acceptProbation();">
+	      		승인하기
+	      	</button>
+		 	
+		    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"
+		    	style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">
+		    	취소
+		    </button>
 	      </div>
 	    </div>
 	  </div>
@@ -288,7 +286,7 @@
 						<tr>
 							<th>제적사유</th>
 							<td colspan="4">
-								<div class="col-5">
+								<div class="col-7">
 									<input type="text" class="form-control" value="학사경고 3회로 제적처리 함" id="stuOutReason">
 								</div>
 							</td>
