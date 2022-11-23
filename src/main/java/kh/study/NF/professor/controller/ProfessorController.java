@@ -94,8 +94,14 @@ public class ProfessorController {
 	//강의 등록후 리스트
 	@GetMapping("/viewLecList")
 	public String lectureList(Model model) {
+		List<LectureVO> list = professorService.selectLecList();
 		
-		model.addAttribute( "lecList", professorService.selectLecList());
+		model.addAttribute( "lecList", list);
+
+		for(LectureVO vo : list) {
+			System.out.println(vo.getLecturePdfVO().getAttachedPdfName());
+		}
+		
 		
 		
 		return "content/professor/lectureList";

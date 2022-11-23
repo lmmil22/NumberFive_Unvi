@@ -10,8 +10,8 @@
 
 <!-- 고정 페이지와 변동페이지는 다르다  -->
 <div layout:fragment="content">
-
-	<div>강의 리스트</div>
+<!-- a태그의 경우 경로를 지정할때 한글문서  , pdf든 바로 띄워 줄수 있다 . -->
+	<div>강의 리스트 <!-- <a href="/images/nf Logo.png" target="_blank">123123</a>  --> </div>
 	<div id="table_box_bootstrap" style="text-align: center;">
 		<table class="table table-striped table-hover">
 			<thead>
@@ -30,12 +30,12 @@
 			</thead>
 			<tbody>
 				<tr th:each="lec : ${lecList}">
-					<th scope="row" th:text="${lec.lecNo}">1</th>
+					<th scope="row" th:text="${lec.lecNo}"></th>
 					<td>
-					<!--   다운가능 <a th:href="@{/proF/download(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a>
-					-->
-					 <a th:href="@{/proF/viewLecPdf(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a>
-					 
+						  <!--  다운가능 <a th:href="@{/proF/download(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a> 지금은 열람을해줄것이라 필요xxxx -->
+					  <a th:href="|@{/pdf/}${lec.lecturePdfVO.attachedPdfName}|" th:text="${lec.lecName}" target="_blank"></a> 
+					<!-- 열람만 하는 곳에서는 원본파일명을 화면에 띄워주고 클릭되는 a태그는 첨부된파일 명이 들어가야한다 그리고 a태그의 경로를 넣어준다 -->
+					<!--  <a th:href="@{/proF/viewLecPdf(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a> 필요 xxxx -->
 					</td>
 					<td th:text="${lec.collNo}"></td>
 					<td th:text="${lec.deptNo}"></td>

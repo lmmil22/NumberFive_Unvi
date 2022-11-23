@@ -66,8 +66,7 @@
 									<tr th:each="lec : ${lecList}">
 										<td scope="row" th:text="${lec.lecNo}">1</td>
 										<td>
-										<!-- <a href="/download/미술감상 및 비평(2) 학습자료.pdf">파일 다운로드</a> -->
-											<!-- <a th:href="@{/proF/viewLecPdf(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a> -->
+											<a th:href="|@{/pdf/}${lec.lecturePdfVO.attachedPdfName}|" th:text="${lec.lecName}" target="_blank"></a>  <!-- 수강신청시 강의자료 열람 -->
 										</td>
 										<td th:text="${lec.lecScore}"></td>
 										<td th:text="${lec.collNo}"></td>
@@ -127,7 +126,7 @@
 									<tr th:each="enroll : ${enrollList}">
 										<td scope="row" th:text="${enroll.lecNo}">1</td>
 										<td>
-											<a th:href="@{/proF/viewLecPdf(lecNo = ${enroll.lecNo})}" th:text="${enroll.lectureVO.lecName}" ></a>
+										<a th:href="@{/proF/download(lecNo = ${enroll.lecNo})}" th:text="${enroll.lectureVO.lecName}" ></a> <!-- 수강신청후 강의자료 다운 -->
 										</td>
 										<td th:text="${enroll.lectureVO.lecScore}"></td>
 										<td th:text="${enroll.lectureVO.collNo}"></td>
