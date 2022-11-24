@@ -1,7 +1,10 @@
 package kh.study.NF.mail.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.NF.mail.service.MailService;
+import kh.study.NF.mail.service.ProbationMailService;
 import kh.study.NF.member.vo.MemberVO;
 // by 유빈 : 이메일 기능 
 @Controller
@@ -20,7 +24,10 @@ public class MailController {
 	//mail기능 서비스 객체 
 	@Autowired
 	private MailService mailService;
-
+	
+	//by수경 학사경고 메일을 보내기 위하여 사용
+	@Autowired
+	private ProbationMailService probationMailService;
 //------------------------------------------------------------------------//
 
 	// 이메일 인증 
@@ -55,7 +62,12 @@ public class MailController {
 //
 //    }
 //-----------------------------------------------------------------------//
-	
+	//by수경 학사경고 메일 보내기 위하여 사용
+	@ResponseBody
+	@PostMapping("sendProbationMailAjax")
+	public void sendProbationMailAjax(MemberVO memberVO, String probReason) throws MessagingException, IOException{
+		probationMailService.sendMailWithFiles(memberVO, probReason);
+	}
 		
 	
 }

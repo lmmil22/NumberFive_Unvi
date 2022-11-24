@@ -70,10 +70,17 @@ function applyResult(){
 	
 			success: function(result) {
 	
-				//모달창 소스
-				const modal = new bootstrap.Modal('#applyResultModal');
-				//모달 보여주기
-				modal.show();
+				Swal.fire({
+				  title: '복학 신청완료',
+				  text: "복학신청이 완료 되었습니다.",
+				  icon: 'success',
+				  confirmButtonColor: '#3085d6',
+				  confirmButtonText: '확인'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					nextPage();
+				  }
+				});
 			},
 	
 			error: function() {
@@ -84,19 +91,21 @@ function applyResult(){
 	
 	//by수경 동의합니다에 체크하지 않았다면 alert창 실행
 	else{
-		$().ready(function () {
-	        Swal.fire({
-	            icon: 'warning',
-	            title: '동의버튼 클릭',
-	            text: '복학 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.',
-	         });
-	    });  
-		
-		//모달창 소스
-		const modal = new bootstrap.Modal('#returnUnivModal');
-		//모달 보여주기
-		modal.show();
-		return;
+		Swal.fire({
+		  title: '동의버튼 클릭',
+		   text: '복학신청 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.',
+		  icon: 'warning',
+		  confirmButtonColor: '#3085d6',
+		  confirmButtonText: '확인'
+		}).then((result) => {
+		  if (result.isConfirmed) {
+			//모달창 소스
+			const modal = new bootstrap.Modal('#returnUnivModal');
+			//모달 보여주기
+			modal.show();
+			return;
+		  }
+		});
 	}
 }
 

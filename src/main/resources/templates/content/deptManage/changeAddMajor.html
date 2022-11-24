@@ -23,9 +23,6 @@
 <!--관리자는 승인대기 버튼 클릭 시 해당 학생의 신청내역을 볼 수 있고
 승인버튼 클릭 시 승인대기 ->승인완료 변경되도록 구현, 체크박스를 통한 일괄 승인 구현-->
 <div layout:fragment ="content">
-<th:block layout:fragment ="css">
-	<link rel ="stylesheet" th:href="@{/css/applyModal.css}">
-</th:block>
 <!--by수경 조건 검색에 사용할 form -->
 <form th:action="@{/emp/changeAddMajor}" method="post" id="searchForm">
 	<input type="hidden" name="changeMajor_fromDate" id="search_changeMajor_fromDate" value="">
@@ -128,7 +125,7 @@
 					      		<button type="button" class="btn btn-primary">승인<p>대기</button>
 					      	</th:block>
 					      	<th:block th:unless="${changeMajor.processStatus eq 'waiting'}" th:value="${changeMajor.applyNo}" >
-					      		<button type="button" class="btn btn-primary">승인<p>완료</button>
+					      		<button type="button" class="btn btn-primary" disabled>승인<p>완료</button>
 					      	</th:block>
 					      </td>
 					      <td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
@@ -233,10 +230,10 @@
 				      <td th:text="${doubleMajor.applyDate}"></td>
 				      <td th:onclick="showDoubleMajorApply([[${doubleMajor.stuNo}]], [[${doubleMajor.applyNo}]]);" data-bs-toggle="modal" data-bs-target="#doubleMajorModal">
 				      		<th:block th:if="${doubleMajor.processStatus eq 'waiting'}">
-					      		<button type="button" class="btn btn-outline-primary">승인<p>대기</button>
+					      		<button type="button" class="btn btn-primary">승인<p>대기</button>
 					      	</th:block>
 					      	<th:block th:unless="${doubleMajor.processStatus eq 'waiting'}">
-					      		<button type="button" class="btn btn-primary">승인<p>완료</button>
+					      		<button type="button" class="btn btn-primary" disabled>승인<p>완료</button>
 					      	</th:block>
 				      </td>
 				      <td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
@@ -258,9 +255,9 @@
 	
 	
 	
-	<!--by수경 전과 신청 현황에서 신청현황 클릭 시 뜨는 전과 신청서 -->
-	<div class="modal fade" id="changeMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
+	<!--by수경 전과 신청 현황에서 승인대기 클릭 시 뜨는 전과 신청서 -->
+	<div class="modal fade bd-example-modal-lg" id="changeMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h4 class="modal-title" id="changeMajorModal_apply">전과 신청서</h4>
@@ -269,78 +266,68 @@
 	      <div class="modal-body">
 			<div class="row">
 				<div class="col-12">
-					<table class="table">
+					<table class="table text-center">
 						<tr>
-							<th>이름</th>  
-						    <td>
-						    	<div id="changeMajorModal_name"></div>
-						    </td>
-						    <th>성별</th>  
-						    <td>
-						    	<div id="changeMajorModal_gender"></div>
-						    </td>   
-						    <th>생년월일</th>  
-					        <td>
-					        	<div id="changeMajorModal_birth"></div>
-					        </td>  
-					        
+							<td colspan="4">
+								<span id="changeMajorModal_name"></span>
+								(<span id="changeMajorModal_no"></span>, 
+								<span id="changeMajorModal_birth"></span>) 
+							</td>
+							<td rowspan="5" colspan="2">
+								<img src="/images/학생3.jpg" width="240px;" height="240px;">
+						    </td>  
 						</tr>
 						<tr>
+						    <th>주소</th>  
+					        <td colspan="3" align="left">
+					        	<div id="changeMajorModal_addr"></div>
+					        </td>
+					    </tr>      
+					    <tr>
 							<th>연락처</th>  
-					        <td>
+					        <td colspan="3" align="left">
 					        	<div id="changeMajorModal_tell"></div>
 					        </td>
-						    <th>주소</th>  
-					        <td colspan="3">
-					        	<div id="changeMajorModal_addr"></div>
-					        </td>  
+						</tr>
+						<tr>
+							<th>학년</th>   
+							<td align="left">
+								<div id="changeMajorModal_grade"></div>
+							</td>
+							<th>학적</th>   
+					   	    <td align="left">
+					   	    	<div id="changeMajorModal_status"></div>
+					   	    </td> 
 						</tr>
 						<tr>  
-						  
-					  	    <th>학번</th>   
-						    <td>
-						    	<div id="changeMajorModal_no"></div>
-						    </td>  
-					   	    <th>학년</th>   
-					   	    <td>
-					   	    	<div id="changeMajorModal_grade"></div>
-					   	    </td> 
-					   	   	<th>상태</th>  
-						    <td>
-						    	<div id="changeMajorModal_status"></div>
-						    </td>  
-						</tr> 
-						<tr>  
-					  	    <th>전공대학</th>   
-						    <td>
-						    	<div id="changeMajorModal_coll"></div>
-						    </td>  
-					   	    <th>전공학과</th>   
-					   	    <td>
+						    <th>전공학과</th>   
+					   	    <td align="left">
 					   	    	<div id="changeMajorModal_dept"></div>
 					   	    </td>  
 					  	    <th>복수전공</th>   
-					        <td>
+					        <td align="left">
 					        	<div id="changeMajorModal_doubleDept"></div>
 					        </td>  
 						</tr> 
 					</table>
-					<table class="table">
+				
+					
+					<table class="table text-center">
 						<tr>  
 					  	    <th>소속전공대학</th>   
 						    <td>
 						    	<div id="changeMajorModal_fromColl"></div>
 						    </td>  
-					   	    <th>소속전공학과</th>   
-					   	    <td>
-					   	    	<div id="changeMajorModal_fromDept"></div>
-					   	    </td>  
-						</tr>  
-						<tr>   
 					        <th>변경전공대학</th>   
 					        <td>
 					        	<div id="changeMajorModal_changeColl"></div>
 					        </td>   
+						</tr>  
+						<tr>   
+					   	    <th>소속전공학과</th>   
+					   	    <td>
+					   	    	<div id="changeMajorModal_fromDept"></div>
+					   	    </td>  
 					        <th>변경전공학과</th>   
 					        <td>
 					        	<div id="changeMajorModal_changeDept"></div>
@@ -351,6 +338,11 @@
 					        <td colspan="2">
 					        	<div id="changeMajorModal_reason"></div>
 					        </td>   
+						</tr>
+						<tr>
+							<td colspan="4">
+								<span><input type="checkbox" id ="changeMajor_ChkBox"></span> 카카오톡 알림 발송하기
+							<td>
 						</tr>  
 					</table>
 				</div>
@@ -367,7 +359,7 @@
 	  </div>
 	</div>
 			
-	<!--by수경 복수전공 신청 현황에서 신청 현황 클릭 시 뜨는 복수전공 신청서 -->
+	<!--by수경 복수전공 신청 현황에서 승인대기 클릭 시 뜨는 복수전공 신청서 -->
 	<div class="modal fade" id="doubleMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered">
 	    <div class="modal-content">
@@ -378,58 +370,46 @@
 	      <div class="modal-body">
 			<div class="row">
 				<div class="col-12">
-					<table class="table">
+					<table class="table text-center">
 						<tr>
-							<th>이름</th>  
-						    <td>
-						    	<div id="doubleMajorModal_name"></div>
-						    </td>
-						    <th>성별</th>  
-						    <td>
-						    	<div id="doubleMajorModal_gender"></div>
-						    </td>   
-						    <th>생년월일</th>  
-					        <td>
-					        	<div id="doubleMajorModal_birth"></div>
-					        </td>  
-					        
+							<td colspan="4">
+								<span id="doubleMajorModal_name"></span>
+								(<span id="doubleMajorModal_no"></span>, 
+								<span id="doubleMajorModal_birth"></span>) 
+							</td>
+							<td rowspan="5" colspan="2">
+								<img src="/images/학생3.jpg" width="240px;" height="240px;">
+						    </td>  
 						</tr>
-						<tr>
-							<th>연락처</th>  
-					        <td>
-					        	<div id="doubleMajorModal_tell"></div>
-					        </td>
+						<tr>    
 						    <th>주소</th>  
-					        <td colspan="3">
+					        <td colspan="3" align="left">
 					        	<div id="doubleMajorModal_addr"></div>
 					        </td>  
 						</tr>
+						<tr>
+							<th>연락처</th>  
+					        <td colspan="3" align="left">
+					        	<div id="doubleMajorModal_tell"></div>
+					        </td>
+					    </tr>
 						<tr>  
-						  
-					  	    <th>학번</th>   
-						    <td>
-						    	<div id="doubleMajorModal_no"></div>
-						    </td>  
 					   	    <th>학년</th>   
-					   	    <td>
+					   	    <td align="left">
 					   	    	<div id="doubleMajorModal_grade"></div>
 					   	    </td> 
-					   	   	<th>상태</th>  
-						    <td>
+					   	   	<th>학적</th>  
+						    <td align="left">
 						    	<div id="doubleMajorModal_status"></div>
 						    </td>  
 						</tr> 
 						<tr>  
-					  	    <th>전공대학</th>   
-						    <td>
-						    	<div id="doubleMajorModal_coll"></div>
-						    </td>  
 					   	    <th>전공학과</th>   
-					   	    <td>
+					   	    <td align="left">
 					   	    	<div id="doubleMajorModal_dept"></div>
 					   	    </td>  
 					  	    <th>복수전공</th>   
-					        <td>
+					        <td align="left">
 					        	<div id="doubleMajorModal_doubleNo"></div>
 					        </td>  
 						</tr> 
@@ -440,16 +420,16 @@
 						    <td>
 						    	<div id="doubleMajorModal_fromColl"></div>
 						    </td>  
-					   	    <th>소속전공학과</th>   
-					   	    <td>
-					   	    	<div id="doubleMajorModal_fromDept"></div>
-					   	    </td>  
-						</tr>  
-						<tr>   
 					        <th>복수전공대학</th>   
 					        <td>
 					        	<div id="doubleMajorModal_doubleColl"></div>
 					        </td>   
+						</tr>  
+						<tr>   
+					   	    <th>소속전공학과</th>   
+					   	    <td>
+					   	    	<div id="doubleMajorModal_fromDept"></div>
+					   	    </td>  
 					        <th>복수전공학과</th>   
 					        <td>
 					        	<div id="doubleMajorModal_doubleDept"></div>
@@ -460,6 +440,11 @@
 					        <td colspan="2">
 					        	<div id="doubleMajorModal_reason"></div>
 					        </td>   
+						</tr>
+						<tr>
+							<td colspan="4">
+								<span><input type="checkbox" id = "doubleMajor_ChkBox"></span> 카카오톡 알림 발송하기
+							<td>
 						</tr>  
 					</table>
 				</div>
@@ -475,48 +460,6 @@
 	    </div>
 	  </div>
 	</div>
-	<!--by수경 전과/복수전공 일괄승인완료 모달창 -->
-	<div class="modal fade" id="resultAlltModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-	      <div class="modal-body">
-	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	  일괄 승인이 완료되었습니다.
-		      	</div>
-	      	</div>
-	       <div class="row">
-	       	<div class="col text-center">
-	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
-	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-	       		th:onclick="formSubmit();">확인</button>
-	       	</div>
-	       </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>		
-	<!--by수경 전과/복수전공 단일 승인완료 모달창 -->
-	<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-	      <div class="modal-body">
-	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	  승인이 완료되었습니다.
-		      	</div>
-	      	</div>
-	       <div class="row">
-	       	<div class="col text-center">
-	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
-	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-	       		th:onclick="home();">확인</button>
-	       	</div>
-	       </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>		
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
 <script type="text/javascript" th:src="@{/js/deptManage/changeAddMajor.js}"></script>	

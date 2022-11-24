@@ -22,8 +22,10 @@ function changeColl(){
 	   		//by수경 학과 select박스 안에 option 태그 선택
 	   		const optionTags = deptSelect.querySelectorAll('option');
 			
+			//기존 학과 목록을 지워준다
 			$('.deptList').empty(); 
-		
+			
+			//새로 그려주기
 			let str ='';
 		
 			for(const dept of result){ 
@@ -62,7 +64,6 @@ function stuInfo(stuNo){
 		    document.querySelector('#probationModal_memNo').value = result.studentVO.memNo;
 		    //이메일 보내기를 위하여 히든으로 가져갈 데이터 
 		    document.querySelector('#probationModal_memEmail').value = result.studentVO.memberVO.memEmail;
-			
 			
 	     	let str ='';
 	     	str += '<tr>';
@@ -129,7 +130,6 @@ function stuOut(stuNo){
 		    document.querySelector('#stuOut_status').innerText = result.studentVO.stuStatus;
 		    document.querySelector('#stuOut_coll').innerText = result.studentVO.collNo;
 		    document.querySelector('#stuOut_dept').innerText = result.studentVO.deptNo;
-		   
 	     
 	     	let str = '';
 	     	str += '<tr>';
@@ -160,25 +160,19 @@ function stuOut(stuNo){
 
 //by수경 학사경고 승인하기 버튼 클릭
 function acceptProbation(){
-	
-	//메일보내기 체크박스 버튼이 체크 되어 있다면 메일 발송되도록 구현
-	const probationMailChkBox = document.querySelector('#probationMailChkBox');
-	const isChecked = probationMailChkBox.checked;
-	
+
 	//학사경고 쿼리에 필요한 데이터 보내기
 	const stuNo = document.querySelector('#probationModal_no').innerText;
 	const probReason = document.querySelector('#probReason').value;
 	const semNo = document.querySelector('#semNo').value;
 	const memNo = document.querySelector('#probationModal_memNo').value;
-	const memEmail = document.querySelector('#probationMailChkBox').value;
-	const memName = document.querySelector('#probationModal_name').innerText;
+	
 	
 		$.ajax({
 		   url: '/emp/acceptProbationAjax', //요청경로
 		    type: 'post',
 		    data:{'stuNo':stuNo,'probReason':probReason,
-		    'semNo':semNo, 'memNo':memNo, 'isChecked':isChecked,
-		    'memEmail':memEmail, 'memName':memName}, //필요한 데이터
+		    'semNo':semNo, 'memNo':memNo}, //필요한 데이터
 		    success: function(result) {	
             
 	            Swal.fire({
@@ -189,7 +183,8 @@ function acceptProbation(){
 				  confirmButtonText: '확인'
 				}).then((result) => {
 				  if (result.isConfirmed) {
-				    location.href = '/emp/probation';
+					//학사 경고 메일 보내기 함수 실행
+					sendMail();
 				  }
 				})
 		     
@@ -199,6 +194,76 @@ function acceptProbation(){
 		    }
 		});
 }
+
+//학생에게 학사경고 안내 메일 전송하기
+function sendMail(){
+	
+	//메일보내기 체크박스 버튼이 체크 되어 있다면 메일 발송되도록 구현
+	const probationMailChkBox = document.querySelector('#probationMailChkBox');
+	const isChecked = probationMailChkBox.checked;
+	
+	//메일전송 시 컨텐츠 영역에 넣을 데이터 
+	const memName = document.querySelector('#probationModal_name').innerText;
+	const memEmail = document.querySelector('#probationModal_memEmail').value;
+	const probReason = document.querySelector('#probReason').value;
+	
+	if(isChecked){
+		
+		//메일 보내기 로딩 화면				
+		let timerInterval
+		Swal.fire({
+		  title: '처리중입니다.',
+		  html: '메일 전송 완료까지 <b></b> 남았습니다.',
+		  timer: 3010,
+		  timerProgressBar: true,
+		  didOpen: () => {
+		    Swal.showLoading()
+		    const b = Swal.getHtmlContainer().querySelector('b')
+		    timerInterval = setInterval(() => {
+		      b.textContent = Swal.getTimerLeft()
+		    }, 100)
+		  },
+		  willClose: () => {
+		    clearInterval(timerInterval)
+		  }
+		});		
+		
+		//ajax 시작
+		$.ajax({
+		   url: '/mail/sendProbationMailAjax', //요청경로
+		    type: 'post',
+		    data:{'memEmail':memEmail, 'memName':memName,
+		    	  'probReason':probReason}, //필요한 데이터
+		    	  
+		    success: function(result) {
+				Swal.fire({
+				  title: '메일 전송 완료',
+				  text: "메일 전송이 완료 되었습니다.",
+				  icon: 'success',
+				  confirmButtonColor: '#3085d6',
+				  confirmButtonText: '확인'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					location.href = '/emp/probation';
+				  }
+				})
+		    },
+		    error: function(){
+		      alert('실패');
+		    }
+		});
+		
+		return;
+	}
+	//체크박스에 체크가 되어 있지 않다면 다시 원래 페이지로 돌아간다.
+	else{
+		location.href = '/emp/probation';
+	}
+
+}
+
+
+
 //by수경 제적처리 버튼 클릭 시
 function acceptStuOut(){
 	
@@ -211,19 +276,22 @@ function acceptStuOut(){
 	    data:{'stuNo':stuNo,'stuOutReason':stuOutReason}, //필요한 데이터
 	    success: function(result) {
 			
-				Swal.fire({
-				  title: '제적처리 완료',
-				  text: "해당 학생을 제적처리하였습니다. 카카오톡으로 내역을 발송하시겠습니까?",
-				  icon: 'success',
-				  confirmButtonColor: '#3085d6',
-				  confirmButtonText: '확인'
-				}).then((result) => {
-				  if (result.isConfirmed) {
-				    sendKakao();
-				    location.href = '/emp/probation';
-				  }
-				})
-
+			Swal.fire({
+			  title: '제적처리 완료',
+			  text: "해당 학생을 제적처리하였습니다. 카카오톡으로 발송하시겠습니까?",
+			  icon: 'success',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  confirmButtonText: '확인',
+			  cancelButtonText: '취소'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+			    sendKakao();
+			   
+			  }else{
+				location.href = '/emp/probation';
+			}
+			})
 	    },
 	    error: function(){
 	       alert('실패');
@@ -240,7 +308,6 @@ function sendKakao(){
 	    title: '제목 영역입니다.',
 	    description: '설명 영역입니다.',
 	  },
-	
 	});
-
+	 location.href = '/emp/probation';
 }

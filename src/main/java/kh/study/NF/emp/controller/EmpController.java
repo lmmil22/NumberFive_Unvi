@@ -502,21 +502,13 @@ public class EmpController {
 		  return "content/statusInfo/stuOut";
 	  }
 	  
-	  //by수경 학사경고 승인하기 ajax
+	  //by수경 학사경고 모달창에서 승인하기 ajax
 	  @ResponseBody
 	  @PostMapping("/acceptProbationAjax")
-	  public void acceptProbationAjax(AcademicProbationVO probationVO, boolean isChecked,
-			  						  MemberVO memberVO) {
-		  //체크박스 선택유무가 true/false로 나뉘기에 boolean으로 가져온다.
-		  System.out.println("11111" + isChecked);
-		  if(isChecked) {
-			  
-		  }
-		  
+		public void acceptProbationAjax(AcademicProbationVO probationVO) {
 		  
 		  //학사경고 테이블에 데이터 insert
 		  empService.insertProbation(probationVO);
-		  
 	  }
 	  
 	  //by수경 제적처리 ajax
