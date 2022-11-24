@@ -17,7 +17,6 @@ function stuInfo(stuNo){
 			document.querySelector('#stuInfoModal_coll').innerText = result.collVO.collName;
 			document.querySelector('#stuInfoModal_dept').innerText = result.deptVO.deptName;
 			document.querySelector('#stuInfoModal_doubleDept').innerText = result.doubleNo;
-			document.querySelector('#stuInfoModal_gender').innerText = result.memberVO.memGender;
 			document.querySelector('#stuInfoModal_birth').innerText = result.memberVO.memBirth;
 			document.querySelector('#stuInfoModal_status').innerText = result.stuStatus;
 		},
@@ -29,7 +28,7 @@ function stuInfo(stuNo){
 
 //by수경 휴학 승인대기/승인완료 클릭 시 라디오 값 변경(단일 변경)
 function changeTakeOffStatus(applyNo, processStatus, stuNo){
-	$().ready(function () {
+	
         Swal.fire({
             title: '승인하기',
             text: "신청내역을 승인하시겠습니까?",
@@ -47,56 +46,79 @@ function changeTakeOffStatus(applyNo, processStatus, stuNo){
 				    data:{'applyNo':applyNo, 'processStatus':processStatus
 				    	 ,'stuNo':stuNo}, //필요한 데이터
 				    success: function(result) {
-					    //모달창 소스
-						const modal = new bootstrap.Modal('#resultModal');
-						//모달 보여주기
-						modal.show();
+					
+					    Swal.fire({
+						  title: '승인완료',
+						  text: "승인이 완료 되었습니다.",
+						  icon: 'success',
+						  confirmButtonColor: '#3085d6',
+						  confirmButtonText: '확인'
+						}).then((result) => {
+						  if (result.isConfirmed) {
+							home();
+							return;
+						  }
+						})
 				    },
 				    error: function(){
 				      alert('실패');
 			    	}	
 				});
-
+				return;
             }
             //라디오 박스 클릭하고 취소했을 때 기존값으로 돌아가도록 구현
             else{
 				event.preventDefault();
+				home();
 			}
-            
-        })
-     });
+        });
 
 }
 //by수경 복학 승인대기/승인완료 클릭 시 라디오 값 변경(단일 변경)
 function changeComebackStatus(applyNo, processStatus, stuNo){
 	
-	const result = confirm('신청내역을 승인하시겠습니까?');
-	
-	if(result){
-		
-		$.ajax({
-		   url: '/emp/changeComebackStatusAjax', //요청경로
-		    type: 'post',
-		    data:{'applyNo':applyNo, 'processStatus':processStatus
-		    	 ,'stuNo':stuNo}, //필요한 데이터
-		    success: function(result) {
-			    //모달창 소스
-				const modal = new bootstrap.Modal('#resultModal');
-				//모달 보여주기
-				modal.show();
-		    },
-		    error: function(){
-		       alert('실패');
-		    }
-		});
-	}
-	
-	//라디오 박스 클릭하고 취소했을 때 기존값으로 돌아가도록 구현
-	else{
-		event.preventDefault();
-	}
-	
-	
+        Swal.fire({
+            title: '승인하기',
+            text: "신청내역을 승인하시겠습니까?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '승인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+			$.ajax({
+			   url: '/emp/changeComebackStatusAjax', //요청경로
+			    type: 'post',
+			    data:{'applyNo':applyNo, 'processStatus':processStatus
+			    	 ,'stuNo':stuNo}, //필요한 데이터
+			    success: function(result) {
+				   	Swal.fire({
+					  title: '승인완료',
+					  text: "승인이 완료 되었습니다.",
+					  icon: 'success',
+					  confirmButtonColor: '#3085d6',
+					  confirmButtonText: '확인'
+					}).then((result) => {
+					  if (result.isConfirmed) {
+						home();
+						return;
+					  }
+					});
+			    },
+			    error: function(){
+			       alert('실패');
+			    }
+			});
+			return;
+		}
+		//라디오 박스 클릭하고 취소했을 때 기존값으로 돌아가도록 구현
+		else{
+			event.preventDefault();
+			home();
+		}
+ 	});
 }
 
 //휴학신청 테이블 제목줄 체크박스
@@ -128,10 +150,7 @@ checkAll2.addEventListener('click',function(){
 });
 
 //by수경 휴학신청 일괄승인 
-function takeOffAllAccept(){
-	//모달창 if/else 구분을 위한 임의 데이터
-	document.querySelector('#resultAllModal_btn').dataset.flag = 1;
-	
+function takeOffAllAccept(){	
 	//form태그 가져오기
 	const takeOffForm = document.querySelector('#takeOffForm');
 	
@@ -169,11 +188,20 @@ function takeOffAllAccept(){
 	//stuNo를 담을 stuNos를 input 히든으로 데이터 담아간다.
 	takeOffForm.querySelector('#takeOffInput2').value = stuNos;
 		
-	//모달창 소스
-	const modal = new bootstrap.Modal('#resultAlltModal');
-	//모달 보여주기
-	modal.show();
-	
+	//승인 확인창	
+   	Swal.fire({
+	  title: '일괄승인 완료',
+	  text: "일괄승인이 완료 되었습니다.",
+	  icon: 'success',
+	  confirmButtonColor: '#3085d6',
+	  confirmButtonText: '확인'
+	}).then((result) => {
+	  if (result.isConfirmed) {
+		takeOffForm.submit();
+		home();
+		return;
+	  }
+	});
 	
 }
 
@@ -208,9 +236,6 @@ checkAll1.addEventListener('click',function(){
 
 //by수경 복학신청 일괄승인 
 function comebackAllAccept(){
-	//모달창 if/else 구분을 위한 임의 데이터
-	document.querySelector('#resultAllModal_btn').dataset.flag = 2;
-	
 	//form태그 가져오기
 	const comebackForm = document.querySelector('#comebackForm');
 	
@@ -251,29 +276,28 @@ function comebackAllAccept(){
 	//stuNo를 담을 stuNos를 input 히든으로 데이터 담아간다.
 	comebackForm.querySelector('#comebackInput2').value = stuNos;
 	
-	//모달창 소스
-	const modal = new bootstrap.Modal('#resultAlltModal');
-	//모달 보여주기
-	modal.show();
-	
-}
-
-//by수경 클릭 시 form태그 실행
-function formSubmit(){
-	
-	//모달창 if/else 구분을 위한 임의 데이터
-	const flag = document.querySelector('#resultAllModal_btn').dataset.flag;
-	
-	if(flag == 1){
-		//휴학 일괄신청 form태그를 실행시킨다.
-		takeOffForm.submit();
-	}
-	else{
-		//복학 일괄신청 form태그를 실행시킨다.
+	//승인 확인창	
+   	Swal.fire({
+	  title: '일괄승인 완료',
+	  text: "일괄승인이 완료 되었습니다.",
+	  icon: 'success',
+	  confirmButtonColor: '#3085d6',
+	  confirmButtonText: '확인'
+	}).then((result) => {
+	  if (result.isConfirmed) {
 		comebackForm.submit();
-	}
+		home();
+		return;
+	  }
+	});
+	
 }
+//by수경 다시 현재 화면으로 이동하는 함수
+function home(){
 
+	location.href = '/emp/takeOffReturnUniv';
+	
+}
 
 //by수경 복학, 휴학 조건 검색에서 search버튼 클릭 시 클릭 시 실행될 form태그
 function search(){

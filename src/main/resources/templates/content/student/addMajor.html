@@ -117,10 +117,17 @@
 		    </div>
 	      <div class="modal-body">
 	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	  복수신청 유의사항<p>
-		      	  1. [[${stuInfo.memberVO.memName}]]님은 2022년 2학기 복수전공 신청을 하셨습니다.
-		      	  
+		      	<div class="col">
+		      	  [[${stuInfo.memberVO.memName}]]님은 2022년 2학기 복수전공 신청을 하셨습니다.<p>
+					1.본교의 모든 학부(과)를 복수전공의 대상학과로 개방함(5년제 건축학 전공, 간호학과 제외)
+					교직과정을 이수하지 않는 학생이 사범계열 학과를 복수전공하는 것은 불가<p>
+					가. 신청자격
+					제 1전공(주전공)에서 2학기 이상 이수한 자. 단, 교원자격취득을 목적으로 하는 복수전공자는 성적 평점평균이 3.00이상인 자<p>
+					나. 신청시기 및 절차<p>
+					2학년 1학기 초부터 4학년 2학기 초 공고된 기간 (교원자격증 취득을 위한 복수전공 교직이수자는 3학년 1학기 복수전공 학부(과)에서 선발함)
+					통합정보시스템을 이용하여 신청 → 지원서출력 → 제1전공・제2전공 교수서명 → 지원서 제출(제2전공 신청학부(과))(한 학기에 1개 전공 신청 가능)<p>
+					다. 편입생의 경우에는 제1전공(주전공)에서 1학기이상 이수 후 신청 가능<p>
+					라. 제3전공 신청자격: 제1전공의 전공과목을 18학점이상, 제2전공의 전공학점을 9학점 이상 이수한 자에게 허용함<p>
 		      	  	<div class="row text-center">
  						<div class="col">
  							<span><input type="checkbox" id="agreeCheckBox"></span> 동의합니다.
@@ -144,31 +151,6 @@
 	    </div>
 	  </div>
 	</div>	
-	
-	<!--by수경 복수전공 신청완료 후 모달창  -->
-	<div class="modal fade" id="applyResultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-	      <div class="modal-body">
-	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	   [[${stuInfo.memberVO.memName}]]님의 복수전공 신청이 완료 되었습니다.
-		      	</div>
-	      	</div>
-	      	
-	       <div class="row">
-	       	<div class="col text-center">
-	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
-	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-	       		th:onclick="nextPage();">확인</button>
-	       	</div>
-	       </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>		
-	
-	
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
 <script type="text/javascript" th:src="@{/js/student/addMajor.js}"></script>	

@@ -13,9 +13,6 @@
 <!--by수경 학생이 전공학과 변경(전과) 신청하는 페이지입니다.-->
 
 <div layout:fragment ="content">
-<th:block layout:fragment ="css">
-	<link rel ="stylesheet" th:href="@{/css/applyModal.css}">
-</th:block>
 	<div class="row justify-content-center text-center">
 		<div class="col mt-5">
 			<table class="table table-bordered">
@@ -121,8 +118,21 @@
 	      <div class="modal-body">
 	      	<div class="row mb-3" >
 		      	<div class="col">
-		      	  1. [[${stuInfo.memberVO.memName}]]님은 2022년 2학기 전과신청을 하셨습니다.
-		      	  	
+		      	  [[${stuInfo.memberVO.memName}]]님은 2022년 2학기 전과신청을 하셨습니다.<p><p>
+		      	  
+		      	  1. 전과시기<p>
+				  입학후 3학기~6학기 학기 시작 전·후 소정 기간 신청<p>					
+				  2. 허용범위<p>
+				  재학중 전과(부)는 재학중 2회에 한하여 허용하며, 5년제 건축학 전공, 간호학과는 전부(과)를 불허함<p>
+				  3. 사정원칙<p>
+					전 · 출입 신청인원이 초과할 경우 전부(과) 직전 학기까지의 성적이 높은 자 및 전부(과) 희망학부(과)의 전공이수학점이 많은 자를 우선
+					각 학부(과)의 요구에 의해 시험(필기 또는 면접) 또는 실기테스트(예능계)를 실시할 수 있음<p>
+				  4.교육과정 이수<p>
+					교양필수, 교양필수선택 과목의 이수여부는 전부(과) 시행 학기를 기준으로 한다.
+					전부(과)한 시점 이전의 전공필수 교과목은 이수면제 한다.<p>
+					
+				  5. 등록금 정산<p>
+					전부(과) 확정자의 수강신청 변경과 계열 변동에 따른 등록금 차액은 정산한다.
 		      	  	<div class="row text-center">
  						<div class="col">
  							<span><input type="checkbox" id="agreeCheckBox"></span> 동의합니다.
@@ -147,29 +157,6 @@
 	  </div>
 	</div>	
 	
-	<!--by수경 전과신청 완료 후 모달창  -->
-	<div class="modal fade" id="applyResultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-body">
-	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	   [[${stuInfo.memberVO.memName}]]님의 전과신청이 완료 되었습니다.
-		      	</div>
-	      	</div>
-	      	
-	       <div class="row">
-	       	<div class="col text-center">
-	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
-	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-	       		th:onclick="nextPage();">확인</button>
-	       	</div>
-	       </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>		
-
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
 <script type="text/javascript" th:src="@{/js/student/changeMajor.js}"></script>	

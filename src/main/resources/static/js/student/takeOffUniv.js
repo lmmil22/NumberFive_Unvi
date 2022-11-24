@@ -87,11 +87,17 @@ function applyResult(){
 			}, //필요한 데이터
 	
 			success: function(result) {
-	
-				//모달창 소스
-				const modal = new bootstrap.Modal('#applyResultModal');
-				//모달 보여주기
-				modal.show();
+				Swal.fire({
+				  title: '휴학신청 완료',
+				  text: "휴학신청이 완료 되었습니다.",
+				  icon: 'success',
+				  confirmButtonColor: '#3085d6',
+				  confirmButtonText: '확인'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					nextPage();
+				  }
+				});
 			},
 	
 			error: function() {
@@ -101,22 +107,23 @@ function applyResult(){
 	}
 	//by수경 만약 동의합니다에 체크하지 않았다면 alert창 실행
 	else{
-		$().ready(function () {
-            Swal.fire({
-                icon: 'warning',
-                title: '동의버튼 클릭',
-                text: '휴학 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.',
-             });
-        });     
-		
-		//휴학 유의사항 모달창 다시 뜨도록 설정
-		//모달창 소스
-		const modal = new bootstrap.Modal('#takeOffUnivModal');
-		//모달 보여주기
-		modal.show();
-		return;
+		Swal.fire({
+		  title: '동의버튼 클릭',
+		   text: '휴학 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.',
+		  icon: 'warning',
+		  confirmButtonColor: '#3085d6',
+		  confirmButtonText: '확인'
+		}).then((result) => {
+		  if (result.isConfirmed) {
+			//휴학 유의사항 모달창 다시 뜨도록 설정
+			//모달창 소스
+			const modal = new bootstrap.Modal('#takeOffUnivModal');
+			//모달 보여주기
+			modal.show();
+			return;
+		  }
+		});
 	}	
-
 }
 //by수경 신청현황을 보여주는 페이지로 이동
 function nextPage(){

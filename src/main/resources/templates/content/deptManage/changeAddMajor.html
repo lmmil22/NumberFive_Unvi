@@ -23,9 +23,6 @@
 <!--관리자는 승인대기 버튼 클릭 시 해당 학생의 신청내역을 볼 수 있고
 승인버튼 클릭 시 승인대기 ->승인완료 변경되도록 구현, 체크박스를 통한 일괄 승인 구현-->
 <div layout:fragment ="content">
-<th:block layout:fragment ="css">
-	<link rel ="stylesheet" th:href="@{/css/applyModal.css}">
-</th:block>
 <!--by수경 조건 검색에 사용할 form -->
 <form th:action="@{/emp/changeAddMajor}" method="post" id="searchForm">
 	<input type="hidden" name="changeMajor_fromDate" id="search_changeMajor_fromDate" value="">
@@ -128,7 +125,7 @@
 					      		<button type="button" class="btn btn-primary">승인<p>대기</button>
 					      	</th:block>
 					      	<th:block th:unless="${changeMajor.processStatus eq 'waiting'}" th:value="${changeMajor.applyNo}" >
-					      		<button type="button" class="btn btn-primary">승인<p>완료</button>
+					      		<button type="button" class="btn btn-primary" disabled>승인<p>완료</button>
 					      	</th:block>
 					      </td>
 					      <td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
@@ -236,7 +233,7 @@
 					      		<button type="button" class="btn btn-primary">승인<p>대기</button>
 					      	</th:block>
 					      	<th:block th:unless="${doubleMajor.processStatus eq 'waiting'}">
-					      		<button type="button" class="btn btn-primary">승인<p>완료</button>
+					      		<button type="button" class="btn btn-primary" disabled>승인<p>완료</button>
 					      	</th:block>
 				      </td>
 				      <td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
@@ -463,48 +460,6 @@
 	    </div>
 	  </div>
 	</div>
-	<!--by수경 전과/복수전공 일괄승인완료 모달창 -->
-	<div class="modal fade" id="resultAlltModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-	      <div class="modal-body">
-	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	  일괄 승인이 완료되었습니다.
-		      	</div>
-	      	</div>
-	       <div class="row">
-	       	<div class="col text-center">
-	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
-	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-	       		th:onclick="formSubmit();">확인</button>
-	       	</div>
-	       </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>		
-	<!--by수경 전과/복수전공 단일 승인완료 모달창 -->
-	<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-	      <div class="modal-body">
-	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	  승인이 완료되었습니다.
-		      	</div>
-	      	</div>
-	       <div class="row">
-	       	<div class="col text-center">
-	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
-	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-	       		th:onclick="home();">확인</button>
-	       	</div>
-	       </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>		
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
 <script type="text/javascript" th:src="@{/js/deptManage/changeAddMajor.js}"></script>	

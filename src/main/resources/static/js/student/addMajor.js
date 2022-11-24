@@ -154,11 +154,18 @@ function applyResult(){
 			}, //필요한 데이터
 	
 			success: function(result) {
-	
-				//모달창 소스
-				const modal = new bootstrap.Modal('#applyResultModal');
-				//모달 보여주기
-				modal.show();
+				
+				Swal.fire({
+				  title: '복수전공 신청완료',
+				  text: "복수전공 신청이 완료 되었습니다.",
+				  icon: 'success',
+				  confirmButtonColor: '#3085d6',
+				  confirmButtonText: '확인'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					nextPage();
+				  }
+				});
 			},
 			error: function() {
 				alert('실패');
@@ -167,20 +174,21 @@ function applyResult(){
 	}
 	//동의하기에 체크가 되어 있지 않다면 alert창 실행
 	else{
-		
-		$().ready(function () {
-            Swal.fire({
-                icon: 'warning',
-                title: '동의버튼 클릭',
-                text: '복수전공 신청 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.',
-             });
-        });     
-		
-		//모달창 소스
-		const modal = new bootstrap.Modal('#addMajorModal');
-		//모달 보여주기
-		modal.show();
-		return;
+		Swal.fire({
+		  title: '동의버튼 클릭',
+		   text: '복수전공 신청 유의사항을 확인하시고 동의버튼을 클릭하여 주십시오.',
+		  icon: 'warning',
+		  confirmButtonColor: '#3085d6',
+		  confirmButtonText: '확인'
+		}).then((result) => {
+		  if (result.isConfirmed) {
+			//모달창 소스
+			const modal = new bootstrap.Modal('#addMajorModal');
+			//모달 보여주기
+			modal.show();
+			return;
+		  }
+		});
 	}
 	
 }

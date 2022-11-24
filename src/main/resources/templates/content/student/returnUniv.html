@@ -79,9 +79,17 @@
 	       </div>
 	      <div class="modal-body">
 	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	  1. [[${stuInfo.memberVO.memName}]]님은 2022년도 2학기 복학신청을 하셨습니다.
-		      	   	
+		      	<div class="col">
+		      	  	[[${stuInfo.memberVO.memName}]]님은 2022년도 2학기 복학신청을 하셨습니다.<p><p>
+		      	  	일반휴학을 한 후 휴학기간이 만료되었거나 군입대 휴학 후 제대한 경우에는 복학을 하여야 하며, 복학대상자가 소정기간 내에 복학을 하지 아니한 경우에는 미복학으로 제적됨.<p>
+		      	  	1. 신청기간<p>
+					복학신청은 학사일정에 공고한 날을 원칙으로 하되, 매 학기 초 30일 이내까지 복학신청 가능<p>
+					2. 신청절차<p>
+					1) 인터넷 복학신청
+					대상자 : 일반휴학 후 복학대상자 및 군입대 휴학 후 전역자<p>
+					절 차 : 학교홈페이지 접속 ⇒ 통합정보시스템(학부) ⇒ 로그인(학번/비밀번호) ⇒ 학적 ⇒ 복학신청 및 결과조회 ⇒ 복학 신청 작성(완료)
+					수강신청 : 수강신청은 재학생들과 동일하게 수강신청기간에 하며, 수강신청기간 지나서 복학하는 학생은 복학신청 당일 밤 12:00까지 가능<p>
+					군입대 휴학 후 전역자는 복학 시 군번, 군입대일자, 전역일자 등 기재<p>
 		      	   	<div class="row text-center">
  						<div class="col">
  							<span><input type="checkbox" id="agreeCheckBox"></span> 동의합니다.
@@ -104,30 +112,6 @@
 	    </div>
 	  </div>
 	</div>		
-
-	<!--by수경 복학신청 완료 후 모달창 -->
-	<div class="modal fade" id="applyResultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-body">
-	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	   [[${stuInfo.memberVO.memName}]]님의 복학신청이 완료 되었습니다.
-		      	</div>
-	      	</div>
-	      	
-	       <div class="row">
-	       	<div class="col text-center">
-	       		<button type="submit" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
-	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-	       		th:onclick="nextPage();">확인</button>
-	       	</div>
-	       </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>					
-	</form>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
 <script type="text/javascript" th:src="@{/js/student/returnUniv.js}"></script>	

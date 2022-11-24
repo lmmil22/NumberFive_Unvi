@@ -95,9 +95,7 @@ chkAll1.addEventListener('click',function(){
 
 //by수경 전과신청 일괄승인 
 function changeAllAccept(){
-	//모달창 if/else 구분을 위한 임의 데이터
-	document.querySelector('#resultAllModal_btn').dataset.flag = 1;
-	
+
 	//form태그 가져오기
 	const changeForm = document.querySelector('#changeForm');
 	
@@ -135,11 +133,21 @@ function changeAllAccept(){
 	changeForm.querySelector('#changeInput1').value = applyNos;
 	//stuNo를 담을 stuNos를 input 히든으로 데이터 담아간다.
 	changeForm.querySelector('#changeInput2').value = stuNos;
-		
-	//모달창 소스
-	const modal = new bootstrap.Modal('#resultAlltModal');
-	//모달 보여주기
-	modal.show();
+	
+	//승인완료 swal창 뜨고 formSubmit() 함수 실행
+	Swal.fire({
+	  title: '일괄승인 완료',
+	  text: "일괄승인이 완료 되었습니다.",
+	  icon: 'success',
+	  confirmButtonColor: '#3085d6',
+	  confirmButtonText: '확인'
+	}).then((result) => {
+	  if (result.isConfirmed) {
+		changeForm.submit();
+		return;
+	  }
+	});
+
 }
 
 //복수전공신청 테이블 제목줄 체크박스
@@ -172,8 +180,6 @@ chkAll2.addEventListener('click',function(){
 
 //by수경 복수전공 신청 일괄승인 
 function doubleAllAccept(){
-	//모달창 if/else 구분을 위한 임의 데이터
-	document.querySelector('#resultAllModal_btn').dataset.flag = 2;
 	
 	//form태그 가져오기
 	const doubleForm = document.querySelector('#doubleForm');
@@ -212,33 +218,23 @@ function doubleAllAccept(){
 	//stuNo를 담을 stuNos를 input 히든으로 데이터 담아간다.
 	doubleForm.querySelector('#doubleInput2').value = stuNos;
 		
-	//모달창 소스
-	const modal = new bootstrap.Modal('#resultAlltModal');
-	//모달 보여주기
-	modal.show();
-}
-
-//by수경 일괄 승인하기 클릭 시 form태그 실행
-function formSubmit(){
-	
-	//모달창 if/else 구분을 위한 임의 데이터
-	const flag = document.querySelector('#resultAllModal_btn').dataset.flag;
-	
-	if(flag == 1){
-		//전과 일괄신청 form태그를 실행시킨다.
-		changeForm.submit();
-	}
-	else{
-		//복수전공 일괄신청 form태그를 실행시킨다.
+	//승인완료 swal창 뜨고 formSubmit() 함수 실행
+	Swal.fire({
+	  title: '일괄승인 완료',
+	  text: "일괄승인이 완료 되었습니다.",
+	  icon: 'success',
+	  confirmButtonColor: '#3085d6',
+	  confirmButtonText: '확인'
+	}).then((result) => {
+	  if (result.isConfirmed) {
 		doubleForm.submit();
-	}
+		return;
+	  }
+	});
 }
 
 //by수경 전과신청 관리자 단일 승인
 function acceptChangeMajor(){
-	//전과신청 모달창에서 카카오톡 알림 보내기 체크박스에 체크가 되어 있다면 알림 보내기
-	const changeMajorChkBox = document.querySelector('#changeMajor_ChkBox').value;
-	const isChecked = changeMajorChkBox.checked;
 	
 	const applyNo = document.querySelector('#changeMajorModal_apply').value;
 	const stuNo = document.querySelector('#changeMajorModal_no').innerText;
@@ -248,11 +244,19 @@ function acceptChangeMajor(){
 	    type: 'post',
 	    data:{'applyNo':applyNo,'stuNo':stuNo}, //필요한 데이터
 	    success: function(result) {
-			//모달창 소스
-			const modal = new bootstrap.Modal('#resultModal');
-			//모달 보여주기
-			modal.show();
-
+			Swal.fire({
+				  title: '승인 완료',
+				  text: "전과 신청이 승인되었습니다.",
+				  icon: 'success',
+				  confirmButtonColor: '#3085d6',
+				  confirmButtonText: '확인'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					checkChangeMajorChkBox();
+					return;
+				  }
+				})
+			
 	    },
 	    error: function(){
 	       alert('실패');
@@ -260,6 +264,43 @@ function acceptChangeMajor(){
 	});
 
 }
+
+//by수경 전과신청 모달창에서 카카오톡 전송 체크박스에 체크 시 실행될 함수
+function checkChangeMajorChkBox(){
+	
+	//전과신청 모달창에서 카카오톡 알림 보내기 체크박스에 체크가 되어 있는지 유무
+	const changeMajorChkBox = document.querySelector('#changeMajor_ChkBox');
+	const isChecked = changeMajorChkBox.checked;
+	
+	if(isChecked){
+		sendKakao();
+		return;
+	}
+	//체크박스에 체크가 없다면 다시 원래 페이지로 이동
+	else{
+		home();
+	}
+	
+}
+
+//by수경 복수전공신청 모달창에서 카카오톡 전송 체크박스에 체크 시 실행될 함수
+function checkDoubleMajorChkBox(){
+	
+	//전과신청 모달창에서 카카오톡 알림 보내기 체크박스에 체크가 되어 있는지 유무
+	const doubleMajorChkBox = document.querySelector('#doubleMajor_ChkBox');
+	const isChecked = doubleMajorChkBox.checked;
+	
+	if(isChecked){
+		sendKakao();
+		return;
+	}
+	//체크박스에 체크가 없다면 다시 원래 페이지로 이동
+	else{
+		home();
+	}
+	
+}
+
 //by수경 복수전공신청 관리자 단일 승인
 function acceptDoubleMajor(){
 	const applyNo = document.querySelector('#doubleMajorModal_apply').value;
@@ -270,11 +311,19 @@ function acceptDoubleMajor(){
 	    type: 'post',
 	    data:{'applyNo':applyNo, 'stuNo':stuNo}, //필요한 데이터
 	    success: function(result) {
-			 //모달창 소스
-			const modal = new bootstrap.Modal('#resultModal');
-			//모달 보여주기
-			modal.show();
-
+		
+			 Swal.fire({
+				  title: '승인 완료',
+				  text: "복수전공 신청이 승인되었습니다.",
+				  icon: 'success',
+				  confirmButtonColor: '#3085d6',
+				  confirmButtonText: '확인'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					checkDoubleMajorChkBox();
+					return;
+				  }
+				})
 	    },
 	    error: function(){
 	       alert('실패');
@@ -317,6 +366,8 @@ function sendKakao(){
 	  },
 	
 	});
+	
+	home();
 
 }
 

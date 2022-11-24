@@ -276,8 +276,8 @@
 	</div>		
 	
 	<!-- 휴학/복학 신청 현황에서 학번 클릭 시 뜨는 모달 창 -->
-	<div class="modal fade" id="stuInfoModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
+	<div class="modal fade bd-example-modal-lg" id="stuInfoModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h4 class="modal-title" >학생정보</h4>
@@ -290,44 +290,38 @@
 						<tr>
 							<th>이름</th>  
 						    <td>
-						    	<div id="stuInfoModal_name"></div>
-						    </td>  
-						    <th>학 번</th>  
+						    	<span id="stuInfoModal_name"></span>
+						    	(<span id="stuInfoModal_no"></span>, 
+						    	<span id="stuInfoModal_status"></span>)
+						    </td> 
+						    <th>생년월일</th>   
 					        <td>
-					        	<div id="stuInfoModal_no"></div>
-					        </td>  
+					        	<div id="stuInfoModal_birth"></div>
+					        </td> 
+					        <td rowspan="3" colspan="2">
+					        	<img src="/images/학생2.jpg" width="200px;" height="200px;">
+					        </td>
+						</tr>
+						<tr>
 					        <th>학년</th>  
 					        <td>
 					        	<div id="stuInfoModal_grade"></div>
-					        </td>
-						</tr>
-						<tr>  
+					        </td>  
 					  	    <th>전공대학</th>   
 						    <td>
 						    	<div id="stuInfoModal_coll"></div>
 						    </td>  
-					   	    <th>전공학과</th>   
+					   	    
+						</tr>  
+						<tr>
+							<th>전공학과</th>   
 					   	    <td>
 					   	    	<div id="stuInfoModal_dept"></div>
 					   	    </td>  
 					  	    <th>복수전공</th>   
 					        <td>
 					        	<div id="stuInfoModal_doubleDept"></div>
-					        </td>  
-						</tr>  
-						<tr>   
-					        <th>성별</th>   
-					        <td>
-					        	<div id="stuInfoModal_gender"></div>
-					        </td>   
-					        <th>생년월일</th>   
-					        <td>
-					        	<div id="stuInfoModal_birth"></div>
-					        </td>   
-					        <th>학적상태</th>   
-					        <td>
-					        	<div id="stuInfoModal_status"></div>
-					        </td>   
+					        </td>    
 						</tr>  
 					</table>
 				</div>
@@ -340,27 +334,6 @@
 	  </div>
 	</div>
 	
-	<!--by수경 휴학/복학 단일 승인완료  모달창 -->
-	<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-	      <div class="modal-body">
-	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	  최종 승인이 완료되었습니다.
-		      	</div>
-	      	</div>
-	       <div class="row">
-	       	<div class="col text-center">
-	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
-	       		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">
-	       		확인</button>
-	       	</div>
-	       </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>		
 	<!--by수경 휴학/복학 일괄승인완료  모달창 -->
 	<div class="modal fade" id="resultAlltModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered">
