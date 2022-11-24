@@ -257,7 +257,7 @@
 		
 	<!-- 이미지 등록 -->
 	 <insert id="insertImage">
-		INSERT INTO ITEM_IMG( 
+		INSERT INTO BOARD_IMG( 
 			IMG_CODE
 			, ORIGIN_NAME
 			, ATTACHED_NAME

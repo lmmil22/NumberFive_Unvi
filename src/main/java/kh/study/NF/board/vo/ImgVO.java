@@ -17,7 +17,7 @@ public class ImgVO {
 	private String  imgCode;
 	private String  originName;
 	private String  attachedName;
-	private String  isMain;
+	private String  isMain;// Y(메인)/N(서브이미지)
 	private String boardNo;
 	
 	

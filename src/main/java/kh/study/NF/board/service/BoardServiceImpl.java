@@ -61,7 +61,7 @@ public class BoardServiceImpl implements BoardService{
 	// 다음 boardNo 조회
 	@Override
 	public String getNextBoardNo() {
-		return sqlSession.selectOne("boardMapper.getNextBoardCode");
+		return sqlSession.selectOne("boardMapper.getNextBoardNo");
 	}
 	
 	

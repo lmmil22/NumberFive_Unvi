@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kh.study.NF.board.vo.ImgVO;
 public class BoardUploadFileUtil {
 	// 내(유빈)컴퓨터 버전 경로
-	private static final String UPLOAD_PATH = "C:\\workSpaceSTS_TEAM\\NumberFive_Unvi\\src\\main\\resources\\static\\images";
+	private static final String UPLOAD_PATH = "C:\\workSpaceSTS_TEAM\\NumberFive_Unvi\\src\\main\\resources\\static\\images\\";
 	
 //------------------------------------------------------------------------------------------------------------------//
 	//파일첨부

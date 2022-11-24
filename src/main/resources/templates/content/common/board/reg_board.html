@@ -8,91 +8,124 @@
 	
 <div layout:fragment="content">
 	<div class="row justify-content-center">
-	<!-- 제목줄 -->
-	<div class="col-12" align="center"> <h1>BOARD FORM</h1> </div>
-	<!-- 내용줄 -->
-	<div class="col-12" > 
-		<form th:action="@{/board/reg}" method="post" th:object="${boardVO}">
-		<input type="hidden" name="memNo">
+		<!-- 제목줄 -->
+		<div class="col-12 mb-3" align="center" > <h1>BOARD FORM</h1> </div>
 		
-			<div class="mb-3">
-				<label for="exampleFormControlInput1" class="form-label">작성자 :</label> 
-				<span sec:authorize="isAuthenticated()" sec:authentication="name" ></span>
-			</div>
-			<div class="mb-3">
-				<label for="exampleFormControlTextarea1" class="form-label">카테고리 :</label>
-				<select class="form-control" name="cateNo" >
-					<th:block th:each="cate : ${cateUsedList}">
-						<option th:text="${cate.cateName}" th:value="${cate.cateNo}" ></option>
-					</th:block>
-				</select>
-			</div>
-			<div class="mb-3">
-				<label for="exampleFormControlInput1" class="form-label" >글 제목 :</label> 
-				<input  type="text" class="form-control" th:field="*{boardTitle}" placeholder="제목을 입력하세요">
-				<div style=" font-size: 0.9rem; color: red;" class="hasError" th:if="${#fields.hasErrors('boardTitle')}" th:errors="*{boardTitle}" ></div>
-			</div>
-			<div class="mb-3">
-				<label for="exampleFormControlTextarea1" class="form-label">글 내용 :</label>
-				<textarea class="form-control" th:field="*{boardContent}" rows="3" placeholder="내용을 입력하세요"></textarea>
-				<div style=" font-size: 0.9rem; color: red;" class="hasError" th:if="${#fields.hasErrors('boardContent')}" th:errors="*{boardContent}" ></div>
-			</div>
-			
-			
-			<div class="row mb-3">
-			
-				<!-- 비밀글여부 -->
-				<div class="col-6">
-					<div class="row">
-						<div class="col-4">
-							<label for="exampleFormControlTextarea1" class="form-label">비밀글여부 :</label>
-						</div>
-						<div class="col-4">
-							  <div class="form-check">
-								  <input value="Y" class="form-check-input" type="radio" name="isSecrert" >
-								  <label class="form-check-label" for="flexRadioDefault2">예</label>
-							  </div>
-						</div>
-						<div class="col-4">
-							<div class="form-check">
-							  <input value="N" class="form-check-input" type="radio" name="isSecrert"  checked>
-							  <label class="form-check-label" for="flexRadioDefault1">아니오</label>
-							</div>  
+		<hr />
+		<!-- 내용줄 -->
+		<div class="col-12 mb-5" > 
+			<form th:action="@{/board/reg}" method="post" th:object="${boardVO}" enctype="multipart/form-data">
+			<input type="hidden" name="memNo">
+				<div class="row">
+					<!-- 첫번째줄영역 -->
+					<div class="col-12 mb-3">
+						<span>
+							 <label for="exampleFormControlInput1" class="form-label">작성자 : &nbsp;</label>  
+						</span>
+						 <span sec:authorize="isAuthenticated()" sec:authentication="name" ></span> 
+					</div>	
+					
+				    <!-- 시작)비밀글+공지글 영역 -->
+					<!-- 비밀글여부 -->
+					<div class="col-4">
+						<div class="row">
+							<div class="col-4">
+								<label for="exampleFormControlTextarea1" class="form-label">비밀글여부 </label>
+							</div>
+							<div class="col-4">
+								  <div class="form-check">
+									  <input value="Y" class="form-check-input" type="radio" name="isSecrert" >
+									  <label class="form-check-label" for="flexRadioDefault2">예</label>
+								  </div>
+							</div>
+							<div class="col-4">
+								<div class="form-check">
+								  <input value="N" class="form-check-input" type="radio" name="isSecrert"  checked>
+								  <label class="form-check-label" for="flexRadioDefault1">아니오</label>
+								</div>  
+							</div>
 						</div>
 					</div>
-				</div>
-				<!-- 비밀글 여부 끝 -->
+					<!-- 비밀글 여부 끝 -->
+					
+					<!-- 공지글 여부 -->
+					<div class="col-4">
+						<div class="row">
+							<div class="col-4 mb-3" >
+								<label for="exampleFormControlTextarea1" class="form-label">공지글여부 </label>
+							</div>
+							<div class="col-4 mb-3">
+								  <div class="form-check">
+									  <input value="Y" class="form-check-input" type="radio" name="isNotice"  >
+									  <label class="form-check-label" for="flexRadioDefault2">예</label>
+								  </div>
+							</div>
+							<div class="col-4 mb-3">
+								<div class="form-check">
+								  <input value="N" class="form-check-input" type="radio" name="isNotice"  checked>
+								  <label class="form-check-label" for="flexRadioDefault1">아니오</label>
+								</div>  
+							</div>
+						</div>
+					</div>
+					<!-- 공지글 여부 끝 -->
+					<!-- 시작) 카테고리  영역 -->
+					<div class="col-1 mb-3">
+						<label for="exampleFormControlTextarea1" class="form-label">카테고리 </label>
+					</div>
+					<div class="col-3 mb-3">
+						<select class="form-control" name="cateNo" >
+							<th:block th:each="cate : ${cateUsedList}">
+								<option th:text="${cate.cateName}" th:value="${cate.cateNo}" ></option>
+							</th:block>
+						</select>
+					</div>
+				<!-- 끝) 카테고리  영역 -->
+				</div>	
+			    <!-- 끝)비밀글+공지글 영역 -->
 				
-				<!-- 공지글 여부 -->
-				<div class="col-6">
-					<div class="row">
-						<div class="col-4">
-							<label for="exampleFormControlTextarea1" class="form-label">공지글여부 :</label>
-						</div>
-						<div class="col-4">
-							  <div class="form-check">
-								  <input value="Y" class="form-check-input" type="radio" name="isNotice"  >
-								  <label class="form-check-label" for="flexRadioDefault2">예</label>
-							  </div>
-						</div>
-						<div class="col-4">
-							<div class="form-check">
-							  <input value="N" class="form-check-input" type="radio" name="isNotice"  checked>
-							  <label class="form-check-label" for="flexRadioDefault1">아니오</label>
-							</div>  
-						</div>
+				<!-- 시작)글 제목 영역 -->
+				<div class="row mb-3">
+					<div class="col-12 mb-3">
+						<label for="exampleFormControlInput1" class="form-label" >글 제목 :</label> 
+						<input  type="text" class="form-control" th:field="*{boardTitle}" placeholder="제목을 입력하세요">
+						<div style=" font-size: 0.9rem; color: red;" class="hasError" th:if="${#fields.hasErrors('boardTitle')}" th:errors="*{boardTitle}" ></div>
 					</div>
 				</div>
-				<!-- 공지글 여부 끝 -->
-			</div>
-			
-			<!-- 글등록 버튼 -->
-			<div align="center">
-				<button class="btn btn-light" type="submit" th:onclick="@{location.href='/board/reg';}">글등록</button>
-			</div>
-			
-		</form>
-	</div>
+				<!-- 끝)  글제목 영역 -->	
+				<!-- 시작) 글내용 영역 -->	
+				<div class="row mb-3">
+					<div class="mb-3">
+						<label for="exampleFormControlTextarea1" class="form-label">글 내용 :</label>
+						<textarea class="form-control" th:field="*{boardContent}" rows="3" placeholder="내용을 입력하세요"></textarea>
+						<div style=" font-size: 0.9rem; color: red;" class="hasError" th:if="${#fields.hasErrors('boardContent')}" th:errors="*{boardContent}" ></div>
+					</div>
+				</div>
+				<!-- 끝) 글내용 영역 -->	
+				<!-- 시작)이미지첨부파일 영역 -->
+				<div class="row mb-3">
+					<div class="col-6 mt-5">
+		               <label class="form-label">대표 이미지 첨부</label>
+		               <input class="form-control" type="file" name="mainImg" >  
+		            </div> 
+		            <div class="col-6 mt-5">
+		               <label class="form-label">서브 이미지 첨부</label>
+		               <input class="form-control" type="file" name="subImgs" multiple>            
+		               <!-- multiple 속성을 주면 파일을 동시에 여러 파일 선택가능하다 -> 갯수가 화면에 뜬다 -->          
+		            </div>
+				</div>
+				<!-- 끝)이미지첨부파일 영역 -->
+				
+				
+	
+				
+				<!-- 글등록 버튼 -->
+				<div align="center">
+					<button class="btn btn-light" type="submit" th:onclick="@{location.href='/board/reg';}">글등록</button>
+				</div>
+				
+			</form>
+		</div>
 	</div>
 </div>
 
