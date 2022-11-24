@@ -24,8 +24,14 @@ public class PageVO extends SearchVO {//연달아 상속받도록!BoardVO > Page
 		endPage = displayPageCnt * (int)Math.ceil(nowPage/(double)displayPageCnt); 
 		//시작페이지
 		beginPage = endPage-displayPageCnt+1;
+		
 		//전체 페이지수 
 		int totalPageCnt = (int)Math.ceil(totalDataCnt / (double)displayCnt);
+		
+		if(totalPageCnt == 0) {
+			totalPageCnt = 1;
+		}
+		
 		//next 버튼 유무
 		if(endPage < totalPageCnt) {//화면에 보이는 마지막 페이지값이 전체페이지 값(마지막페이지값)보다 작으면 next버튼보임
 			next=true;

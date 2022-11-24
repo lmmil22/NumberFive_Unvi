@@ -41,8 +41,8 @@ public class BoardVO extends PageVO{
 	private String isSecrert;
 	private String isNotice;
 	
-	//별도추가
-	private int rowNum;
+	//DB 이외 별도추가
+	private int rowNum;//행번호로 게시글목록조회위해
 	//private int boardPw;
 
 	

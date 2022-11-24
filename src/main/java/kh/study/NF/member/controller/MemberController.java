@@ -115,8 +115,7 @@ public class MemberController {
 	    	
 	    	System.out.println("________________ 이메일 발송 성공_________________");
 	    	
-	    	// 여기까지 11/11 완료된 상태
-	    	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	    	//문제점발생
 	    	// 여기서부터 프로젝트 다시 시작하면된다. 현재상태 : 업데이트쿼리문이 실행되지 않는 상태이다...
 	    	// 그러면 회원가입을 진행하고 시큐리티 암호화작업들어가면서 비밀번호 생성해보자. 
 	    	
@@ -147,6 +146,15 @@ public class MemberController {
 		model.addAttribute("isLoginFail",isLoginFail);
 		
 		return "content/common/home_Login";
+	}
+	//로그인 후 첫 화면
+	@GetMapping("/afterLogin")
+	public String afterLogin(boolean isLoginFail, Model model) {
+		//-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
+		System.out.println("_______________로그인 성공시 false!!! -->" + isLoginFail);
+		model.addAttribute("isLoginFail",isLoginFail);
+		
+		return "content/common/after_Login";
 	}
 //----------------------------------------------------------------------------------------------//	
 	// 관리자 로그인 후 페이지 이동

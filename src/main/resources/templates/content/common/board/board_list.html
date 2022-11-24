@@ -21,49 +21,36 @@
 		<form th:action="@{/board/list}" method="post">
 			<div align="center" id="search-container">
 				<nav class="row navbar bg-light">
-				<div class="col-2 container-fluid "></div><!--열맞추기용 -->
+				<div class="col-1 container-fluid "></div><!--열맞추기용 -->
 				<div class="col-3 container-fluid ">
 					<select name="searchKeyword" class="form-select" aria-label="Default select example">
-					  <!-- value값을 두개가져오니까 split을 사용해서 배열을 for문으로 돌려서 데이터 추출? -->
-					  <!-- <option value="BOARD_TITLE,BOARD_WRITER" th:selected="${boardVO.searchKeyword == 'BOARD_TITLE'  }">전체</option> -->
-					  <option value="BOARD_TITLE" th:selected="${boardVO.searchKeyword == 'BOARD_TITLE'}">제목</option>
-					  <option value="BOARD_WRITER" th:selected="${boardVO.searchKeyword == 'BOARD_WRITER'}">작성자</option>
+						  <!-- value값을 두개가져오니까 split을 사용해서 배열을 for문으로 돌려서 데이터 추출? -->
+						  <option value="ALL" th:selected="${boardVO.searchKeyword == 'ALL'}">전체</option>
+						  <option value="BOARD_TITLE" 	th:selected="${boardVO.searchKeyword == 'BOARD_TITLE'}">제목</option>
+						  <option value="BOARD_CONTENT" th:selected="${boardVO.searchKeyword == 'BOARD_CONTENT'}">내용</option>
+						  <option value="BOARD_WRITER"  th:selected="${boardVO.searchKeyword == 'BOARD_WRITER'}">작성자</option>
 					</select>
 				</div>
-				<div class="col-1 container-fluid"></div>
 				<div class="col-3 container-fluid">
 				      <input name="searchValue"  th:value="${boardVO.searchValue}" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 				</div>
-			    <div class="col-3 container-fluid">
-				      <button class="btn btn-outline-success" type="submit">검색</button>
+		    	 <!-- 검색 버튼 영역 -->
+			    <div class="col-2 container-fluid">
+					 <button class="btn btn-outline-success" type="submit">검색</button>
+			    </div>
+				<div class="col-1 container-fluid"></div> <!--열맞추기용 -->
+			     <!-- 글쓰기 등록 버튼 영역 -->
+			    <div class="col-2 container-fluid">
+				     <button  sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-success" th:onclick="@{location.href='/board/reg';}">글쓰기</button>
 			    </div>
 				</nav>
 			</div>
 		</form>
 		</div>
 	</div>
-	
-	<!--  부트스트랩 기능 끝 -->
-
-<!-- 부트스트랩 : 게시판 종류별 메뉴클릭 탭 바 (카테고리별) -->
-<!-- <ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Active</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled">Disabled</a>
-  </li>
-</ul>	 -->
-
-
 
 <!-- 부산대학교 학생지원시스템 레퍼런스 : 게시판 종류별 메뉴클릭 탭 바 (카테고리별) -->
+	<div class="row">
 	<div class="col-xl-7 order-xl-last">
 		<section class="sec-1 sec-smart-board">
 			<!-- 탭 -->
@@ -124,8 +111,10 @@
 				</li>
 			</ul>
 		</section>
+				
 	</div>
-<!--   -->
+	</div>
+<!--  end -->
 
 <!-- 게시판 글머리 영역 -->
 	<div class="row">
@@ -133,8 +122,8 @@
 		<table class="table table-hover ">
 			<colgroup>
 				<col width="*%">
-				<col width="45%">
 				<col width="4%">
+				<col width="45%">
 				<col width="20%">
 				<col width="10%">
 				<col width="8%">
@@ -143,23 +132,23 @@
 			<thead class="table-light">
 				<tr>
 					<td>No.</td><!-- pk값이 아닌 행번호(row_no)를 의미함 -->
-					<td>글제목</td>
-					<td><!-- 비밀글여부 -->
+					<td ><!-- 비밀글여부 -->
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
 						  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
 						</svg> 
 					</td>
-					<td>작성일</td>
-					<td>작성자</td>
-					<td>조회수</td>
-					<td>댓글수</td>
+					<td align="center">글제목</td>
+					<td align="center">작성일</td>
+					<td align="center">작성자</td>
+					<td align="center">조회수</td>
+					<td align="center">댓글수</td>
 				</tr>
 			  </thead>
 			  
 			  <tbody>
 				  <th:block th:if="${#lists.size(boardList) == 0}">
 					<tr>
-						<td colspan="7"> 게시된 등록글이 없습니다.</td>
+						<td align="center" colspan="7"> 게시된 등록글이 없습니다.</td>
 					</tr>
 				 </th:block>
 				  <th:block th:unless="${#lists.size(boardList) == 0}" >
@@ -175,6 +164,15 @@
 							</th:block>
 						</td>
 						<td>
+							<th:block th:if="${board.isSecrert eq'Y'}">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+								  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+								</svg> 
+							</th:block>
+							<th:block th:unless="${board.isSecrert eq'Y'}">
+							</th:block>
+						</td>
+						<td >
 							<!-- 비밀글 일 때 -->
 							<!-- 본인 작성 비밀글이 아닌경우, warning창 띄우기 -->
 							<th:block th:if="${board.isSecrert eq 'Y'}">
@@ -205,19 +203,10 @@
 									</th:block>
 							</th:block>
 						</td>
-						<td>
-							<th:block th:if="${board.isSecrert eq'Y'}">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
-								  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-								</svg> 
-							</th:block>
-							<th:block th:unless="${board.isSecrert eq'Y'}">
-							</th:block>
-						</td>
-						<td th:text="${board.boardCreateDate}"></td>
+						<td align="center" th:text="${board.boardCreateDate}"></td>
 						<td th:text="${board.boardWriter}"></td>
-						<td th:text="${board.boardReadCnt}"></td>
-						 <td th:text="${board.replyCnt}"></td> 
+						<td align="center" th:text="${board.boardReadCnt}"></td>
+						<td align="center" th:text="${board.replyCnt}"></td> 
 					</tr>
 				  </th:block>
 				</tbody>
@@ -252,12 +241,6 @@
 		</div>
 		<!-- 부트스트랩 끝 -->
 
-		<!--로그인하면 글쓰기 등록버튼 -->
-		 <div class="row" align="center">
-		 	<div class="col">
-				<button  sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-success" th:onclick="@{location.href='/board/reg';}">글쓰기</button>
-		 	</div>
-		</div> 
 	</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

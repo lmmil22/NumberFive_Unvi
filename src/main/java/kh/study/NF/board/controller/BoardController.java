@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.NF.board.service.BoardService;
 import kh.study.NF.board.vo.BoardCategoryVO;
@@ -41,6 +42,7 @@ public class BoardController {
 		System.out.println("_________________게시판 총 갯수 조회 쿼리문 실행성공_______________");
 		//5.페이지 정보 세팅(목록조회전)
 		boardVO.setPageInfo();
+		
 		System.out.println("_________________게시판 페이징 정보 실행 성공_______________");
 		System.out.println("_____boardVO 추출_____" + boardVO);
 		
@@ -91,17 +93,12 @@ public class BoardController {
 		model.addAttribute("board", boardService.selectDetailBoard(boardNo));
 		//사용중인 카테고리 목록조회
 		model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
-		
-		//---------------[게시글 댓글 기능]--------------------------//
 		//댓글목록조회
 		model.addAttribute("replyList",boardService.selectReplyList(boardNo));
-		
 		//조회수증가-이클립스
 		boardService.updateReadCnt(boardNo);
-		//댓글목록조회-이클립스
-		//List<ReplyVO> replyList = boardService.selectReplyList(boardNo);
-		//model.addAttribute("replyList", replyList);
-		//------------------------------------------------------------//
+		
+		
 		System.out.println("______________________상세조회 쿼리문 모두 실행 완료______________________________");
 		return "content/common/board/board_detail";
 	}
@@ -132,10 +129,17 @@ public class BoardController {
 
 	// 글삭제
 	@GetMapping("/delete")
-	public String delete(String boardNo) {
+	public String delete1(String boardNo) {
 		boardService.delete(boardNo);
 		System.out.println("___게시글 상세조회 후 삭제버튼 클릭하고 스왈다음 여기로 왔다___");
 		return "redirect:/board/list";
+	}
+	// 글삭제
+	@ResponseBody
+	@PostMapping("/delete")
+	public void delete2(String boardNo) {
+		System.out.println("_________게시글 상세조회 후 삭제버튼 클릭하고 스왈 컨펌 ajax 실행 __________");
+		boardService.delete(boardNo);
 	}
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

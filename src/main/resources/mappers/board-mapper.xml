@@ -89,12 +89,22 @@
 							  WHERE BOARD_NO =BOARD.BOARD_NO) AS REPLY_CNT
 					FROM BOARD
 					<if test="searchValue != null and !searchValue.equals('')">
-						WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+						<choose>
+							<when test="searchKeyword.equals('ALL')">
+								WHERE LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_WRITER) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_CONTENT) LIKE '%'||LOWER(#{searchValue})||'%'
+							</when>
+							<otherwise>
+								WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+							</otherwise>
+						</choose>
 					</if>
+				)
 					WHERE IS_NOTICE='Y'
 					ORDER BY TO_NUMBER(BOARD_NO) DESC
-			    )
-			)
+			  )
+			
 			WHERE ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
 			
 			UNION ALL  
@@ -136,30 +146,26 @@
 							  WHERE BOARD_NO =BOARD.BOARD_NO) AS REPLY_CNT
 					FROM BOARD
 					<if test="searchValue != null and !searchValue.equals('')">
-					WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+						<choose>
+							<when test="searchKeyword.equals('ALL')">
+								WHERE LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_WRITER) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_CONTENT) LIKE '%'||LOWER(#{searchValue})||'%'
+							</when>
+							<otherwise>
+								WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+							</otherwise>
+						</choose>
 					</if>
-					 where IS_NOTICE='N'
+					 )
+					 WHERE IS_NOTICE='N'
 					ORDER BY TO_NUMBER(BOARD_NO) DESC
-			    )
+			    
 			)
 			WHERE ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
 			
 		</select>
 	<!-- 끝 -->		
-
-
-	<!-- (미사용 플젝마지막때 삭제하기 )게시글목록조회 -->
-	 <!-- <select id="selectBoard" resultMap="board">
-		SELECT   BOARD_NO
-				,BOARD_TITLE
-				,BOARD_CONTENT
-				,BOARD_WRITER
-				,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE
-				,IS_SECRERT
-				,IS_NOTICE
-		FROM BOARD
-		ORDER BY BOARD_NO DESC
-	</select>  -->
 	
 	<!-- 게시글 상세조회 -->
 	 <select id="selectDetailBoard" resultMap="board">
