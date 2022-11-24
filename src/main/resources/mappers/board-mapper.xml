@@ -14,8 +14,8 @@
 		<result column="IS_SECRERT" 		property="isSecrert"/>
 		<result column="IS_NOTICE" 			property="isNotice"/>
 
-		<result column="ROW_NUM" 		property="rowNum"/> 
-		<!-- <result column="BOARD_PW" 		property="boardPw"/>  -->
+		<result column="ROW_NUM" 			property="rowNum"/> 
+		<!-- 추가 비밀글비밀번호설정시,<result column="BOARD_PW" 		property="boardPw"/>  -->
 	</resultMap>
 	
 	<!-- 게시판 카테고리 -->
@@ -182,7 +182,6 @@
 	 <update id="update" >
 		UPDATE BOARD
 		SET  BOARD_TITLE   = #{boardTitle}
-			<!-- ,BOARD_NO = #{boardNo} -->
 			,BOARD_CONTENT = #{boardContent}
 			,CATE_NO = #{cateNo}
 			,IS_SECRERT = #{isSecrert}
@@ -250,6 +249,30 @@
 			, #{isUse}
 		)
 	</insert>
+	
+	<!-- 다음 BOARD_NO코드 조회 -->
+	<select id="getNextBoardNo" resultType="String">
+	    SELECT  NVL ( MAX (TO_NUMBER(BOARD_NO)) , 0 ) + 1  FROM BOARD   
+	</select>
+		
+	<!-- 이미지 등록 -->
+	 <insert id="insertImage">
+		INSERT INTO ITEM_IMG( 
+			IMG_CODE
+			, ORIGIN_NAME
+			, ATTACHED_NAME
+			, IS_MAIN
+			, BOARD_NO 
+		)
+		<foreach collection="imgList" item="img" separator="UNION ALL" index="i">
+			SELECT ( SELECT 'IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(IMG_CODE, 5))), 0) + 1 + #{i}, 3, 0) FROM BOARD_IMG)
+				, #{img.originName}
+				, #{img.attachedName}
+				, #{img.isMain}
+				, #{img.boardNo} 
+			FROM DUAL
+		</foreach>
+	</insert>  
 	
 </mapper> 
 

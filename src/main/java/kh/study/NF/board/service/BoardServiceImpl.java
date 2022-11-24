@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kh.study.NF.board.vo.BoardCategoryVO;
 import kh.study.NF.board.vo.BoardVO;
@@ -17,16 +18,15 @@ public class BoardServiceImpl implements BoardService{
 	private SqlSessionTemplate sqlSession;
 	
 //--------------------------- [ 공통 게시판 ] ------------------------------------//	
-	//게시글 등록
+	
+	//게시글 등록( + 이미지 등록)
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void insertBoard(BoardVO boardVO) {
 		sqlSession.insert("boardMapper.insertBoard",boardVO);
+		sqlSession.insert("boardMapper.insertImage",boardVO);
 	}
-	//게시글 목록 조회(미사용)
-	/*
-	 * @Override public List<BoardVO> selectBoard() { return
-	 * sqlSession.selectList("boardMapper.selectBoard"); }
-	 */
+
 	//게시글 목록 조회 + 키워드검색기능 (board 프로젝트 참고)
 	@Override
 	public List<BoardVO> selectBoardList(BoardVO boardVO) {
@@ -58,6 +58,12 @@ public class BoardServiceImpl implements BoardService{
 	public void updateReadCnt(String boardNo) {
 		sqlSession.update("boardMapper.updateReadCnt",boardNo);
 	}
+	// 다음 boardNo 조회
+	@Override
+	public String getNextBoardNo() {
+		return sqlSession.selectOne("boardMapper.getNextBoardCode");
+	}
+	
 	
 //--------------- [ 게시판 댓글  ] -----------------------------//
 	//댓글등록
@@ -113,6 +119,7 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardCategoryVO> selectBoardCateUse() {
 		return sqlSession.selectList("boardMapper.selectBoardCateUse");
 	}
+
 	
 	
 	

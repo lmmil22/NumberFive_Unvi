@@ -1,6 +1,8 @@
 // by 유빈
 package kh.study.NF.board.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -16,11 +18,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kh.study.NF.board.service.BoardService;
 import kh.study.NF.board.vo.BoardCategoryVO;
 import kh.study.NF.board.vo.BoardVO;
+import kh.study.NF.board.vo.ImgVO;
 import kh.study.NF.board.vo.ReplyVO;
+import kh.study.NF.config.BoardUploadFileUtil;
 
 @Controller
 @RequestMapping("/board")
@@ -34,7 +39,6 @@ public class BoardController {
 	public String select(Model model,BoardVO boardVO,String boardNo) {
 		System.out.println("SearchKeyword=" + boardVO.getSearchKeyword());
 		System.out.println("searchValue=" + boardVO.getSearchValue());
-		
 		//페이징처리때문에[3.4.5번]
 		//3.전체 데이커(게시글) 수를 먼저 가져오기 
 		//4.db에서 쿼리문 메소드기능 실행한 값(totalCnt)을 totalDataCnt에 넣어주기
@@ -42,10 +46,8 @@ public class BoardController {
 		System.out.println("_________________게시판 총 갯수 조회 쿼리문 실행성공_______________");
 		//5.페이지 정보 세팅(목록조회전)
 		boardVO.setPageInfo();
-		
 		System.out.println("_________________게시판 페이징 정보 실행 성공_______________");
 		System.out.println("_____boardVO 추출_____" + boardVO);
-		
 		//2.게시글 목록 조회(한줄요약)
 		model.addAttribute("boardList",boardService.selectBoardList(boardVO));
 		System.out.println("_________________게시판 목록 조회 성공_______________");
@@ -63,14 +65,28 @@ public class BoardController {
 	}
 	
 	// 실제 글 등록
+	// -> shop - admincontroller - /regItem 경로 소스참고
 	@PostMapping("/reg")
-	public String reg(@Valid BoardVO boardVO, BindingResult bindingResult, Model model
-						,Authentication authentication){
+	public String reg(@Valid BoardVO boardVO, BindingResult bindingResult, Model model,Authentication authentication
+						,ImgVO imgVO, MultipartFile mainImg ,List<MultipartFile> subImgs){// 서브파일은 여러 파일이 들어가있으니 리스트!
 		
+		// 학번/교번 유저 
 		User user = (User) authentication.getPrincipal();
-		
 		boardVO.setBoardWriter(user.getUsername());//시큐리티 로그인 아이디(학번,교번)을 작성자로 넣어주기
 		
+		// 단일 이미지 파일 첨부 - mainImg
+		ImgVO  uploadInfo = BoardUploadFileUtil.uploadFile(mainImg);
+		// 다중 이미지 파일 첨부 - subImgs
+		List<ImgVO> uploadList = BoardUploadFileUtil.MultiUploadFile(subImgs);
+		//다중서브이미지 리스트에 단일메인이미지까지 넣어준다.
+		uploadList.add(uploadInfo);
+		
+		String nextBoardNo = boardService.getNextBoardNo();
+		boardVO.setBoardNo(nextBoardNo);//
+		for(ImgVO vo : uploadList) {
+			vo.setBoardNo(nextBoardNo);
+		}
+		boardVO.setImgList(uploadList);
 		boardService.insertBoard(boardVO);
 		
 		System.out.println("___________매퍼 게시글등록 실행 됐다___________");

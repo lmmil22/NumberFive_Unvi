@@ -41,11 +41,9 @@ public class BoardVO extends PageVO{
 	private String isSecrert;
 	private String isNotice;
 	
-	//DB 이외 별도추가
+	// [ DB 컬럼 이외 별도추가 ]
 	private int rowNum;//행번호로 게시글목록조회위해
-	//private int boardPw;
-
-	
-	private List<ReplyVO> replyList;
+	//private int boardPw;//(추가사항)비밀글 비밀번호 이용위해
+	private List<ImgVO> imgList;//다중 이미지업로드위해
 
 }

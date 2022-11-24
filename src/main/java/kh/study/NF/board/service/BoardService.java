@@ -11,8 +11,6 @@ public interface BoardService {
 //--------------- [ 공통 게시판 ] -----------------------------//
 	// 글등록
 	void insertBoard(BoardVO boardVO);
-	// 글 목록조회(미사용)
-	//List<BoardVO> selectBoard();
 	// 게시글목록조회(Board 소스)
 	List<BoardVO> selectBoardList(BoardVO boardVO);
 	// 상세조회
@@ -25,6 +23,10 @@ public interface BoardService {
 	void delete(String boardNo);
 	//게시글 총 개수 조회
 	int selectBoardCnt();
+	// 다음 boardNo 조회
+	String getNextBoardNo();
+	//이미지등록서비스는 별도 생성 x -> 글등록에서 같이 실행
+
 //--------------- [ 관리자 모드 게시판 ] -----------------------------//
 	//카테고리목록조회
 	List<BoardCategoryVO> selectBoardCate();
