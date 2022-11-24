@@ -21,13 +21,13 @@ public class FullCalendarController {
 	@GetMapping("/cal")
 	public String cal() {
 		
-		return "content/test/calList";
+		return "content/academicSchedule/calList";
 	}
 	
 	@GetMapping("/event") //ajax 데이터 전송 URL
     public @ResponseBody List<Map<String, Object>> getEvent(){
 		//List<Map<String, Object>>의 자료형으로 보낼시 자동으로 JSON으로 변경이 된다.
-	  
+	  calendarService.selectRegDate();
 		return calendarService.getEventList();
 	 }
 	

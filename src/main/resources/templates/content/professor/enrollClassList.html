@@ -27,7 +27,29 @@
 					<!-- 검색 조건 영역 -->
 					<div class="row">
 						<div class="col-12">
-							검색 영역
+							<span>
+								<label for="collNo" >단과대학</label>
+								<span>
+									<select onchange="changeDept();" class="changeDept"
+										name="collNo" id="collNo">
+
+										<option th:each="coll: ${collList}" th:value=${coll.collNo}
+											th:text="${coll.collName}"></option>
+									</select>
+								</span>
+							</span>
+							<span>
+								<label for="deptNo" >소속학과</label>
+								<span>
+									<select class="changeDeptList" name="deptNo" id="deptNo">
+										<option th:each="dept: ${deptList}" th:value=${dept.deptNo}
+											th:text="${dept.deptName}"></option>
+									</select>
+								</span>
+							</span>
+
+							<input type="text" name="searchValue" > <!-- 여기에 아무것도 입력을 안하고 검색을 해도 서치벨류라는 이름으로 데이터가 넘어가 그러면 넘어가긴한다 빈값으로   -->
+							<input type="submit" value="검색">
 						</div>
 					</div>
 					<!-- 목록 영역 -->	
@@ -153,75 +175,6 @@
 		</div>
 	</div>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-<!-- 	<div>강의 리스트 </div>
-	<div>
-		<select>
-		<option>1</option>
-		</select>
-		<select>
-		<option>2</option>
-		</select>
-		
-		<span> <input type="text" >  </span>
-		<span> <input type="submit" value="검색" >  </span>
-	</div>
-	
-	<div id="table_box_bootstrap" style="text-align: center;">
-		<table class="table table-striped table-hover" >
-			<tdead>
-				<tr>
-					<td scope="col">#</td>
-					<td scope="col">강의명</td>
-					<td scope="col">학점</td>
-					<td scope="col">단과대학</td>
-					<td scope="col">학과</td>
-					<td scope="col">교수</td>
-					<td scope="col">강의 요일/시간</td>
-					<td scope="col">최대인원</td>
-					<td scope="col">현재인원</td>
-					<td scope="col">수강 신청</td>
-					<td scope="col">수강 학기</td>
-				</tr>
-			</tdead>
-			<tbody>
-				<tr td:each="lec : ${lecList}">
-					<td scope="row" td:text="${lec.lecNo}">1</td>
-					<td>
-					 <a td:href="@{/proF/viewLecPdf(lecNo = ${lec.lecNo})}" td:text="${lec.lecName}" ></a>
-					 
-					</td>
-					<td td:text="${lec.lecScore}"></td>
-					<td td:text="${lec.collNo}"></td>
-					<td td:text="${lec.deptNo}"></td>
-					<td td:text="${lec.empNo}"></td>
-					<td td:text="${lec.lectureTimeVO.lastTime}"></td>
-					<td td:text="${lec.maxNum}"></td>
-					<td td:text="${lec.nowNum}"></td>
-					<td td:text="${lec.semNo}"></td>
-					
-					<td><input type="button" value="강의 상태 수정"	data-bs-toggle="modal"  data-bs-target="#changeLecModal"></td>
-					
-					<td>
-						<input class="btn btn-primary" td:classappend="${lec.lecStatus eq 'N' ? 'disabled' : ''}" 
-							
-					</td>
-
-				</tr>
-			</tbody>   
-		</table>
-	</div> -->
 	
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script th:src="@{/js/paginator.js}"></script>

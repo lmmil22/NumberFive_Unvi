@@ -1,0 +1,61 @@
+<!--by 지아 학사공지 풀캘린더입니다   -->
+<!DOCTYPE html>
+
+<html lang='en' xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/base_layout}">
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<th:block layout:fragment="css">
+	<!-- css 정의된 부분이 바뀌면서가져올것이다  -->
+</th:block>
+<!-- <link rel="stylesheet"  th:href="@{}"> 외부 css 파일 불러오겠다  rel은 고정
+ -->
+<link href='/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
+
+<div layout:fragment="content">
+
+	<h1>학사 일정</h1>
+	<div id='calendar'></div>
+
+
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script src='/fullcalendar-5.11.3/lib/main.js'></script>
+	<link href='/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
+	<script>
+    var calendarEl = document.getElementById('calendar');
+    var request = $.ajax({
+      url: "/calendar/event",
+      method: "GET",
+    });
+    request.done(function(data){
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+     	    googleCalendarApiKey: '개인 api',
+    	    eventSources: [
+    	    {
+    	          googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
+    	          className: '국가공휴일',
+    	          color: '#be5683', //rgb,#ffffff 등의 형식으로 할 수 있어요.
+    	          //textColor: 'black' 
+    	        },
+
+
+    	    ]
+    	  ,initialView: 'dayGridMonth',
+       		 events: data
+      });
+      calendar.render();		
+    });
+  </script>
+	<style>
+#calendar {
+	width: 80%;
+	margin: 20px auto;
+}
+</style>
+</div>
+</html>
+
+
+

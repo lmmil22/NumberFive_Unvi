@@ -212,6 +212,12 @@ public class ProfessorController {
 		User user = (User)authentication.getPrincipal();
 		enrollmentVO.setStuNo(user.getUsername());
 		
+		
+		//검색 조건을 위한 학과 학부 데이터 넘김
+		model.addAttribute("deptList",deptService.selectDeptList());
+		 model.addAttribute("collList",deptService.selectCollList());
+		
+		
 		//이미 수강신청한 lec_no 목록 조회
 		List<String> emrolledList = professorService.selectEnrollmentLecNoList(enrollmentVO.getStuNo());
 		
@@ -297,6 +303,8 @@ public class ProfessorController {
 		return grade;
 
 	}
+	
+	
 	
 	
 	

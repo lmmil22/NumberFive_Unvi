@@ -1,3 +1,4 @@
+//by 지아 강의 클릭시 
 function selectLecStu(lecNo){
 	//alert(lecNo);
 	//ajax start
@@ -21,7 +22,7 @@ function selectLecStu(lecNo){
 			str += `<a onclick="gradeDetail(${stu.stuNo},'${stu.lecNo}',this);">${stu.studentVO.memNo}</a>`;
 			str += `</td>`;
 			str += `<td >${stu.gradeVO.grade}</td>`;
-			str += `<td><input  class="gradeBtn" type="button" value="변경" onclick="gradeDetail('${stu.stuNo}','${stu.lecNo}',this)">               </td>`;
+			str += `<td><input  class="gradeBtn" type="button" value="변경" onclick="gradeDetail('${stu.stuNo}','${stu.lecNo}',this)">               </td>`; //매개변수는 여러개 넘어가는게 가능 무한대, 해당 강의의 점수가 update되야하기 때문에 lecNo가 필요하다
 			str += '</tr>'; //js 문자열을 인식시켜주기 위해서는 홀따옴표안에 감싸야한다 
 			}
 			str += '</tbody>';
@@ -33,9 +34,9 @@ function selectLecStu(lecNo){
 	 });
 	//ajax end
 }
-
+//by 지아 
 //변경버튼 클릭시  점수 등록 가능 
-function gradeDetail(stuNo, lecNo,  selectedTag) {
+function gradeDetail(stuNo, lecNo,  selectedTag) { //변경 클릭해서 lecNo가 넘어감
 	//alert(selectedTag.parent().previous().text);
 	const selectedTd = selectedTag.closest('tr').querySelector('td:nth-child(3)'); //선택한 tr에서 3번째 자식을 선택해준다 
 	const btn= document.querySelector(".gradeBtn");
@@ -47,14 +48,14 @@ function gradeDetail(stuNo, lecNo,  selectedTag) {
 	}
 	//변경이 아니라ㅏ value가 확인일때 실행된다
 	else {
-		regGrade(selectedTd, btn , stuNo, lecNo);
+		regGrade(selectedTd, btn , stuNo, lecNo); //점수를 입력해줄땐 버튼이 확인이다
 	}
 
 
 	
 
 }
-
+//by 지아
 //확인 버튼을 누르면 업데이트진행되는 ajax?
 function updateGrade(){
 	//const btn= document.querySelector(".gradeBtn").value;
@@ -84,7 +85,7 @@ function updateGrade(){
 }
 
 
-
+//by 지아
 //버튼이 변경일때
 function prepareRegGrade(selectedTd, btn){
 	//ajax start
@@ -123,8 +124,9 @@ function prepareRegGrade(selectedTd, btn){
 	});
 	//ajax end
 }
+//by 지아
 //확인 버튼이 활성화 되었을때
-function regGrade(selectedTd, btn ,stuNo, lecNo){
+function regGrade(selectedTd, btn ,stuNo, lecNo){//받아온 lecNo를 다시 controller 로 보내주었다 
 	
 	//const grade = selectedTd.querySelector('option:selected').value;
 	//td 등 안에있는 텍스트를 빼고 싶을대는 text 인것이고 
