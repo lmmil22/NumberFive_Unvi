@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<!--  By 지아-->
+<mapper namespace="calendarMapper">
+	
+	<resultMap type="kh.study.NF.FullCalendar.vo.CalendarVO" id="calendar">
+		<id column="CAL_NO" property="calNo"/>
+		<result column="TITLE" property="title"/>
+		<result column="REGDATE" property="regdate"/>
+		<result column="STARTDATE" property="startdate"/>
+		<result column="ENDDATE" property="enddate"/>
+		<result column="CAL_COLOR" property="calColor"/>
+		<result column="CAL_WRITER" property="calWriter"/>
+		<result column="CAL_CONTENT" property="calContent"/>
+	</resultMap>
+	
+	<select id="selectRegDate" resultMap="calendar">
+	SELECT 
+		TITLE 
+		, TO_CHAR(STARTDATE,'YYYY-MM-DD') AS STARTDATE 
+		, TO_CHAR(REGDATE,'YYYY-MM-DD') AS REGDATE 
+		, TO_CHAR(ENDDATE,'YYYY-MM-DD') AS ENDDATE 
+		, CAL_COLOR
+	FROM CALENDAR
+	</select>
+
+	
+</mapper>
+
+
+
+
+
+
