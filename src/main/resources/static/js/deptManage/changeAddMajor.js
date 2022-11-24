@@ -14,9 +14,7 @@ function showChangeMajorApply(stuNo, applyNo){
 			document.querySelector('#changeMajorModal_no').innerText = result.stuNo;
 			document.querySelector('#changeMajorModal_birth').innerText = result.studentVO.memberVO.memBirth;
 			document.querySelector('#changeMajorModal_tell').innerText = result.studentVO.memberVO.memTell;
-			document.querySelector('#changeMajorModal_gender').innerText = result.studentVO.memberVO.memGender;
 			document.querySelector('#changeMajorModal_addr').innerText = result.studentVO.memberVO.memAddr;
-			document.querySelector('#changeMajorModal_coll').innerText = result.studentVO.collNo;
 			document.querySelector('#changeMajorModal_dept').innerText = result.studentVO.deptNo;
 			document.querySelector('#changeMajorModal_fromColl').innerText = result.fromColl;
 			document.querySelector('#changeMajorModal_fromDept').innerText = result.fromDept;
@@ -47,9 +45,7 @@ function showDoubleMajorApply(stuNo, applyNo){
 			document.querySelector('#doubleMajorModal_no').innerText = result.stuNo;
 			document.querySelector('#doubleMajorModal_birth').innerText = result.studentVO.memberVO.memBirth;
 			document.querySelector('#doubleMajorModal_tell').innerText = result.studentVO.memberVO.memTell;
-			document.querySelector('#doubleMajorModal_gender').innerText = result.studentVO.memberVO.memGender;
 			document.querySelector('#doubleMajorModal_addr').innerText = result.studentVO.memberVO.memAddr;
-			document.querySelector('#doubleMajorModal_coll').innerText = result.studentVO.collNo;
 			document.querySelector('#doubleMajorModal_dept').innerText = result.studentVO.deptNo;
 			document.querySelector('#doubleMajorModal_fromColl').innerText = result.fromColl;
 			document.querySelector('#doubleMajorModal_fromDept').innerText = result.fromDept;
@@ -222,7 +218,7 @@ function doubleAllAccept(){
 	modal.show();
 }
 
-//by수경 클릭 시 form태그 실행
+//by수경 일괄 승인하기 클릭 시 form태그 실행
 function formSubmit(){
 	
 	//모달창 if/else 구분을 위한 임의 데이터
@@ -240,6 +236,9 @@ function formSubmit(){
 
 //by수경 전과신청 관리자 단일 승인
 function acceptChangeMajor(){
+	//전과신청 모달창에서 카카오톡 알림 보내기 체크박스에 체크가 되어 있다면 알림 보내기
+	const changeMajorChkBox = document.querySelector('#changeMajor_ChkBox').value;
+	const isChecked = changeMajorChkBox.checked;
 	
 	const applyNo = document.querySelector('#changeMajorModal_apply').value;
 	const stuNo = document.querySelector('#changeMajorModal_no').innerText;

@@ -39,12 +39,12 @@ public class ProbationMailHandler {
 	public void setTo(String email) throws MessagingException{
 		mimeMessageHelper.setTo(email);
 	}
-	
+	//메일 제목 부분
 	public void setSubject(String subject) throws MessagingException{
 		mimeMessageHelper.setSubject(subject);
 	}
 	
-	
+	//메일 내용 부분
 	public void setText(String text, boolean useHtml) throws MessagingException{
 		mimeMessageHelper.setText(text, useHtml);
 	}
@@ -52,9 +52,9 @@ public class ProbationMailHandler {
 	//파일 첨부하기 위하여 추가
 	 public void setAttach(String fileName, String path) throws MessagingException, IOException {
 	    File file = new ClassPathResource(path).getFile();
-	    FileSystemResource fsr = new FileSystemResource(file);
+	    FileSystemResource fileSystemResource = new FileSystemResource(file);
 
-	    mimeMessageHelper.addAttachment(fileName, fsr);
+	    mimeMessageHelper.addAttachment(fileName, fileSystemResource);
 	 }
 	
 	// 메일 안에 이미지 삽입하기 위하여 추가 
