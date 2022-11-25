@@ -15,9 +15,17 @@
 		<result column="IS_NOTICE" 			property="isNotice"/>
 
 		<result column="ROW_NUM" 			property="rowNum"/> 
+		<collection property="imgList" resultMap="img"/>
 		<!-- 추가 비밀글비밀번호설정시,<result column="BOARD_PW" 		property="boardPw"/>  -->
 	</resultMap>
-	
+	<!-- 이미지 Board_img 테이블 VO -->
+	<resultMap type="kh.study.NF.board.vo.ImgVO" id="img">
+		<id column="IMG_CODE" property="imgCode"/>
+		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="ATTACHED_NAME" property="attachedName"/>
+		<result column="IS_MAIN" property="isMain"/>
+		<result column="BOARD_NO" property="boardNo"/>
+	</resultMap>  
 	<!-- 게시판 카테고리 -->
 	 <resultMap type="kh.study.NF.board.vo.BoardCategoryVO" id="cate">
 		<id column="CATE_NO" property="cateNo"/>
@@ -88,28 +96,45 @@
 							  FROM BOARD_REPLY
 							  WHERE BOARD_NO =BOARD.BOARD_NO) AS REPLY_CNT
 					FROM BOARD
+					WHERE IS_NOTICE='Y'
 					<if test="searchValue != null and !searchValue.equals('')">
 						<choose>
 							<when test="searchKeyword.equals('ALL')">
-								WHERE LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
+								AND( LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
 								OR LOWER(BOARD_WRITER) LIKE '%'||LOWER(#{searchValue})||'%'
-								OR LOWER(BOARD_CONTENT) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_CONTENT) LIKE '%'||LOWER(#{searchValue})||'%')
 							</when>
 							<otherwise>
-								WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+								AND LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
 							</otherwise>
 						</choose>
 					</if>
-				)
-					WHERE IS_NOTICE='Y'
 					ORDER BY TO_NUMBER(BOARD_NO) DESC
+				)
 			  )
 			
 			WHERE ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
 			
 			UNION ALL  
 			
-			SELECT ROW_NUM
+			SELECT (SELECT COUNT(*) 
+					FROM BOARD
+					<if test="searchValue != null and !searchValue.equals('')">
+						<choose>
+							<when test="searchKeyword.equals('ALL')">
+								WHERE (LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_WRITER) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_CONTENT) LIKE '%'||LOWER(#{searchValue})||'%')
+							</when>
+							<otherwise>
+								WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+							</otherwise>
+						</choose>
+					</if>) -ROW_NUM + 1
+					<if test="searchValue == null or searchValue.equals('')">
+					- (SELECT COUNT(*) FROM BOARD WHERE IS_NOTICE = 'Y')
+					</if>
+			    
 			    , BOARD_NO
 			    , BOARD_TITLE
 			    , BOARD_WRITER
@@ -145,21 +170,21 @@
 							  FROM BOARD_REPLY
 							  WHERE BOARD_NO =BOARD.BOARD_NO) AS REPLY_CNT
 					FROM BOARD
+					WHERE IS_NOTICE='N'
 					<if test="searchValue != null and !searchValue.equals('')">
 						<choose>
 							<when test="searchKeyword.equals('ALL')">
-								WHERE LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
+								AND (LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
 								OR LOWER(BOARD_WRITER) LIKE '%'||LOWER(#{searchValue})||'%'
-								OR LOWER(BOARD_CONTENT) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_CONTENT) LIKE '%'||LOWER(#{searchValue})||'%')
 							</when>
 							<otherwise>
-								WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+								AND LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
 							</otherwise>
 						</choose>
 					</if>
-					 )
-					 WHERE IS_NOTICE='N'
 					ORDER BY TO_NUMBER(BOARD_NO) DESC
+					 )
 			    
 			)
 			WHERE ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
@@ -167,15 +192,21 @@
 		</select>
 	<!-- 끝 -->		
 	
-	<!-- 게시글 상세조회 -->
+	<!-- 게시글(+이미지첨부파일) 상세조회 (조인) -->
 	 <select id="selectDetailBoard" resultMap="board">
-		SELECT   BOARD_NO
+		SELECT   B.BOARD_NO 
 				,BOARD_TITLE
 				,BOARD_CONTENT
 				,BOARD_WRITER
 				,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE
-		FROM BOARD
-		WHERE BOARD_NO = #{boardNo}
+				
+				, IS_MAIN
+				, ATTACHED_NAME
+				
+		FROM BOARD B,BOARD_IMG I
+		
+		WHERE B.BOARD_NO = I.BOARD_NO
+		AND B.BOARD_NO = #{boardNo}
 	</select>  
 	
 	<!-- 게시글수정 -->
@@ -199,9 +230,21 @@
 	<select id="selectBoardCnt" resultType="int">
 		SELECT COUNT(BOARD_NO)
 		FROM BOARD
+		<if test="searchValue != null and !searchValue.equals('')">
+			<choose>
+				<when test="searchKeyword.equals('ALL')">
+					WHERE LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
+					OR LOWER(BOARD_WRITER) LIKE '%'||LOWER(#{searchValue})||'%'
+					OR LOWER(BOARD_CONTENT) LIKE '%'||LOWER(#{searchValue})||'%'
+				</when>
+				<otherwise>
+					WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+				</otherwise>
+			</choose>
+		</if>
 	</select>
 	
-<!-- 해당 게시글 조회수 증가 : 이클립스-->
+	<!-- 해당 게시글 조회수 증가 : 이클립스-->
 	<update id="updateReadCnt">
 		UPDATE BOARD
 		SET
@@ -254,7 +297,10 @@
 	<select id="getNextBoardNo" resultType="String">
 	    SELECT  NVL ( MAX (TO_NUMBER(BOARD_NO)) , 0 ) + 1  FROM BOARD   
 	</select>
-		
+	
+	
+<!-- ///////////////////////////// [게시글 등록시 이미지 첨부파일 등록] ///////////////////////////////////////// -->		
+	 
 	<!-- 이미지 등록 -->
 	 <insert id="insertImage">
 		INSERT INTO BOARD_IMG( 

@@ -160,9 +160,10 @@
 								</svg>
 							</th:block>
 							<th:block th:unless="${board.isNotice eq'Y'}">
-								 [[${board.rowNum}]]
+								<span th:text="${board.rowNum}"></span> 
 							</th:block>
 						</td>
+						<!-- 비밀글여부 -->
 						<td>
 							<th:block th:if="${board.isSecrert eq'Y'}">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
@@ -172,6 +173,7 @@
 							<th:block th:unless="${board.isSecrert eq'Y'}">
 							</th:block>
 						</td>
+						<!-- 글제목줄 -->
 						<td >
 							<!-- 비밀글 일 때 -->
 							<!-- 본인 작성 비밀글이 아닌경우, warning창 띄우기 -->

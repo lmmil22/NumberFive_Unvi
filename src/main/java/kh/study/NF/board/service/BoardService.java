@@ -5,6 +5,7 @@ import java.util.List;
 import kh.study.NF.board.vo.BoardCategoryVO;
 import kh.study.NF.board.vo.BoardVO;
 import kh.study.NF.board.vo.ReplyVO;
+import kh.study.NF.board.vo.SearchVO;
 
 public interface BoardService {
 	
@@ -22,7 +23,7 @@ public interface BoardService {
 	// 삭제
 	void delete(String boardNo);
 	//게시글 총 개수 조회
-	int selectBoardCnt();
+	int selectBoardCnt(SearchVO searchVO);
 	// 다음 boardNo 조회
 	String getNextBoardNo();
 	//이미지등록서비스는 별도 생성 x -> 글등록에서 같이 실행

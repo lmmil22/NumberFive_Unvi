@@ -25,6 +25,7 @@ import kh.study.NF.board.vo.BoardCategoryVO;
 import kh.study.NF.board.vo.BoardVO;
 import kh.study.NF.board.vo.ImgVO;
 import kh.study.NF.board.vo.ReplyVO;
+import kh.study.NF.board.vo.SearchVO;
 import kh.study.NF.config.BoardUploadFileUtil;
 
 @Controller
@@ -36,13 +37,13 @@ public class BoardController {
 	//--------------------------- [공통 권한 게시판 영역]  --------------------------------------//
 	//게시글 목록페이지
 	@RequestMapping("/list")
-	public String select(Model model,BoardVO boardVO,String boardNo) {
+	public String select(Model model,BoardVO boardVO,String boardNo,SearchVO searchVO) {
 		System.out.println("SearchKeyword=" + boardVO.getSearchKeyword());
 		System.out.println("searchValue=" + boardVO.getSearchValue());
 		//페이징처리때문에[3.4.5번]
 		//3.전체 데이커(게시글) 수를 먼저 가져오기 
 		//4.db에서 쿼리문 메소드기능 실행한 값(totalCnt)을 totalDataCnt에 넣어주기
-		boardVO.setTotalDataCnt(boardService.selectBoardCnt());
+		boardVO.setTotalDataCnt(boardService.selectBoardCnt(searchVO));
 		System.out.println("_________________게시판 총 갯수 조회 쿼리문 실행성공_______________");
 		//5.페이지 정보 세팅(목록조회전)
 		boardVO.setPageInfo();
@@ -64,7 +65,7 @@ public class BoardController {
 		return"content/common/board/reg_board";
 	}
 	
-	// 실제 글 등록
+	// 실제 게시글 등록
 	// -> shop - admincontroller - /regItem 경로 소스참고
 	@PostMapping("/reg")
 	public String reg(@Valid BoardVO boardVO, BindingResult bindingResult, Model model,Authentication authentication
@@ -101,11 +102,11 @@ public class BoardController {
 		return "content/common/board/reg_result";
 	}
 
-	//게시글 상세조회
+	//게시글(+이미지) 상세조회
 	@GetMapping("/detail")
-	public String selectDetail(@RequestParam(required = false) String boardNo,Model model,ReplyVO  replyVO) {
+	public String selectDetail(@RequestParam(required = false) String boardNo,Model model,ReplyVO  replyVO,BoardVO boardVO) {
 		System.out.println("___________게시판상세조회 페이지로 이동 !!! _______________");
-		//게시글 목록조회
+		//게시글 상세조회
 		model.addAttribute("board", boardService.selectDetailBoard(boardNo));
 		//사용중인 카테고리 목록조회
 		model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
@@ -113,9 +114,8 @@ public class BoardController {
 		model.addAttribute("replyList",boardService.selectReplyList(boardNo));
 		//조회수증가-이클립스
 		boardService.updateReadCnt(boardNo);
-		
-		
 		System.out.println("______________________상세조회 쿼리문 모두 실행 완료______________________________");
+		System.out.println(boardService.selectDetailBoard(boardNo));
 		return "content/common/board/board_detail";
 	}
 	

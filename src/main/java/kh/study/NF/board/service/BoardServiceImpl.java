@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kh.study.NF.board.vo.BoardCategoryVO;
 import kh.study.NF.board.vo.BoardVO;
 import kh.study.NF.board.vo.ReplyVO;
+import kh.study.NF.board.vo.SearchVO;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService{
@@ -50,8 +51,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 	//총 게시글  개수 조회
 	@Override
-	public int selectBoardCnt() {
-		return sqlSession.selectOne("boardMapper.selectBoardCnt");
+	public int selectBoardCnt(SearchVO searchVO) {
+		return sqlSession.selectOne("boardMapper.selectBoardCnt",searchVO);
 	}
 	//각 게시글 조회수 +1씩 증가
 	@Override
