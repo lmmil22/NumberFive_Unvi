@@ -385,4 +385,40 @@ AND S.STU_NO = #{stuNo}
 	WHERE APPLY_NO = #{applyNo}  
 </update>
 
+<!-- by수경 차트 사용을 위한 관리자 처리현황 데이터 -->
+<select id="showChart" resultMap="deptManage">
+  
+SELECT COUNT(APPLY_NO) AS APPLY_NO
+     , COUNT(APPROVAL_DATE) AS APPROVAL_DATE  
+FROM DEPT_MANAGE
+WHERE APPLY_DATE >= (SYSDATE -7)
+
+
+SELECT COUNT(APPLY_NO)
+      ,COUNT(APPROVAL_DATE)
+      , DAY
+FROM (SELECT 
+    APPLY_NO
+    , STU_NO
+    , APPLY_CODE
+    , APPLY_DATE
+    , APPROVAL_DATE
+    , FROM_COLL
+    , FROM_DEPT
+    , DOUBLE_MAJOR_COLL
+    , DOUBLE_MAJOR_DEPT
+    , PROCESS_STATUS
+    , APPLY_REASON
+    , TO_COLL
+    , TO_DEPT
+    , STU_YEAR
+    , STU_SEM
+    , TO_CHAR(APPLY_DATE,'YYYY-MM-DD')AS DAY                            
+    FROM DEPT_MANAGE
+    WHERE APPLY_DATE >= (SYSDATE -7))
+GROUP BY DAY;
+
+
+</select>
+
 </mapper>
