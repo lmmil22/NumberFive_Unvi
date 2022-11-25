@@ -94,11 +94,11 @@ function stuInfo(stuNo){
 			//승인 버튼 새로 그리기
 			//만약 학생의 afterStatus가 STU_OUT이라면 display=none으로 안보이도록 구현
 			if(result.studentVO.statusInfoVO.afterStatus == 'STU_OUT'){
-				str1 += '<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="statusInfo_afterStatus" data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem; display:none;" onclick="acceptProbation();">승인하기</button>';
+				str1 += '<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="statusInfo_afterStatus" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem; display:none;" onclick="acceptProbation();">승인하기</button>';
 			}
 			//만약 학생의 afterStatus가 NULL이라면
 			else{
-				str1 += '<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="statusInfo_afterStatus" data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;" onclick="acceptProbation();">승인하기</button>';
+				str1 += '<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="statusInfo_afterStatus" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;" onclick="acceptProbation();">승인하기</button>';
 			}
 			//modal-footer클래스 앞에 만들겠다.
 			$('.probation_div').prepend(str1);
@@ -167,31 +167,43 @@ function acceptProbation(){
 	const semNo = document.querySelector('#semNo').value;
 	const memNo = document.querySelector('#probationModal_memNo').value;
 	
-	
-		$.ajax({
-		   url: '/emp/acceptProbationAjax', //요청경로
-		    type: 'post',
-		    data:{'stuNo':stuNo,'probReason':probReason,
-		    'semNo':semNo, 'memNo':memNo}, //필요한 데이터
-		    success: function(result) {	
-            
-	            Swal.fire({
-				  title: '학사경고 승인',
-				  text: "학사경고가 승인되었습니다.",
-				  icon: 'success',
-				  confirmButtonColor: '#3085d6',
-				  confirmButtonText: '확인'
-				}).then((result) => {
-				  if (result.isConfirmed) {
-					//학사 경고 메일 보내기 함수 실행
-					sendMail();
-				  }
-				})
-		     
-		    },
-		    error: function(){
-		       alert('실패');
-		    }
+
+	Swal.fire({
+		  title: '학사경고',
+		  text: "승인하시겠습니까?",
+		  icon: 'question',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  confirmButtonText: '승인',
+		  cancelButtonText: '취소'
+	}).then((result) => {
+		  if (result.isConfirmed) {
+			$.ajax({
+			   url: '/emp/acceptProbationAjax', //요청경로
+			    type: 'post',
+			    data:{'stuNo':stuNo,'probReason':probReason,
+			    'semNo':semNo, 'memNo':memNo}, //필요한 데이터
+			    success: function(result) {	
+		            Swal.fire({
+					  title: '학사경고 승인',
+					  text: "학사경고가 승인되었습니다.",
+					  icon: 'success',
+					  confirmButtonColor: '#3085d6',
+					  confirmButtonText: '확인'
+					}).then((result) => {
+					  if (result.isConfirmed) {
+						//학사 경고 메일 보내기 함수 실행
+						sendMail();
+					  }
+					})
+			    },
+			    error: function(){
+			       alert('실패');
+			    }
+			});
+		  	}else{
+				home();
+		   }
 		});
 }
 
@@ -244,7 +256,7 @@ function sendMail(){
 				  confirmButtonText: '확인'
 				}).then((result) => {
 				  if (result.isConfirmed) {
-					location.href = '/emp/probation';
+					home();
 				  }
 				})
 		    },
@@ -257,11 +269,14 @@ function sendMail(){
 	}
 	//체크박스에 체크가 되어 있지 않다면 다시 원래 페이지로 돌아간다.
 	else{
-		location.href = '/emp/probation';
+		home();
 	}
 
 }
-
+//수경 다시 학사경고 페이지로 이동
+function home(){
+	location.href = '/emp/probation';
+}
 
 
 //by수경 제적처리 버튼 클릭 시
@@ -270,33 +285,48 @@ function acceptStuOut(){
 	const stuNo = document.querySelector('#stuOut_no').innerText;
 	const stuOutReason = document.querySelector('#stuOutReason').value;
 	
-	$.ajax({
-	   url: '/emp/acceptStuOutAjax', //요청경로
-	    type: 'post',
-	    data:{'stuNo':stuNo,'stuOutReason':stuOutReason}, //필요한 데이터
-	    success: function(result) {
-			
-			Swal.fire({
-			  title: '제적처리 완료',
-			  text: "해당 학생을 제적처리하였습니다. 카카오톡으로 발송하시겠습니까?",
-			  icon: 'success',
-			  showCancelButton: true,
-			  confirmButtonColor: '#3085d6',
-			  confirmButtonText: '확인',
-			  cancelButtonText: '취소'
-			}).then((result) => {
-			  if (result.isConfirmed) {
-			    sendKakao();
-			   
-			  }else{
-				location.href = '/emp/probation';
-			}
-			})
-	    },
-	    error: function(){
-	       alert('실패');
-	    }
+	Swal.fire({
+	  title: '제적처리',
+	  text: "승인하시겠습니까?",
+	  icon: 'question',
+	  showCancelButton: true,
+	  confirmButtonColor: '#3085d6',
+	  confirmButtonText: '승인',
+	  cancelButtonText: '취소'
+	}).then((result) => {
+	  if (result.isConfirmed) {
+		$.ajax({
+		   url: '/emp/acceptStuOutAjax', //요청경로
+		    type: 'post',
+		    data:{'stuNo':stuNo,'stuOutReason':stuOutReason}, //필요한 데이터
+		    success: function(result) {
+				
+				Swal.fire({
+				  title: '제적처리 완료',
+				  text: "해당 학생을 제적처리하였습니다. 카카오톡으로 발송하시겠습니까?",
+				  icon: 'success',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  confirmButtonText: '확인',
+				  cancelButtonText: '취소'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+				    sendKakao();
+				   
+				  }else{
+					home();
+				}
+				})
+		    },
+		    error: function(){
+		       alert('실패');
+		    }
+		});
+	  }else{
+			home();
+	   }
 	});
+	
 }
 
 //by수경 카카오톡 메시지 공유하기
@@ -309,5 +339,5 @@ function sendKakao(){
 	    description: '설명 영역입니다.',
 	  },
 	});
-	 location.href = '/emp/probation';
+	 home();
 }

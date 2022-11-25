@@ -119,7 +119,7 @@
 					      <td th:text="${changeMajor.toColl}"></td>
 					      <td th:text="${changeMajor.toDept}"></td>
 					      <td th:text="${changeMajor.applyDate}"></td>
-					      <td th:onclick="showChangeMajorApply([[${changeMajor.stuNo}]], [[${changeMajor.applyNo}]]);" 
+					      <td th:onclick="showChangeMajorApply([[${changeMajor.stuNo}]], [[${changeMajor.applyNo}]],[[${changeMajor.processStatus}]]);" 
 					      data-bs-toggle="modal" data-bs-target="#changeMajorModal">
 					      	<th:block th:if="${changeMajor.processStatus eq 'waiting'}">
 					      		<button type="button" class="btn btn-primary">승인<p>대기</button>
@@ -228,7 +228,7 @@
 				      <td th:text="${doubleMajor.doubleMajorColl}"></td>
 				      <td th:text="${doubleMajor.doubleMajorDept}"></td>
 				      <td th:text="${doubleMajor.applyDate}"></td>
-				      <td th:onclick="showDoubleMajorApply([[${doubleMajor.stuNo}]], [[${doubleMajor.applyNo}]]);" data-bs-toggle="modal" data-bs-target="#doubleMajorModal">
+				      <td th:onclick="showDoubleMajorApply([[${doubleMajor.stuNo}]], [[${doubleMajor.applyNo}]],[[${doubleMajor.processStatus}]]);" data-bs-toggle="modal" data-bs-target="#doubleMajorModal">
 				      		<th:block th:if="${doubleMajor.processStatus eq 'waiting'}">
 					      		<button type="button" class="btn btn-primary">승인<p>대기</button>
 					      	</th:block>
@@ -348,20 +348,24 @@
 				</div>
 			</div>
 	      </div>
-	      <div class="modal-footer">
+	      <div class="modal-footer changeMajor_div">
 	      	<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
-	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-	       		th:onclick="acceptChangeMajor();">승인하기</button>
+	       	data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
+	       	th:onclick="acceptChangeMajor();">
+	       		승인하기
+	       	</button>
 	        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" 
-	        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">취소</button>
+	        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">
+	        	취소
+	        </button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 			
 	<!--by수경 복수전공 신청 현황에서 승인대기 클릭 시 뜨는 복수전공 신청서 -->
-	<div class="modal fade" id="doubleMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
+	<div class="modal fade bd-example-modal-lg" id="doubleMajorModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h4 class="modal-title" id="doubleMajorModal_apply">복수전공 신청서</h4>
@@ -414,7 +418,7 @@
 					        </td>  
 						</tr> 
 					</table>
-					<table class="table">
+					<table class="table text-center">
 						<tr>  
 					  	    <th>소속전공대학</th>   
 						    <td>
@@ -450,7 +454,7 @@
 				</div>
 			</div>
 	      </div>
-	      <div class="modal-footer">
+	      <div class="modal-footer doubleMajor_div">
 	      	<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
 	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
 	       		th:onclick="acceptDoubleMajor();">승인하기</button>

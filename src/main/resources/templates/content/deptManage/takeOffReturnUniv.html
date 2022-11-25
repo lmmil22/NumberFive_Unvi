@@ -24,9 +24,6 @@
 
 <body>
 <div layout:fragment ="content">
-<th:block layout:fragment ="css">
-	<link rel ="stylesheet" th:href="@{/css/applyModal.css}">
-</th:block>
 <!--by수경 검색조건에서 검색버튼 클릭 시 실행될 form태그 -->
 <form th:action="@{/emp/takeOffReturnUniv}" method="post" id="searchForm">
 	<input type="hidden" name="takeOffUniv_fromDate" id="search_takeOffUniv_fromDate" value="">
@@ -125,19 +122,17 @@
 				      <td th:text="${comeback.applyDate}"></td>
 				      <td>
 				      	<span th:if="${comeback.processStatus eq 'waiting'}">
-				      		<input type="radio" th:name="|processStatus_${status.count}|" th:onclick="changeComebackStatus([[${comeback.applyNo}]], 'waiting',[[${comeback.stuNo}]]);"
+				      		<input type="radio" th:name="|comebackProcessStatus_${status.count}|" th:onclick="changeComebackStatus([[${comeback.applyNo}]], 'waiting',[[${comeback.stuNo}]]);"
 				      		value="waiting" th:checked="${comeback.processStatus eq 'waiting'}"> 
 				      		<label class="form-check-label" for="flexRadioDefault1">승인대기 </label>
-				      		<input type="radio" th:name="|processStatus_${status.count}|" th:onclick="changeComebackStatus([[${comeback.applyNo}]], 'accept',[[${comeback.stuNo}]]);"
+				      		<input type="radio" th:name="|comebackProcessStatus_${status.count}|" th:onclick="changeComebackStatus([[${comeback.applyNo}]], 'accept',[[${comeback.stuNo}]]);"
 				      		value="accept" th:checked="${comeback.processStatus eq 'accept'}" > 
 				      		<label class="form-check-label" for="flexRadioDefault1">승인완료 </label>
 				      	</span>
 				      	<span th:if="${comeback.processStatus eq 'accept'}">
-				      		<input type="radio" th:name="|processStatus_${status.count}|" th:onclick="changeComebackStatus([[${comeback.applyNo}]], 'waiting',[[${comeback.stuNo}]]);"
-				      		value="waiting" th:checked="${comeback.processStatus eq 'waiting'}" disabled> 
+				      		<input type="radio" th:name="|comebackProcessStatus_${status.count}|" value="waiting" th:checked="${comeback.processStatus eq 'waiting'}" disabled> 
 				      		<label class="form-check-label" for="flexRadioDefault1">승인대기 </label>
-				      		<input type="radio" th:name="|processStatus_${status.count}|" th:onclick="changeComebackStatus([[${comeback.applyNo}]], 'accept',[[${comeback.stuNo}]]);"
-				      		value="accept" th:checked="${comeback.processStatus eq 'accept'}" disabled> 
+				      		<input type="radio" th:name="|comebackProcessStatus_${status.count}|" value="accept" th:checked="${comeback.processStatus eq 'accept'}" disabled> 
 				      		<label class="form-check-label" for="flexRadioDefault1">승인완료 </label>
 				      	</span>
 				      </td>
@@ -201,7 +196,7 @@
 		                  </div>
 		               </td>
 		               <td>
-		                  <button class="btn btn-primary" style="height: 45px;" type="button" onclick="search();">Search</button>
+		                  <button class="btn btn-primary" style="height: 45px;" type="button" th:onclick="search();">Search</button>
 		               </td>
 		            </tr>
 		         </table>
@@ -242,19 +237,17 @@
 					      <td th:text="${takeOff.applyDate}"></td>
 					      <td>
 					      	<span th:if="${takeOff.processStatus eq 'waiting'}">
-					      		<input type="radio" th:name="|processStatus_${status.count}|" value="waiting"
+					      		<input type="radio" th:name="|takeOffProcessStatus_${status.count}|" value="waiting"
 					      		th:checked="${takeOff.processStatus eq 'waiting'}" th:onclick="changeTakeOffStatus([[${takeOff.applyNo}]], 'waiting',[[${takeOff.stuNo}]]);"> 
 					      		<label class="form-check-label" for="flexRadioDefault1">승인대기</label>
-					      		<input type="radio" th:name="|processStatus_${status.count}|" value="accept" 
+					      		<input type="radio" th:name="|takeOffProcessStatus_${status.count}|" value="accept" 
 					      		th:checked="${takeOff.processStatus eq 'accept'}" th:onclick="changeTakeOffStatus([[${takeOff.applyNo}]], 'accept',[[${takeOff.stuNo}]]);"> 
 					      		<label class="form-check-label" for="flexRadioDefault1">승인완료</label>
 				      		</span>
 					      	<span th:if="${takeOff.processStatus eq 'accept'}">
-					      		<input type="radio" th:name="|processStatus_${status.count}|" value="waiting" disabled
-					      		th:checked="${takeOff.processStatus eq 'waiting'}" th:onclick="changeTakeOffStatus([[${takeOff.applyNo}]], 'waiting',[[${takeOff.stuNo}]]);"> 
+					      		<input type="radio" th:name="|takeOffProcessStatus_${status.count}|" value="waiting" disabled th:checked="${takeOff.processStatus eq 'waiting'}"> 
 					      		<label class="form-check-label" for="flexRadioDefault1">승인대기</label>
-					      		<input type="radio" th:name="|processStatus_${status.count}|" value="accept" disabled
-					      		th:checked="${takeOff.processStatus eq 'accept'}" th:onclick="changeTakeOffStatus([[${takeOff.applyNo}]], 'accept',[[${takeOff.stuNo}]]);"> 
+					      		<input type="radio" th:name="|takeOffProcessStatus_${status.count}|" value="accept" disabled th:checked="${takeOff.processStatus eq 'accept'}"> 
 					      		<label class="form-check-label" for="flexRadioDefault1">승인완료</label>
 				      		</span>
 					      </td>
@@ -289,37 +282,37 @@
 					<table class="table">
 						<tr>
 							<th>이름</th>  
-						    <td>
+						    <td colspan="2">
 						    	<span id="stuInfoModal_name"></span>
 						    	(<span id="stuInfoModal_no"></span>, 
 						    	<span id="stuInfoModal_status"></span>)
 						    </td> 
 						    <th>생년월일</th>   
-					        <td>
+					        <td colspan="2">
 					        	<div id="stuInfoModal_birth"></div>
 					        </td> 
 					        <td rowspan="3" colspan="2">
-					        	<img src="/images/학생2.jpg" width="200px;" height="200px;">
+					        	<img src="/images/학생2.jpg" width="180px;" height="180px;">
 					        </td>
 						</tr>
 						<tr>
 					        <th>학년</th>  
-					        <td>
+					        <td colspan="2">
 					        	<div id="stuInfoModal_grade"></div>
 					        </td>  
 					  	    <th>전공대학</th>   
-						    <td>
+						    <td colspan="2">
 						    	<div id="stuInfoModal_coll"></div>
 						    </td>  
 					   	    
 						</tr>  
 						<tr>
 							<th>전공학과</th>   
-					   	    <td>
+					   	    <td colspan="2">
 					   	    	<div id="stuInfoModal_dept"></div>
 					   	    </td>  
 					  	    <th>복수전공</th>   
-					        <td>
+					        <td colspan="2">
 					        	<div id="stuInfoModal_doubleDept"></div>
 					        </td>    
 						</tr>  
@@ -333,28 +326,6 @@
 	    </div>
 	  </div>
 	</div>
-	
-	<!--by수경 휴학/복학 일괄승인완료  모달창 -->
-	<div class="modal fade" id="resultAlltModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-	      <div class="modal-body">
-	      	<div class="row mb-3" >
-		      	<div class="col text-center">
-		      	  일괄 승인이 완료되었습니다.
-		      	</div>
-	      	</div>
-	       <div class="row">
-	       	<div class="col text-center">
-	       		<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" 
-	       		data-flag="" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;"
-	       		th:onclick="formSubmit();">확인</button>
-	       	</div>
-	       </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>		
 			
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
 <script type="text/javascript" th:src="@{/js/deptManage/takeOffReturnUniv.js}"></script>	 

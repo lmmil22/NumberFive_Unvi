@@ -49,14 +49,18 @@ function changeTakeOffStatus(applyNo, processStatus, stuNo){
 					
 					    Swal.fire({
 						  title: '승인완료',
-						  text: "승인이 완료 되었습니다.",
+						  text: "승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
 						  icon: 'success',
+						  showCancelButton: true,
 						  confirmButtonColor: '#3085d6',
-						  confirmButtonText: '확인'
+						  confirmButtonText: '확인',
+						  cancelButtonText: '취소'
 						}).then((result) => {
 						  if (result.isConfirmed) {
-							home();
+							sendKakao();
 							return;
+						  }else{
+							home();
 						  }
 						})
 				    },
@@ -96,14 +100,18 @@ function changeComebackStatus(applyNo, processStatus, stuNo){
 			    success: function(result) {
 				   	Swal.fire({
 					  title: '승인완료',
-					  text: "승인이 완료 되었습니다.",
+					  text: "승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
 					  icon: 'success',
+					  showCancelButton: true,
 					  confirmButtonColor: '#3085d6',
-					  confirmButtonText: '확인'
+					  confirmButtonText: '확인',
+					  cancelButtonText: '취소'
 					}).then((result) => {
 					  if (result.isConfirmed) {
-						home();
+							sendKakao();
 						return;
+					  }else{
+						home();
 					  }
 					});
 			    },
@@ -187,22 +195,42 @@ function takeOffAllAccept(){
 	takeOffForm.querySelector('#takeOffInput1').value = applyNos;
 	//stuNo를 담을 stuNos를 input 히든으로 데이터 담아간다.
 	takeOffForm.querySelector('#takeOffInput2').value = stuNos;
-		
-	//승인 확인창	
-   	Swal.fire({
-	  title: '일괄승인 완료',
-	  text: "일괄승인이 완료 되었습니다.",
-	  icon: 'success',
-	  confirmButtonColor: '#3085d6',
-	  confirmButtonText: '확인'
+	
+	//승인완료 swal창 뜨고 formSubmit() 함수 실행
+	Swal.fire({
+		  title: '일괄승인',
+		  text: "일괄승인 하시겠습니까?",
+		  icon: 'question',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  confirmButtonText: '승인',
+		  cancelButtonText: '취소'
 	}).then((result) => {
 	  if (result.isConfirmed) {
 		takeOffForm.submit();
+		
+		Swal.fire({
+		  title: '일괄승인 완료',
+		  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
+		  icon: 'success',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  confirmButtonText: '확인',
+		  cancelButtonText: '취소'
+		  
+		}).then((result) => {
+		  if (result.isConfirmed) {
+			sendKakao();
+			return;
+		  }
+		  else{
+			home();
+		  }
+		});
+	  }else{
 		home();
-		return;
-	  }
+	   }
 	});
-	
 }
 
 
@@ -276,21 +304,41 @@ function comebackAllAccept(){
 	//stuNo를 담을 stuNos를 input 히든으로 데이터 담아간다.
 	comebackForm.querySelector('#comebackInput2').value = stuNos;
 	
-	//승인 확인창	
-   	Swal.fire({
-	  title: '일괄승인 완료',
-	  text: "일괄승인이 완료 되었습니다.",
-	  icon: 'success',
-	  confirmButtonColor: '#3085d6',
-	  confirmButtonText: '확인'
+	
+	//승인완료 swal창 뜨고 formSubmit() 함수 실행
+	Swal.fire({
+		  title: '일괄승인',
+		  text: "일괄승인 하시겠습니까?",
+		  icon: 'question',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  confirmButtonText: '승인',
+		  cancelButtonText: '취소'
 	}).then((result) => {
 	  if (result.isConfirmed) {
 		comebackForm.submit();
+		
+		Swal.fire({
+		  title: '일괄승인 완료',
+		  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
+		  icon: 'success',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  confirmButtonText: '확인',
+		  cancelButtonText: '취소'
+		}).then((result) => {
+		  if (result.isConfirmed) {
+			sendKakao();
+			return;
+		  }
+		  else{
+			home();
+		  }
+		});
+	  }else{
 		home();
-		return;
-	  }
+	   }
 	});
-	
 }
 //by수경 다시 현재 화면으로 이동하는 함수
 function home(){
@@ -326,7 +374,7 @@ function sendKakao(){
 	    title: '제목 영역입니다.',
 	    description: '설명 영역입니다.',
 	  },
-	
 	});
+		home();
 
 }

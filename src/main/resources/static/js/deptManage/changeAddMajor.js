@@ -2,7 +2,7 @@
 //승인상태 클릭 시 모달창으로 해당 학생의 신청 시 작성한 내역 보여줌
 
 //by수경 승인상태 클릭 시 전과 신청서 보여주기
-function showChangeMajorApply(stuNo, applyNo){
+function showChangeMajorApply(stuNo, applyNo, processStatus){
 	$.ajax({
 	   url: '/emp/showChangeMajorApplyAjax', //요청경로
 	    type: 'post',
@@ -29,10 +29,29 @@ function showChangeMajorApply(stuNo, applyNo){
 	       alert('실패');
 	    }
 	});
+	
+		//by수경 승인완료 버튼 클릭 시 해당 학생 신청서는 보이지만 승인버튼은 안보이도록 구현
+	
+		//기존 버튼부분을 지워준다
+		$('.changeMajor_div').children().eq(0).remove();
+		let str = '';
+		
+		//승인 버튼 새로 그리기
+		//만약 학생의 processStatus가 accept이라면 display=none으로 안보이도록 구현
+		if(processStatus == 'accept'){
+			str += '<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem; display:none;" onclick="acceptChangeMajor();">승인하기</button>';
+		}
+		//만약 학생의 processStatus가 waiting 이라면 버튼 보이도록
+		else{
+			str += '<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;" onclick="acceptChangeMajor();">승인하기</button>';
+		}
+		//modal-footer클래스 앞에 만들겠다.
+		$('.changeMajor_div').prepend(str);
+	
 
 }
 //by수경 승인상태 클릭 시 복수전공 신청서 보여주기
-function showDoubleMajorApply(stuNo, applyNo){
+function showDoubleMajorApply(stuNo, applyNo,processStatus){
 	
 	$.ajax({
 	   url: '/emp/showDoubleMajorAjax', //요청경로
@@ -61,6 +80,24 @@ function showDoubleMajorApply(stuNo, applyNo){
 	       alert('실패');
 	    }
 	});
+	
+		//by수경 승인완료 버튼 클릭 시 해당 학생 신청서는 보이지만 승인버튼은 안보이도록 구현
+	
+		//기존 버튼부분을 지워준다
+		$('.doubleMajor_div').children().eq(0).remove();
+		let str = '';
+		
+		//승인 버튼 새로 그리기
+		//만약 학생의 processStatus가 accept이라면 display=none으로 안보이도록 구현
+		if(processStatus == 'accept'){
+			str += '<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem; display:none;" onclick="acceptChangeMajor();">승인하기</button>';
+		}
+		//만약 학생의 processStatus가 waiting 이라면 버튼 보이도록
+		else{
+			str += '<button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" id="resultAllModal_btn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;" onclick="acceptChangeMajor();">승인하기</button>';
+		}
+		//modal-footer클래스 앞에 만들겠다.
+		$('.doubleMajor_div').prepend(str);
 
 	
 }
@@ -136,18 +173,38 @@ function changeAllAccept(){
 	
 	//승인완료 swal창 뜨고 formSubmit() 함수 실행
 	Swal.fire({
-	  title: '일괄승인 완료',
-	  text: "일괄승인이 완료 되었습니다.",
-	  icon: 'success',
-	  confirmButtonColor: '#3085d6',
-	  confirmButtonText: '확인'
+		  title: '일괄승인',
+		  text: "일괄승인 하시겠습니까?",
+		  icon: 'question',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  confirmButtonText: '승인',
+		  cancelButtonText: '취소'
 	}).then((result) => {
-	  if (result.isConfirmed) {
-		changeForm.submit();
-		return;
-	  }
-	});
-
+		  if (result.isConfirmed) {
+			changeForm.submit();
+			
+			Swal.fire({
+			  title: '일괄승인 완료',
+			  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
+			  icon: 'success',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  confirmButtonText: '확인',
+			  cancelButtonText: '취소'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+				sendKakao();
+				return;
+			  }
+			  else{
+				home();
+			  }
+			});
+		  }else{
+			home();
+		   }
+		});
 }
 
 //복수전공신청 테이블 제목줄 체크박스
@@ -220,17 +277,38 @@ function doubleAllAccept(){
 		
 	//승인완료 swal창 뜨고 formSubmit() 함수 실행
 	Swal.fire({
-	  title: '일괄승인 완료',
-	  text: "일괄승인이 완료 되었습니다.",
-	  icon: 'success',
-	  confirmButtonColor: '#3085d6',
-	  confirmButtonText: '확인'
+		  title: '일괄승인',
+		  text: "일괄승인 하시겠습니까?",
+		  icon: 'question',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  confirmButtonText: '승인',
+		  cancelButtonText: '취소'
 	}).then((result) => {
-	  if (result.isConfirmed) {
-		doubleForm.submit();
-		return;
-	  }
-	});
+		  if (result.isConfirmed) {
+			doubleForm.submit();
+			Swal.fire({
+			  title: '일괄승인 완료',
+			  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
+			  icon: 'success',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  confirmButtonText: '확인',
+			  cancelButtonText: '취소'
+			  
+			}).then((result) => {
+			  if (result.isConfirmed) {
+				sendKakao();
+				return;
+			  }
+			  else{
+				home();
+			  }
+			});
+		  }else{
+			home();
+		   }
+		});
 }
 
 //by수경 전과신청 관리자 단일 승인
@@ -239,30 +317,44 @@ function acceptChangeMajor(){
 	const applyNo = document.querySelector('#changeMajorModal_apply').value;
 	const stuNo = document.querySelector('#changeMajorModal_no').innerText;
 	
-	$.ajax({
-	   url: '/emp/acceptChangeMajorAjax', //요청경로
-	    type: 'post',
-	    data:{'applyNo':applyNo,'stuNo':stuNo}, //필요한 데이터
-	    success: function(result) {
-			Swal.fire({
-				  title: '승인 완료',
-				  text: "전과 신청이 승인되었습니다.",
-				  icon: 'success',
-				  confirmButtonColor: '#3085d6',
-				  confirmButtonText: '확인'
-				}).then((result) => {
-				  if (result.isConfirmed) {
-					checkChangeMajorChkBox();
-					return;
-				  }
-				})
-			
-	    },
-	    error: function(){
-	       alert('실패');
-	    }
-	});
-
+	    Swal.fire({
+            title: '승인하기',
+            text: "신청내역을 승인하시겠습니까?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '승인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+				$.ajax({
+				   url: '/emp/acceptChangeMajorAjax', //요청경로
+				    type: 'post',
+				    data:{'applyNo':applyNo,'stuNo':stuNo}, //필요한 데이터
+				    success: function(result) {
+						Swal.fire({
+						  title: '승인 완료',
+						  text: "전과 신청이 승인되었습니다.",
+						  icon: 'success',
+						  confirmButtonColor: '#3085d6',
+						  confirmButtonText: '확인'
+						}).then((result) => {
+						  if (result.isConfirmed) {
+							checkChangeMajorChkBox();
+							return;
+						  }
+						})
+				    },
+				    error: function(){
+				       alert('실패');
+				    }
+				});
+				return;
+            }else{
+				home();
+			}
+        });
 }
 
 //by수경 전과신청 모달창에서 카카오톡 전송 체크박스에 체크 시 실행될 함수
@@ -306,29 +398,45 @@ function acceptDoubleMajor(){
 	const applyNo = document.querySelector('#doubleMajorModal_apply').value;
 	const stuNo = document.querySelector('#doubleMajorModal_no').innerText;
 
-	$.ajax({
-	   url: '/emp/acceptDoubleMajorAjax', //요청경로
-	    type: 'post',
-	    data:{'applyNo':applyNo, 'stuNo':stuNo}, //필요한 데이터
-	    success: function(result) {
-		
-			 Swal.fire({
-				  title: '승인 완료',
-				  text: "복수전공 신청이 승인되었습니다.",
-				  icon: 'success',
-				  confirmButtonColor: '#3085d6',
-				  confirmButtonText: '확인'
-				}).then((result) => {
-				  if (result.isConfirmed) {
-					checkDoubleMajorChkBox();
+	 Swal.fire({
+            title: '승인하기',
+            text: "신청내역을 승인하시겠습니까?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '승인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+				$.ajax({
+				   url: '/emp/acceptDoubleMajorAjax', //요청경로
+				    type: 'post',
+				    data:{'applyNo':applyNo, 'stuNo':stuNo}, //필요한 데이터
+				    success: function(result) {
+					
+						 Swal.fire({
+							  title: '승인 완료',
+							  text: "복수전공 신청이 승인되었습니다.",
+							  icon: 'success',
+							  confirmButtonColor: '#3085d6',
+							  confirmButtonText: '확인'
+							}).then((result) => {
+							  if (result.isConfirmed) {
+								checkDoubleMajorChkBox();
+								return;
+							  }
+							})
+				    },
+				    error: function(){
+				       alert('실패');
+				    }
+				});
 					return;
-				  }
-				})
-	    },
-	    error: function(){
-	       alert('실패');
-	    }
-	});
+			} else{
+				home();
+		    }
+ 	});
 
 }
 //by수경 다시 전과/복수전공관리자 페이지로 이동(단일승인)
