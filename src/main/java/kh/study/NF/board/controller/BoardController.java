@@ -105,17 +105,22 @@ public class BoardController {
 	//게시글(+이미지) 상세조회
 	@GetMapping("/detail")
 	public String selectDetail(@RequestParam(required = false) String boardNo,Model model,ReplyVO  replyVO,BoardVO boardVO) {
+		System.out.println("null값이니??????????/들고왔니???????"+boardNo);
 		System.out.println("___________게시판상세조회 페이지로 이동 !!! _______________");
 		//게시글 상세조회
 		model.addAttribute("board", boardService.selectDetailBoard(boardNo));
+		System.out.println("게시판 상세조회 했을 때----"+boardVO);
 		//사용중인 카테고리 목록조회
 		model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
+		System.out.println("--------------------- 사용중 카테고리 목록 조회완료 -------------------------");
 		//댓글목록조회
 		model.addAttribute("replyList",boardService.selectReplyList(boardNo));
+		System.out.println("--------------------- 댓글 목록 조회하러 완료-------------------------");
 		//조회수증가-이클립스
 		boardService.updateReadCnt(boardNo);
-		System.out.println("______________________상세조회 쿼리문 모두 실행 완료______________________________");
+		System.out.println("______________________ 조회수증가 쿼리문 모두 실행 완료______________________________");
 		System.out.println(boardService.selectDetailBoard(boardNo));
+		System.out.println("______________________//baordNo가지고 상세조회 쿼리문 모두 실행 완료 했을 때//______________________________");
 		return "content/common/board/board_detail";
 	}
 	

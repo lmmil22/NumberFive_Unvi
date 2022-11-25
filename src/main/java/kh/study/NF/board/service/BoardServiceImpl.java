@@ -34,7 +34,7 @@ public class BoardServiceImpl implements BoardService{
 		return sqlSession.selectList("boardMapper.selectBoardList",boardVO);
 	}
 	
-	//게시글상세조회(미사용)
+	//게시글상세조회
 	@Override
 	public BoardVO selectDetailBoard(String boardNo) {
 		return sqlSession.selectOne("boardMapper.selectDetailBoard", boardNo);
@@ -82,7 +82,7 @@ public class BoardServiceImpl implements BoardService{
 	public void deleteReply(int replyNo) {
 		sqlSession.delete("replyMapper.deleteReply",replyNo);
 	}
-	 //댓글상세조회
+	 //댓글상세조회(미사용)
 	 @Override 
 	 public ReplyVO selectDetailReply(int replyNo) { 
 		 return sqlSession.selectOne("replyMapper.selectDetailReply",replyNo); 

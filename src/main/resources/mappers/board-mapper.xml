@@ -198,14 +198,13 @@
 				,BOARD_TITLE
 				,BOARD_CONTENT
 				,BOARD_WRITER
-				,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE
-				
+				,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE				
 				, IS_MAIN
 				, ATTACHED_NAME
 				
 		FROM BOARD B,BOARD_IMG I
 		
-		WHERE B.BOARD_NO = I.BOARD_NO
+		WHERE B.BOARD_NO = I.BOARD_NO(+) <!-- 아우터조인 사용: 이미지파일이 없어도 조인가능하도록 구현 -->
 		AND B.BOARD_NO = #{boardNo}
 	</select>  
 	

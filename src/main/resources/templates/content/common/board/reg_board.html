@@ -105,30 +105,41 @@
 				</div>
 				<!-- 끝) 글내용 영역 -->	
 				<!-- 시작)이미지첨부파일 영역 -->
-				<div class="row mb-3">
-					<div class="col-6 mt-5">
-		               <label class="form-label">대표 이미지 첨부</label>
-		               <input class="form-control" type="file" name="mainImg" >  
+		        <div class="col-3 mt-5 "> 이미지 파일 첨부(선택)</div>
+				<div align="left" class="row  mt-2 mb-4">
+		            <div class="col-6  multiFileDiv">
+		             <div style="color: red; font-size: 0.9rem;">
+						 ※ 1개의 이미지만 파일 선택하여 첨부 가능합니다.
+		               <input id="mainImgDiv" class="mb-3 form-control" type="file" name="mainImg" ><!-- 11/25 추가버튼 생성되어 나타나게하고 삭제버튼 생성되어 없어지게만들자. -->
+					</div>
+	                 <div id="subImgsDiv" style="color: red; font-size: 0.9rem;">
+						 ※ 2개이상 이미지 파일 선택하여 첨부 가능합니다.
+					 	<input class="form-control" type="file" name="subImgs" multiple>           
+					</div>
+		             </div><div class="col-3">
+		             <!-- <div> 추가/삭제 시 구현할 것
+			                <button id="addFileBtn" class="btn btn-light" type="button" th:onclick="goAdd();">추가</button>        
+			                <button id="removeFileBtn"  class="btn btn-light" type="button" th:onclick="goRemove();">삭제</button>  
+		               </div>  --> 
 		            </div> 
-		            <div class="col-6 mt-5">
-		               <label class="form-label">서브 이미지 첨부</label>
-		               <input class="form-control" type="file" name="subImgs" multiple>            
-		               <!-- multiple 속성을 주면 파일을 동시에 여러 파일 선택가능하다 -> 갯수가 화면에 뜬다 -->          
-		            </div>
 				</div>
+				
 				<!-- 끝)이미지첨부파일 영역 -->
-				
-				
-	
 				
 				<!-- 글등록 버튼 -->
 				<div align="center">
 					<button class="btn btn-light" type="submit" th:onclick="@{location.href='/board/reg';}">글등록</button>
 				</div>
-				
 			</form>
 		</div>
 	</div>
-</div>
+	
+	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script type="text/javascript" th:src="@{/js/common/reg_board.js}"></script>	
+</div>
 </html>
