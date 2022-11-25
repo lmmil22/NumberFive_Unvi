@@ -17,5 +17,5 @@ public class CalendarVO {
 	private String enddate;
 	private String calColor;
 	private String calWriter;
-	private String calContent;
+//	private String calContent;
 }

@@ -4,12 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.NF.FullCalendar.service.CalendarService;
+import kh.study.NF.FullCalendar.vo.CalendarVO;
 //by 지아 학사일정 관련 controller입니다
 @Controller
 @RequestMapping("/calendar")
@@ -30,5 +34,15 @@ public class FullCalendarController {
 	  calendarService.selectRegDate();
 		return calendarService.getEventList();
 	 }
+	
+	@PostMapping("/insertCal")
+	public String insertCal(Authentication authentication , CalendarVO calendarVO) {
+		User user = (User)authentication.getPrincipal();
+		calendarVO.setCalWriter(user.getUsername());
+		
+		calendarService.insertCal(calendarVO);
+		
+		return "redirect:/calendar/cal";
+	}
 	
 }

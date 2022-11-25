@@ -9,5 +9,6 @@ public interface CalendarService {
 
 	 List<Map<String, Object>> getEventList();
 	List<CalendarVO> selectRegDate();
-	 
+	void insertCal(CalendarVO calendarVO); 
+	
 }

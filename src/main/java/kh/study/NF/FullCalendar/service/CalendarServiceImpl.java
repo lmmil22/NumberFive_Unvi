@@ -69,4 +69,9 @@ public class CalendarServiceImpl implements CalendarService {
 
 	}
 
+	@Override
+	public void insertCal(CalendarVO calendarVO) {
+		sqlSession.insert("calendarMapper.insertCalData",calendarVO);
+	}
+
 }
