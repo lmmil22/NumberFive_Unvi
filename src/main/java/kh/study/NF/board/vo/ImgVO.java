@@ -13,12 +13,13 @@ public class ImgVO {
 //	ORIGIN_NAME
 //	ATTACHED_NAME
 //	IS_MAIN
+//  SUB_IMGS
 //	BOARD_NO	
 	private String  imgCode;
 	private String  originName;
 	private String  attachedName;
 	private String  isMain;//null가능(미사용)갖고오긴 했는디..있을 필요가 없다... Y(메인)/N(서브이미지)
-	private String boardNo;
+	private String  boardNo;
 	
 	
 }

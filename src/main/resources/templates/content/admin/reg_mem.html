@@ -27,7 +27,7 @@
 	  	<form id="joinFormTag" class="row g-3" th:action="@{/member/regMem}" method="post" th:object="${memberVO}">
 		  <div class="col-12">
 		    <label for="memNo" class="form-label">학번 및 교번</label>
-		    <input type="text" class="form-control" th:field="*{memNo}" placeholder="본인의 학번 및 교번을 입력하세요"  required>
+		    <input type="text" class="form-control memNo" th:field="*{memNo}" placeholder="본인의 학번 및 교번을 입력하세요"  required>
 <!-- 주석처리는 MemberVO에서 어노테이션으로 각변수마다 validation 처리를 해줬을 때 사용가능한 것들 (내가한 것은 js에서 처리하도록구현) -->
 <!-- 			<div class="hasError" th:if="${#fields.hasErrors('memNo')}" th:errors="*{memNo}"></div>
  -->		  </div>
@@ -35,7 +35,7 @@
 		  <div class="col-12">
 		    <label for="memPw" class="form-label">비 밀 번 호</label>
 		    <div style="color: red; font-size: 13px;"> ※ 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하</div>
-		    <input type="password" class="form-control"  th:field="*{memPw}"  placeholder="비밀번호를 입력하세요." required>
+		    <input type="password" class="form-control memPw"  th:field="*{memPw}"  placeholder="비밀번호를 입력하세요." required>
 		  </div>
 
 		  <div class="col-12">
@@ -65,9 +65,9 @@
 		    <input type="text" class="form-control" th:field="*{memTell}"  placeholder="연락처 입력은 선택입니다." >
 	  </div>
  
-		  <div class="col-12">
-		    <label for="memRole" class="form-label">권한(필수)</label>
-			  <div class="form-check form-check-inline" >
+		  <div class="col-12 ">
+		     <label for="memRole" class="form-label ">권한(필수)</label>
+			 <div class="form-check form-check-inline" >
 			  <input class="form-check-input" type="radio"  name="memRole" id="memRole" value="STUDENT" checked>
 			  <label class="form-check-label" for="inlineRadio1">학생 </label>
 			</div>

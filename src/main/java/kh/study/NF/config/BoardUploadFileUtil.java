@@ -91,8 +91,14 @@ public class BoardUploadFileUtil {
 			//첨부된 파일 갯수만큼 반복하여 첨부시작
 			for(MultipartFile subImg : subImgs) {
 				ImgVO vo = uploadFile(subImg);
-				vo.setIsMain("N"); // 서브이미지는 메인이 아니므로 N 설정해주기
-				list.add(vo);
+				
+				//(추가) 다중이미지가 null이 아닐때도 리스트항목에 추가를 안하게되서 null값도 허용되도록 설정
+				if (vo.getOriginName()!=null) {
+					
+					vo.setIsMain("N"); // 서브이미지는 메인이 아니므로 N 설정해주기
+					list.add(vo);
+
+				}
 			}
 			return list;
 		}

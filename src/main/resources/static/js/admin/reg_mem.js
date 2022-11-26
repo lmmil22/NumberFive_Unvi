@@ -25,21 +25,22 @@ function checkValid(){
 // ----------------------------변수선언-------------------------------------------//	
 	let str ='';//validation 처리 표시 문자열
 
-	let memNoTag = document.querySelector('#memNo');
+	let memNoTag = document.querySelector('.memNo');
 	let memNameTag = document.querySelector('#memName');
 	let memAddrTag = document.querySelector('#memAddr');
 	let memAddrDetailTag = document.querySelector('#memAddrDetail');
-	//let memRoleTag = document.querySelector('#memRole');
+	let memPwTag = document.querySelector('.memPw');
+	let memEmailTag = document.querySelector('#memEmail');
+	//let memRoleTag = document.querySelector('.memRole');
 	
 	// --비밀번호 유효성검사
 	//조건: 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하
 	let pw_regex = new RegExp("^(?=.*[0-9])(?=.*[a-zA-z]).{8,15}$");
-	let memPwTag = document.querySelector('#memPw');
 	// --이메일 유효성검사
 	let email_regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
-	let memEmailTag = document.querySelector('#memEmail');
 // ---------------- if문 --------------------------------------------------------//	
-	// 빈 값일 때
+// [ 빈 값일 때 ]
+	
 	// 비번
 	if(memPwTag.value == ''){
 		str = '비밀번호는 필수입력입니다.';
@@ -47,6 +48,7 @@ function checkValid(){
 		$(memPwTag).next().remove();
 		str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
 		memPwTag.insertAdjacentHTML('afterend', str);
+		
 		//이메일
 		if(memEmailTag.value == ''){
 			str = '이메일은 필수입력입니다.';
@@ -54,35 +56,39 @@ function checkValid(){
 			$(memEmailTag).next().remove();
 			str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
 			memEmailTag.insertAdjacentHTML('afterend', str);
+			
 			//학번교번
 			if(memNoTag.value == ''){
 				str = '학번 및 교번은 필수입력입니다.';
-				
+				$(memNoTag).next().remove();
 				str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
 				memNoTag.insertAdjacentHTML('afterend', str);
+				
 				//이름
 				if(memNameTag.value == ''){
 					str = '이름은 필수입력입니다.';
-					
+					$(memNameTag).next().remove();
 					str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
 					memNameTag.insertAdjacentHTML('afterend', str);
+					
 					//주소
 					if(memAddrTag.value == ''){
 						str = '주소는 필수입력입니다.';
-						
+						$(memAddrTag).next().remove();
 						str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
 						memAddrTag.insertAdjacentHTML('afterend', str);
+						
 						//상세주소
 						if(memAddrDetailTag.value == ''){
 							str = '상세주소는 필수입력입니다.';
-							
+							$(memAddrDetailTag).next().remove();
 							str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
 							memAddrDetailTag.insertAdjacentHTML('afterend', str);
 							
-							/*//회원권한
-							if(memRoleTag.value == ''){
-								str = '회원권한은 필수입력 입니다.';
-								
+							//회원권한
+							/*if(memRoleTag.value == ''){
+								str = '회원권한은 필수 입니다.';
+								$(memRoleTag).next().remove();
 								str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
 								memRoleTag.insertAdjacentHTML('afterend', str);
 								

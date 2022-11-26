@@ -15,9 +15,11 @@
 		<!-- 내용줄 -->
 		<div class="col-12 mb-5" > 
 			<form th:action="@{/board/reg}" method="post" th:object="${boardVO}" enctype="multipart/form-data">
-			<input type="hidden" name="boardWriter">
-			<input type="hidden" name="boardNo">
-			<input type="hidden" name="memNo">
+				<input type="hidden" name="boardWriter">
+				<input type="hidden" name="boardNo">
+				<input type="hidden" name="memNo">
+				
+				
 				<div class="row">
 					<!-- 첫번째줄영역 -->
 					<div class="col-12 mb-3">
@@ -107,23 +109,29 @@
 				<!-- 시작)이미지첨부파일 영역 -->
 		        <div class="col-3 mt-5 "> 이미지 파일 첨부(선택)</div>
 				<div align="left" class="row  mt-2 mb-4">
-		            <div class="col-6  multiFileDiv">
-		             <div style="color: red; font-size: 0.9rem;">
-						 ※ 1개의 이미지만 파일 선택하여 첨부 가능합니다.
-		               <input id="mainImgDiv" class="mb-3 form-control" type="file" name="mainImg" ><!-- 11/25 추가버튼 생성되어 나타나게하고 삭제버튼 생성되어 없어지게만들자. -->
+		            <div class="col-9  multiFileDiv">
+		            	<div>
+			                <div  style="color: red; font-size: 0.9rem;">
+								 ※ 1개의 이미지만 파일 선택하여 첨부 가능합니다.
+							</div>	 
+							<div>
+				                <input id="mainImgDiv" class="mb-3 form-control" type="file" name="mainImg" >
+							</div> 
+							<div style="display: inline-block;" id="addFileBtn"> 
+			               </div>		               
+		            	</div>
+		            	
+		            	<div id="subImgsDiv" >
+		            		 <input type="file" name="subImgs" style="visibility: hidden;" value=""> 
+		            	</div>
+		            	<!-- 추가버튼클릭시 js에서 보여지도록 하는 영역 -->
+		                <!-- <div id="subImgsDiv" style="color: red; font-size: 0.9rem;">
+							 ※ 2개이상 이미지 파일 선택하여 첨부 가능합니다.
+						 	<input class="form-control" type="file" name="subImgs" multiple>           
+						</div>  -->
 					</div>
-	                 <div id="subImgsDiv" style="color: red; font-size: 0.9rem;">
-						 ※ 2개이상 이미지 파일 선택하여 첨부 가능합니다.
-					 	<input class="form-control" type="file" name="subImgs" multiple>           
-					</div>
-		             </div><div class="col-3">
-		             <!-- <div> 추가/삭제 시 구현할 것
-			                <button id="addFileBtn" class="btn btn-light" type="button" th:onclick="goAdd();">추가</button>        
-			                <button id="removeFileBtn"  class="btn btn-light" type="button" th:onclick="goRemove();">삭제</button>  
-		               </div>  --> 
-		            </div> 
+		             <div class="col-3"></div> <!-- 빈문자 -->
 				</div>
-				
 				<!-- 끝)이미지첨부파일 영역 -->
 				
 				<!-- 글등록 버튼 -->
@@ -133,13 +141,18 @@
 			</form>
 		</div>
 	</div>
-	
+<!-- 테스트영역 -->	
+
+<!-- 테스트영역 -->
+
+
+
 	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript" th:src="@{/js/common/reg_board.js}"></script>	
+
 </div>
 </html>
