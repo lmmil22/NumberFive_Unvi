@@ -1,13 +1,35 @@
 <!-- by 유빈 -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"	
+<html lang="ko"
+	 xmlns:th="http://www.thymeleaf.org"	
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{layout/base_layout}"> 
+	
 <th:block layout:fragment="css"> <!-- css 정의된 부분이 바뀌면서가져올것이다  -->
-	<link rel="stylesheet" type="text" th:href="@{css/test.css}"> <!--외부 css 파일 불러오겠다  rel은 고정-->
+	<link rel="stylesheet" type="text" th:href="@{css/test.css}"> <!--외부 css 파일 불러오겠다 rel은 고정-->
 </th:block>
+
 <div layout:fragment="content"> 
+
+<div class="jb-box">
+      <video muted autoplay loop>
+        <source src="/videos/NFU_home_video.mp4" type="video/mp4">
+        <strong>Your browser does not support the video tag.</strong>
+      </video>
+      <div class="jb-text">
+        <p>NFU University CAMPUS </p>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
 <!-- 	Leap forward, NFU!
 	시대를 열어가는 담대한 지성, NFU
 <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
