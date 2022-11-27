@@ -17,8 +17,8 @@ body{
 	/*  padding: 0px; margin: 0px; */
 	 /* ------------------------- */
 	 /* -- 배경이미지를 꽉차게 -- */
-	  height: 100vh;
-     width: 100vw;
+	  height: 100%;
+     width: 100%;
      /*  background-image: url('/videos/NFU_home_video.mp4'); */
     /*  background-repeat : no-repeat;  */
      /* background-size : cover;  */
@@ -45,29 +45,6 @@ body{
             background-size:cover;-webkit-transition:1s opacity;transition:1s opacity
     }
     
-    /* div{
-        font-family:Agenda-Light,Agenda\ Light,Agenda,Arial\ Narrow,sans-serif;
-        font-weight:100;background:rgba(0,0,0,.3);color:#fff;padding:2rem;width:33%;
-        margin:2rem;float:right;font-size:1.2rem
-    } */
-    
-   /*  h1{
-        font-size:3rem;
-        text-transform:uppercase;
-        margin-top:0;
-        letter-spacing:.3rem
-    } */
-    
-    /* a{
-        display:inline-block;color:#fff;text-decoration:none;background:rgba(0,0,0,.5);
-        padding:.5rem;-webkit-transition:.6s background;
-        transition:.6s background
-    } */
-    
-    /* a:hover{
-        background:rgba(0,0,0,.9)
-    } */
-    
     #topMenuDiv{
     	width: 100vw; 
     	height: 100vh;
@@ -75,16 +52,6 @@ body{
     }
     
 /* test중 */
-
-
-
-
-
-
-
-
-
-
 /* -- 2) 동영상배경 홈화면 꽉차게 -- */
 /* .jb-box { width: 100%; height: 500px; overflow: hidden;margin: 0px auto; position: relative; }
 video { width: 100%; }
@@ -93,16 +60,30 @@ video { width: 100%; }
 /* ------------------------- */
 
 
+* {
+  margin: 0;
+}
+/* 리셋을 하지 않은 경우 추가 */
 
+html, body {
+   height: 100%;
+}
 
+.content {
+   min-height: 100%;
+   margin: 0 auto -155px;
+}
+ /* 하단 마진은 푸터의 높이 값과 같다 */
 
+.jb-box {
+   height: 300px;
+}
+/* '.push'는 'footer'와 높이가 같아야 한다. */
 
-
-
-
-
-
-
+footer {
+    position: relative;
+    transform: translatY(-100%);
+}
 
 
 a{
