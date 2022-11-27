@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultrap.net.nz/thymeleaf/layout"> 
+<head>
+<meta charset="UTF-8">
+<title>[NFU 학사관리] Home</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<!-- 배경 이미지 꽉차게 test중 -->
+<link href="/css/test.css" rel="stylesheet">
+<!-- 제이쿼리  -->
+ <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<!-- by 유빈 : swal사용추가 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<!-- by 지아 : 탑메뉴 css 디자인 -->
+<link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/css/nice-select.css">
+    <link rel="stylesheet" href="/css/css/flaticon.css">
+    <link rel="stylesheet" href="/css/css/gijgo.css">
+    <link rel="stylesheet" href="/css/css/animate.css">
+    <link rel="stylesheet" href="/css/css/slicknav.css">
+    <link rel="stylesheet" href="/css/css/style.css">
+</head>
+<body>
+
+<!-- (실제 top)container의 첫번째 윗부분 영역 -->
+<div class="container" >
+
+	<div class="row"> 
+		<div class="col">
+			<div th:replace="fragment/top::top"></div> 
+		</div> 
+	</div>
+	
+	 <div class="row">
+		<div class="col">
+			<div layout:fragment="content"></div> 
+		</div> 
+	</div>
+
+	<div class="row"> 
+		<div class="col">
+			<div th:replace="fragment/footer::footer"></div> 
+		</div>  
+	</div> 
+</div>
+
+<!-- 실제(middle) container의 두번째 가운데부분 영역 -->
+<!-- <div class="container_middle">
+
+	<div class="row"> 
+		<div class="col">
+			<div th:replace="fragment/top::top"></div> 
+		</div> 
+	</div>
+	
+	<div class="row">
+		<div class="col">
+			<div layout:fragment="content"></div> 
+		</div> 
+	</div>
+
+	<div class="row"> 
+		<div class="col">
+			<div th:replace="fragment/footer::footer"></div> 
+		</div>  
+	</div>
+</div> -->
+
+<!--(실제 footer) container의 세번째 끝부분 영역 -->
+<!-- <div class="container_footer">
+
+	div class="row"> 
+		<div class="col">
+			<div th:replace="fragment/top::top"></div> 
+		</div> 
+	</div>
+	
+	<div class="row">
+		<div class="col">
+			<div layout:fragment="content"></div> 
+		</div> 
+	</div>
+
+	<div class="row"> 
+		<div class="col">
+			<div th:replace="fragment/footer::footer"></div> 
+		</div>  
+	</div>
+</div> -->
+
+
+
+</body>
+</html>
+
+
