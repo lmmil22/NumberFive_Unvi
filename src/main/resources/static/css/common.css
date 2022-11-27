@@ -3,13 +3,16 @@
 
 @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
-.nanumgothic * {
- font-family: 'Nanum Gothic', sans-serif;
+@font-face {
+    font-family: 'SuseongBatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/SuseongBatang.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
 
 body{
- font-family: 'Nanum Gothic', sans-serif;
- font-weight: bold;
+ font-family: 'SuseongBatang';
+
  font-size: 18px;
 
 }
