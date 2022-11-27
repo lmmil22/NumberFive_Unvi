@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout ="http://www.ultrap.net.nz/thymeleaf/layout"   
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   layout:decorate="~{layout/base_layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div layout:fragment ="content">
+<th:block >
+</th:block>
+
+	<div class="row" style="padding: 0px; height: 100%;">
+		<div class="col mb-6">
+		 <div class="nonslider">
+		   <div class="bg">
+	        <video id="banner-video" playsinline="" muted="" autoplay="" loop="">
+		      <source src="/images/NFU_home_video.mp4" type="video/mp4">
+		    </video>
+		  </div>
+		 </div>
+		</div>
+	</div>
+	
+	<div class="row mt-6">
+		<div class="col text-center mt-6" style="font-weight: bold; font-size: 30px;">
+			<label class="label">Leap forward, NFU!<p> </label>
+			<label class="label">시대를 열어가는 담대한 지성, NFU<p> </label>
+		</div>
+	</div>
+				
+			
+	<div class="row">
+		<div class="col-6">
+			<div id="banner" class="carousel carousel-dark slide" data-bs-ride="carousel">
+			  <div class="carousel-indicators">
+			    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+			    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+			  </div>
+			  <div class="carousel-inner">
+			    <div class="carousel-item active" data-bs-interval="10000">
+			      <img src="/images/국가장학금.jpg" class="d-block w-100" height="500px;" width="260px;">
+			      <div class="carousel-caption d-none d-md-block">
+			      </div>
+			    </div>
+			    <div class="carousel-item" data-bs-interval="2000">
+	      		  <img src="/images/희망도서.jpg" class="d-block w-100"  height="500px;" width="150px;">
+			      <div class="carousel-caption d-none d-md-block">
+			      </div>
+			    </div>
+			  </div>
+			  <button class="carousel-control-prev" type="button" data-bs-target="#banner" data-bs-slide="prev">
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="visually-hidden">Previous</span>
+			  </button>
+			  <button class="carousel-control-next" type="button" data-bs-target="#banner" data-bs-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="visually-hidden">Next</span>
+			  </button>
+			</div>
+		</div>
+		<div class="col-6">
+			<img src="/images/학생1.jpg" class="d-block w-100">
+		</div>
+	</div>
+
+   
+</div>
+
+
+</body>
+</html>

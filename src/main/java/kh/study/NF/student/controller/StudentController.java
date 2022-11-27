@@ -189,4 +189,9 @@ public class StudentController {
 		return  "content/student/stuApplyList";
 	}
 	
+	
+	@GetMapping("/main")
+	public String mainTest() {
+		return "content/common/main_test";
+	}
 }

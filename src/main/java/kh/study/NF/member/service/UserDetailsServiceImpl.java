@@ -14,29 +14,29 @@ import kh.study.NF.member.vo.MemberVO;
 
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
-	@Resource(name = "memberService")
-	private MemberService memberService;
-	
-	@Autowired
-	private SqlSessionTemplate sqlSession;
-	
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		MemberVO loginInfo = sqlSession.selectOne("memberMapper.login",username);
-		
-		// 로그인시 아아디를 잘못 입력한 경우 null이 뜨기때문에 오류캐치
-		if (loginInfo == null) {
-			System.out.println(username + "이라는 회원은 존재하지 않습니다.");
-			throw new UsernameNotFoundException("오류발생");
-		}
-		
-		UserDetails userDetails = User
-								.withUsername(loginInfo.getMemNo())
-								//암호화 작업3 -noop제거 
-								.password(loginInfo.getMemPw())
-								.roles(loginInfo.getMemRole().split(","))
-								.build();
-		return userDetails;
-	}
+   @Resource(name = "memberService")
+   private MemberService memberService;
+   
+   @Autowired
+   private SqlSessionTemplate sqlSession;
+   
+   @Override
+   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+      MemberVO loginInfo = sqlSession.selectOne("memberMapper.login",username);
+      
+      // 로그인시 아아디를 잘못 입력한 경우 null이 뜨기때문에 오류캐치
+      if (loginInfo == null) {
+         System.out.println(username + "이라는 회원은 존재하지 않습니다.");
+         throw new UsernameNotFoundException("오류발생");
+      }
+      
+      UserDetails userDetails = User
+                        .withUsername(loginInfo.getMemNo())
+                        //암호화 작업3 -noop제거 
+                        .password(loginInfo.getMemPw())
+                        .roles(loginInfo.getMemRole().split(","))
+                        .build();
+      return userDetails;
+   }
 
 }
