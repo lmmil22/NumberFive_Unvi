@@ -76,6 +76,15 @@ public class MemberController {
 		model.addAttribute("isLoginFail",isLoginFail);
 		return "content/common/home_Login"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
 	}
+	
+	
+	// 11/27 이미지 꽉차게 테스트용 경로
+	@GetMapping("/homeLoginTest")
+	public String homeLoginTest(MemberVO memberVO, boolean isLoginFail, Model model ) {
+		return "content/common/home_Login_Test"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
+	}
+	
+	
 //-------------------------------------------------------------------------------------------///	
 	// 로그인성공시,로그인실패시 -> 로그인페이지로 이동
 	// 스프링 시큐리티 config에서 설정한 경로대로 보내준다.

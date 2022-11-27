@@ -1,0 +1,39 @@
+/* by 유빈 : 이미지 꽉채우게 테스트중 */
+@charset "UTF-8";
+
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+@font-face {
+    font-family: 'SuseongBatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/SuseongBatang.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+	 font-family: 'SuseongBatang';
+	 font-size: 18px;
+	 
+	 height: 100vh;
+     width: 100vw;
+     background-image: url('/images/first_home.png');
+     background-repeat : no-repeat;
+     background-size : cover;
+     
+}
+a{
+	color: black;/* 글자색 */
+	text-decoration: none;  
+}
+
+textarea{
+	resize: none;
+	width: 100%;
+	height: 100%;
+}
+
+/* by 유빈 a태그 hover */
+#findPwId:hover{
+	color: #1C6758;
+}
+
