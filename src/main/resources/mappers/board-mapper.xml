@@ -229,15 +229,17 @@
 	<select id="selectBoardCnt" resultType="int">
 		SELECT COUNT(BOARD_NO)
 		FROM BOARD
+		WHERE 1 = 1
+		AND IS_NOTICE = 'N'
 		<if test="searchValue != null and !searchValue.equals('')">
 			<choose>
 				<when test="searchKeyword.equals('ALL')">
-					WHERE LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
+					AND LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
 					OR LOWER(BOARD_WRITER) LIKE '%'||LOWER(#{searchValue})||'%'
 					OR LOWER(BOARD_CONTENT) LIKE '%'||LOWER(#{searchValue})||'%'
 				</when>
 				<otherwise>
-					WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+					AND LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
 				</otherwise>
 			</choose>
 		</if>

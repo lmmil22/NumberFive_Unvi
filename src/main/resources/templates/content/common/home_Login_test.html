@@ -1,236 +1,498 @@
-<!-- by 유빈 -->
+<!-- by 유빈 : 찐최종 -->
 <!DOCTYPE html>
-<html lang="ko"
-	 xmlns:th="http://www.thymeleaf.org"	
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	layout:decorate="~{layout/base_layout}"> 
-	
-<th:block layout:fragment="css"> <!-- css 정의된 부분이 바뀌면서가져올것이다  -->
-	<link rel="stylesheet" type="text" th:href="@{css/test.css}"> <!--외부 css 파일 불러오겠다 rel은 고정-->
+	layout:decorate="~{layout/base_layout}">
+
+<th:block layout:fragment="css">
+	<!-- css 정의된 부분이 바뀌면서가져올것이다  -->
+	<!-- <link rel="stylesheet" type="text" th:href="@{css/test.css}"> -->
+	<!--외부 css 파일 불러오겠다 rel은 고정-->
 </th:block>
 
-<div layout:fragment="content" class="content"> 
-
-
-
-<!-- 전체 배경화면 동영상 영역 -->
-<div class="jb-box">
-      <video muted autoplay loop>
-        <source src="/videos/NFU_home_video.mp4" type="video/mp4">
-        <strong>Your browser does not support the video tag.</strong>
-      </video>
-<div class="jb-text">
-  <p>Lorem Ipsum Dolor</p>
-</div>
-</div>
+<div layout:fragment="content">
 
 
 
 
 
-<!-- 좌측 ) 캐러셀 + 우측) 게시판 영역  -->
-<div class="row mt-5">
-<!--좌측 ) [ 캐러셀 ]  : 슬라이드 부트스트랩 적용 -->
-<div class="col-6">
- 	Leap forward, NFU!
-	시대를 열어가는 담대한 지성, NFU
-<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active" data-bs-interval="10000">
-      <img src="/images/nf logo.png" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Some representative placeholder content for the first slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item" data-bs-interval="2000">
-      <img src="/images/nf logo.png" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Some representative placeholder content for the second slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="/images/nf logo.png" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-</div>
+
+	<!-- 전체 배경화면 동영상 영역 -->
+	<div class="jb-box">
+		<video muted autoplay loop>
+			<source src="/videos/NFU_home_video.mp4" type="video/mp4">
+		</video>
+		<!-- <strong>Your browser does not support the video tag.</strong>
+		<div class="jb-text">
+			<p>Lorem Ipsum Dolor</p>
+		</div> -->
+	</div>
 
 
-<!-- 우측) 게시판 영역 -->
-<div class="col-6" style="background-color: gray;">
-	게시판 가져오기.
-</div><!-- 두번째 줄 끝 -->	
-
-<!--  ////////////////////////////////////////////////  모달 영역 //////////////////////////////////////////////// - ->
-<!-- 1번) shop 복붙소스- 이메일로 비밀번호 찾기 a태그 클릭시 실행 Modal  -->
-<div class="modal fade" id="login_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel" style="font-weight: bold;">비밀번호찾기(임시비밀번호발급)</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-     <!--  로그인 - 세션이용 데이터 form태그로 보내주기
-      부트스트랩에서 가져왔기때문에 함부러 수정x 형식에 맞게 해야사용가능하다 -->
-		<form class="row g-3" name="formLogin" method="post" th:action="@{/member/loginProcess}" >
-		  <div class="mb-3">
-		  <!-- label은 input태그의 라벨(스티커)이다. 웬만하면, for값과 id값이 같아야한다
-		  html 파일 내에 memberId 라는 id값이 여러개 존재한다.(중복발생) -->
-		    <label for="memNo" class="form-label" >학번/교번</label>
-		    <input  type="text" class="form-control" name="memNo" id="memNo" aria-describedby="emailHelp" placeholder="ex)MEM_001" checked="checked">
-		  </div>
-		  <div class="mb-3">
-		    <label for="memName" class="form-label">이름</label>
-		    <input type="text" class="form-control" name="memName"  id="memName" placeholder="이름을 입력하세요" checked="checked">
-		  </div>
-		  <div class="mb-3">
-		    <label for="memEmail" class="form-label">이메일</label>
-		    <input type="email" class="form-control" name="memEmail"  id="memEmail" placeholder="ex)abc123@gmail.com" checked="checked">
-		  </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" onclick="sendEmail();">임시비밀번호발급하러가기=이메일로비밀번호찾기</button>
-	      </div>
-		</form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 2번) Modal 구글링해서 가져온 소스 : 스프링부트로 이메일 비밀번호찾기 --> 
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header" >
-                    <h4><span class="glyphicon glyphicon-lock"></span> [이메일로 비밀번호 찾기]</h4>
-                </div>
-                <div class="modal-body" style="padding:30px 40px;">
-                    <div style="color: #ac2925">
-                        <center> 입력된 정보로 임시 비밀번호가 전송됩니다. </center>
-                    </div>
-                    <hr>
-                    <form role="form" th:action="@{/member/checkAndSendEmail}" method="post" >
-                        <div class="form-group">
-                            <label for="userEmail"><span class="glyphicon glyphicon-user"></span>이메일</label>
-                            <input name="memEmail"  type="text" class="form-control" id="userEmail" placeholder="가입시 등록한 이메일을 입력하세요.">
-                        </div>
-                        <div class="form-group">
-                            <label for="userName"><span class="glyphicon glyphicon-eye-open"></span> 학번/교번</label>
-                            <input name="memNo" type="text" class="form-control" id="userName" placeholder="학번 및 교번을 입력하세요.">
-                        </div>
-                        <div align="center" style="margin-top: 15px;">
-	                        <button type="submit" class="btn btn-success btn-block" id="checkEmail">전송</button>
-                        </div> 
-                    </form>
-                    <hr>
-                    <div class="text-center small mt-2" id="checkMsg" style="color: red"></div>
-                </div>
-                <div class="modal-footer">
-             		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
- 
 
 
-<!-- 회원가입 클릭시 실행 Modal -->
-<div class="modal fade" id="join_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-  
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel" style="font-weight: bold;">[ 회원가입 ]</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      
-      <div class="modal-body">
-       <!-- 너비 조정
-      col-12 / col-6 :  한 줄 너비 총 크기 12이기때문에 12분등 중 어느만큼 사용하는건지 -->
-	  	<form  id="joinFormTag" class="row g-3" th:action="@{/member/join}" method="post" th:object="${memberVO}">
-		  	<!-- class값은 고정 건드리면 안됨. 부트스트랩사용하기위한 의미
-		    for태그와 id태그 이름은 같게 하도록 -->
-		  <div class="col-12">
-		    <label for="memNo" class="form-label">학번 및 교번</label>
-		    <input type="text" class="form-control" th:field="*{memNo}" placeholder="본인의 학번 및 교번을 입력하세요"  required>
-			<div class="hasError" th:if="${#fields.hasErrors('memNo')}" th:errors="*{memNo}"></div>
-		  </div>
 
-		  <div class="col-12">
-		    <label for="memPw" class="form-label">비 밀 번 호</label>
-		    <div style="color: red; font-size: 13px;"> ※ 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하</div>
-		    <input type="password" class="form-control"  th:field="*{memPw}"  placeholder="비밀번호를 입력하세요." required>
- 			<div class="hasError" th:if="${#fields.hasErrors('memPw')}" 	  th:errors="*{memPw}"></div>
-		  </div>
+	<!-- 좌측 ) 캐러셀 + 우측) 게시판 영역  -->
+	<!-- 제목줄 -->
+	<div class="row mt-6">
+		<div class="col text-center mt-6" style="font-weight: bold; font-size: 30px;">
+			<label class="label">Leap forward, NFU!<p> </label>
+			<label class="label">시대를 열어가는 담대한 지성, NFU<p> </label>
+		</div>
+	</div>
+	
+	<!--좌측 ) [ 캐러셀 ]  : 슬라이드 부트스트랩 적용 -->
+	<div class="row mt-3">
+		<div class="col-5">
+			<div style="width: 400px; height:  300px;" id="carouselExampleDark" class="carousel carousel-dark slide"
+				data-bs-ride="carousel">
+				<div class="carousel-indicators">
+					<button type="button" data-bs-target="#carouselExampleDark"
+						data-bs-slide-to="0" class="active" aria-current="true"
+						aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#carouselExampleDark"
+						data-bs-slide-to="1" aria-label="Slide 2"></button>
+				</div>
+				<div class="carousel-inner">
+					<div class="carousel-item active" data-bs-interval="10000">
+						<img src="/images/국가장학금.jpg" class="d-block w-100" alt="..." height="300px;" >
+					</div>
+					<div class="carousel-item" data-bs-interval="2000">
+						<img src="/images/희망도서.jpg" class="d-block w-100" alt="..." height="300px;" >
+					</div>
+				</div>
+				<button class="carousel-control-prev" type="button"
+					data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button"
+					data-bs-target="#carouselExampleDark" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
+		</div>
 
-		  <div class="col-12">
-		    <label for="memName" class="form-label"> 이 름</label>
-		    <input type="text"   class="form-control"  th:field="*{memName}" placeholder="이름을 입력하세요" required>
-			<div class="hasError" th:if="${#fields.hasErrors('memName')}"  th:errors="*{memName}"></div>
-		  </div>
 
-		 <!-- 주소(상세주소 + 검색버튼추가)
-		 줄을 맞추기위해 실제내용은 화면에 안보이도록 공백문자사용/ class에 form-control 붙여넣기 -->
-		  <div class="col-9">
-		    <label for="memAddr" class="form-label"> 주 소 </label>
-		    <input type="text" class="form-control" th:field="*{memAddr}" placeholder="주소를 검색하세요."  readonly onclick="searchAddr();">값변경못하도록 읽기전용속성값부여하기 ( 데이터넘기기 가능)
-			<div class="hasError" th:if="${#fields.hasErrors('memAddr')}" th:errors="*{memAddr}"></div>
-		  </div>
-		  <div class="col-3" >
-		    <label for="" class="form-label">&nbsp;</label>
-			<input type="button" class="btn btn-secondary form-control" onclick="searchAddr();" value="검색" >
-		  </div>
-		  <div class="col-12" >
-		    <input type="text" class="form-control" th:field="*{memAddrDetail}" placeholder="상세주소를 입력하세요.">
-   			<div class="hasError" th:if="${#fields.hasErrors('memAddrDetail')}" th:errors="*{memAddrDetail}"></div>
-		  </div>
-		 
-		  <div class="col-12">
-		    <label for="memEmail" class="form-label">이 메 일</label>
-		    <input type="email" class="form-control" th:field="*{memEmail}"  placeholder="이메일을 입력하세요." >
-			<div class="hasError" th:if="${#fields.hasErrors('memEmail')}" th:errors="*{memEmail}"></div>
-		  </div>
-		  
-		  <div class="d-grid gap-2 col-12" >
-		   <!--  버튼클릭하나로 모든 데이터 가져가야하므로 무조건 submit!  -->
-		    <button type="submit" class="btn btn-primary" >회원가입</button>
-		    <button type="button" class="btn btn-primary" onclick="checkValid();">회원가입</button>
-		  </div>
-		</form>
-	  </div>      
-    </div>
-  </div>
-</div>
-<!-- 회원가입 모달 끝 -->
+		<!-- 우측) 게시판 영역 -->
+		<div class="col-7" >
+		
+<!-- 부산대학교 학생지원시스템 레퍼런스 : 게시판 종류별 메뉴클릭 탭 바 (카테고리별) -->
+		<div class="row">
+		<div class="col-12">
+		
+			<ul class="nav nav-tabs">
+			  <li class="nav-item">
+			  <!-- 1. js 바꾸기작업 -> class값에서 active 지우거나 생기게해주기 -->
+			    <a class="nav-link active" data-toggle="tab" href="#qwe">학생지원시스템</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link "  data-toggle="tab" href="#asd">대학공지</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" data-toggle="tab" href="#zxc">자유게시판</a>
+			  </li>
+			</ul>
+			<div class="tab-content">
+			  <div class="tab-pane fade  show active" id="qwe">
 
-<!-- 주소 API  -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+				<div class="row">
+					<div class="col">
+					<table class="table table-hover ">
+						<colgroup>
+							<col width="*%">
+							<col width="4%">
+							<col width="41%">
+							<col width="20%">
+							<col width="10%">
+							<col width="10%">
+							<col width="10%">
+						</colgroup>
+						<thead class="table-light">
+							<tr>
+								<td>No.</td><!-- pk값이 아닌 행번호(row_no)를 의미함 -->
+								<td ><!-- 비밀글여부 -->
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+									  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+									</svg> 
+								</td>
+								<td align="center">글제목</td>
+								<td align="center">작성일</td>
+								<td align="center">작성자</td>
+								<td align="center">조회수</td>
+								<td align="center">댓글수</td>
+							</tr>
+						  </thead>
+						  
+						  <tbody>
+							  <th:block th:if="${#lists.size(boardList) == 0}">
+								<tr>
+									<td align="center" colspan="7"> 게시된 등록글이 없습니다.</td>
+								</tr>
+							 </th:block>
+							  <th:block th:unless="${#lists.size(boardList) == 0}" >
+								<tr th:each="board : ${boardList}">
+									<td>
+										<th:block th:if="${board.isNotice eq'Y'}">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-megaphone" viewBox="0 0 16 16">
+											  <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-.214c-2.162-1.241-4.49-1.843-6.912-2.083l.405 2.712A1 1 0 0 1 5.51 15.1h-.548a1 1 0 0 1-.916-.599l-1.85-3.49a68.14 68.14 0 0 0-.202-.003A2.014 2.014 0 0 1 0 9V7a2.02 2.02 0 0 1 1.992-2.013 74.663 74.663 0 0 0 2.483-.075c3.043-.154 6.148-.849 8.525-2.199V2.5zm1 0v11a.5.5 0 0 0 1 0v-11a.5.5 0 0 0-1 0zm-1 1.35c-2.344 1.205-5.209 1.842-8 2.033v4.233c.18.01.359.022.537.036 2.568.189 5.093.744 7.463 1.993V3.85zm-9 6.215v-4.13a95.09 95.09 0 0 1-1.992.052A1.02 1.02 0 0 0 1 7v2c0 .55.448 1.002 1.006 1.009A60.49 60.49 0 0 1 4 10.065zm-.657.975 1.609 3.037.01.024h.548l-.002-.014-.443-2.966a68.019 68.019 0 0 0-1.722-.082z"/>
+											</svg>
+										</th:block>
+										<th:block th:unless="${board.isNotice eq'Y'}">
+											<span th:text="${board.rowNum}"></span> 
+										</th:block>
+									</td>
+									<!-- 비밀글여부 -->
+									<td>
+										<th:block th:if="${board.isSecrert eq'Y'}">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+											  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+											</svg> 
+										</th:block>
+										<th:block th:unless="${board.isSecrert eq'Y'}">
+										</th:block>
+									</td>
+									<!-- 글제목줄 -->
+									<td >
+										<!-- 비밀글 일 때 -->
+										<!-- 본인 작성 비밀글이 아닌경우, warning창 띄우기 -->
+										<th:block th:if="${board.isSecrert eq 'Y'}">
+											<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
+												<th:block th:if="${board.isNotice == 'Y'}">
+													<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="|[공지] ${board.boardTitle}|" ></a>
+												</th:block>
+												<th:block th:unless="${board.isNotice == 'Y'}">
+													<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="${board.boardTitle}" ></a>
+												</th:block>
+											</th:block >
+											<th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> <!-- 게시글작성자와 로그인한 학번/교번과 일치하면 -->
+												<th:block th:if="${board.isNotice == 'Y'}">
+													<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="|[공지] ${board.boardTitle}|" ></a>
+												</th:block>
+												<th:block th:unless="${board.isNotice == 'Y'}">
+													<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="${board.boardTitle}" ></a>
+												</th:block>
+											</th:block>
+										</th:block>
+										<!-- 비밀글이 아닐때 -->
+										<th:block th:unless="${board.isSecrert eq 'Y'}">
+											<th:block th:if="${board.isNotice == 'Y'}">
+													<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="|[공지] ${board.boardTitle}|" ></a>
+												</th:block>
+												<th:block th:unless="${board.isNotice == 'Y'}">
+													<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="${board.boardTitle}" ></a>
+												</th:block>
+										</th:block>
+									</td>
+									<td align="center" th:text="${board.boardCreateDate}"></td>
+									<td th:text="${board.boardWriter}"></td>
+									<td align="center" th:text="${board.boardReadCnt}"></td>
+									<td align="center" th:text="${board.replyCnt}"></td> 
+								</tr>
+							  </th:block>
+							</tbody>
+					</table>	
+					</div>
+				</div>
 
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script type="text/javascript" th:src="@{/js/common/home_Login.js}"></script>
+
+
+
+
+
+			  </div>
+			  <div class="tab-pane fade " id="asd">
+			  <!-- 미리 테이블은 어차피 안보이니까 그려놓고 자스로 해당 id값 class값 안에 active 값을 추가해줘야 화면에서 보인다. 
+			  class="tab-pane fade show active"
+			  그럼 기존 class acive는 지우기?????-->
+			    <table class="table table-hover">
+				    <tr>
+				    	<td>
+						  조회된 목록이 없습니다.
+				    	</td>
+				    </tr>
+				</table>
+			  </div>
+			  <div class="tab-pane fade" id="zxc">
+			    <table class="table table-hover">
+				    <tr>
+				    	<td>
+						  조회된 목록이 없습니다.
+				    	</td>
+				    </tr>
+				</table>
+			  </div>
+			</div>
+	
+	
+		<!-- <section class="sec-1 sec-smart-board">
+			탭
+			<ul class="nav nav-tabs" id="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" id="board-tab-1" data-toggle="tab" href="#board-tabpanel-1" data-selected="true" data-lang="" title="선택됨" >학생지원시스템공지</a>
+					<div class="tab-content">
+						게시판 글머리 영역
+	
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="board-tab-2" data-toggle="tab" href="#board-tabpanel-2" data-selected="false" onclick="f_pnuNotice('10');return false;" onkeypress="this.onclick;" data-lang="">대학공지</a>
+					<div class="tab-content">
+						'대학공지' 탭 패널
+						<div class="tab-pane fade" id="board-tabpanel-2" aria-labelledby="board-tab-2">
+							<p class="non-info mb" data-lang="">조회된 게시물이 없습니다.</p>
+							
+						</div>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="board-tab-3" data-toggle="tab" href="#board-tabpanel-3" data-selected="false" onclick="f_getDepartConfig('10');return false;" onkeypress="this.onclick;" data-lang="">학과공지</a>
+					<div class="tab-content">
+						'학과공지' 탭 패널
+						<div class="tab-pane fade" id="board-tabpanel-3" aria-labelledby="board-tab-3">
+							<a class="more-link" href="#none" aria-label="더보기" title="더보기"></a>
+							<p class="non-info mb" data-lang="">로그인이 필요한 서비스 입니다.</p>
+						</div>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="board-tab-4" data-toggle="tab" href="#board-tabpanel-4" data-selected="false" onclick="f_mainBbsList('4','000000000000062','10');return false;" onkeypress="this.onclick;" data-lang="">장학공지</a>
+					<div class="tab-content">
+						'장학공지' 탭 패널
+						<div class="tab-pane fade" id="board-tabpanel-4" aria-labelledby="board-tab-4">
+							<p class="non-info mb" data-lang="">조회된 게시물이 없습니다.</p>
+						</div>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="board-tab-5" data-toggle="tab" href="#board-tabpanel-5" data-selected="false" onclick="f_mainBbsList('5','000000000000384','10');return false;" onkeypress="this.onclick;">Q&amp;A</a>
+					<div class="tab-content">
+						'Q&A' 탭 패널
+						
+						<div class="tab-pane fade" id="board-tabpanel-5" aria-labelledby="board-tab-5">
+							<p class="non-info mb" data-lang="">조회된 게시물이 없습니다.</p>
+						</div>	
+					</div>
+				</li>
+			</ul>
+		</section> -->
+				
+	</div>
+	</div>
+<!--  end -->
+
+
+	
+		</div>
+		<!-- 두번째 줄 끝 -->
+
+	</div>
+	
+
+
+	<!--  ////////////////////////////////////////////////  모달 영역 //////////////////////////////////////////////// - ->
+		<!-- 1번) shop 복붙소스- 이메일로 비밀번호 찾기 a태그 클릭시 실행 Modal  -->
+		<div class="modal fade" id="login_modal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel"
+							style="font-weight: bold;">비밀번호찾기(임시비밀번호발급)</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<!--  로그인 - 세션이용 데이터 form태그로 보내주기
+		      부트스트랩에서 가져왔기때문에 함부러 수정x 형식에 맞게 해야사용가능하다 -->
+						<form class="row g-3" name="formLogin" method="post"
+							th:action="@{/member/loginProcess}">
+							<div class="mb-3">
+								<!-- label은 input태그의 라벨(스티커)이다. 웬만하면, for값과 id값이 같아야한다
+				  html 파일 내에 memberId 라는 id값이 여러개 존재한다.(중복발생) -->
+								<label for="memNo" class="form-label">학번/교번</label> <input
+									type="text" class="form-control" name="memNo" id="memNo"
+									aria-describedby="emailHelp" placeholder="ex)MEM_001"
+									checked="checked">
+							</div>
+							<div class="mb-3">
+								<label for="memName" class="form-label">이름</label> <input
+									type="text" class="form-control" name="memName" id="memName"
+									placeholder="이름을 입력하세요" checked="checked">
+							</div>
+							<div class="mb-3">
+								<label for="memEmail" class="form-label">이메일</label> <input
+									type="email" class="form-control" name="memEmail" id="memEmail"
+									placeholder="ex)abc123@gmail.com" checked="checked">
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-bs-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary"
+									onclick="sendEmail();">임시비밀번호발급하러가기=이메일로비밀번호찾기</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 2번) Modal 구글링해서 가져온 소스 : 스프링부트로 이메일 비밀번호찾기 -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content -->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4>
+							<span class="glyphicon glyphicon-lock"></span> [이메일로 비밀번호 찾기]
+						</h4>
+					</div>
+					<div class="modal-body" style="padding: 30px 40px;">
+						<div style="color: #ac2925">
+							<center>입력된 정보로 임시 비밀번호가 전송됩니다.</center>
+						</div>
+						<hr>
+						<form role="form" th:action="@{/member/checkAndSendEmail}"
+							method="post">
+							<div class="form-group">
+								<label for="userEmail"><span
+									class="glyphicon glyphicon-user"></span>이메일</label> <input
+									name="memEmail" type="text" class="form-control" id="userEmail"
+									placeholder="가입시 등록한 이메일을 입력하세요.">
+							</div>
+							<div class="form-group">
+								<label for="userName"><span
+									class="glyphicon glyphicon-eye-open"></span> 학번/교번</label> <input
+									name="memNo" type="text" class="form-control" id="userName"
+									placeholder="학번 및 교번을 입력하세요.">
+							</div>
+							<div align="center" style="margin-top: 15px;">
+								<button type="submit" class="btn btn-success btn-block"
+									id="checkEmail">전송</button>
+							</div>
+						</form>
+						<hr>
+						<div class="text-center small mt-2" id="checkMsg"
+							style="color: red"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<!-- 회원가입 클릭시 실행 Modal -->
+		<div class="modal fade" id="join_modal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel"
+							style="font-weight: bold;">[ 회원가입 ]</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+
+					<div class="modal-body">
+						<!-- 너비 조정
+		      col-12 / col-6 :  한 줄 너비 총 크기 12이기때문에 12분등 중 어느만큼 사용하는건지 -->
+						<form id="joinFormTag" class="row g-3" th:action="@{/member/join}"
+							method="post" th:object="${memberVO}">
+							<!-- class값은 고정 건드리면 안됨. 부트스트랩사용하기위한 의미
+				    for태그와 id태그 이름은 같게 하도록 -->
+							<div class="col-12">
+								<label for="memNo" class="form-label">학번 및 교번</label> <input
+									type="text" class="form-control" th:field="*{memNo}"
+									placeholder="본인의 학번 및 교번을 입력하세요" required>
+								<div class="hasError" th:if="${#fields.hasErrors('memNo')}"
+									th:errors="*{memNo}"></div>
+							</div>
+
+							<div class="col-12">
+								<label for="memPw" class="form-label">비 밀 번 호</label>
+								<div style="color: red; font-size: 13px;">※ 영문 및 숫자 조합 8자리
+									이상 ~ 15자리 이하</div>
+								<input type="password" class="form-control" th:field="*{memPw}"
+									placeholder="비밀번호를 입력하세요." required>
+								<div class="hasError" th:if="${#fields.hasErrors('memPw')}"
+									th:errors="*{memPw}"></div>
+							</div>
+
+							<div class="col-12">
+								<label for="memName" class="form-label"> 이 름</label> <input
+									type="text" class="form-control" th:field="*{memName}"
+									placeholder="이름을 입력하세요" required>
+								<div class="hasError" th:if="${#fields.hasErrors('memName')}"
+									th:errors="*{memName}"></div>
+							</div>
+
+							<!-- 주소(상세주소 + 검색버튼추가)
+				 줄을 맞추기위해 실제내용은 화면에 안보이도록 공백문자사용/ class에 form-control 붙여넣기 -->
+							<div class="col-9">
+								<label for="memAddr" class="form-label"> 주 소 </label> <input
+									type="text" class="form-control" th:field="*{memAddr}"
+									placeholder="주소를 검색하세요." readonly onclick="searchAddr();">값변경못하도록
+								읽기전용속성값부여하기 ( 데이터넘기기 가능)
+								<div class="hasError" th:if="${#fields.hasErrors('memAddr')}"
+									th:errors="*{memAddr}"></div>
+							</div>
+							<div class="col-3">
+								<label for="" class="form-label">&nbsp;</label> <input
+									type="button" class="btn btn-secondary form-control"
+									onclick="searchAddr();" value="검색">
+							</div>
+							<div class="col-12">
+								<input type="text" class="form-control"
+									th:field="*{memAddrDetail}" placeholder="상세주소를 입력하세요.">
+								<div class="hasError"
+									th:if="${#fields.hasErrors('memAddrDetail')}"
+									th:errors="*{memAddrDetail}"></div>
+							</div>
+
+							<div class="col-12">
+								<label for="memEmail" class="form-label">이 메 일</label> <input
+									type="email" class="form-control" th:field="*{memEmail}"
+									placeholder="이메일을 입력하세요.">
+								<div class="hasError" th:if="${#fields.hasErrors('memEmail')}"
+									th:errors="*{memEmail}"></div>
+							</div>
+
+							<div class="d-grid gap-2 col-12">
+								<!--  버튼클릭하나로 모든 데이터 가져가야하므로 무조건 submit!  -->
+								<button type="submit" class="btn btn-primary">회원가입</button>
+								<button type="button" class="btn btn-primary"
+									onclick="checkValid();">회원가입</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+
+
+
+
+
+
+
+
+
+	<!-- 주소 API  -->
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script type="text/javascript" th:src="@{/js/common/home_Login.js}"></script>
 
 </div>
 </html>

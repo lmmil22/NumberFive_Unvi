@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kh.study.NF.board.service.BoardService;
+import kh.study.NF.board.vo.BoardVO;
+import kh.study.NF.board.vo.SearchVO;
 import kh.study.NF.config.MemRole;
 import kh.study.NF.mail.service.MailService;
 import kh.study.NF.member.service.MemberService;
@@ -31,6 +34,8 @@ public class MemberController {
    
    @Resource(name = "memberService")
    private MemberService memberService;
+   @Resource(name = "boardService")
+   private BoardService boardService;
    
    @Autowired
    private MailService mailService;
@@ -77,10 +82,20 @@ public class MemberController {
       return "content/common/home_Login"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
    }
    
-   
-   // 11/27 이미지 꽉차게 테스트용 경로
+//---------------------------------------------------------------------------------------------//   
+   // !!!!! 실제 !!!!! 11/27 이미지 꽉차게 테스트용 경로
    @GetMapping("/homeLoginTest")
-   public String homeLoginTest(MemberVO memberVO, boolean isLoginFail, Model model ) {
+   public String homeLoginTest(MemberVO memberVO, boolean isLoginFail, Model model,BoardVO boardVO,String boardNo,SearchVO searchVO ) {
+			System.out.println("SearchKeyword=" + boardVO.getSearchKeyword());
+			System.out.println("searchValue=" + boardVO.getSearchValue());
+			boardVO.setTotalDataCnt(boardService.selectBoardCnt(searchVO));
+			System.out.println("_________________게시판 총 갯수 조회 쿼리문 실행성공_______________");
+			boardVO.setPageInfo();
+			System.out.println("_________________게시판 페이징 정보 실행 성공_______________");
+			System.out.println("_____boardVO 추출_____" + boardVO);
+			model.addAttribute("boardList",boardService.selectBoardList(boardVO));
+			System.out.println("_________________게시판 목록 조회 성공_______________");
+			
       return "content/common/home_Login_Test"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
    }
    
