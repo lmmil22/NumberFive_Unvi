@@ -61,11 +61,11 @@
 	<div align="center">
 		<span th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
 			<button type="button" class="btn btn-light"  th:onclick="|location.href='@{/board/update(boardNo=${board.boardNo})}'|">수정</button>
-			<!-- 스왈사용안하고 바로 할때 -->
-			<button type="button" class="btn btn-danger"  th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">삭제</button>				
-			 <!-- 스왈사용 할때 -->
-			 <input type="hidden" name="boardNo" th:value="${board.boardNo}">
-			<button id="isDeleteTag" type="button" class="btn btn-danger" th:onclick="goDelete([[${board.boardNo}]]);">삭제S</button>
+			<!-- 스왈 미사용 시,-->
+			<!-- <button type="button" class="btn btn-danger"  th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">삭제</button> -->				
+			<!-- 스왈 사용시, -->
+			<input type="hidden" name="boardNo" th:value="${board.boardNo}">
+			<button id="isDeleteTag" type="button" class="btn btn-danger" th:onclick="goDelete([[${board.boardNo}]]);">삭제</button>
 		</span>
 		<span>
 			<button type="button" class="btn btn-light" th:onclick="@{location.href='/board/list';}">뒤로가기</button>
@@ -119,29 +119,30 @@
 										<span style="font-size: 0.89rem;"  class="u_cbox_date" data-value="2022-11-23T13:33:55+0900" th:text="| 작성일 : ${reply.replyCreateDate}|" ></span>
 									</span>
 								</div>
-								
 								<form action="/board/updateReply" method="post" class="updateForm">
-								<div class="row">
-									<input type="hidden" name="replyNo" th:value="${reply.replyNo}">
-									<div class="col-10 ">
-										<div class="input-group">
-											 <span class="input-group-text"><img width="50px;" height="50px;" src= "https://static.nid.naver.com/images/web/user/default.png?type=f132_132" alt="프로필 이미지" class="u_cbox_img_profile" onerror="cbox.Util.onImageError(this);"></span>
-											 <div class="form-control replyContent">
-											 	[[${reply.replyContent}]]
-											 </div>
+									<div class="row">
+										<input type="hidden" name="replyNo" th:value="${reply.replyNo}">
+										<div class="col-10 ">
+											<div class="input-group">
+												 <span class="input-group-text"><img width="50px;" height="50px;" src= "https://static.nid.naver.com/images/web/user/default.png?type=f132_132" alt="프로필 이미지" class="u_cbox_img_profile" onerror="cbox.Util.onImageError(this);"></span>
+												 <div class="form-control replyContent">
+												 	[[${reply.replyContent}]]
+												 </div>
+											</div>
+										</div>
+										<div class="col-2" style="padding: 7px;">
+											<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
+												<div style="padding: 5px;">
+													<input class="btn btn-light" type="button"  value="수정" onclick="goUpdate(this);">
+													<input class="btn btn-light" type="button"  value="삭제" th:onclick="|location.href='@{/board/deleteReply(replyNo=${reply.replyNo})}'|">  
+													
+													<input type="hidden" name="replyNo" th:value="${reply.replyNo}">
+													<button id="replyDelete" type="button" class="btn btn-danger" th:onclick="goReplyDelete([[${reply.replyNo}]]);">삭제s</button>
+												</div>
+									 		</th:block> 
 										</div>
 									</div>
-									<div class="col-2" style="padding: 7px;">
-										<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
-											<div style="padding: 5px;">
-												<input class="btn btn-light" type="button"  value="수정" onclick="goUpdate(this);">
-												<input class="btn btn-light" type="button"  value="삭제" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">  
-											</div>
-								 		</th:block> 
-									</div>
-								</div>
 								</form>
-								
 							</div>
 						</div>
 					</div>

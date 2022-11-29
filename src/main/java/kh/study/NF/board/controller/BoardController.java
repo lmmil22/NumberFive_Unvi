@@ -216,7 +216,7 @@ public class BoardController {
 	public String deleteReply(int replyNo) {
 		boardService.deleteReply(replyNo);
 		System.out.println("___게시글 상세조회 후 댓글 삭제버튼 클릭함___");
-		return "redirect:/board/detail";
+		return "redirect:/board/list"; 
 	}
 
 	// 댓글수정하러가기(양식페에지이동)
@@ -245,18 +245,8 @@ public class BoardController {
 	@PostMapping("/updateReply")
 	public String updateReply(ReplyVO replyVO) {
 		
-//		ReplyVO result =  boardService.selectDetailReply(replyNo);
-//		
-//		replyVO.setBoardNo(result.getBoardNo());
-//		replyVO.setIsSecret(result.getIsSecret());
-//		replyVO.setReplyContent(result.getReplyContent());
-//		replyVO.setReplyCreateDate(result.getReplyCreateDate());
-//		replyVO.setReplyWriter(result.getReplyWriter());
-//		replyVO.setReplyNo(result.getReplyNo());
-		
 		System.out.println(replyVO.getReplyNo());
 		System.out.println("@@@@@@@@@@@@@@@"+replyVO.getReplyContent());
-		
 
 		boardService.updateReply(replyVO);
 		

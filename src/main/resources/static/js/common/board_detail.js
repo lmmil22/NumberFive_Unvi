@@ -5,7 +5,7 @@ function goReg(){
 
 	let replyTextTag = document.querySelector('#replyText').value;//  textarea는 innerText가 아니라 value로 해야함!! 유의!!
 	const regReplyForm = document.querySelector('#regReplyForm');
-	// 확인용 Salert(replyTextTag);
+	// 확인용 alert(replyTextTag);
 	
 	// 댓글이 빈값일 때 
 	if(replyTextTag == ''){
@@ -17,6 +17,7 @@ function goReg(){
 	}
 	
 }
+
 ///////////////////////////////////////////////////////////////////////
 //----[ 작성 후 목록조회된 댓글 수정버튼 클릭시 진행 함수]----------------------//
 function goUpdate(btn){
@@ -183,3 +184,29 @@ function goDelete(boardNo){
 	});
 
 }
+//----------------------------------------------------------------------------------------------//
+//-------------------[ 댓글 삭제 버튼 클릭시 실행되는 함수]-------------------------------------//
+function goReplyDelete(replyNo){
+	Swal.fire({
+		title: '삭제 완료.',
+		text: '삭제가 완료되었습니다.',
+		icon: 'success',
+		showCancelButton: false, // cancel버튼 보이지 않도록(false) 보이도록 하고자 한다면 true
+		confirmButtonColor: '#3085d6',
+		confirmButtonText: '확인',
+		cancelButtonText: '취소'
+		
+		}).then((result) => {
+		if (result.isConfirmed) {
+			location.href=`/board/deleteReply?replyNo=${replyNo}`;
+		}
+	})
+}
+
+
+
+
+
+
+
+

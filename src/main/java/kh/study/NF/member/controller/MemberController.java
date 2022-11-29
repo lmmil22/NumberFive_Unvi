@@ -96,7 +96,8 @@ public class MemberController {
 			model.addAttribute("boardList",boardService.selectBoardList(boardVO));
 			System.out.println("_________________게시판 목록 조회 성공_______________");
 			
-      return "content/common/home_Login_test"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
+      return "content/common/home_Login_Test"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
+      // 언니 수정부분 return "content/common/home_Login_test"; //by 유빈 :로그인페이지는 공통이라 common폴더 아래 login으로 파일 만들었어!!
    }
    
    

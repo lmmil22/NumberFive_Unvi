@@ -6,6 +6,7 @@
 <th:block layout:fragment="css">
 	<link rel="stylesheet" th:href="@{}">
 </th:block>
+
 <div layout:fragment="content">
 <!-- board 게시판 제목줄 -->
 	<div align="center" class="row">
@@ -215,9 +216,8 @@
 		</table>	
 		</div>
 		
-		
-		<!-- 11/27 문제점발생!! 3페이지부터 게시글목록이없습니다! 라고 조회된다...왜???? -->
 		<!-- 부트스트랩 페이징처리 -->
+		<!-- 문제 발생 예상? : 공지글 추가하거나 변경시, 과연 페이징처리 잘 구현되나...?저번에 안됐는디..;;; -->
 		 <div class="row" >						
 			<!-- <div class="col-5" ></div> -->
 			<div class="offset-5" > 
