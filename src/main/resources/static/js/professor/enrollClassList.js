@@ -2,10 +2,21 @@
 
 //수강 신청 클릭시 진행
  
- 
- 
+
+ /*
  function selectLecEnroll(lecNo){
-	//alert(lecNo);
+	
+	 Swal.fire({
+	title: '수강신청.',
+	text: "수강신청이 진행됩니.",
+	icon: 'warning',
+	showCancelButton: false, // cancel버튼 보이지 않도록(false) 보이도록 하고자 한다면 true
+	confirmButtonColor: '#3085d6',
+	confirmButtonText: '확인',
+	cancelButtonText: '취소'
+	}).then((result) => {
+	if (result.isConfirmed) {
+			//alert(lecNo);
 	
 	//ajax start
 	 $.ajax({
@@ -24,6 +35,14 @@
 	 });
 	//ajax end
 	
+		
+		
+	}
+})
+ 
+	
+	
+
 } 
 
 //by 지아 
@@ -88,3 +107,4 @@ function changeDept(){
 
 }
 
+*/

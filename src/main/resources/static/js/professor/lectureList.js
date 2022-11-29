@@ -15,47 +15,84 @@ document.getElementById("table_box_bootstrap").appendChild(box);
 //by 지아 
 //강의 수정을 누르면 
 function changeLecDetail(lecNo){
-	const result = confirm('강의를 수정하시겠어요?');
 	
-	if (result){
-	//ajax start
-	 $.ajax({
-		 url: '/proF/lecListAjax', //요청경로
-		 type: 'post',
-		 data: {'lecNo':lecNo}, 
-		 
-		 success: function(result) {
-			 //alert('aaa');
-			 	//모달창 띄우는 소스 작성
-			//result에 내가 조회한 데이터가 있고 
-			// 그 데이터를 모달이 띄우기 전에 
-			// 모달 영역에 넣어준다
-			setModelData(result); 
+	Swal.fire({
+   title: '강의 수정',
+   text: '강의를 수정하시겠습니까?',
+   icon: 'question',
+   
+   showCancelButton: true, 
+   confirmButtonColor: '#3085d6', 
+   cancelButtonColor: '#d33',
+   confirmButtonText: '승인', 
+   cancelButtonText: '취소', 
+   
+   //reverseButtons: true, // 버튼 순서 거꾸로
+   
+}).then(result => {
+   // 만약 Promise리턴을 받으면,
+   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+   		if (result){
+			//ajax start
+			 $.ajax({
+				 url: '/proF/lecListAjax', //요청경로
+				 type: 'post',
+				 data: {'lecNo':lecNo}, 
+				 
+				 success: function(result) {
+					 //alert('aaa');
+					 	//모달창 띄우는 소스 작성
+					//result에 내가 조회한 데이터가 있고 
+					// 그 데이터를 모달이 띄우기 전에 
+					// 모달 영역에 넣어준다
+					setModelData(result); 
+					
+					const Modal = new bootstrap.Modal('#changeLecModal');
+					Modal.show();
+				 },
+				 error: function() {
+					 alert('실패');
+				 }
+			 });
+			//ajax end
+			}
+			$('#changeLecModal').modal('hide');
 			
-			const Modal = new bootstrap.Modal('#changeLecModal');
-			Modal.show();
-		 },
-		 error: function() {
-			 alert('실패');
-		 }
-	 });
-	//ajax end
-	}
-	$('#changeLecModal').modal('hide');
 	
+      Swal.fire('승인이 완료되었습니다.', '화끈하시네요~!', 'success');
+   }
+});
 	
+	//const result = confirm('강의를 수정하시겠어요?');
+	
+
 
 }
 
 //by 지아 
 //강의 삭제 클릭 시 
 function deleteLec(lecNo){
-	const result = confirm('강의를 삭제하시겠어요?');
-	
-	if(result){
+	//const result = confirm('강의를 삭제하시겠어요?');
+	Swal.fire({
+   title: '강의 삭제 ?',
+   text: '강의를 삭제하시겠어요.',
+   icon: 'warning',
+   
+   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+   confirmButtonText: '승인', // confirm 버튼 텍스트 지정
+   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+   
+   reverseButtons: true, // 버튼 순서 거꾸로
+   
+}).then(result => {
+   // 만약 Promise리턴을 받으면,
+   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+   
+      
+	//if(result){
 		
-		
-	
 	//ajax start
 	 $.ajax({
 		 url: '/proF/deleteLecAjax', //요청경로
@@ -71,8 +108,10 @@ function deleteLec(lecNo){
 		 }
 	 });
 	//ajax end
-	}
-	
+	//}
+	Swal.fire('승인이 완료되었습니다.', '화끈하시네요~!', 'success');
+   }
+});
 }
 
 
@@ -89,3 +128,24 @@ function setModelData(result){
 	document.querySelector('#changeLecModal_lecNo').value = result.lecNo;
 	
 }
+/*
+Swal.fire({
+   title: '정말로 그렇게 하시겠습니까?',
+   text: '다시 되돌릴 수 없습니다. 신중하세요.',
+   icon: 'warning',
+   
+   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+   confirmButtonText: '승인', // confirm 버튼 텍스트 지정
+   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+   
+   reverseButtons: true, // 버튼 순서 거꾸로
+   
+}).then(result => {
+   // 만약 Promise리턴을 받으면,
+   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+   
+      Swal.fire('승인이 완료되었습니다.', '화끈하시네요~!', 'success');
+   }
+});*/
