@@ -11,7 +11,8 @@
 <!-- 고정 페이지와 변동페이지는 다르다  -->
 <div layout:fragment="content">
 	<style>
-.custom-btn {
+
+/* .custom-btn {
   width: 130px;
   height: 40px;
   padding: 10px 25px;
@@ -24,16 +25,17 @@
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
-  background-color: #EFF5F5;
+  background-color: #f8fafe;
   border-radius: 4px;
   text-align: center;
+  padding-bottom: 30px;
 }
 .btn-11 {
   overflow: hidden;
   transition: all 0.3s ease;
 }
 .btn-11:hover {
-   background: #425F57;
+   background: #232637;
   color: #fff;
 }
 .btn-11:before {
@@ -44,7 +46,7 @@
     left: 0;
     width: 30px;
     height: 100%;
-    background-color: #D6E4E5;
+    background-color: #f8fafe;
     animation: shiny-btn1 3s ease-in-out infinite;
 }
 .btn-11:active{
@@ -53,7 +55,7 @@
     inset -4px -4px 6px 0 rgba(255,255,255,.2),
     inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
 }
-
+ */
 /* 
 @-webkit-keyframes shiny-btn1 {
     0% { -webkit-transform: scale(0) rotate(45deg); opacity: 0; }
@@ -74,7 +76,7 @@
 					<th scope="col">강의명</th>
 					<th scope="col">단과대학</th>
 					<th scope="col">학과</th>
-					<th scope="col">학점</th>
+					<th scope="col">학점 </th>
 					<th scope="col">교수</th>
 					<th scope="col">강의 요일</th>
 					<th scope="col">강의 시간</th>
@@ -105,7 +107,10 @@
 			</tbody>
 		</table>
 	</div>
+	
 <button class="custom-btn btn-11">강의수정</button>
+<button type="button" class="btn btn-Secondary" >Secondary</button>
+
 <!--  수정버튼을 누르면 뜨는 모달 -->
 	<!-- Button trigger modal -->
 <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"  data-bs-target="#changeLecModal">
