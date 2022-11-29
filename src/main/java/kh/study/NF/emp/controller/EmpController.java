@@ -533,4 +533,18 @@ public class EmpController {
 		  
 	  }
 	  
+	  //by수경 관리자 학적승인 실적(KPI) 차트를 보여주기 위한 페이지
+	  @GetMapping("/showKPI")
+	  public String showKPIChart() {
+		   
+		  return "content/deptManage/showKPIChart";
+	  }
+	  
+	  //by수경 차트 데이터 추가를 위한 차트 Ajax
+	  @ResponseBody
+	  @GetMapping("/showKPIAjax")
+	  public List<DeptManageVO> showKPIAjax(){
+		 return empService.showKPIChart();
+	  }
+	  
 }

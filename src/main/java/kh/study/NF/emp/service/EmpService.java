@@ -64,4 +64,7 @@ public interface EmpService {
 	
 	//by수경 학사경고 일자/사유 목록 
 	List<AcademicProbationVO> probationReason(String stuNo);
+	
+	//by수경 관리자 학적승인 실적(KPI) 차트를 위한 데이터 쿼리
+	List<DeptManageVO> showKPIChart();
 }

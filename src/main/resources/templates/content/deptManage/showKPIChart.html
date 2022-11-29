@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout ="http://www.ultrap.net.nz/thymeleaf/layout"	
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/base_layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div layout:fragment ="content">
+	<div class="row">
+		<div class="col" id="chart">
+		</div>
+	</div>
+
+
+	
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>	
+<script type="text/javascript" th:src="@{/js/deptManage/showKPIChart.js}"></script>	
+</div>
+
+
+</body>
+</html>

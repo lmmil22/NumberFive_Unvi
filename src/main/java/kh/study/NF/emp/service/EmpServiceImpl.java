@@ -135,5 +135,12 @@ public class EmpServiceImpl implements EmpService{
 		
 	}
 	
+	//by수경 관리자 학적승인 실적(KPI) 차트를 위한 데이터 쿼리
+	@Override
+	public List<DeptManageVO> showKPIChart() {
+		
+		return sqlSession.selectList("deptManageMapper.showKPIChart");
+	}
+	
 
 }

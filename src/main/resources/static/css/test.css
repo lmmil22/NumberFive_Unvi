@@ -70,9 +70,7 @@ video { width: 100%; }
 /* ------------------------- */
 
 
-* {
-  margin: 0;
-}
+
 /* 리셋을 하지 않은 경우 추가 */
 
 html, body {
@@ -111,4 +109,20 @@ textarea{
 #findPwId:hover{
 	color: #1C6758;
 }
-
+/*by수경 메인 페이지 게시판 내 스크롤 생성 */
+#scroll{
+	overflow-y: scroll; 
+}
+::-webkit-scrollbar {
+	width: 10px;
+}
+    
+::-webkit-scrollbar-track {
+  background: #eeeeee;
+  border-radius: 10px;
+}
+      
+::-webkit-scrollbar-thumb {
+	background: #dcdcdc;
+	border-radius: 10px;
+}   

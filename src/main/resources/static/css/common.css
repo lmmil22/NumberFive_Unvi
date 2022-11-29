@@ -16,6 +16,41 @@ body{
  font-size: 18px;
 
 }
+
+video {
+   position:absolute;
+   width:3450px; 
+   height:550px;
+
+   z-index:-100;
+   -webkit-transform:translateX(-50%) translateY(-50%);
+   transform:translateX(-50%) translateY(-50%);
+
+   -webkit-transition:1s opacity;
+   transition:1s opacity;
+   object-fit: cover ;
+}
+
+#topMenuDiv{
+	width: 100vw; 
+	height: 100vh;
+
+}
+
+* {
+  margin: 0;
+}
+
+.content {
+   min-height: 100%;
+   margin: 0 auto -155px;
+}
+ /* 하단 마진은 푸터의 높이 값과 같다 */
+ 
+.jb-box {
+   height: 300px;
+}
+/* '.push'는 'footer'와 높이가 같아야 한다. */
 a{
 	color: black;/* 글자색 */
 	text-decoration: none;  
@@ -31,6 +66,23 @@ textarea{
 #findPwId:hover{
 	color: #1C6758;
 }
+/*by수경 메인 페이지 게시판 내 스크롤 생성 */
+#scroll{
+	overflow-y: scroll; 
+}
+::-webkit-scrollbar {
+	width: 10px;
+}
+    
+::-webkit-scrollbar-track {
+  background: #eeeeee;
+  border-radius: 10px;
+}
+      
+::-webkit-scrollbar-thumb {
+	background: #dcdcdc;
+	border-radius: 10px;
+}   
 
 
 /* by 지아 여기서 부터 아래는 페이징 처리입니다 이 위에 스타일 작성부탁드릴게요 */
