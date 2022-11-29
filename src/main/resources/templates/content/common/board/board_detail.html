@@ -30,9 +30,7 @@
 	<!-- 두번째 줄 -->		
 	 <div class="col-12 mb-2 ">
 	 	 <label for="exampleFormControlspan1" class="form-label">글제목 : </label>
-		<th:block th:each="cate : ${cateUsedList}">
-			<span th:text=" | [ ${cate.cateName} ] ${board.boardTitle}|" th:value="${cate.cateNo} " ></span>
-		</th:block>
+		 <span th:text=" ${board.boardTitle} "  ></span>
 	</div> 
 	<hr />
 	<!-- 세번째 줄  -->
@@ -85,18 +83,19 @@
 	</div>
 
 	<!-- 댓글작성가능영역 -->
-	<form th:action="@{/board/insertReply}" method="post" th:object="${replyVO}"><!-- th:object="${ReplyVO}" -->
-	<div class="row ">
-		<!-- 로그인한 작성자의 댓글 등록 창	 --> 
+	<form id="regReplyForm" th:action="@{/board/insertReply}" method="post" th:object="${replyVO}"><!-- th:object="${ReplyVO}" -->
+		<div class="row ">
+			<!-- 로그인한 작성자의 댓글 등록 창	 --> 
 			<div class="col-10" >
 				<input type="hidden" name="boardNo" th:value="${board.boardNo}">			
-	   			<textarea type="text" cols="5" rows="2" name="replyContent" class="form-control" placeholder="로그인 후 댓글 작성가능합니다."></textarea>
+	   			<textarea id="replyText" type="text" cols="5" rows="2" name="replyContent" class="form-control" placeholder="로그인 후 댓글 작성가능합니다."></textarea>
 				<div class="hasError" th:if="${#fields.hasErrors('replyContent')}" th:errors="*{replyContent}"></div> 
 			</div>
 			<div class="col-2" style="padding: 5px; padding-left: 45px;" >
-				<button id="regBtn" sec:authorize="isAuthenticated()" class="btn btn-light" type="submit" >등록</button>
+				<!-- <button id="regBtn" sec:authorize="isAuthenticated()" class="btn btn-light" type="submit" >등록</button> -->
+				<button id="regBtn" sec:authorize="isAuthenticated()" class="btn btn-light" type="button" onclick="goReg();" >등록</button>
 			</div>
-	</div>
+		</div>
 	</form>
 
 <hr />
@@ -136,7 +135,7 @@
 										<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
 											<div style="padding: 5px;">
 												<input class="btn btn-light" type="button"  value="수정" onclick="goUpdate(this);">
-												<input class="btn btn-light" type="button" value="삭제" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">  
+												<input class="btn btn-light" type="button"  value="삭제" th:onclick="|location.href='@{/board/delete(boardNo=${board.boardNo})}'|">  
 											</div>
 								 		</th:block> 
 									</div>

@@ -218,10 +218,11 @@
 		
 		<!-- 11/27 문제점발생!! 3페이지부터 게시글목록이없습니다! 라고 조회된다...왜???? -->
 		<!-- 부트스트랩 페이징처리 -->
-		<div class="row" align="center">
-			<div class="col">
-				<nav aria-label="Page navigation example">
-				  <ul class="pagination">
+		 <div class="row" >						
+			<!-- <div class="col-5" ></div> -->
+			<div class="offset-5" > 
+				<nav  aria-label="Page navigation example" >
+				  <ul class="pagination " >
 				   <th:block th:if="${boardVO.prev}">
 				    	<li class="page-item">
 					   		 <a class="page-link" th:text="prev" th:href="@{/board/list(nowPage=${boardVO.beginPage-1})}"></a>
@@ -239,10 +240,10 @@
 				   </th:block>
 				  </ul>
 				</nav>
-			</div>
-		</div>
+			 </div>
+		</div> 
+			<!-- <div class="col-5" ></div>  -->
 		<!-- 부트스트랩 끝 -->
-
 	</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

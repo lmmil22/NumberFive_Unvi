@@ -1,30 +1,35 @@
 /*by 유빈*/
-
 ///////////////////////////////////////////////////////////////////////
-//-------------------------------------------------------------------//
-//[게시글 댓글 수정버튼 클릭시 진행 함수]
-function goUpdate(btn){
-	// 댓글등록 유효성 검사 함수 
-	// let str ='';//validation 처리 표시 문자열
-	let regBtnTag = document.querySelector('#regBtn');
+//------------[게시글 댓글 등록 버튼 클릭시 진행 함수]----------------//
+function goReg(){
 
-	if(regBtnTag.value == ''){
+	let replyTextTag = document.querySelector('#replyText').value;//  textarea는 innerText가 아니라 value로 해야함!! 유의!!
+	const regReplyForm = document.querySelector('#regReplyForm');
+	// 확인용 Salert(replyTextTag);
+	
+	// 댓글이 빈값일 때 
+	if(replyTextTag == ''){
 		alert('댓글을 작성해주세요.');
-		
-		//str = '댓글을 작성해주세요.';
-		//str = `<span style="color:red; font-size:0.5rem;">${str}</span>`;
-		//regBtnTag.insertAdjacentHTML('afterend', str);
-		
-		return ;	
+		return;
 	}
+	else{
+		regReplyForm.submit();
+	}
+	
+}
+///////////////////////////////////////////////////////////////////////
+//----[ 작성 후 목록조회된 댓글 수정버튼 클릭시 진행 함수]----------------------//
+function goUpdate(btn){
+	const replyContent = btn.closest('div.row').querySelector(".replyContent");
+	const originalReplyContent = replyContent.innerText;
 
 	//'수정'버튼으로 되어있을 때,
 	if(btn.value == '수정'){
-		const replyContent = document.querySelector(".replyContent");
-		const originalReplyContent = replyContent.innerText;
-		replyContent.innerText = '';
+		
+		replyContent.innerText = '';		
 		let str = "";
 		str += `<textarea class="form-control" name="replyContent">${originalReplyContent}</textarea>`;
+		
 		replyContent.insertAdjacentHTML("afterbegin",str);
 		//'확인'버튼으로 바꾸기
 		btn.value = '확인';
@@ -32,7 +37,15 @@ function goUpdate(btn){
 	
 	//그렇지 않을 때('확인'버튼일 때)
 	else{
-		document.querySelector('.updateForm').submit();
+	//test
+		// 댓글 수정할 때 값이 빈값일 때
+		if(replyContent.querySelector("textarea").value == ''){
+			alert('댓글을 작성해주세요.');
+			
+			return ;	
+		}
+	//test	
+		replyContent.closest('form').submit();
 	}
 	
 }

@@ -87,7 +87,9 @@ public class BoardController {
 		for(ImgVO vo : uploadList) {
 			vo.setBoardNo(nextBoardNo);
 		}
+		
 		boardVO.setImgList(uploadList);
+		System.out.println("______________글등록하러간다.______________");
 		boardService.insertBoard(boardVO);
 		
 		System.out.println("___________매퍼 게시글등록 실행 됐다___________");

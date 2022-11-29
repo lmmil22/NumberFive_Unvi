@@ -25,7 +25,9 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void insertBoard(BoardVO boardVO) {
 		sqlSession.insert("boardMapper.insertBoard",boardVO);
-		sqlSession.insert("boardMapper.insertImage",boardVO);
+		if (boardVO.getImgList().get(0).getOriginName()!= null) {
+			sqlSession.insert("boardMapper.insertImage",boardVO);
+		}
 	}
 
 	//게시글 목록 조회 + 키워드검색기능 (board 프로젝트 참고)
