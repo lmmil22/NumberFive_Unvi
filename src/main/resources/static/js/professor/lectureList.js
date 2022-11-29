@@ -109,7 +109,7 @@ function deleteLec(lecNo){
 	 });
 	//ajax end
 	//}
-	Swal.fire('승인이 완료되었습니다.', '화끈하시네요~!', 'success');
+	Swal.fire('강의 삭제', '삭제가 완료되었습니다', 'success');
    }
 });
 }
