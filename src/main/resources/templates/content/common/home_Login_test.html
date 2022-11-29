@@ -29,23 +29,20 @@
 		</div> -->
 	</div>
 
-
-
-
-
 	<!-- 좌측 ) 캐러셀 + 우측) 게시판 영역  -->
 	<!-- 제목줄 -->
-	<div class="row mt-6">
-		<div class="col text-center mt-6" style="font-weight: bold; font-size: 30px;">
+	<div class="row mt-6" >
+		<div class="col text-center mt-6" style="font-weight: bold; font-size: 30px; ">
 			<label class="label">Leap forward, NFU!<p> </label>
 			<label class="label">시대를 열어가는 담대한 지성, NFU<p> </label>
 		</div>
 	</div>
 	
+	<!-- 전체(배너 + 게시판) -->
+	<div class="row " >
 	<!--좌측 ) [ 캐러셀 ]  : 슬라이드 부트스트랩 적용 -->
-	<div class="row mt-3">
-		<div class="col-4">
-			<div style="width: 380px; height:350px;" id="carouselExampleDark" class="carousel carousel-dark slide"
+		<div class="col-6"><!-- style="width: 380px; height:350px;" -->
+			<div  id="carouselExampleDark" class="carousel carousel-dark slide"
 				data-bs-ride="carousel">
 				<div class="carousel-indicators">
 					<button type="button" data-bs-target="#carouselExampleDark"
@@ -77,10 +74,10 @@
 
 
 		<!-- 우측) 게시판 영역 -->
-		<div class="col-8" >
+		<div class="col-6" >
 		
 <!-- 부산대학교 학생지원시스템 레퍼런스 : 게시판 종류별 메뉴클릭 탭 바 (카테고리별) -->
-		<div class="row">
+		<div class="row ">
 		<div class="col-12">
 		
 			<ul class="nav nav-tabs">
@@ -103,26 +100,26 @@
 					<table class="table table-hover ">
 						<colgroup>
 							<col width="*%">
-							<col width="4%">
+							<!-- <col width="4%"> -->
 							<col width="41%">
 							<col width="20%">
+							<!-- <col width="10%">
 							<col width="10%">
-							<col width="10%">
-							<col width="10%">
+							<col width="10%"> -->
 						</colgroup>
 						<thead class="table-light">
 							<tr>
 								<td>No.</td><!-- pk값이 아닌 행번호(row_no)를 의미함 -->
-								<td ><!-- 비밀글여부 -->
+								<!-- <td >비밀글여부
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
 									  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
 									</svg> 
-								</td>
+								</td> -->
 								<td align="center">글제목</td>
 								<td align="center">작성일</td>
-								<td align="center">작성자</td>
+								<!-- <td align="center">작성자</td>
 								<td align="center">조회수</td>
-								<td align="center">댓글수</td>
+								<td align="center">댓글수</td> -->
 							</tr>
 						  </thead>
 						  
@@ -145,7 +142,7 @@
 										</th:block>
 									</td>
 									<!-- 비밀글여부 -->
-									<td>
+									<!-- <td>
 										<th:block th:if="${board.isSecrert eq'Y'}">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
 											  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
@@ -153,7 +150,7 @@
 										</th:block>
 										<th:block th:unless="${board.isSecrert eq'Y'}">
 										</th:block>
-									</td>
+									</td> -->
 									<!-- 글제목줄 -->
 									<td >
 										<!-- 비밀글 일 때 -->
@@ -187,9 +184,9 @@
 										</th:block>
 									</td>
 									<td align="center" th:text="${board.boardCreateDate}"></td>
-									<td th:text="${board.boardWriter}"></td>
+									<!-- <td th:text="${board.boardWriter}"></td>
 									<td align="center" th:text="${board.boardReadCnt}"></td>
-									<td align="center" th:text="${board.replyCnt}"></td> 
+									<td align="center" th:text="${board.replyCnt}"></td>  -->
 								</tr>
 							  </th:block>
 							</tbody>

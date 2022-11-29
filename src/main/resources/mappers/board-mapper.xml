@@ -87,7 +87,7 @@
 			    	SELECT BOARD_NO 
 							, BOARD_TITLE
 						    , BOARD_WRITER
-						    , BOARD_CREATE_DATE
+						    , TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE			<!--  수정함 11/29 -->
 						    , IS_SECRERT
 							, IS_NOTICE
 							,CATE_NO
@@ -161,7 +161,7 @@
 			    	SELECT BOARD_NO 
 							, BOARD_TITLE
 						    , BOARD_WRITER
-						    , BOARD_CREATE_DATE
+						    ,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE	<!-- 11/29 수정 -->		
 						    , IS_SECRERT
 							, IS_NOTICE
 							,CATE_NO
@@ -198,7 +198,7 @@
 				,BOARD_TITLE
 				,BOARD_CONTENT
 				,BOARD_WRITER
-				,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE				
+				,BOARD_CREATE_DATE	<!-- 11.29 수정함 -->			
 				, IS_MAIN
 				, ATTACHED_NAME
 				
