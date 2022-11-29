@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import org.springframework.core.io.InputStreamResource;
 import javax.annotation.Resource;
+import javax.validation.Valid;
+
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -71,9 +74,10 @@ public class ProfessorController {
 	}
 	
 	//강의등록페이지에서 강의등록을 눌렀을 때 //by지아
+	//벨리데이션 수정중!!
 	@PostMapping("/regProfLecForm")
 	public String regProfLecForm(LecturePdfVO lecturePdfVO,
-			LectureTimeVO lectureTimeVO ,LectureVO lectureVO ,MultipartFile PdfName ) {
+			LectureTimeVO lectureTimeVO ,LectureVO lectureVO ,MultipartFile PdfName ,@Valid LectureTimeVO lecTimeVO , BindingResult bindingResult, Model model ) {
 		String nextLecNo = professorService.getNextLecNo();
 		lectureVO.setLecNo(nextLecNo);
 		
@@ -83,6 +87,28 @@ public class ProfessorController {
 		lecturePdfVO.setOriginPdfName(uploadPdf.getOriginPdfName());
 		lecturePdfVO.setLecNo(nextLecNo);
 		lectureTimeVO.setLecNo(nextLecNo);
+		
+		//validation 체크
+		//if(bindingResult.hasErrors()) {
+		//System.out.println("!!!error!!!");
+		//model로 필요한 자료를 보냄
+		//return "content/professor/regProfLec";
+		//}
+//		 if(bindingResult.hasErrors()) {
+//	            StringBuilder sb = new StringBuilder();
+//	            bindingResult.getAllErrors().forEach(objectError -> {
+//	                FieldError field = (FieldError) objectError;
+//	                String message = objectError.getDefaultMessage();
+//
+//	                System.out.println("field : "+field.getField());
+//	                System.out.println(message);
+//
+//	                sb.append("field : "+field.getField());
+//	                sb.append("message : "+message);
+//	            });
+//		 }
+		
+		
 		
 		professorService.insertLecture(lectureVO, lecturePdfVO, lectureTimeVO);
 		
