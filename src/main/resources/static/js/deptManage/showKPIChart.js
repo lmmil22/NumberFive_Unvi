@@ -6,6 +6,16 @@ function showKPIChart(){
 	    type: 'get',
 	    data:{}, //필요한 데이터
 	    success: function(result) {
+
+	
+	    },
+	    error: function(){
+	       alert('실패');
+	    }
+	});
+
+} 
+ 
 	      var options = {
 	          series: [{
 	          name: '접수내역',
@@ -48,17 +58,7 @@ function showKPIChart(){
 	        };
 	
 	        var chart = new ApexCharts(document.querySelector("#chart"), options);
-	        chart.render();
-	
-	    },
-	    error: function(){
-	       alert('실패');
-	    }
-	});
-
-} 
- 
- 
+	        chart.render(); 
  
  
       
