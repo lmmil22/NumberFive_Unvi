@@ -6,8 +6,11 @@ import java.util.Map;
 import kh.study.NF.dept.vo.ColleageVO;
 import kh.study.NF.dept.vo.DeptVO;
 import kh.study.NF.emp.vo.AcademicProbationVO;
+import kh.study.NF.emp.vo.ChartVO;
 import kh.study.NF.emp.vo.DeptManageVO;
+import kh.study.NF.emp.vo.ProbationChartVO;
 import kh.study.NF.emp.vo.StatusInfoVO;
+import kh.study.NF.emp.vo.StuOutChartVO;
 import kh.study.NF.emp.vo.StuOutVO;
 import kh.study.NF.student.vo.StudentVO;
 
@@ -66,5 +69,14 @@ public interface EmpService {
 	List<AcademicProbationVO> probationReason(String stuNo);
 	
 	//by수경 관리자 학적승인 실적(KPI) 차트를 위한 데이터 쿼리
-	List<DeptManageVO> showKPIChart();
+	List<ChartVO> showApplyChart();
+	
+	//by수경 관리자 학적승인 실적(KPI) 차트를 위한 데이터 쿼리
+	List<ChartVO> showApprovalChart();
+	
+	//by수경 학사경고 차트
+	List<ProbationChartVO> showProbationChart();
+	
+	//by수경 제적 차트
+	List<StuOutChartVO> showStuOutChart();
 }

@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 import kh.study.NF.dept.vo.ColleageVO;
 import kh.study.NF.dept.vo.DeptVO;
 import kh.study.NF.emp.vo.AcademicProbationVO;
+import kh.study.NF.emp.vo.ChartVO;
 import kh.study.NF.emp.vo.DeptManageVO;
+import kh.study.NF.emp.vo.ProbationChartVO;
 import kh.study.NF.emp.vo.StatusInfoVO;
+import kh.study.NF.emp.vo.StuOutChartVO;
 import kh.study.NF.emp.vo.StuOutVO;
 import kh.study.NF.student.vo.StudentVO;
 //by수경 학생의 복학, 휴학, 전과, 복수전공신청에 대한 관리자 영역
@@ -135,12 +138,30 @@ public class EmpServiceImpl implements EmpService{
 		
 	}
 	
-	//by수경 관리자 학적승인 실적(KPI) 차트를 위한 데이터 쿼리
+	//by수경 학적신청 실적(KPI) 차트를 위한 데이터 쿼리
 	@Override
-	public List<DeptManageVO> showKPIChart() {
+	public List<ChartVO> showApplyChart() {
 		
-		return sqlSession.selectList("deptManageMapper.showKPIChart");
+		return sqlSession.selectList("deptManageMapper.showApplyChart");
 	}
 	
+	//by수경 학적승인 실적(KPI) 차트를 위한 데이터 쿼리
+	@Override
+	public List<ChartVO> showApprovalChart() {
+		
+		return sqlSession.selectList("deptManageMapper.showApprovalChart");
+	}
+	//by수경 학사경고 차트
+	@Override
+	public List<ProbationChartVO> showProbationChart() {
+		
+		return sqlSession.selectList("deptManageMapper.showProbationChart");
+	}
+	//by수경 제적 차트
+	@Override
+	public List<StuOutChartVO> showStuOutChart() {
+		return sqlSession.selectList("deptManageMapper.showStuOutChart");
+		
+	}
 
 }

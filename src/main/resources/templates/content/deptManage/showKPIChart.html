@@ -6,20 +6,26 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>[NFU]학적관리 KPI</title>
 </head>
 <body>
-
 <div layout:fragment ="content">
 	<div class="row">
-		<div class="col" id="chart">
+		<div class="col-6">
+			<div id="approvalKPI" style="max-width: 650px; margin: 35px auto;"></div>
 		</div>
+		<div class="col-6">
+			<div id="probationChart" style="max-width: 650px; margin: 35px auto;"></div>
+		</div>
+		
+	
 	</div>
 
 
-	
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	
+<!--by수경 차트 생성을 위하여 태그 추가 / j쿼리 실행 후 실행되도록 위치 설정함 -->	
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script type="text/javascript" th:src="@{/js/deptManage/showKPIChart.js}"></script>	
 </div>
 

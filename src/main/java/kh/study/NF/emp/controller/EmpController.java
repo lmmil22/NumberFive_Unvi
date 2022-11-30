@@ -1,8 +1,9 @@
 package kh.study.NF.emp.controller;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +25,11 @@ import kh.study.NF.dept.service.DeptService;
 import kh.study.NF.dept.vo.DeptVO;
 import kh.study.NF.emp.service.EmpService;
 import kh.study.NF.emp.vo.AcademicProbationVO;
+import kh.study.NF.emp.vo.ChartVO;
 import kh.study.NF.emp.vo.DeptManageVO;
+import kh.study.NF.emp.vo.ProbationChartVO;
 import kh.study.NF.emp.vo.StatusInfoVO;
+import kh.study.NF.emp.vo.StuOutChartVO;
 import kh.study.NF.emp.vo.StuOutVO;
 import kh.study.NF.emp.vo.StuinfoAndProbationListVO;
 import kh.study.NF.member.vo.MemberVO;
@@ -533,18 +537,105 @@ public class EmpController {
 		  
 	  }
 	  
-	  //by수경 관리자 학적승인 실적(KPI) 차트를 보여주기 위한 페이지
+	  //by수경 관리자 학적승인 실적(KPI) 차트와 학사경고 및 제적 차트 보여주기 위한 페이지
 	  @GetMapping("/showKPI")
 	  public String showKPIChart() {
-		   
 		  return "content/deptManage/showKPIChart";
 	  }
 	  
-	  //by수경 차트 데이터 추가를 위한 차트 Ajax
+	  //by수경 학적 신청과 승인 KPI 차트 데이터 추가를 위한 Ajax
 	  @ResponseBody
-	  @GetMapping("/showKPIAjax")
-	  public List<DeptManageVO> showKPIAjax(){
-		 return empService.showKPIChart();
+	  @PostMapping("/showKPIAjax")
+	  public Map<String, Object> showKPIAjax(){
+		  //차트 그릴 데이터 조회하여 가져오기
+		  List<ChartVO> applyChartData = empService.showApplyChart();
+		  List<ChartVO> approvalChartData = empService.showApprovalChart();
+		  
+		  //Map 데이터 담을 통 만들기
+		  Map<String, Object> KPIchartDataMap = new HashMap<>();
+		  
+		  //쿼리 데이터를 필요한 형태로 가공해서 담을 통 만들기 (applyDate 기준으로 데이터 담을 통)
+		  List<Integer> applyNoList1 = new ArrayList<>();
+		  List<Integer> approvalDateNoList1 = new ArrayList<>();
+		  List<String> applyDateList = new ArrayList<>();
+		  
+		  //approvalDate 기준으로 데이터 담을 통
+		  List<Integer> applyNoList2 = new ArrayList<>();
+		  List<Integer> approvalDateNoList2 = new ArrayList<>();
+		  List<String> approvalDateList = new ArrayList<>();
+		  
+		  //쿼리에서 넘어온 데이터를 List에 담아준다.
+		  for(ChartVO e : applyChartData) {
+			  applyNoList1.add(e.getApplyNoCnt());
+			  approvalDateNoList1.add(e.getApprovalDateCnt());
+			  applyDateList.add(e.getDay());
+		  }
+		  
+		  //쿼리에서 넘어온 데이터를 List에 담아준다.
+		  for(ChartVO e : approvalChartData) {
+			  applyNoList2.add(e.getApplyNoCnt());
+			  approvalDateNoList2.add(e.getApprovalDateCnt());
+			  approvalDateList.add(e.getDay());
+		  }
+		  
+		  //List에 담은 데이터를 map에 저장한다
+		  KPIchartDataMap.put("applyNoList1", applyNoList1);
+		  KPIchartDataMap.put("approvalDateNoList1", approvalDateNoList1);
+		  KPIchartDataMap.put("applyDateList", applyDateList);
+		  
+		  KPIchartDataMap.put("applyNoList2", applyNoList2);
+		  KPIchartDataMap.put("approvalDateNoList2", approvalDateNoList2);
+		  KPIchartDataMap.put("approvalDateList", approvalDateList);
+		  
+		  //ajax return에 map데이터 보내기
+		  return KPIchartDataMap;
 	  }
 	  
+	  //by수경 학사경고와 제적 차트를 위한 데이터Ajax
+	  @ResponseBody
+	  @PostMapping("/showProbationStuOutChartAjax")
+	  public Map<String,Object> showProbationStuOutChartAjax(){
+		  
+		  //차트에 넣을 데이터 조회하여 가져오기
+		  List<ProbationChartVO> probationData = empService.showProbationChart();
+		  List<StuOutChartVO> stuOutData = empService.showStuOutChart();
+		  
+		  //Map 데이터 담을 통 만들기
+		  Map<String,Object> probationStuOutChartMap = new HashMap<>();
+		  
+		  //쿼리 데이터를 필요한 형태로 가공해서 담을 통 만들기
+		  //학사경고 데이터
+		  List<Integer> probNoList = new ArrayList<>();
+		  List<Integer> probDateList = new ArrayList<>();
+		  List<String> dateList1 = new ArrayList<>();
+		  //제적 데이터
+		  List<Integer> stuOutNoList = new ArrayList<>();
+		  List<Integer> stuOutDateList = new ArrayList<>();
+		  List<String> dateList2 = new ArrayList<>();
+		  
+		  //학사경고 데이터를 List에 담아준다.
+		  for(ProbationChartVO e : probationData) {
+			  probNoList.add(e.getProbNoCnt());
+			  probDateList.add(e.getProbDateCnt());
+			  dateList1.add(e.getDay());
+		  }
+		  
+		  //제적 데이터를 List에 담아준다.
+		  for(StuOutChartVO e : stuOutData) {
+			  stuOutNoList.add(e.getStuOutCnt());
+			  stuOutDateList.add(e.getStuOutDateCnt());
+			  dateList2.add(e.getDay());
+		  }
+		  
+		  //List에 담은 데이터를 map에 저장한다
+		  probationStuOutChartMap.put("probNoList", probNoList);
+		  probationStuOutChartMap.put("probDateList", probDateList);
+		  probationStuOutChartMap.put("dateList1", dateList1);
+		  probationStuOutChartMap.put("stuOutNoList", stuOutNoList);
+		  probationStuOutChartMap.put("stuOutDateList", stuOutDateList);
+		  probationStuOutChartMap.put("dateList2", dateList2);
+		  
+		  //ajax return에 map데이터 보내기
+		  return probationStuOutChartMap;
+	  }
 }
