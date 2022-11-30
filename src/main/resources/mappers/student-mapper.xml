@@ -101,18 +101,12 @@
 
 <!--by수경 학생 휴학 확정(일괄승인) 시 상태 변경  -->
 <update id="takeOffStus">
-	UPDATE STU 
+  	UPDATE STU 
 	SET 
-	<foreach collection="applyNoList" item="applyNo" separator=",">
 	STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','휴학','재학') 
 				  FROM DEPT_MANAGE D 
 				  WHERE APPLY_NO = #{applyNo})
-	</foreach> 
-	
-	WHERE STU_NO IN
-	<foreach collection="stuNoList" item="stuNo" separator="," open="(" close=")" >
-		#{stuNo}
-  	</foreach> 
+	WHERE STU_NO = #{stuNo}
 </update>
 
 <!--by수경 학생의 복학신청 확정(단일승인) 시 상태 update Mapper -->

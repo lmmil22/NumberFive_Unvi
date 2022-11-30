@@ -287,15 +287,28 @@ public class EmpController {
 		  //stuNo를 ,로 구분하여 데이터를 가져왔음
 		  String [] stuNosArr = stuNos.split(",");
 		  //배열 데이터 하나하나를 담을 List 준비
-		  List<String>stuNoList = Arrays.asList(stuNosArr);
+		  List<String> stuNoList = Arrays.asList(stuNosArr);
 		  //데이터 담기
 		  deptManageVO.setStuNoList(stuNoList);
 		  
 		  //일괄승인 쿼리 실행
 		  empService.comebackTakeOffAllAccept(deptManageVO);
 		 
+		  
+		  System.out.println("stuNo 개수 : " + stuNoList.size());
+		  System.out.println("applyNo 개수 : " + applyNoList.size());
+		  
 		  //일괄승인 시 학생정보 변경 쿼리 실행
-		  studentService.takeOffStus(deptManageVO);
+		  for(int i = 0 ; i < stuNoList.size() ; i++) {
+			  System.out.println("for문 - " + (i + 1));
+			  System.out.println("stuNo = " + stuNoList.get(i));
+			  System.out.println("applyNo = " + applyNoList.get(i));
+			  DeptManageVO vo = new DeptManageVO();
+			  vo.setStuNo(stuNoList.get(i));
+			  vo.setApplyNo(applyNoList.get(i));
+			  
+			  studentService.takeOffStus(vo);
+		  }
 		  
 		  return"redirect:/emp/takeOffReturnUniv";
 	  }

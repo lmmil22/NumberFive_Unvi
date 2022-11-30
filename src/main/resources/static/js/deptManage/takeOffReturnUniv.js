@@ -195,7 +195,7 @@ function takeOffAllAccept(){
 	takeOffForm.querySelector('#takeOffInput1').value = applyNos;
 	//stuNo를 담을 stuNos를 input 히든으로 데이터 담아간다.
 	takeOffForm.querySelector('#takeOffInput2').value = stuNos;
-	
+
 	//승인완료 swal창 뜨고 formSubmit() 함수 실행
 	Swal.fire({
 		  title: '일괄승인',
@@ -208,7 +208,6 @@ function takeOffAllAccept(){
 	}).then((result) => {
 	  if (result.isConfirmed) {
 		takeOffForm.submit();
-		
 		Swal.fire({
 		  title: '일괄승인 완료',
 		  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
@@ -217,7 +216,6 @@ function takeOffAllAccept(){
 		  confirmButtonColor: '#3085d6',
 		  confirmButtonText: '확인',
 		  cancelButtonText: '취소'
-		  
 		}).then((result) => {
 		  if (result.isConfirmed) {
 			sendKakao();
