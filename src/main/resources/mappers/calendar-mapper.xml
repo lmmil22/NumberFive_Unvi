@@ -16,6 +16,7 @@
 		<!-- <result column="CAL_CONTENT" property="calContent"/> -->
 	</resultMap>
 	
+	<!-- 캘린더 조회 -->
 	<select id="selectRegDate" resultMap="calendar">
 	SELECT 
 		TITLE 
@@ -26,8 +27,10 @@
 	FROM CALENDAR
 	</select>
 
+
+
+	<!-- 캘린더 등록 -->
 	<insert id="insertCalData">
-	
 	INSERT INTO CALENDAR(
 		CAL_NO
 		,TITLE
@@ -41,11 +44,8 @@
 		, #{startdate}
 		, #{enddate}
 		, #{calWriter}
-		,'#EFF5F5'
+		,'#3B185F'
 	)
-		
-	
-	
 	</insert>
 	
 	

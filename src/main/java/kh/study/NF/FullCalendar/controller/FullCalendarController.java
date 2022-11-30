@@ -35,14 +35,15 @@ public class FullCalendarController {
 		return calendarService.getEventList();
 	 }
 	
-	@PostMapping("/insertCal")
-	public String insertCal(Authentication authentication , CalendarVO calendarVO) {
+	@ResponseBody
+	@PostMapping("/insertCalAjax")
+	public void insertCal(Authentication authentication , CalendarVO calendarVO) {
 		User user = (User)authentication.getPrincipal();
 		calendarVO.setCalWriter(user.getUsername());
 		
 		calendarService.insertCal(calendarVO);
 		
-		return "redirect:/calendar/cal";
+		//return "redirect:/calendar/cal";
 	}
 	
 }

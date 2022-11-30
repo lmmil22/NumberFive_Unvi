@@ -1,4 +1,4 @@
-<!--by 지아 학사공지 풀캘린더입니다   -->
+<!--by 지아 학사일정 풀캘린더입니다   -->
 <!DOCTYPE html>
 
 <html lang='en' xmlns:th="http://www.thymeleaf.org"
@@ -15,11 +15,16 @@
 
 	<h1>학사 일정</h1>
 	
-	<div sec:authorize="hasRole('ROLE_PROFESSOR')">ROLE_ADMIN 권한이 있습니다
+	<!--	<h1>학사 일정</h1>
+	관리자만 일정 등록가능 
+	<div sec:authorize="hasRole('ROLE_ADMIN')">
+	<input type="button" value="학사 일정 등록"  data-bs-toggle="modal"  data-bs-target="#changeLecModal">
+ 	<input type="button" value="학사 일정 등록"  th:onclick="insert();"> </div>  -->
 	
-	</div>
-<!-- 	<input type="button" value="학사 일정 등록"  data-bs-toggle="modal"  data-bs-target="#changeLecModal">
- -->	<input type="button" value="학사 일정 등록"  th:onclick="insert();">
+	<!-- 현재는 교수일대만 등록가능하게 만듬 -->
+	<div sec:authorize="hasRole('ROLE_PROFESSOR')">ROLE_PROFESSOR 권한이 있습니다
+	<input type="button" value="학사 일정 등록"  data-bs-toggle="modal"  data-bs-target="#changeLecModal"></div>
+<!-- 	<input type="button" value="학사 일정 등록"  th:onclick="insert();"> -->
 	<div id='calendar'></div>
 
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -61,19 +66,15 @@
 <script src="sweetalert2.all.min.js"></script>
 	<script th:src="@{/js/calendar/calList.js}"></script>
 
-</div>
-</html>
 
 
 
 
-<!-- <!--  수정버튼을 누르면 뜨는 모달 
-	Button trigger modal
-<button type="button" class="btn btn-primary" data-bs-toggle="modal"  data-bs-target="#changeLecModal">
- 
-</button>
+<!--  수정버튼을 누르면 뜨는 모달 -->
+<!-- 	Button trigger modal  -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal"  data-bs-target="#changeLecModal"></button>
 
-Modal
+<!-- Modal -->
 <div class="modal fade" id="changeLecModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -89,17 +90,17 @@ Modal
 				<tr >
 					<td>일정</td>
 					<td>
-						<input type="text" style="width: 100px" id="changeLecModal_lecName" name="lecName" value="" >
+						<input type="text" style="width: 100px" id="title" name="title"  >
 					</td>
 					<td>시작날짜</td>
 					<td>
-						<input type="text" style="width: 100px" id="" name="lecName" value="" >
+						<input type="text" style="width: 100px" id="startdate" name="startdate" placeholder="0000-00-00">
 					</td>
 				</tr>
 				<tr>
 					<td>종료날짜</td>
 					<td>
-						<input type="text" style="width: 100px" id="" name="lecName" value="" >
+						<input type="text" style="width: 100px" id="enddate" name="enddate" placeholder="0000-00-00" >
 					</td>
 				</tr>
        		</thead>
@@ -108,12 +109,13 @@ Modal
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
-        <input type="submit" class="btn btn-primary" value="수정하기">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-
+        <input type="submit" class="btn btn-primary" value="등록하기" th:onclick="insert();">
+<!--         <button type="submit" class="btn btn-primary">Save changes</button>-->
 
 </div>
 </form>
 </div>
 </div>
-</div> -->
+</div> 
+</div>
+</html>

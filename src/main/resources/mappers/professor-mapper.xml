@@ -70,6 +70,7 @@
 		<result column="LAST_TIME" property="lastTime"/>
 		<result column="LEC_NO" property="lecNo"/>
 	</resultMap>
+	<!-- 서치벨류를 리졸트에 추가 하지 않은이유 : 조회 할때 필요하고 insert시엔 필요 x 이기 때문  -->
 	<!-- 학기 -->
 	<resultMap type="kh.study.NF.professor.vo.SemesterVO" id="semester">
 		<id column="SEM_NO" property="semNo"/>
@@ -273,14 +274,8 @@
 			TRIM(#{lecDay})
 		</foreach>
 	)
-	AND (FIRST_TIME &gt;= #{firstTime} OR LAST_TIME &gt;= #{firstTime})
+	AND (FIRST_TIME &gt;= #{firstTime} OR LAST_TIME &gt;= #{firstTime}) 
 	AND (FIRST_TIME &lt;= #{lastTime} OR LAST_TIME &lt;= #{lastTime})
-
-	
-	
-	
-	
-	
 	</select>
 	
 	
@@ -324,7 +319,7 @@
 			#{lecNo}
 	 	</foreach>
 	 	
-	 	<if test="paramMap.collNo != null and !paramMap.collNo.equals('')">
+	 	<if test="paramMap.collNo != null and !paramMap.collNo.equals('')"> <!-- 처음 화면을 키면 빈값이 넘어오고 아무것도 입력안하고 검색누르면 빈값이 넘어간다  -->
 	 		AND COLL_NO = #{paramMap.collNo}
 	 	</if>
 	 	<if test="paramMap.deptNo != null and !paramMap.deptNo.equals('')">
@@ -434,7 +429,7 @@
 		 <!-- 확인 하고 주석지우기 -->
 	</select>
 	
-	<!-- 아래 두개 수정 필요??? 확인 하고 주석지우기  -->
+	
 	<!-- 수강 신청 취소시 진행   -->
 	<delete id="deleteStuLec">
 		DELETE FROM ENROLLMENT
