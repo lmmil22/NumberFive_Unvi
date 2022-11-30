@@ -296,6 +296,21 @@
 			#{lecNo}
 	 	</foreach>
 	 	
+	 	<if test="paramMap.collNo != null and !paramMap.collNo.equals('')">
+	 		AND COLL_NO = #{paramMap.collNo}
+	 	</if>
+	 	<if test="paramMap.deptNo != null and !paramMap.deptNo.equals('')">
+	 		AND DEPT_NO = #{paramMap.deptNo}
+	 	</if>
+	 	<if test="paramMap.searchValue != null and !paramMap.searchValue.equals('')">
+	 		AND (UPPER(LEC_NAME) LIKE '%'||UPPER(#{paramMap.searchValue})||'%' 
+	 		OR UPPER((SELECT MEM_NAME
+		        FROM MEMBER
+		        WHERE MEM_NO = (SELECT MEM_NO
+                                FROM EMP
+                                WHERE EMP_NO = L.EMP_NO))) LIKE '%'||UPPER(#{paramMap.searchValue})||'%')
+	 	</if>
+	 	
 	 	ORDER BY LEC_NO DESC
 	</select>
 	
@@ -524,7 +539,7 @@
    		
     FROM  DEPT D , COLLEAGE C
     WHERE D.COLL_NO = C.COLL_NO
-    <if test="_parameter != null">
+    <if test="_parameter != null and !_parameter.equals('')">
     AND D.COLL_NO = #{collNo}
     </if>
 	ORDER BY COLL_NO

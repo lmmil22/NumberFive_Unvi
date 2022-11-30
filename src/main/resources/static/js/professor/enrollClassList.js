@@ -130,7 +130,7 @@ function changeDept(){
 			$('.changeDeptList').empty(); //모든 자식들 지워줄거에요 
 		
 			let str ='';
-		
+			str = `<option value="">전체</option>`;
 			for(const dept of result){ //옵션이 계속 반복된다
 			str += `<option value="${dept.deptNo}">${dept.deptName}</option>`;
 				}			

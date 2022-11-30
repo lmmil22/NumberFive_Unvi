@@ -12,58 +12,6 @@
 <div layout:fragment="content">
 	<style>
 
-/* .custom-btn {
-  width: 130px;
-  height: 40px;
-  padding: 10px 25px;
-  border: 3px solid #0E5E6F;
-  font-family: 'Lato', sans-serif;
-  font-weight: 500;
-  font : bold;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-block;
-  background-color: #f8fafe;
-  border-radius: 4px;
-  text-align: center;
-  padding-bottom: 30px;
-}
-.btn-11 {
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-.btn-11:hover {
-   background: #232637;
-  color: #fff;
-}
-.btn-11:before {
-    position: absolute;
-    content: '';
-    display: inline-block;
-    top: -180px;
-    left: 0;
-    width: 30px;
-    height: 100%;
-    background-color: #f8fafe;
-    animation: shiny-btn1 3s ease-in-out infinite;
-}
-.btn-11:active{
-  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
-              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
-    inset -4px -4px 6px 0 rgba(255,255,255,.2),
-    inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
-}
- */
-/* 
-@-webkit-keyframes shiny-btn1 {
-    0% { -webkit-transform: scale(0) rotate(45deg); opacity: 0; }
-    80% { -webkit-transform: scale(0) rotate(45deg); opacity: 0.5; }
-    81% { -webkit-transform: scale(4) rotate(45deg); opacity: 1; }
-    100% { -webkit-transform: scale(50) rotate(45deg); opacity: 0; }
-}
- */
 </style>
 	
 <!-- a태그의 경우 경로를 지정할때 한글문서  , pdf든 바로 띄워 줄수 있다 . -->
@@ -84,12 +32,12 @@
 					<th scope="col">삭제</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody><!-- 열람안되는거 질문  -->
 				<tr th:each="lec : ${lecList}">
 					<th scope="row" th:text="${lec.lecNo}"></th>
 					<td>
 						  <!--  다운가능 <a th:href="@{/proF/download(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a> 지금은 열람을해줄것이라 필요xxxx -->
-					  <a th:href="|@{/pdf/}${lec.lecturePdfVO.attachedPdfName}|" th:text="${lec.lecName}" target="_blank"></a> 
+					  <a th:href="|@{/pdf/}${lec.lecturePdfVO.attachedPdfName}|" th:text="${lec.lecName}" target="_blank"></a>
 					<!-- 열람만 하는 곳에서는 원본파일명을 화면에 띄워주고 클릭되는 a태그는 첨부된파일 명이 들어가야한다 그리고 a태그의 경로를 넣어준다 -->
 					<!--  <a th:href="@{/proF/viewLecPdf(lecNo = ${lec.lecNo})}" th:text="${lec.lecName}" ></a> 필요 xxxx -->
 					</td>

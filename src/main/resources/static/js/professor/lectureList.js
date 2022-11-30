@@ -1,8 +1,6 @@
 //by 지아 
 //
- $('a').click(function(event){
-    event.preventDefault(); 
-  });
+
 
 //페이징 라이브러리
 var box = paginator({
@@ -15,6 +13,7 @@ document.getElementById("table_box_bootstrap").appendChild(box);
 //by 지아 
 //강의 수정을 누르면 
 function changeLecDetail(lecNo){
+	
 	
 	Swal.fire({
    title: '강의 수정',
@@ -32,7 +31,7 @@ function changeLecDetail(lecNo){
 }).then(result => {
    // 만약 Promise리턴을 받으면,
    if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
-   		if (result){
+   		
 			//ajax start
 			 $.ajax({
 				 url: '/proF/lecListAjax', //요청경로
@@ -55,11 +54,11 @@ function changeLecDetail(lecNo){
 				 }
 			 });
 			//ajax end
-			}
+			
 			$('#changeLecModal').modal('hide');
 			
 	
-      Swal.fire('승인이 완료되었습니다.', '화끈하시네요~!', 'success');
+      Swal.fire('수정 완료되었습니다.', '', 'success');
    }
 });
 	
@@ -78,16 +77,16 @@ function deleteLec(lecNo){
    text: '강의를 삭제하시겠어요.',
    icon: 'warning',
    
-   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
-   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
-   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
-   confirmButtonText: '승인', // confirm 버튼 텍스트 지정
-   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+   showCancelButton: true, 
+   confirmButtonColor: '#3085d6',
+   cancelButtonColor: '#d33', 
+   confirmButtonText: '승인',
+   cancelButtonText: '취소', 
    
-   reverseButtons: true, // 버튼 순서 거꾸로
+   reverseButtons: true, 
    
 }).then(result => {
-   // 만약 Promise리턴을 받으면,
+ 
    if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
    
       

@@ -26,33 +26,40 @@
 			<div class="row mb-3">
 				<div class="col-12">
 					<!-- 검색 조건 영역 -->
-					<div class="row">
-						<div class="col-12">
-							<span>
-								<label for="collNo" >단과대학</label>
+					<form action="/proF/enrollList" method="post">
+						
+						<div class="row">
+							<div class="col-12">
 								<span>
-									<select onchange="changeDept();" class="changeDept"
-										name="collNo" id="collNo">
-
-										<option th:each="coll: ${collList}" th:value=${coll.collNo}
-											th:text="${coll.collName}"></option>
-									</select>
+									<label for="collNo" >단과대학</label>
+									<span>
+										<select onchange="changeDept();" class="changeDept"
+											name="collNo" id="collNo">
+											<option value="" th:selected="${paramMap['collNo'] == null or paramMap['collNo'] == ''}">전체</option>
+	
+											<option th:each="coll: ${collList}" th:value=${coll.collNo}
+												th:selected="${paramMap['collNo'] == coll.collNo}"
+												th:text="${coll.collName}"></option>
+										</select>
+									</span>
 								</span>
-							</span>
-							<span>
-								<label for="deptNo" >소속학과</label>
 								<span>
-									<select class="changeDeptList" name="deptNo" id="deptNo">
-										<option th:each="dept: ${deptList}" th:value=${dept.deptNo}
-											th:text="${dept.deptName}"></option>
-									</select>
+									<label for="deptNo" >소속학과</label>
+									<span>
+										<select class="changeDeptList" name="deptNo" id="deptNo">
+											<option value="" th:selected="${paramMap['deptNo'] == null or paramMap['deptNo'] == ''}">전체 </option>
+											<option th:each="dept: ${deptList}" th:value=${dept.deptNo}
+											th:selected="${paramMap['deptNo'] == dept.deptNo}"
+												th:text="${dept.deptName}"></option>
+										</select>
+									</span>
 								</span>
-							</span>
-
-							<input type="text" name="searchValue" > <!-- 여기에 아무것도 입력을 안하고 검색을 해도 서치벨류라는 이름으로 데이터가 넘어가 그러면 넘어가긴한다 빈값으로   -->
-							<input type="submit" value="검색">
+								
+								<input type="text" name="searchValue" placeholder="강의명과 교수명을 입력해주세요" th:value="${paramMap['searchValue']}"> <!-- 여기에 아무것도 입력을 안하고 검색을 해도 서치벨류라는 이름으로 데이터가 넘어가 그러면 넘어가긴한다 빈값으로   -->
+								<input type="submit" value="검색">
+							</div>
 						</div>
-					</div>
+					</form>
 					<!-- 목록 영역 -->	
 					<div class="row">
 						<div class="col-12">

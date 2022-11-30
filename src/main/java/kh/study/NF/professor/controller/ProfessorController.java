@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.core.io.InputStreamResource;
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -229,10 +232,18 @@ public class ProfessorController {
 	
 	
 	//수강신청시 진행 
-	@GetMapping("/enrollList")
-	public String enrollList(Model model, EnrollmentVO enrollmentVO , Authentication authentication) {
+	@RequestMapping("/enrollList")
+	public String enrollList(Model model, EnrollmentVO enrollmentVO ,@RequestParam Map<String , String> paramMap, Authentication authentication) {
 		//로그인 임시 코드, 로그인 구현 시 소스 변경 필요
 		//enrollmentVO.setStuNo("STU_003");
+		
+		System.out.println("collNo : " + paramMap.get("collNo"));
+		System.out.println("deptNo : " + paramMap.get("deptNo"));
+		System.out.println("searchValue : " + paramMap.get("searchValue"));
+		//제일처음 페이지로 오면 널값이 뜬다 
+		//아무것도 입력안하고 검색을 누르면 빈값이 뜬다
+		//searchValue안에 모든 내용을 받아주는것은 paramMap이다
+		
 		
 		//소스변경 완료 
 		User user = (User)authentication.getPrincipal();
@@ -250,10 +261,15 @@ public class ProfessorController {
 		//이미 수강신청한 lec_no 목록을 쿼리 실행시 전달
 		enrollmentVO.setEmrolledList(emrolledList);
 		
+		//검색조건 추가
+		enrollmentVO.setParamMap(paramMap);
+		
 		//수강 신청 가능한 목록 리스트
 		model.addAttribute( "lecList",professorService.selectLecListEnroll(enrollmentVO));
 		//학생이 신청한 수강목록
 		model.addAttribute( "enrollList",professorService.selectStuLectureList(enrollmentVO));
+		//검색하고 나서 paramMap안에 데이터들이 그대로 그려져야하기 때문에 데이터를 보내주었다.
+		model.addAttribute( "paramMap",paramMap);
 		
 		return "content/professor/enrollClassList";
 		
