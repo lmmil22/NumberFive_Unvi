@@ -146,14 +146,13 @@ public class ProfessorController {
 		return list;
 	}
 	
-	//강의 수정 버튼 클릭 시
+	//강의 수정 모달창에서 수정하기 버튼 클릭 시
+	@ResponseBody
 	@PostMapping("/updateLec")
-	public String updateLec(LectureVO lectureVO , LectureTimeVO lectureTimeVO) {
-		
-		
+	public void updateLec(LectureVO lectureVO , LectureTimeVO lectureTimeVO) {
+		System.out.println("!!!!!" + lectureVO);
+		System.out.println("!!!!!" + lectureTimeVO);
 		professorService.updateLec(lectureVO ,lectureTimeVO );
-		
-		return "redirect:/proF/viewLecList";
 	}
 	
 	//강의 삭제 버튼 클릭 시
