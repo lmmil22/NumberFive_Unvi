@@ -85,28 +85,46 @@
       <form th:action="@{/proF/updateLec}"  method="post" >
       <input type="hidden" name="lecNo" id="changeLecModal_lecNo" value=""> 
       <div class="modal-body">
-       <table >
-       		<thead>
-				<tr >
-					<td>일정</td>
-					<td>
-						<input type="text" style="width: 100px" id="title" name="title"  >
-					</td>
-					<td>시작날짜</td>
-					<td>
-						<input type="text" style="width: 100px" id="startdate" name="startdate" placeholder="0000-00-00">
-					</td>
-				</tr>
-				<tr>
-					<td>종료날짜</td>
-					<td>
-						<input type="text" style="width: 100px" id="enddate" name="enddate" placeholder="0000-00-00" >
-					</td>
-				</tr>
-       		</thead>
-       		
-       </table>
-      </div>
+				
+                  <div class="row mb-1">
+                     <div class="form-group input-group mb-1">
+                        <div class="col-6 col-lg-2 px-0">
+                           <span class="input-group-text h-100 rounded-0">일정</span>
+                        </div>
+                        <div class="col-6 col-lg-10 px-1 rounded-1">
+                           <input class="form-control" type="text" id="title"  name="title" value="" aria-label="readonly input example" readonly>
+                           
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="row mb-1">
+                     <div class="form-group input-group mb-1">
+                        <div class="col-6 col-lg-2 px-0">
+                           <span class="input-group-text h-100 rounded-0">종료날짜</span>
+                        </div>
+                        <div class="col-6 col-lg-10 px-1 rounded-1">
+                           <input  class="form-control" type="text" id="enddate" name="enddate"
+										placeholder="0000-00-00" value="" aria-label="readonly input example" readonly>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="row mb-1">
+                     <div class="form-group input-group mb-1">
+                        <div class="col-6 col-lg-2 px-0">
+                           <span class="input-group-text h-100 rounded-0">시작날짜</span>
+                        </div>
+                        <div class="col-6 col-lg-10 px-1 rounded-1">
+                           <input  class="form-control" type="text" id="startdate" name="startdate"
+										placeholder="0000-00-00" value="" aria-label="readonly input example" readonly>
+                        </div>
+                     </div>
+                  </div>
+                  
+						
+						
+					</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
         <input type="submit" class="btn btn-primary" value="등록하기" th:onclick="insert();">
@@ -119,3 +137,115 @@
 </div> 
 </div>
 </html>
+
+
+<!-- Modal -->
+ <!--   <div class="modal fade" id="testInfoChange" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h1 class="modal-title fs-5" id="exampleModalLabel">평가결과 수정</h1>
+               <button type="button" class="btn-close" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+            </div>
+            Modal body 시작
+            <form action="{}"  method="post" id="UpdateOrDeleteForm" name="UpdateOrDeleteForm">
+               <div class="modal-body">
+                        <div class="row mb-1">
+                     <div class="form-group input-group mb-1">
+                        <div class="col-6 col-lg-2 px-0">
+                           <span class="input-group-text h-100 rounded-0">학생이름</span>
+                        </div>
+                        <div class="col-6 col-lg-10 px-1 rounded-1">
+                           학생코드 
+                           <input id="stuCodeForChange" type="hidden" name="studentCode" value="" > 
+                        
+                        
+                           <input id="stuNameForChange" class="form-control" type="text" value="" aria-label="readonly input example" readonly>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  
+                  <div class="row mb-1">
+                     <div class="form-group input-group mb-1">
+                        <div class="col-6 col-lg-2 px-0">
+                           <span class="input-group-text h-100 rounded-0">수강학급</span>
+                        </div>
+                        <div class="col-6 col-lg-10 px-1 rounded-1">
+                           <input id ="stuLessonsForChange" class="form-control" type="text" value="" aria-label="readonly input example" readonly>
+                           
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="row mb-1">
+                     <div class="form-group input-group mb-1">
+                        <div class="col-6 col-lg-2 px-0">
+                           <span class="input-group-text h-100 rounded-0">과목</span>
+                        </div>
+                        <div class="col-6 col-lg-10 px-1 rounded-1">
+                           
+                           
+                           <select class="form-select selectChange" name="subjectCode"  aria-label="Default select example" id="selectSubforChange">
+                              <option value="">선택</option>
+                               <th:block th:each ="sub:${subjectList}" >
+                                 <option th:value="${sub.subjectCode}" th:text="${sub.subjectName}" >
+                                 </option>
+                               </th:block>   
+                           </select>
+                           
+                           
+                        </div>
+                     </div>
+                  </div>
+                  
+
+                  <div class="row mb-1">
+                     <div class="form-group input-group mb-1">
+                        <div class="col-6 col-lg-2 px-0">
+                           <span class="input-group-text h-100 rounded-0">평가일</span>
+                        </div>
+                        <div class="col-6 col-lg-10 px-1 rounded-1" id="forChangeDiv">
+                           <input class="form-control" type="text" value="" aria-label="readonly input example" readonly>
+                           <select
+                              class="form-select" aria-label="Default select example" id="selectDateforChange" name="testDate">
+                              <option value="" selected >평가 정보가 없습니다.</option>
+                           </select>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  
+                  
+                  
+                  <div class="row">
+                     <div class="form-group input-group mb-1">
+                        <div class="col-6 col-lg-2 px-0">
+                           <span class="input-group-text h-100 rounded-0">점수</span>
+                        </div>
+                        <div class="col-6 col-lg-10 px-1 rounded-1">
+                           <input type="hidden" id="testCodeForchange" name="testCode" value="">
+                           <input type="number" id="changeScoreInput" name="score" value=""
+                              class="form-control rounded-0 h-100" placeholder="점수를 입력하세요"
+                              aria-label="8" aria-describedby="cpaCn" min="0" max="100" >
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               Modal body 끝
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary"
+                     data-bs-dismiss="modal">취소</button>
+                  <button onclick="deleteTest();" type="button" class="btn btn-danger">삭제</button>
+                  <button onclick="updateTest();" type="button" class="btn btn-primary">저장</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+    
+     -->
+    
+    
+    <!--평가 수정 삭제 모달 끝---------------------------------------------------------------------------------------------------------------------------------------------------->

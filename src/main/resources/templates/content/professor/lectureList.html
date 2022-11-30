@@ -76,7 +76,7 @@
       <form th:action="@{/proF/updateLec}"  method="post" id="updateDataForm">
       <input type="hidden" name="lecNo" id="changeLecModal_lecNo" value=""> 
       <div class="modal-body">
-       <table border="1">
+       <table >
        		<thead>
 				<tr >
 					<td>강의명</td>
@@ -96,9 +96,9 @@
        		<tbody>
 				<tr>
 						<td>강의 시작시간</td>
-					<td><input id="changeLecModal_firstTime"  name="firstTime" value="" style="width: 120px"> </td>
+					<td><input id="changeLecModal_firstTime"  name="firstTime" value="" style="width: 100px"> </td>
 						<td>강의 마치는시간</td>
-					<td><input id="changeLecModal_lastTime" value="" name="lastTime" style="width: 150px"></td>
+					<td><input id="changeLecModal_lastTime" value="" name="lastTime" style="width: 120px"></td>
 					
 				</tr>
        		</tbody>
@@ -108,7 +108,7 @@
 					<td><input id="changeLecModal_lecScore" style="width: 100px" name="lecScore" value=""></td>
        				<td> 강의 요일</td>
        				<td>
-       					<input type="text" id="changeLecModal_lecDay" name="lecDay" style="width: 150px">
+       					<input type="text" id="changeLecModal_lecDay" name="lecDay" style="width: 120px">
        				</td>
        			</tr>
        		</tfoot>

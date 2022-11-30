@@ -31,7 +31,7 @@ div {
 				<div class="row">
 
 					<div class="mb-3 row">
-						<label for="lecName" class="col-sm-3 col-form-label">강의명</label>
+						<label for="lecName" class="col-sm-4 col-form-label">강의명</label>
 						<div class="col-sm-5">
 							<input type="text" class="form-control" id="lecName" name="lecName" required
 							>
@@ -39,7 +39,7 @@ div {
 					</div>
 					
 					<div class="mb-3 row">
-						<label for="lecScore" class="col-sm-3 col-form-label">강의
+						<label for="lecScore" class="col-sm-4 col-form-label">강의
 							학점</label>
 						<div class="col-sm-5">
 							<input type="number" class="form-control" id="lecScore"  name="lecScore" max="4" required
@@ -47,9 +47,9 @@ div {
 						</div>
 					</div>
 					<div class="mb-3 row">
-						<label for="semNo" class="col-sm-3 col-form-label">강의 학기 </label>
+						<label for="semNo" class="col-sm-4 col-form-label">강의 학기 </label>
 						<div class="col-sm-5">
-							<select name="semNo" id="semNo">
+							<select name="semNo" id="semNo" style="width: 200px;">
 								<option th:each="semester: ${semesterList}" th:value=${semester.semNo}
 									th:text="${semester.semName}" >  </option>
 							</select>
@@ -57,19 +57,20 @@ div {
 					</div>
 					
 					<div class="mb-3 row">
-						<label for="collNo" class="col-sm-3 col-form-label">단과대학</label>
+						<label for="collNo" class="col-sm-4 col-form-label">단과대학</label>
 						<div class="col-sm-5">
-							<select onchange="changeDept();" class="changeDept" name="collNo" id="collNo">
-
+							<select onchange="changeDept();" class="changeDept" name="collNo" id="collNo" style="width: 200px;">
+							<option value="" >전체</option>
 								<option th:each="coll: ${collList}" th:value=${coll.collNo}
 									th:text="${coll.collName}"></option>
 							</select>
 						</div>
 					</div>
 					<div class="mb-3 row">
-						<label for="deptNo" class="col-sm-3 col-form-label">소속학과</label>
+						<label for="deptNo" class="col-sm-4 col-form-label">소속학과</label>
 						<div class="col-sm-5">
-							<select class="changeDeptList" name="deptNo" id="deptNo">
+							<select class="changeDeptList" name="deptNo" id="deptNo" style="width: 200px;">
+								<option value="" >전체 </option>
 								<option th:each="dept: ${deptList}" th:value=${dept.deptNo}
 									th:text="${dept.deptName}"></option>
 							</select>
@@ -84,9 +85,9 @@ div {
 					</div> -->
 					
 							<div class="mb-3 row">
-						<label for="empNo" class="col-sm-3 col-form-label">담당교수 </label>
+						<label for="empNo" class="col-sm-4 col-form-label">담당교수 </label>
 						<div class="col-sm-5">
-							<select name="empNo" id="empNo">
+							<select name="empNo" id="empNo" style="width: 200px;">
 								<option th:each="emp: ${empList}" th:value=${emp.empNo}
 									th:text="${emp.memNo}" >  </option>
 							</select>
@@ -94,7 +95,7 @@ div {
 					</div>
 					
 					<div class="mb-3 row">
-						<label for="maxNum" class="col-sm-3 col-form-label">최대 수강 신청 인원</label>
+						<label for="maxNum" class="col-sm-4 col-form-label">최대 수강신청 인원</label>
 						<div class="col-sm-5">
 							<input type="number" class="form-control" id="maxNum" name="maxNum" max="20">
 						</div>
@@ -140,7 +141,7 @@ div {
 					</div>
 				</div>
 			</div>
-			<div>
+			<div class="d-grid gap-2 col-6 mx-auto">
 				<input type="button" class="form-control" style="width: 500px;"value="시간 체크" onclick="time();"> 
 				<input id="regLectureTimeBtn" type="submit" class="form-control" style="width: 500px;"value="등록" disabled> <!--  ajax로 통해 등록하기 버튼이 활성 , 비활성 된다 -->
 			</div>
