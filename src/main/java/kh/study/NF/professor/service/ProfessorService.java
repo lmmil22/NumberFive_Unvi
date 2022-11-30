@@ -67,7 +67,8 @@ public interface ProfessorService {
 	 List<GradeVO> selectGrade();
 	 
 	 //학생 점수 업데이트
-	 
 	 void updateGrade(StuGradeVO stuGradeVO);
-	 
+
+	 //중복체크를 위한 시간 검색
+	List<LectureTimeVO> selectTime(LectureTimeVO lectureTimeVO); 
 }

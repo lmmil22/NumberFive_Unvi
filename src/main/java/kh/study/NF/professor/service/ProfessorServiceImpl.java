@@ -143,6 +143,12 @@ public class ProfessorServiceImpl implements ProfessorService{
 		sqlSession.update("professorMapper.udpateGrade",stuGradeVO);
 	}
 	
+	//시간 검색
+	@Override
+	public List<LectureTimeVO> selectTime(LectureTimeVO lectureTimeVO) {
+		return sqlSession.selectList("professorMapper.selectTime",lectureTimeVO);
+	}
+	
 	
 	
 }

@@ -1,5 +1,7 @@
 package kh.study.NF.professor.vo;
 
+import java.util.List;
+
 import javax.validation.constraints.AssertTrue;
 
 import lombok.Getter;
@@ -19,4 +21,7 @@ public class LectureTimeVO {
 	private String firstTime;
 	private String lastTime;
 	private String lecNo;
+	
+	private List<String> dayList;
+	private String empNo;
 }

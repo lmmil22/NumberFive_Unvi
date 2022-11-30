@@ -257,6 +257,34 @@
 	WHERE LEC_NO = #{lecNo}
 	</select>
 	
+	<!-- 등록 전 이미 등록 되어있는 날짜에 같은 교수가 등록안되게 조회먼저 -->
+	<select id="selectTime" resultMap="lectureTime">
+	SELECT TIME_NO
+		, LEC_DAY
+		, LEC_NO
+		, FIRST_TIME
+		, LAST_TIME
+	FROM LECTURE_TIME
+	WHERE (SELECT EMP_NO
+        FROM LECTURE
+        WHERE LEC_NO = LECTURE_TIME.LEC_NO) = #{empNo}
+	AND (
+		<foreach collection="dayList" item="lecDay" separator="OR LEC_DAY LIKE" open="LEC_DAY LIKE">
+			TRIM(#{lecDay})
+		</foreach>
+	)
+	AND (FIRST_TIME &gt;= #{firstTime} OR LAST_TIME &gt;= #{firstTime})
+	AND (FIRST_TIME &lt;= #{lastTime} OR LAST_TIME &lt;= #{lastTime})
+
+	
+	
+	
+	
+	
+	</select>
+	
+	
+	
 		<!-- 등록된 강의 수강신청시 조회  -->
 	<select id="selectLecLIstEnroll"  resultMap="lecture">
 	 	SELECT

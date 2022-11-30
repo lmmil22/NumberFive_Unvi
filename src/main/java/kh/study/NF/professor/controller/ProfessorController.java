@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -80,7 +81,7 @@ public class ProfessorController {
 	//벨리데이션 수정중!!
 	@PostMapping("/regProfLecForm")
 	public String regProfLecForm(LecturePdfVO lecturePdfVO,
-			LectureTimeVO lectureTimeVO ,LectureVO lectureVO ,MultipartFile PdfName ,@Valid LectureTimeVO lecTimeVO , BindingResult bindingResult, Model model ) {
+			LectureTimeVO lectureTimeVO ,LectureVO lectureVO ,MultipartFile PdfName , Model model ) {
 		String nextLecNo = professorService.getNextLecNo();
 		lectureVO.setLecNo(nextLecNo);
 		
@@ -344,6 +345,24 @@ public class ProfessorController {
 		return grade;
 
 	}
+	
+	//중복 시간 조회 시 진행
+	@ResponseBody
+	@PostMapping("/timeAjax")
+	public int timeAjax(LectureTimeVO lectureTimeVO, Authentication authentication) {
+		String[] dayArr = lectureTimeVO.getLecDay().split(","); //월 , 화 이렇게 들어오는걸 잘라준다 .
+		List<String> dayList = Arrays.asList(dayArr);
+		lectureTimeVO.setDayList(dayList); //잘라준걸 vo에 담을수 있는 리스트를 생성해준다 
+		
+		User user = (User)authentication.getPrincipal();
+		lectureTimeVO.setEmpNo(user.getUsername());
+		
+		List<LectureTimeVO> LectureTimeList = professorService.selectTime(lectureTimeVO); //리스트 타입으로 리턴 시킨 서비스 메소드를 받아서 
+		
+		return LectureTimeList.size(); //개수를 보낸다 숫자니까 int로 // 숫자가 있다면 그날의 시간표가 있는것
+	}
+	
+	
 	
 	
 	
