@@ -346,7 +346,7 @@ public class ProfessorController {
 
 	}
 	
-	//중복 시간 조회 시 진행
+	//by 지아 중복 시간 조회 시 진행
 	@ResponseBody
 	@PostMapping("/timeAjax")
 	public int timeAjax(LectureTimeVO lectureTimeVO, Authentication authentication) {

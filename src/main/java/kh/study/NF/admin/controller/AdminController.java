@@ -2,6 +2,8 @@ package kh.study.NF.admin.controller;
 
 import javax.annotation.Resource;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +25,16 @@ public class AdminController {
 	
 	
 	
-	//by 지아
+	//by 지아 상세조회페이지이동
 	@GetMapping("/memDetail")
-	public String memDetail(Model model , String memNo) {
+	public String memDetail(Model model , String memNo ,Authentication authentication) {
+		
+		User user = (User)authentication.getPrincipal();
+		memNo = user.getUsername();
+		model.addAttribute("member",adminService.selectMemDetail(memNo));
 		
 		
-		
-		return "";
+		return "content/admin/memberDetail";
 	}
 //---------------------------------------------------------------------//	
 	//by 유빈

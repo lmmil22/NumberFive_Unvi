@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"	
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/base_layout}"> 
+
+<th:block layout:fragment="css"> 
+<link rel="stylesheet"  th:href="@{}"> 
+</th:block>
+
+<div layout:fragment="content"> 
+<style>
+  table, th, td {
+    border: 1px solid #bcbcbc;
+  }
+  table {
+    width: 700px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 4px solid #bcbcbc;
+    border-collapse: collapse;
+  }
+</style>
+	<div>
+
+		<!-- 		<table class="table table-striped"> -->
+		<table>
+			 	<colgroup>
+									<col width="30">
+									<col width="20">
+									<col width="10">
+									<col width="20">
+									<col width="20">
+								</colgroup> 
+			<thead>
+				<tr>
+					<td rowspan="3">사진</td>
+					<th>이름</th>
+					<td th:text="${member.memberVO.memName}"></td>
+					<th>부전공</th>
+					<td th:text="${member.doubleNo}"></td>
+				</tr>
+
+				<tr>
+					<th>학번</th>
+					<td th:text="${member.memberVO.memNo}"></td>
+					<th>학기</th>
+					<td>[[${member.stuYear}]]</td>
+				</tr>
+
+				<tr>
+					<th>소속</th>
+					<td th:text="${member.collNo}"></td>
+					<th>학적 상태</th>
+					<td th:text="${member.stuStatus}"></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th colspan="5">학생 상세 정보</th>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>생년월일</th>
+					<td th:text="${member.memberVO.memBirth}"></td>
+					<th>전화번호</th>
+					<td colspan="2" th:text="${member.memberVO.memTell}"></td>
+				</tr>
+				<tr>
+					<th>이메일</th>
+					<td colspan="2" th:text="${member.memberVO.memEmail}"></td>
+					<th>주소</th>
+					<td th:text="${member.memberVO.memAddr}"></td>
+				</tr>
+			</tfoot>
+
+		</table>
+
+	</div>
+</div>
+</html>
