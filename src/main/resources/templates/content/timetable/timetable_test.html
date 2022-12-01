@@ -1,0 +1,133 @@
+<!-- by 유빈 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/base_layout}">
+	
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/timetable.css}">
+</th:block>
+
+<div layout:fragment="content">
+	<!-- 제목줄 -->
+	<div class="row mt-3">
+		<div class="col">
+		    <h1>Student Timetable</h1>
+		</div>
+	</div>
+    
+    <!-- 학생시간표 미 로그인 시 -->
+	<div class="row mt-5 ">
+	    <div  class="col"  sec:authorize="isAnonymous()" style="height:3.0em; background-color: #F7F7F7; text-align: center; padding-top: 1.1rem;"> 로그인 후 조회가능합니다. </div>
+	</div>
+    <!-- 학생시간표 로그인 시 -->
+    <div class="col" align="center" sec:authorize="isAuthenticated()">
+    <!-- 해당 학생 학번영역 -->
+    <div> [[${#authentication.authorities}]] 의 시간표입니다. </div>
+    
+    <!-- 타임테이블 영역 -->
+	<table class="table mt-5">
+		<colgroup>
+			<col width="*%">
+			<col width="18%">
+			<col width="18%">
+			<col width="18%">
+			<col width="18%">
+			<col width="18%">
+		</colgroup>
+	  <thead ><!-- 요일 영역 -->
+	    <tr>
+	      <th scope="col"></th>
+	      <th scope="col">월</th>
+	      <th scope="col">화</th>
+	      <th scope="col">수</th>
+	      <th scope="col">목</th>
+	      <th scope="col">금</th>
+	    </tr>
+	  </thead>
+	  <tbody class="table-group-divider">
+	    <tr>
+	      <th scope="row">9:00</th>
+	      <td>Mark</td>
+	      <td>Otto</td>
+	      <td>@mdo</td>
+	      <td>@mdo</td>
+	      <td>@mdo</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">10:00</th>
+	      <td>Jacob</td>
+	      <td>Thornton</td>
+	      <td>@fat</td>
+	      <td>@mdo</td>
+	      <td>@mdo</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">11:00</th>
+	      <td>Jacob</td>
+	      <td>Thornton</td>
+	      <td>@fat</td>
+	      <td>@mdo</td>
+	      <td>@mdo</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">12:00</th>
+	      <td>Jacob</td>
+	      <td>Thornton</td>
+	      <td>@fat</td>
+	      <td>@mdo</td>
+	      <td>@mdo</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">13:00</th>
+	     <td>Jacob</td>
+	      <td>Thornton</td>
+	      <td>@fat</td>
+	      <td>@mdo</td>
+	      <td>@mdo</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">14:00</th>
+	      <td>Jacob</td>
+	      <td>Thornton</td>
+	      <td>@fat</td>
+	      <td>@mdo</td>
+	      <td>@mdo</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">15:00</th>
+	      <td>Jacob</td>
+	      <td>Thornton</td>
+	      <td>@fat</td>
+	      <td>@mdo</td>
+	      <td>@mdo</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">16:00</th>
+	      <td>Jacob</td>
+	      <td>Thornton</td>
+	      <td>@fat</td>
+	      <td>@mdo</td>
+	      <td>@mdo</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">17:00</th>
+	     <td>Jacob</td>
+	      <td>Thornton</td>
+	      <td>@fat</td>
+	      <td>@mdo</td>
+	      <td>@mdo</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">18:00</th>
+	      <td>Jacob</td>
+	      <td>Thornton</td>
+	      <td>@fat</td>
+	      <td>@mdo</td>
+	      <td>@mdo</td>
+	    </tr>
+	  </tbody>
+	</table>
+	</div>
+</div>
+</html>
