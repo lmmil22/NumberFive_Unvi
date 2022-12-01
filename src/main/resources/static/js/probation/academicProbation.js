@@ -226,7 +226,7 @@ function sendMail(){
 		Swal.fire({
 		  title: '처리중입니다.',
 		  html: '메일 전송 완료까지 <b></b> 남았습니다.',
-		  timer: 3010,
+		  timer: 3030,
 		  timerProgressBar: true,
 		  didOpen: () => {
 		    Swal.showLoading()

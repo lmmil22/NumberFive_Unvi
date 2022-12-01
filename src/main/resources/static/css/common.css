@@ -183,6 +183,14 @@ textarea{
 
 .topNav .topNav-column li a:hover { color: #666666; }
 
+/* by수경 로그인 부분이 따라오도록 설정 */
+.sticky {
+  position: sticky;
+  top: 0; 
+  background: pink;
+
+}
+
 
 
 /* by 지아 여기서 부터 아래는 페이징 처리입니다 이 위에 스타일 작성부탁드릴게요 */

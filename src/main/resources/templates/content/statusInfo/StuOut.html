@@ -12,70 +12,75 @@
 <body>
 
 <div layout:fragment ="content">
-	<div class="row justify-content-center">
-		<div class="col mt-5">
-		제적 학생조회
-		<form th:action="@{/emp/stuOut}" method="post">
-			<table class="table align-middle text-center">
-				<tr>
-					<td>소속대학</td>
-					<td> 
-						<select class="form-select" th:onchange="changeColl();" id="coll" name="collNo">
-							<option th:selected="${paramMap['collNo'] == null or paramMap['collNo'] eq ''}" value="" >전체</option>
-							<th:block th:each=" coll : ${collList}">
-								<option th:value="${coll.collNo}" th:text="${coll.collName}" th:selected="${paramMap['collNo'] eq coll.collNo}"></option>
-							</th:block>
-						</select>
-					</td>
-					<td>소속학과</td>
-					<td> 
-						<select class="form-select deptList" id="dept" name="deptNo">
-							<option th:selected="${paramMap['deptNo'] == null or paramMap['deptNo'] eq ''}"  value="">전체</option>
-							<th:block th:each=" dept : ${deptList}">
-								<option th:value="${dept.deptNo}" th:text="${dept.deptName}" th:selected="${paramMap['deptNo'] eq dept.deptNo}"></option>
-							</th:block>
-						</select> 
-					</td>
-					<td rowspan="2">  <button class="btn btn-primary" style="height: 90px;" type="submit">Search</button> </td>
-				</tr>
-				<tr>
-					<td>학적</td>
-					<td>
-						<select class="form-select" name="stuStatus">
-							<option th:selected="${paramMap['stuStatus'] == null or paramMap['stuStatus'] eq ''}" value="" >전체</option>
-							<option th:selected="${paramMap['stuStatus'] eq '재학'}" value="재학">재학</option>
-							<option th:selected="${paramMap['stuStatus'] eq '휴학'}" value="휴학">휴학</option>
-						</select>
-					</td>
-					<td>성명</td>
-					<td> <input class ="form-control" type="text" name="memName" th:value="${paramMap['memName']}"> </td>
-				</tr>
-			</table>
-		</form>	
-		
-		학생목록
-			<table class="table align-middle text-center">
-				<tr>
-					<td>학번</td>
-					<td>이름</td>
-					<td>소속대학</td>
-					<td>소속학과</td>
-					<td>학적</td>
-					<td>제적일자</td>
-					<td>제적사유</td>
-				</tr>
-				<tr th:each="stuOut:${stuOutList}">
-					<td th:text="${stuOut.stuNo}" data-bs-toggle="modal" data-bs-target="#stuOutModal" th:onclick="stuInfo([[${stuOut.stuNo}]]);"></td>
-					<td th:text="${stuOut.memberVO.memName}"></td>
-					<td th:text="${stuOut.collVO.collName}"></td>
-					<td th:text="${stuOut.deptVO.deptName}"></td>
-					<td th:text="${stuOut.stuStatus}"></td>
-					<td th:text="${stuOut.statusInfoVO.stuOutVO.stuOutDate}"></td>
-					<td th:text="${stuOut.statusInfoVO.stuOutVO.stuOutReason}"></td>
-				</tr>
-			</table>
+	<div class="row mt-3 mb-4">
+		<div class="col mt-4 mb-4" >
+			<div class="col mt-4 mb-4" style="font-weight: bold; font-size: 22px;">
+				제적 학생조회
+			</div>
+			<form th:action="@{/emp/stuOut}" method="post">
+				<table class="table align-middle text-center">
+					<tr>
+						<td>소속대학</td>
+						<td> 
+							<select class="form-select" th:onchange="changeColl();" id="coll" name="collNo">
+								<option th:selected="${paramMap['collNo'] == null or paramMap['collNo'] eq ''}" value="" >전체</option>
+								<th:block th:each=" coll : ${collList}">
+									<option th:value="${coll.collNo}" th:text="${coll.collName}" th:selected="${paramMap['collNo'] eq coll.collNo}"></option>
+								</th:block>
+							</select>
+						</td>
+						<td>소속학과</td>
+						<td> 
+							<select class="form-select deptList" id="dept" name="deptNo">
+								<option th:selected="${paramMap['deptNo'] == null or paramMap['deptNo'] eq ''}"  value="">전체</option>
+								<th:block th:each=" dept : ${deptList}">
+									<option th:value="${dept.deptNo}" th:text="${dept.deptName}" th:selected="${paramMap['deptNo'] eq dept.deptNo}"></option>
+								</th:block>
+							</select> 
+						</td>
+						<td rowspan="2">  <button class="btn btn-primary" style="height: 90px;" type="submit">Search</button> </td>
+					</tr>
+					<tr>
+						<td>학적</td>
+						<td>
+							<select class="form-select" name="stuStatus">
+								<option th:selected="${paramMap['stuStatus'] == null or paramMap['stuStatus'] eq ''}" value="" >전체</option>
+								<option th:selected="${paramMap['stuStatus'] eq '재학'}" value="재학">재학</option>
+								<option th:selected="${paramMap['stuStatus'] eq '휴학'}" value="휴학">휴학</option>
+							</select>
+						</td>
+						<td>성명</td>
+						<td> <input class ="form-control" type="text" name="memName" th:value="${paramMap['memName']}"> </td>
+					</tr>
+				</table>
+			</form>	
 		</div>
-	</div>
+		<div class="row">
+			<div class="col mb-4 mt-4" style="font-weight: bold; font-size: 22px;">
+				학생목록
+			</div>
+				<table class="table align-middle text-center">
+					<tr>
+						<td>학번</td>
+						<td>이름</td>
+						<td>소속대학</td>
+						<td>소속학과</td>
+						<td>학적</td>
+						<td>제적일자</td>
+						<td>제적사유</td>
+					</tr>
+					<tr th:each="stuOut:${stuOutList}">
+						<td th:text="${stuOut.stuNo}" data-bs-toggle="modal" data-bs-target="#stuOutModal" th:onclick="stuInfo([[${stuOut.stuNo}]]);"></td>
+						<td th:text="${stuOut.memberVO.memName}"></td>
+						<td th:text="${stuOut.collVO.collName}"></td>
+						<td th:text="${stuOut.deptVO.deptName}"></td>
+						<td th:text="${stuOut.stuStatus}"></td>
+						<td th:text="${stuOut.statusInfoVO.stuOutVO.stuOutDate}"></td>
+						<td th:text="${stuOut.statusInfoVO.stuOutVO.stuOutReason}"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	
 	<!--by수경 학생 학번 클릭 시 나타날 제적 모달창 -->
 	<div class="modal fade bd-example-modal-lg" id="stuOutModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
