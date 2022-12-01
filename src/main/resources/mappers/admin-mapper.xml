@@ -26,8 +26,17 @@
 	FROM  MEMBER M , STU S
 	WHERE M.MEM_NO = #{memNo}
 	AND S.MEM_NO = M.MEM_NO
-</select>
+	</select>
 	
+	<update id="updateMemDetail">
+	UPDATE MEMBER
+	SET
+	MEM_TELL = #{memTell}
+	, MEM_EMAIL = #{memEmail}
+	, MEM_ADDR = #{memAddr}
+	WHERE MEM_NO = #{memNo}
+	
+	</update>
 	
 	
 	

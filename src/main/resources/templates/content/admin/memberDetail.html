@@ -8,6 +8,8 @@
 <link rel="stylesheet"  th:href="@{}"> 
 </th:block>
 
+<!-- by지아 학생의 상세 정보 -->
+
 <div layout:fragment="content"> 
 <style>
   table, th, td {
@@ -23,61 +25,71 @@
   }
 </style>
 	<div>
-
+		<form th:action="@{/admin/updateForm}" method="post" id="memInfoForm">
+		
 		<!-- 		<table class="table table-striped"> -->
-		<table>
-			 	<colgroup>
-									<col width="30">
-									<col width="20">
-									<col width="10">
-									<col width="20">
-									<col width="20">
-								</colgroup> 
-			<thead>
-				<tr>
-					<td rowspan="3">사진</td>
-					<th>이름</th>
-					<td th:text="${member.memberVO.memName}"></td>
-					<th>부전공</th>
-					<td th:text="${member.doubleNo}"></td>
-				</tr>
-
-				<tr>
-					<th>학번</th>
-					<td th:text="${member.memberVO.memNo}"></td>
-					<th>학기</th>
-					<td>[[${member.stuYear}]]</td>
-				</tr>
-
-				<tr>
-					<th>소속</th>
-					<td th:text="${member.collNo}"></td>
-					<th>학적 상태</th>
-					<td th:text="${member.stuStatus}"></td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th colspan="5">학생 상세 정보</th>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr>
-					<th>생년월일</th>
-					<td th:text="${member.memberVO.memBirth}"></td>
-					<th>전화번호</th>
-					<td colspan="2" th:text="${member.memberVO.memTell}"></td>
-				</tr>
-				<tr>
-					<th>이메일</th>
-					<td colspan="2" th:text="${member.memberVO.memEmail}"></td>
-					<th>주소</th>
-					<td th:text="${member.memberVO.memAddr}"></td>
-				</tr>
-			</tfoot>
-
-		</table>
-
+			<table>
+					<colgroup>
+						<col width="100">
+						<col width="">
+						<col width="">
+						<col width="">
+						<col width="">
+					</colgroup> 
+				<thead>
+					<tr>
+						<td rowspan="3"> 
+	<!-- 					<img th:src="|@{/images/}${member.memberVO.memImage}|" alt="..." style="width: 220px;">
+	 -->	 				<img src="/images/김여름.jpg" width="100%;" />
+	 					</td>
+						<th>이름</th>
+						<td th:text="${member.memberVO.memName}"></td>
+						<th>부전공</th>
+						<td th:text="${member.doubleNo}"></td>
+					</tr>
+	
+					<tr>
+						<th>학번</th>
+						<td th:text="${member.memberVO.memNo}"></td>
+						<th>학기</th>
+						<td th:text="${member.stuYear}"></td>
+					</tr>
+	
+					<tr>
+						<th>소속</th>
+						<td th:text="${member.collNo}"></td>
+						<th>학적 상태</th>
+						<td th:text="${member.stuStatus}"></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th colspan="5">학생 상세 정보</th>
+					</tr>
+				</tbody>
+				<tfoot id="updateTfoot">
+					<tr>
+						<th>생년월일</th>
+						<td  th:text="${member.memberVO.memBirth}"></td>
+						<th>전화번호</th>
+						<td id="tell" colspan="2" th:text="${member.memberVO.memTell}"></td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td id="email" th:text="${member.memberVO.memEmail}"></td>
+						<th>주소</th>
+						<td id="addr" colspan="2"  th:text="${member.memberVO.memAddr}"></td>
+					</tr>
+				</tfoot>
+	
+			</table>
+				<!--  <button  type="button" value="수정하기" th:onclick="updateMemInfo([[${member.memberVO.memNo}]]);"></button> --> 
+				 <input class="d-grid gap-2 col-4 mx-auto" style="width: 100px;"value="수정하기" type="button" id="updateBtn" th:onclick="updateMemInfo([[${member.memberVO.memNo}]], this);" data-status="1"> 
+		</form>
 	</div>
+	
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" th:src="@{/js/admin/memberDetail.js}"></script>
+	
 </div>
 </html>
