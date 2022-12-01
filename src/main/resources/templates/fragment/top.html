@@ -7,23 +7,23 @@
 <!-- 전체영역 -->
 <div class="container">
 	<!-- 첫번째 상단줄 : 로그인 메뉴바 ( shop 가져온 소스 로그인,로그아웃 표시 영역 ) -->
-    <div class="row" style="background-color: white;">
-		<div class="col text-end" sec:authorize="isAnonymous()"> 
+    <div class="row" style="background-color: rgba( 255, 255, 255, 0.5 );">
+		<div class="col mt-1 mb-1 text-end" sec:authorize="isAnonymous()" style="font-weight: bold;"> 
 			📢 로그인이 필요합니다.
-			<span data-bs-toggle="modal" data-bs-target="#login_modal" style="color: #3D8361;">LOGIN_Modal</span>
-			<button onclick="location.href='/login';"  type="submit"  class="btn btn-light">LOGIN</button>
+			<span data-bs-toggle="modal" data-bs-target="#login_modal" style="color: #3D8361; font-weight: bold;">LOGIN</span>
+			<!-- <button onclick="location.href='/login';"  type="submit"  class="btn btn-light">LOGIN</button> -->
 		</div>
-		<div class="col text-end" sec:authorize="isAuthenticated()" >
+		<div class="col mt-1 mb-1 text-end" sec:authorize="isAuthenticated()"  style="font-weight: bold;">
 			<!-- 아래 sec 데이터값은 아이디값을 추출되기때문에 span태그 사이에 다른 문자열을 넣을 수 없다. -->
 			<!-- 그래서 이어서 문자열을 작성하려면 span태그 밖에서 작성하도록 한다.  -->
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16">
 			  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
 			  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z"/>
 			</svg>
-			[ <span sec:authentication="name"></span>	] <span th:text="${#authentication.authorities}"> </span> 님 
+			[<span sec:authentication="name"></span>] <span th:text="${#authentication.authorities}"></span> 님 
 			<!-- 로그아웃 컨트롤러는 시큐리티에서 자동으로 호출되기때문에 컨트롤러나 form태그 작성 불필요 -->
 			<!-- 단순히 a태그나 버튼으로 경로이동만 시켜주면 된다! --> 
-			<button onclick="location.href='/logout';" sec:authorize="isAuthenticated()" type="submit"  class="btn btn-light">LOGOUT</button>
+			<span onclick="location.href='/logout';" sec:authorize="isAuthenticated()" type="submit"  style="color: #3D8361; font-weight: bold;">LOGOUT</span>
 		</div>
 	</div>
 	
@@ -58,91 +58,189 @@
 	<!-- end -->
 
 
-
-	<!-- 두번째 상단줄 : 로고 이미지 + 권한별 메뉴바 -->	
+	<!-- 두번째 상단줄 : 로고 이미지 + 권한별 메뉴바 -> by수경 로고와 대학이름은 고정 권한별 메뉴바만 따로 묶었습니다.-->	
 	<div class="row">
-		<div class="col-12">
-		<!-- 인증과 권한이 없는 누구에게나 표시되는 탑 메뉴바 -->
-		<header sec:authorize="isAnonymous()"  class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-			<div class="row">
-			 <a href="/member/homeLogin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-			   <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-			   <span class="fs-4" >
-			   	<img src="/images/nfLogoTOP.png" width="15%;" height="10%;"/>
-			   	&nbsp; &nbsp; NFU University
+		<div class="col-3">
+			<a href="/member/homeLogin" class="d-flex align-items-center mb-md-0 me-md-auto text-dark text-decoration-none">
+			<!-- <svg width="40" height="32"><use xlink:href="#bootstrap"></use></svg> -->
+			   <span style="font-size: 32px; font-weight: bold;">
+			   	<img src="/images/nfLogoTOP.png" width="30%;" height="20%;"/>
+			    NFU 
 				</span>
-			 </a>
-			 <div class="col">
-			 	<ul class="nav nav-pills">
-			  	 <li class="nav-item"><a href="/member/intro" class="nav-link active" aria-current="page">학교 소개</a></li>
-			  	 <li class="nav-item"><a href="/board/list" class="nav-link">공통 게시판</a></li>
-			 	</ul>
-			  </div>
-			</div>
-	    </header>
-	    
+			</a>
+		</div>
+
+		<div class="col-9 mb-5 text-end" style="padding-right: 0px;">
+			<!-- 인증과 권한이 없는 누구에게나 표시되는 탑 메뉴바 -->
+			<header sec:authorize="isAnonymous()" >
+				<ul class="nav topNav">
+				    <li>
+						 <a href="#">대학/대학원</a>
+						<div class="nav-column topNav_column">
+							<ul>
+							    <li><a href="#">대학/학부</a></li>
+							    <li><a href="#">예술대학</a></li>
+							    <li><a href="#">패션디자인학과</a></li>
+							</ul>
+						</div>
+				    </li>
+				    <li>
+						<a href="/board/list" class="nav-link">입학/취업</a>
+						<div class="nav-column topNav_column">
+							 <ul>
+							     <li><a href="#">Pampers Diapers</a></li>
+							     <li><a href="#">Huggies Diapers</a></li>
+							     <li><a href="#">Seventh Generation</a></li>
+							 </ul>
+						</div>
+				    </li>
+				    <li>
+				        <a href="#">연구/산학</a>
+				        <div class="nav-column topNav_column">
+							 <ul>
+							     <li><a href="/board/list">공통 게시판</a></li>
+							     <li><a href="#">Huggies Diapers</a></li>
+							     <li><a href="#">Seventh Generation</a></li>
+							 </ul>
+						</div>
+				    </li>
+				    <li><a href="#">대학생활</a></li>
+				    <li><a href="#">국제교류</a></li>
+				    <li><a href="#">공지/참여</a></li>
+				    <li><a href="#">홍보센터</a></li>
+				    <li><a href="#">Chatting</a></li>
+				    
+				</ul>
+		    </header>
+
 		<!-- 학생의 경우 top 메뉴바 -->
-	    <header sec:authorize="hasRole('ROLE_STUDENT')"  class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-	      <a href="/member/homeLogin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-	        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-	        <span class="fs-4" >
-			        <img src="/images/nfLogoTOP.png" width="15%;" height="10%;"/>
-			        &nbsp; &nbsp; NFU University
-		    </span>
-	      </a>
+	    <header sec:authorize="hasRole('ROLE_STUDENT')">
 			<!--by 유빈  탑에 넣은 숏버전 이미지 삽입할 때 <img width="30%" height="30%" src="/images/LFU logo short ver.png " /> -->
-	      <ul class="nav nav-pills">
-	        <li class="nav-item"><a href="/member/myinfo" class="nav-link active" aria-current="page">나의 정보 관리</a></li>
-	        <li class="nav-item"><a href="/proF/viewLecList" class="nav-link">강의관리</a></li>
-	        <li class="nav-item"><a href="#" class="nav-link">학적관리</a></li>
-	        <li class="nav-item"><a href="#" class="nav-link">신청내역조회</a></li>
-	        <li class="nav-item"><a href="/board/list" class="nav-link">공통 게시판</a></li>
-	      </ul>
+				<ul class="nav topNav">
+				    <li>
+						 <a href="#">대학/대학원</a>
+						<div class="nav-column topNav_column">
+							<ul>
+							    <li><a href="#">대학/학부</a></li>
+							    <li><a href="#">예술대학</a></li>
+							    <li><a href="#">패션디자인학과</a></li>
+							</ul>
+						</div>
+				    </li>
+				    <li>
+						<a href="/board/list" class="nav-link">입학/취업</a>
+						<div class="nav-column topNav_column">
+							 <ul>
+							     <li><a href="#">Pampers Diapers</a></li>
+							     <li><a href="#">Huggies Diapers</a></li>
+							     <li><a href="#">Seventh Generation</a></li>
+							 </ul>
+						</div>
+				    </li>
+				    <li>
+				        <a href="#">연구/산학</a>
+				        <div class="nav-column topNav_column">
+							 <ul>
+							     <li><a href="/board/list">공통 게시판</a></li>
+							     <li><a href="#">Huggies Diapers</a></li>
+							     <li><a href="#">Seventh Generation</a></li>
+							 </ul>
+						</div>
+				    </li>
+				    <li><a href="#">대학생활</a></li>
+				    <li><a href="#">국제교류</a></li>
+				    <li><a href="#">공지/참여</a></li>
+				    <li><a href="#">홍보센터</a></li>
+				    <li><a href="#">Chatting</a></li>
+				    
+				</ul>
 	    </header>
 	    
 		<!-- 교직원(관리자)경우 top 메뉴바 -->
-	    <header sec:authorize="hasRole('ROLE_ADMIN')"  class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-	      <a href="/member/homeLogin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-	        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-	        <span class="fs-4" >
-				<img src="/images/nfLogoTOP.png" width="15%;" height="10%;"/>
-					NFU University
-		    </span>
-	      </a>
-	        
-			<!--by 유빈  탑에 넣은 숏버전 이미지 삽입할 때 <img width="30%" height="30%" src="/images/LFU logo short ver.png " /> -->
-	      <ul class="nav nav-pills">
-	        <li class="nav-item"><a href="/member/myinfo" class="nav-link active" aria-current="page">회원 정보 관리</a></li>
-	        <li class="nav-item"><a href="/member/regMemForm" class="nav-link">회원등록</a></li>
-	        <li class="nav-item"><a href="/board/boardAdmin" class="nav-link">관리자_게시판</a></li>
-	        <li class="nav-item"><a href="/emp/takeOffReturnUniv" class="nav-link">학적승인신청현황</a></li>
-	        <li class="nav-item"><a href="/board/list" class="nav-link">공통 게시판</a></li>
-	      </ul>
+	    <header sec:authorize="hasRole('ROLE_ADMIN')">
+			<ul class="nav topNav">
+			    <li>
+					 <a href="#">대학/대학원</a>
+					<div class="nav-column topNav_column">
+						<ul>
+						    <li><a href="#">대학/학부</a></li>
+						    <li><a href="#">예술대학</a></li>
+						    <li><a href="#">패션디자인학과</a></li>
+						</ul>
+					</div>
+			    </li>
+			    <li>
+					<a href="/board/list" class="nav-link">입학/취업</a>
+					<div class="nav-column topNav_column">
+						 <ul>
+						     <li><a href="#">Pampers Diapers</a></li>
+						     <li><a href="#">Huggies Diapers</a></li>
+						     <li><a href="#">Seventh Generation</a></li>
+						 </ul>
+					</div>
+			    </li>
+			    <li>
+			        <a href="#">연구/산학</a>
+			        <div class="nav-column topNav_column">
+						 <ul>
+						     <li><a href="/board/list">공통 게시판</a></li>
+						     <li><a href="#">Huggies Diapers</a></li>
+						     <li><a href="#">Seventh Generation</a></li>
+						 </ul>
+					</div>
+			    </li>
+			    <li><a href="#">대학생활</a></li>
+			    <li><a href="#">국제교류</a></li>
+			    <li><a href="#">공지/참여</a></li>
+			    <li><a href="#">홍보센터</a></li>
+			    <li><a href="#">Chatting</a></li>
+			    
+			</ul>
 	    </header>
 	    
 	    <!-- 교수님의 경우 top 메뉴바 -->
-	    <header sec:authorize="hasRole('ROLE_PROFESSOR')"  class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-	      <a href="/member/homeLogin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-	        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-	        <span class="fs-4" >
-			    <img src="/images/nfLogoTOP.png" width="10%;" height="10%;"/>
-			       NFU University
-		    </span>
-	      </a>
-			<!--by 유빈  탑에 넣은 숏버전 이미지 삽입할 때 <img width="30%" height="30%" src="/images/LFU logo short ver.png " /> -->
-	      <ul class="nav nav-pills">
-	        <li class="nav-item"><a href="/member/myinfo" class="nav-link active" aria-current="page">나의 정보 관리</a></li>
-	        <li class="nav-item"><a href="/proF/viewLecList" class="nav-link">강의관리</a></li>
-	        <li class="nav-item"><a href="/proF/regProfLec" class="nav-link">강의등록</a></li>
-	        <li class="nav-item"><a href="/proF/scoreManagement" class="nav-link">강의 점수등록</a></li>
-	        <li class="nav-item"><a href="#" class="nav-link">신청내역조회</a></li>
-	        <li class="nav-item"><a href="/board/list" class="nav-link">게시판</a></li>
-	      </ul>
+	    <header sec:authorize="hasRole('ROLE_PROFESSOR')">
+			<ul class="nav topNav">
+			    <li>
+					 <a href="#">대학/대학원</a>
+					<div class="nav-column topNav_column">
+						<ul>
+						    <li><a href="#">대학/학부</a></li>
+						    <li><a href="#">예술대학</a></li>
+						    <li><a href="#">패션디자인학과</a></li>
+						</ul>
+					</div>
+			    </li>
+			    <li>
+					<a href="/board/list" class="nav-link">입학/취업</a>
+					<div class="nav-column topNav_column">
+						 <ul>
+						     <li><a href="#">Pampers Diapers</a></li>
+						     <li><a href="#">Huggies Diapers</a></li>
+						     <li><a href="#">Seventh Generation</a></li>
+						 </ul>
+					</div>
+			    </li>
+			    <li>
+			        <a href="#">연구/산학</a>
+			        <div class="nav-column topNav_column">
+						 <ul>
+						     <li><a href="/board/list">공통 게시판</a></li>
+						     <li><a href="#">Huggies Diapers</a></li>
+						     <li><a href="#">Seventh Generation</a></li>
+						 </ul>
+					</div>
+			    </li>
+			    <li><a href="#">대학생활</a></li>
+			    <li><a href="#">국제교류</a></li>
+			    <li><a href="#">공지/참여</a></li>
+			    <li><a href="#">홍보센터</a></li>
+			    <li><a href="#">Chatting</a></li>
+			</ul>
 	    </header>
-		</div>
-	</div>    
-</div>
-
+	    </div>
+	  </div> 
+	</div> 
 
 <!-- 별도 파일 불러오는 영역 -->
 <script type="text/javascript" th:src="@{/js/common/top.js}"></script>

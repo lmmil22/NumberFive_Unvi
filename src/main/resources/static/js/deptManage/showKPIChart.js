@@ -26,7 +26,7 @@ function drawChart(KPIchartDataMap){
 		}, {
 			name: '승인 내역',
 			type: 'line',
-			data: KPIchartDataMap.approvalDateNoList1
+			data: KPIchartDataMap.approvalDateNoList1,
 		}],
 		chart: {
 			height: 430,
@@ -36,7 +36,10 @@ function drawChart(KPIchartDataMap){
 			width: [0, 4]
 		},
 		title: {
-			text: '2022년 학적신청내역 대비 승인내역 KPI'
+			text: '2022년 학적신청내역 대비 승인내역 KPI',
+			style: {
+	            fontSize: '22px',
+          	}
 		},
 		dataLabels: {
 			enabled: true,
@@ -44,17 +47,23 @@ function drawChart(KPIchartDataMap){
 		},
 		labels: KPIchartDataMap.approvalDateList,
 		xaxis: {
-			type: 'String'
+			type: 'String',
 		},
 		yaxis: [{
 			title: {
 				text: '신청 내역',
+				style: {
+	            	fontSize: '18px',
+          		}
 			},
 
 		}, {
 			opposite: true,
 			title: {
-				text: '승인 내역'
+				text: '승인 내역',
+				style: {
+	            	fontSize: '18px',
+          		}
 			}
 		}]
 	};
@@ -115,7 +124,10 @@ function drawProbationChart(probationStuOutChartMap){
           colors: ['#fff']
         },
    		  title: {
-        text: '2022년 2학기 학사경고 및 제적 건수'
+        text: '2022년 2학기 학사경고 및 제적 건수',
+        style: {
+	         fontSize: '22px',
+        }
         },
         tooltip: {
           shared: true,
@@ -126,10 +138,16 @@ function drawProbationChart(probationStuOutChartMap){
         },yaxis: [{
 			title: {
 				text: '학사경고',
+				style: {
+	            	fontSize: '18px',
+          		}
 			},}, {
 			opposite: true,
 			title: {
-				text: '제적'
+				text: '제적',
+				style: {
+	            	fontSize: '18px',
+          		}
 			}
 		}]
 	 };

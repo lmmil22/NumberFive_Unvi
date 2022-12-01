@@ -10,16 +10,22 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'PuradakGentleGothicR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.1/PuradakGentleGothicR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body{
  font-family: 'SuseongBatang';
-
  font-size: 18px;
 
 }
 
 video {
    position:absolute;
-   width:3450px; 
+   width:3200px; 
    height:550px;
 
    z-index:-100;
@@ -31,19 +37,13 @@ video {
    object-fit: cover ;
 }
 
-#topMenuDiv{
-	width: 100vw; 
-	height: 100vh;
-
-}
-
 * {
   margin: 0;
 }
 
 .content {
    min-height: 100%;
-   margin: 0 auto -155px;
+   margin: 0 auto;
 }
  /* 하단 마진은 푸터의 높이 값과 같다 */
  
@@ -83,6 +83,106 @@ textarea{
 	background: #dcdcdc;
 	border-radius: 10px;
 }   
+
+/* by수경 top drop down 메뉴를 위하여 추가 */
+.topNav,
+.topNav a,
+.topNav ul,
+.topNav li,
+.topNav div,
+
+.topNav a { text-decoration: none; }
+
+.topNav li { list-style: none; }
+.topNav {
+    display: inline-block;
+    position: relative;
+    cursor: default;
+    z-index: 500;
+}
+ 
+.topNav > li {
+    display: block;
+    float: left;
+
+}
+.topNav > li > a {
+    position: relative;
+    display: block;
+    z-index: 510;
+    height: 54px;
+    padding: 0 20px;
+    line-height: 54px;
+ 
+    font-family: 'PuradakGentleGothicR';
+    font-size: 16px;
+    color: black;
+ 
+    background: rgba( 255, 255, 255, 0.5 );
+    border-left: 1px solid rgba( 255, 255, 255, 0.5 );
+    border-right: 1px solid rgba( 255, 255, 255, 0.5 );
+ 
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    transition: all .3s ease;
+}
+
+.topNav > li:first-child > a {
+    border-radius: 3px 0 0 3px;
+    border-left: none;
+}
+
+.topNav > li:last-child > a{
+	border-radius: 0 3px 3px 0;
+	border-right: none;
+} 
+
+/* top메뉴 안 컨텐츠 영역 */
+.topNav > li > div {
+    position: absolute;
+    display: block;
+	width: 100%;
+    top: 55px;
+    left: 0;
+     
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+ 
+    background:rgba( 255, 255, 255, 0.5 );
+    border-radius: 0 0 3px 3px;
+ 
+    -webkit-transition: all .3s ease .15s;
+    -moz-transition: all .3s ease .15s;
+    -o-transition: all .3s ease .15s;
+    -ms-transition: all .3s ease .15s;
+    transition: all .3s ease .15s;
+    
+    display: block;
+    line-height: 26px;
+    font-family: 'PuradakGentleGothicR';
+    font-size: 17px;
+    color: black;
+    text-align: left;
+    
+}
+.topNav > li:hover > div {
+    opacity: 1;
+    visibility: visible;
+    overflow: visible;
+}
+
+
+.topNav .topNav-column {
+    float: left;
+    width: 20%;
+    padding: 2.5%;
+}
+
+.topNav .topNav-column li a:hover { color: #666666; }
+
 
 
 /* by 지아 여기서 부터 아래는 페이징 처리입니다 이 위에 스타일 작성부탁드릴게요 */
