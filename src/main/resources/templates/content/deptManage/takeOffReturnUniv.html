@@ -145,11 +145,7 @@
 				</table>
 				<div class="row mt-5">
 					<div class="col text-center">
-						<form th:action="@{/emp/comebackAllAccept}" method="post" id="comebackForm">
-							<input type="button" value="일괄승인" th:onclick="comebackAllAccept();" class="btn btn-primary">
-							<input type="hidden" name="applyNos" value="" id="comebackInput1">
-							<input type="hidden" name="stuNos" value="" id="comebackInput2">
-						</form>
+						<input type="button" value="일괄승인" th:onclick="comebackAllAccept();" class="btn btn-primary">
 					</div>
 				</div>
 			</div>		
@@ -257,11 +253,7 @@
 				</table>
 				<div class="row mt-5">
 					<div class="col text-center">
-						<form th:action="@{/emp/takeOffAllAccept}" method="post" id="takeOffForm">
-							<input type="button" value="일괄승인" th:onclick="takeOffAllAccept();"  class="btn btn-primary">
-							<input type="hidden" name="applyNos" value="" id="takeOffInput1">
-							<input type="hidden" name="stuNos" value="" id="takeOffInput2">
-						</form>
+						<input type="button" value="일괄승인" th:onclick="takeOffAllAccept();"  class="btn btn-primary">
 					</div>
 				</div>
 			</div>		

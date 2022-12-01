@@ -26,7 +26,7 @@ function drawChart(KPIchartDataMap){
 		}, {
 			name: '승인 내역',
 			type: 'line',
-			data: KPIchartDataMap.approvalDateNoList2
+			data: KPIchartDataMap.approvalDateNoList1
 		}],
 		chart: {
 			height: 430,
@@ -42,7 +42,7 @@ function drawChart(KPIchartDataMap){
 			enabled: true,
 			enabledOnSeries: [1]
 		},
-		labels: KPIchartDataMap.applyDateList,
+		labels: KPIchartDataMap.approvalDateList,
 		xaxis: {
 			type: 'String'
 		},

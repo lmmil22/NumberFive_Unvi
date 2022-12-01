@@ -133,9 +133,6 @@ chkAll1.addEventListener('click',function(){
 //by수경 전과신청 일괄승인 
 function changeAllAccept(){
 
-	//form태그 가져오기
-	const changeForm = document.querySelector('#changeForm');
-	
 	//체크박스에서 체크 표시된 부분 가져오기
 	const checkedBoxes = document.querySelectorAll('.check1:checked');
 	
@@ -166,12 +163,7 @@ function changeAllAccept(){
 			stuNos = stuNos + checkedBox.dataset.stuNo+ ',';
 		}
 	
-	//applyNo를 담을 applyNos를 input 히든으로 데이터 담아간다.
-	changeForm.querySelector('#changeInput1').value = applyNos;
-	//stuNo를 담을 stuNos를 input 히든으로 데이터 담아간다.
-	changeForm.querySelector('#changeInput2').value = stuNos;
-	
-	//승인완료 swal창 뜨고 formSubmit() 함수 실행
+	//승인완료 swal창 뜨고 일괄승인 ajax 실행한다 
 	Swal.fire({
 		  title: '일괄승인',
 		  text: "일괄승인 하시겠습니까?",
@@ -182,29 +174,37 @@ function changeAllAccept(){
 		  cancelButtonText: '취소'
 	}).then((result) => {
 		  if (result.isConfirmed) {
-			changeForm.submit();
-			
-			Swal.fire({
-			  title: '일괄승인 완료',
-			  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
-			  icon: 'success',
-			  showCancelButton: true,
-			  confirmButtonColor: '#3085d6',
-			  confirmButtonText: '확인',
-			  cancelButtonText: '취소'
-			}).then((result) => {
-			  if (result.isConfirmed) {
-				sendKakao();
-				return;
-			  }
-			  else{
-				home();
-			  }
+			$.ajax({
+			   url: '/emp/changeAllAccept', //요청경로
+			    type: 'post',
+			    data:{'applyNos':applyNos, 'stuNos':stuNos}, //필요한 데이터
+			    success: function(result) {
+					Swal.fire({
+					  title: '일괄승인 완료',
+					  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
+					  icon: 'success',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  confirmButtonText: '확인',
+					  cancelButtonText: '취소'
+					}).then((result) => {
+					  if (result.isConfirmed) {
+						sendKakao();
+						return;
+					  }
+					  else{
+						home();
+					  }
+					});
+			    },
+			    error: function(){
+			       alert('실패');
+			    }
 			});
-		  }else{
-			home();
-		   }
-		});
+	  }else{
+		home();
+	   }
+	});
 }
 
 //복수전공신청 테이블 제목줄 체크박스
@@ -238,9 +238,6 @@ chkAll2.addEventListener('click',function(){
 //by수경 복수전공 신청 일괄승인 
 function doubleAllAccept(){
 	
-	//form태그 가져오기
-	const doubleForm = document.querySelector('#doubleForm');
-	
 	//체크박스에서 체크 표시된 부분 가져오기
 	const checkedBoxes = document.querySelectorAll('.check2:checked');
 	
@@ -269,11 +266,6 @@ function doubleAllAccept(){
 			//체크박스들의 stuNo dataset값 가져온다
 			stuNos = stuNos + checkedBox.dataset.stuNo+ ',';
 		}
-	
-	//applyNo를 담을 applyNos를 input 히든으로 데이터 담아간다.
-	doubleForm.querySelector('#doubleInput1').value = applyNos;
-	//stuNo를 담을 stuNos를 input 히든으로 데이터 담아간다.
-	doubleForm.querySelector('#doubleInput2').value = stuNos;
 		
 	//승인완료 swal창 뜨고 formSubmit() 함수 실행
 	Swal.fire({
@@ -286,29 +278,38 @@ function doubleAllAccept(){
 		  cancelButtonText: '취소'
 	}).then((result) => {
 		  if (result.isConfirmed) {
-			doubleForm.submit();
-			Swal.fire({
-			  title: '일괄승인 완료',
-			  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
-			  icon: 'success',
-			  showCancelButton: true,
-			  confirmButtonColor: '#3085d6',
-			  confirmButtonText: '확인',
-			  cancelButtonText: '취소'
-			  
-			}).then((result) => {
-			  if (result.isConfirmed) {
-				sendKakao();
-				return;
-			  }
-			  else{
-				home();
-			  }
+			$.ajax({
+			   url: '/emp/doubleAllAccept', //요청경로
+			    type: 'post',
+			    data:{'applyNos':applyNos, 'stuNos':stuNos}, //필요한 데이터
+			    success: function(result) {
+			  		Swal.fire({
+					  title: '일괄승인 완료',
+					  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
+					  icon: 'success',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  confirmButtonText: '확인',
+					  cancelButtonText: '취소'
+					  
+					}).then((result) => {
+					  if (result.isConfirmed) {
+						sendKakao();
+						return;
+					  }
+					  else{
+						home();
+					  }
+					});
+			    },
+			    error: function(){
+			       alert('실패');
+			    }
 			});
-		  }else{
-			home();
-		   }
-		});
+	  }else{
+		home();
+	   }
+	});
 }
 
 //by수경 전과신청 관리자 단일 승인

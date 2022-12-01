@@ -26,7 +26,13 @@ public class DeptManageCalendar {
 		int month = date.getMonthValue();
 		int day = date.getDayOfMonth(); 
 		
-		String nowDate = year + "-"  + month + "-" + day;
+		//1월과 9월에는 01, 02 형식으로 표현하기 위하여 조건 추가 (삼항연산자)
+		String monthStr = month/10 == 0 ? "0" + month : month + "";
+		
+		//1일과 9일에 01, 02 형식으로 표현하기 위해 조건 추가(삼항연산자)
+		String dateStr = day/10 == 0 ? "0" + day : day +"";
+		
+		String nowDate = year + "-"  + monthStr + "-" + dateStr;
 		
 		return nowDate;
 	}
@@ -40,7 +46,13 @@ public class DeptManageCalendar {
 		int month = date.minusMonths(1).getMonthValue();
 		int day = date.minusMonths(1).getDayOfMonth();
 		
-		String amonthAgo = year + "-"  + month + "-" + day;
+		//1월과 9월에는 01, 02 형식으로 표현하기 위하여 조건 추가 (삼항연산자)
+		String monthStr = month/10 == 0 ? "0" + month : month + "";
+		
+		//1일과 9일에 01, 02 형식으로 표현하기 위해 조건 추가(삼항연산자)
+		String dateStr = day/10 == 0 ? "0" + day : day +"";
+		
+		String amonthAgo = year + "-"  + monthStr + "-" + dateStr;
 		
 		return amonthAgo;
 	}

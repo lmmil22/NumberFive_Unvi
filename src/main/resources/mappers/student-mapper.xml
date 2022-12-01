@@ -89,7 +89,7 @@
     ORDER BY COLL_NO
 </select>
 
-<!--by수경 학생의 휴학신청 확정(단일승인) 시 상태 update Mapper -->
+<!--by수경 학생의 휴학신청 확정(단일승인/일괄승인) 시 학생 상태 update Mapper -->
 <update id="takeOffStu">
 	UPDATE STU 
 	SET STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','휴학','재학') 
@@ -99,17 +99,8 @@
 	
 </update>
 
-<!--by수경 학생 휴학 확정(일괄승인) 시 상태 변경  -->
-<update id="takeOffStus">
-  	UPDATE STU 
-	SET 
-	STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','휴학','재학') 
-				  FROM DEPT_MANAGE D 
-				  WHERE APPLY_NO = #{applyNo})
-	WHERE STU_NO = #{stuNo}
-</update>
 
-<!--by수경 학생의 복학신청 확정(단일승인) 시 상태 update Mapper -->
+<!--by수경 학생의 복학신청 확정(단일승인/일괄승인) 시 학생 상태 update Mapper -->
 <update id="returnStu">
 	UPDATE STU 
 	SET STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','재학','휴학') 
@@ -119,46 +110,32 @@
 	
 </update>
 
-<!--by수경 학생 복학신청 확정(일괄승인) 시 상태 변경  -->
-<update id="returnStus">
-	UPDATE STU 
-		   SET 
-			<foreach collection="applyNoList" item="applyNo" separator=",">
-				STU_STATUS = (SELECT DECODE(PROCESS_STATUS,'accept','재학','휴학') 
-							  FROM DEPT_MANAGE D 
-							  WHERE APPLY_NO = #{applyNo})
-			</foreach>				  
-			
-			WHERE STU_NO IN
-			<foreach collection="stuNoList" item="stuNo" separator="," open="(" close=")" >
-				#{stuNo}
-		 	</foreach> 
-</update>
 
-<!-- by수경 학생의 전과신청(단일승인) 확정 시 상태 update -->
+<!-- by수경 학생의 전과신청(단일승인/일괄승인) 확정 시 학생 상태 update -->
 <update id="changeMajorStu">
 	UPDATE STU 
-	SET DEPT_NO = (SELECT TO_DEPT FROM DEPT_MANAGE WHERE APPLY_NO = #{applyNo})
-	  , COLL_NO = (SELECT TO_COLL FROM DEPT_MANAGE WHERE APPLY_NO = #{applyNo})
+	SET 
+	DEPT_NO = (SELECT TO_DEPT 
+			   FROM DEPT_MANAGE 
+			   WHERE APPLY_NO = #{applyNo})
+  , COLL_NO = (SELECT TO_COLL 
+  			   FROM DEPT_MANAGE 
+  			   WHERE APPLY_NO = #{applyNo})
 	WHERE STU_NO = #{stuNo}
 </update>
 
-<!-- by수경 학생의 전과신청(일괄승인) 확정 시 상태 update -->
-<update id="changeMajorStus">
+
+<!--by수경 복수전공 (단일승인/일괄승인) 후 학생테이블에 doubleNo 데이터 넣기 -->
+<update id="updateDoubleMajor">
 	UPDATE STU 
-			SET
-		    <foreach collection="applyNoList" item="applyNo" separator=",">
-			 DEPT_NO = (SELECT TO_DEPT FROM DEPT_MANAGE D WHERE APPLY_NO = #{applyNo})
-			 , COLL_NO = (SELECT TO_COLL FROM DEPT_MANAGE D WHERE APPLY_NO = #{applyNo})
-		    </foreach>
-			
-			WHERE STU_NO IN
-		    <foreach collection="stuNoList" item="stuNo" separator="," open="(" close=")" >
-			 #{stuNo}
-		    </foreach>
+		   SET 
+		   DOUBLE_NO = (SELECT DOUBLE_NO 
+					 	FROM DOUBLE_MAJOR D 
+					 	WHERE D.STU_NO = #{stuNo})
+		   WHERE STU_NO = #{stuNo}
 </update>
 
-<!-- by수경 학생의 복수전공 신청(단일승인) 확정 시 상태 update -->
+<!-- by수경 학생의 복수전공 신청(단일승인/일괄승인) 확정 시 상태 update -->
 <insert id="insertDoubleMajor">
 	INSERT INTO DOUBLE_MAJOR (DOUBLE_NO
 							, STU_NO
@@ -171,46 +148,5 @@
 					 		, (SELECT DOUBLE_MAJOR_DEPT FROM DEPT_MANAGE WHERE APPLY_NO = #{applyNo})
 	)
 </insert>
-
-<!-- by수경 학생의 복수전공 신청(일괄승인) 확정 시 상태 INSERT -->
-<insert id="insertDoubleMajors">
-	INSERT INTO DOUBLE_MAJOR (DOUBLE_NO
-							, STU_NO
-							, DOUBLE_COLL
-							, DOUBLE_DEPT
-				  	)VALUES(
-				  	<foreach collection="stuNoList" item="stuNo" separator="," index="i">
-						(SELECT 'DOUBLE_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(DOUBLE_NO, 8))), 0)+1 + #{i}, 3, 0) FROM DOUBLE_MAJOR)
-						, #{stuNo}
-					</foreach>
-					
-					<foreach collection="applyNoList" item="applyNo" separator=",">
-						,(SELECT DOUBLE_MAJOR_COLL FROM DEPT_MANAGE D WHERE APPLY_NO = #{applyNo})
-						, (SELECT DOUBLE_MAJOR_DEPT FROM DEPT_MANAGE D WHERE APPLY_NO = #{applyNo})
-					</foreach>
-	) 
-</insert>
-
-<!--by수경 복수전공 일괄신청승인 후 학생테이블에 doubleNo 데이터 넣기 -->
-<update id="updateDoubleMajors">
-
-	UPDATE STU 
-		<foreach collection="stuNoList" item="stuNo" separator=",">
-			SET DOUBLE_NO = (SELECT DOUBLE_NO FROM DOUBLE_MAJOR WHERE STU_NO = #{stuNo})
-			WHERE STU_NO = #{stuNo}
-		</foreach>
-
-</update>
-
-<!--by수경 복수전공 단일승인 후 학생테이블에 doubleNo 데이터 넣기 -->
-<update id="updateDoubleMajor">
-
-	UPDATE STU 
-		   SET DOUBLE_NO = (SELECT DOUBLE_NO 
-					 		FROM DOUBLE_MAJOR D 
-					 		WHERE D.STU_NO = #{stuNo})
-		   WHERE STU_NO = #{stuNo}
-</update>
-			
 
 </mapper>

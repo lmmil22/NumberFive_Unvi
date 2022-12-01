@@ -63,7 +63,7 @@ public class StudentServiceImpl implements StudentService {
 		return sqlSession.selectList("studentMapper.DeptList",deptVO);
 	}
 	
-	//by수경 학생 휴학신청 확정 시 상태 변경(단일 승인)
+	//by수경 학생 휴학신청 확정 시 상태 변경(단일 승인/일괄 승인)
 	@Override
 	public void takeOffStu(DeptManageVO deptManageVO) {
 		
@@ -71,7 +71,7 @@ public class StudentServiceImpl implements StudentService {
 		
 	}
 	
-	//by수경 학생 복학신청 확정 시 상태 변경(단일 승인)
+	//by수경 학생 복학신청 확정 시 상태 변경(단일 승인/ 일괄승인)
 	@Override
 	public void returnStu(DeptManageVO deptManageVO) {
 
@@ -79,52 +79,21 @@ public class StudentServiceImpl implements StudentService {
 		
 	}
 	
-	//by수경 학생 전과신청 확정 시 상태 변경(단일승인)
+	//by수경 학생 전과신청 확정(단일승인/일괄승인) 시 학생 상태 변경
 	@Override
 	public void changeMajorStu(DeptManageVO deptManageVO) {
 		sqlSession.update("studentMapper.changeMajorStu", deptManageVO);
 		
 	}
 	
-	//by수경 학생 복수전공 신청 확정 시 상태 변경(단일승인)
+	//by수경 학생 복수전공 신청 확정(단일승인/일괄승인) 시 학생 상태 변경
 	@Override
 	public void insertDoubleMajor(DeptManageVO deptManageVO) {
 		sqlSession.insert("studentMapper.insertDoubleMajor", deptManageVO);
 		
 	}
-	
-	//by수경 학생 휴학 일괄 승인 시 상태 변경
-	@Override
-	public void takeOffStus(DeptManageVO deptManageVO) {
-		sqlSession.update("studentMapper.takeOffStus", deptManageVO);
-	}
-	
-	//by수경 학생 복학 일괄 승인 시 상태 변경
-	@Override
-	public void returnStus(DeptManageVO deptManageVO) {
-		sqlSession.update("studentMapper.returnStus", deptManageVO);
-	}
-	
-	//by수경 학생 전과신청 확정 시 상태 변경(일괄승인)
-	@Override
-	public void changeMajorStus(DeptManageVO deptManageVO) {
-		sqlSession.update("studentMapper.changeMajorStus", deptManageVO);
-		
-	}
 
-	//by수경 학생 복수전공 신청 확정 시 상태 변경(일괄승인)
-	@Override
-	public void insertDoubleMajors(DeptManageVO deptManageVO) {
-		sqlSession.insert("studentMapper.insertDoubleMajors", deptManageVO);
-		
-	}
-	//by수경 복수전공 일괄신청승인 후 학생테이블에 doubleNo 데이터 넣기
-	@Override
-	public void updateDoubleMajors(DeptManageVO deptManageVO) {
-		sqlSession.update("studentMapper.updateDoubleMajors", deptManageVO);
-		
-	}
-	//by수경 복수전공 단일신청승인 후 학생테이블에 doubleNo 데이터 넣기
+	//by수경 복수전공 단일신청승인(단일승인/일괄승인) 후 학생테이블에 doubleNo 데이터 넣기
 	@Override
 	public void updateDoubleMajor(String stuNo) {
 		sqlSession.update("studentMapper.updateDoubleMajor", stuNo);

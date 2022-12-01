@@ -228,9 +228,10 @@ public class EmpController {
 		  studentService.returnStu(deptManageVO);
 	  }
 	  
-	  //by수경 복학신청 일괄승인
+	  //by수경 복학신청 일괄승인 Ajax
+	  @ResponseBody
 	  @PostMapping("/comebackAllAccept")
-	  public String comebackAllAccept(String applyNos, String stuNos
+	  public void comebackAllAccept(String applyNos, String stuNos
 			  						, DeptManageVO deptManageVO, StudentVO studentVO) {
 		  //applyNo를 ,로 구분하여 데이터를 가져왔음
 		  String [] applyNosArr = applyNos.split(",");
@@ -255,18 +256,27 @@ public class EmpController {
 		  //데이터 담기
 		  deptManageVO.setStuNoList(stuNoList);
 		 
-		  //일괄승인 쿼리 실행
+		  //일괄승인 쿼리 실행(deptManage 상태 accept로 변경)
 		  empService.comebackTakeOffAllAccept(deptManageVO);
 		  
-		  //일괄승인 시 학생정보 변경 쿼리 실행
-		  studentService.returnStus(deptManageVO);
-		  
-		  return"redirect:/emp/takeOffReturnUniv";
+		  //일괄승인 시 학생정보 변경 쿼리 실행 (휴학-> 재학으로)
+		  for(int i = 0 ; i < stuNoList.size() ; i++) {
+			 // System.out.println("for문 - " + (i + 1));
+			 // System.out.println("stuNo = " + stuNoList.get(i));
+			 //System.out.println("applyNo = " + applyNoList.get(i));
+			  DeptManageVO vo = new DeptManageVO();
+			  vo.setStuNo(stuNoList.get(i));
+			  vo.setApplyNo(applyNoList.get(i));
+			  
+			  //일괄승인 시 학생정보 변경 쿼리 실행(학생 수 만큼 실행되어 하기 때문에)
+			  studentService.returnStu(vo);
+		  }
 	  }
 	  
-	  //수경 휴학신청 일괄승인
+	  //수경 휴학신청 일괄승인 ajax
+	  @ResponseBody
 	  @PostMapping("/takeOffAllAccept")
-	  public String takeOffAllAccept(String applyNos, String stuNos
+	  public void takeOffAllAccept(String applyNos, String stuNos
 			  						, DeptManageVO deptManageVO, StudentVO studentVO) {
 		//applyNo를 ,로 구분하여 데이터를 가져왔기에 제거
 		  String [] applyNosArr = applyNos.split(",");
@@ -291,14 +301,14 @@ public class EmpController {
 		  //데이터 담기
 		  deptManageVO.setStuNoList(stuNoList);
 		  
-		  //일괄승인 쿼리 실행
+		  //일괄승인 쿼리 실행 (deptManage 처리상태 accept로 변경)
 		  empService.comebackTakeOffAllAccept(deptManageVO);
 		 
 		  
-		  System.out.println("stuNo 개수 : " + stuNoList.size());
-		  System.out.println("applyNo 개수 : " + applyNoList.size());
+		  //System.out.println("stuNo 개수 : " + stuNoList.size());
+		  //System.out.println("applyNo 개수 : " + applyNoList.size());
 		  
-		  //일괄승인 시 학생정보 변경 쿼리 실행
+		  //일괄승인 시 학생정보 변경 쿼리 실행 (재학-> 휴학으로)
 		  for(int i = 0 ; i < stuNoList.size() ; i++) {
 			  System.out.println("for문 - " + (i + 1));
 			  System.out.println("stuNo = " + stuNoList.get(i));
@@ -307,10 +317,10 @@ public class EmpController {
 			  vo.setStuNo(stuNoList.get(i));
 			  vo.setApplyNo(applyNoList.get(i));
 			  
-			  studentService.takeOffStus(vo);
+			  //update가 신청 학생 수 만큼 적용되어야 하기 때문에 for문 안에서 실행
+			  studentService.takeOffStu(vo);
 		  }
 		  
-		  return"redirect:/emp/takeOffReturnUniv";
 	  }
 	  
 	  //by수경 관리자에게 전과신청서 보여주기
@@ -329,9 +339,10 @@ public class EmpController {
 		  return empService.showDoubleMajor(deptManageVO);
 	  }
 	  
-	  //수경 전과신청 일괄승인
+	  //수경 전과신청 일괄승인(ajax)
+	  @ResponseBody
 	  @PostMapping("/changeAllAccept")
-	  public String changeAllAccept(String applyNos, String stuNos
+	  public void changeAllAccept(String applyNos, String stuNos
 			  						, DeptManageVO deptManageVO, StudentVO studentVO) {
 		//applyNo를 ,로 구분하여 데이터를 가져왔기에 제거
 		  String [] applyNosArr = applyNos.split(",");
@@ -356,18 +367,28 @@ public class EmpController {
 		  //데이터 담기
 		  deptManageVO.setStuNoList(stuNoList);
 		  
-		  //일괄승인 쿼리 실행
+		  //일괄승인 쿼리 실행 (deptManage accept로 상태 변경)
 		  empService.changeDoubleMajorAllAccept(deptManageVO);
 		 
-		  //일괄승인 시 학생정보 변경 쿼리 실행
-		  studentService.changeMajorStus(deptManageVO);
+		  //일괄승인 시 학생정보 변경 쿼리 실행  (전공대학, 전공학과 변경)
+		  for(int i = 0 ; i < stuNoList.size() ; i++) {
+			  //System.out.println("for문 - " + (i + 1));
+			  //System.out.println("stuNo = " + stuNoList.get(i));
+			  //System.out.println("applyNo = " + applyNoList.get(i));
+			  DeptManageVO vo = new DeptManageVO();
+			  vo.setStuNo(stuNoList.get(i));
+			  vo.setApplyNo(applyNoList.get(i));
+			  
+			  //일괄승인 시 학생정보 변경 쿼리 실행 (전공대학, 전공학과 변경)
+			  studentService.changeMajorStu(vo);
+		  }
 		  
-		  return"redirect:/emp/changeAddMajor";
 	  }
-	  //수경 복수전공신청 일괄승인
+	  //수경 복수전공신청 일괄승인(ajax)
+	  @ResponseBody
 	  @PostMapping("/doubleAllAccept")
-	  public String doubleAllAccept(String applyNos, String stuNos
-			  , DeptManageVO deptManageVO, StudentVO studentVO) {
+	  public void doubleAllAccept(String applyNos, String stuNos
+			  					, DeptManageVO deptManageVO, StudentVO studentVO) {
 		  //applyNo를 ,로 구분하여 데이터를 가져왔기에 제거
 		  String [] applyNosArr = applyNos.split(",");
 		  //배열 데이터 하나하나를 담을 List 준비
@@ -391,16 +412,25 @@ public class EmpController {
 		  //데이터 담기
 		  deptManageVO.setStuNoList(stuNoList);
 		  
-		  //일괄승인 쿼리 실행
+		  //일괄승인 쿼리 실행 deptManage accept로 변경
 		  empService.changeDoubleMajorAllAccept(deptManageVO);
 		  
-		  //일괄승인 시 복수전공 테이블에 테이터 삽입 쿼리 실행
-		  studentService.insertDoubleMajors(deptManageVO);
-		  
-		  //일괄승인 시 학생테이블에 복수전공 코드 데이터 넣기
-		  studentService.updateDoubleMajors(deptManageVO);
-		  
-		  return"redirect:/emp/changeAddMajor";
+		  //일괄승인 시 학생정보 변경 쿼리 실행 
+		  for(int i = 0 ; i < stuNoList.size() ; i++) {
+			  //System.out.println("for문 - " + (i + 1));
+			  //System.out.println("stuNo = " + stuNoList.get(i));
+			  //System.out.println("applyNo = " + applyNoList.get(i));
+			  DeptManageVO vo = new DeptManageVO();
+			  vo.setStuNo(stuNoList.get(i));
+			  vo.setApplyNo(applyNoList.get(i));
+			  
+			  //일괄승인 시 복수전공 테이블에 테이터 삽입 쿼리 실행
+			  studentService.insertDoubleMajor(vo);
+			  
+			  //일괄승인 시 학생테이블에 복수전공 코드 데이터 넣기
+			  studentService.updateDoubleMajor(vo.getStuNo());
+		  }
+	
 	  }
 	  
 	  //by수경 전과신청 관리자 단일승인

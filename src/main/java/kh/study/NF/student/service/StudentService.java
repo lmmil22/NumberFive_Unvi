@@ -31,33 +31,18 @@ public interface StudentService {
 	//추후 매개변수 DeptVO deptVO
 	List<DeptVO> DeptList(DeptVO deptVO);
 	
-	//by수경 학생 휴학신청 확정(단일승인) 시 상태 변경
+	//by수경 학생 휴학신청 확정(단일승인/일괄승인) 시 학생 상태 변경
 	void takeOffStu(DeptManageVO deptManageVO);
 	
-	//by수경 학생 복학신청 확정(단일승인) 시 상태 변경
+	//by수경 학생 복학신청 확정(단일승인/일괄승인) 시 학생 상태 변경
 	void returnStu(DeptManageVO deptManageVO);
 	
-	//by수경 학생 휴학 일괄 승인 시 상태 변경
-	void takeOffStus(DeptManageVO deptManageVO);
-	
-	//by수경 학생 복학 일괄 승인 시 상태 변경
-	void returnStus(DeptManageVO deptManageVO);
-	
-	//by수경 학생 전과신청 확정 시 상태 변경(단일승인)
+	//by수경 학생 전과신청 확정(단일승인/일괄승인) 시 학생 상태 변경
 	void changeMajorStu(DeptManageVO deptManageVO);
 	
-	//by수경 학생 전과신청 확정 시 상태 변경(일괄승인)
-	void changeMajorStus(DeptManageVO deptManageVO);
-	
-	//by수경 학생 복수전공 신청 확정 시 상태 변경(단일승인)
+	//by수경 학생 복수전공 신청 확정(단일승인/일괄승인) 시 학생 상태 변경
 	void insertDoubleMajor(DeptManageVO deptManageVO);
 	
-	//by수경 학생 복수전공 신청 확정 시 상태 변경(일괄승인)
-	void insertDoubleMajors(DeptManageVO deptManageVO);
-	
-	//by수경 복수전공 일괄신청승인 후 학생테이블에 doubleNo 데이터 넣기
-	void updateDoubleMajors(DeptManageVO deptManageVO);
-	
-	//by수경 복수전공 단일신청승인 후 학생테이블에 doubleNo 데이터 넣기
+	//by수경 복수전공 단일신청승인(단일승인/일괄승인) 후 학생테이블에 doubleNo 데이터 넣기
 	void updateDoubleMajor(String stuNo);
 }

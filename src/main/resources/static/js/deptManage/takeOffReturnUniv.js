@@ -157,10 +157,8 @@ checkAll2.addEventListener('click',function(){
 	
 });
 
-//by수경 휴학신청 일괄승인 
+//by수경 휴학신청 일괄승인 (ajax 활용)
 function takeOffAllAccept(){	
-	//form태그 가져오기
-	const takeOffForm = document.querySelector('#takeOffForm');
 	
 	//체크박스에서 체크 표시된 부분 가져오기
 	const checkedBoxes = document.querySelectorAll('.check2:checked');
@@ -190,13 +188,8 @@ function takeOffAllAccept(){
 			//체크박스들의 stuNo dataset값 가져온다
 			stuNos = stuNos + checkedBox.dataset.stuNo+ ',';
 		}
-	
-	//applyNo를 담을 applyNos를 input 히든으로 데이터 담아간다.
-	takeOffForm.querySelector('#takeOffInput1').value = applyNos;
-	//stuNo를 담을 stuNos를 input 히든으로 데이터 담아간다.
-	takeOffForm.querySelector('#takeOffInput2').value = stuNos;
 
-	//승인완료 swal창 뜨고 formSubmit() 함수 실행
+	//승인완료 swal창에서 승인 클릭 후 ajax로 연결되어 update쿼리 실행되도록 설정 
 	Swal.fire({
 		  title: '일괄승인',
 		  text: "일괄승인 하시겠습니까?",
@@ -207,23 +200,32 @@ function takeOffAllAccept(){
 		  cancelButtonText: '취소'
 	}).then((result) => {
 	  if (result.isConfirmed) {
-		takeOffForm.submit();
-		Swal.fire({
-		  title: '일괄승인 완료',
-		  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
-		  icon: 'success',
-		  showCancelButton: true,
-		  confirmButtonColor: '#3085d6',
-		  confirmButtonText: '확인',
-		  cancelButtonText: '취소'
-		}).then((result) => {
-		  if (result.isConfirmed) {
-			sendKakao();
-			return;
-		  }
-		  else{
-			home();
-		  }
+		$.ajax({
+		   url: '/emp/takeOffAllAccept', //요청경로
+		    type: 'post',
+		    data:{'applyNos':applyNos,'stuNos':stuNos}, //필요한 데이터
+		    success: function(result) {
+				Swal.fire({
+				  title: '일괄승인 완료',
+				  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
+				  icon: 'success',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  confirmButtonText: '확인',
+				  cancelButtonText: '취소'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					sendKakao();
+					return;
+				  }
+				  else{
+					home();
+				  }
+				});
+		    },
+		    error: function(){
+		       alert('실패');
+		    }
 		});
 	  }else{
 		home();
@@ -262,8 +264,6 @@ checkAll1.addEventListener('click',function(){
 
 //by수경 복학신청 일괄승인 
 function comebackAllAccept(){
-	//form태그 가져오기
-	const comebackForm = document.querySelector('#comebackForm');
 	
 	//체크박스에서 체크 표시된 부분 가져오기
 	const checkedBoxes = document.querySelectorAll('.check1:checked');
@@ -280,7 +280,6 @@ function comebackAllAccept(){
 		return;
 	
 	}
-	
 	//여러 체크박스가 선택되었다면
 	//applyNo데이터 가져오기
 	let applyNos = '';
@@ -296,13 +295,7 @@ function comebackAllAccept(){
 			//체크박스들의 stuNo dataset값 가져온다
 			stuNos = stuNos + checkedBox.dataset.stuNo+ ',';
 		}
-	
-	//applyNo를 담을 applyNo를 input 히든으로 데이터 담아간다.
-	comebackForm.querySelector('#comebackInput1').value = applyNos;
-	//stuNo를 담을 stuNos를 input 히든으로 데이터 담아간다.
-	comebackForm.querySelector('#comebackInput2').value = stuNos;
-	
-	
+
 	//승인완료 swal창 뜨고 formSubmit() 함수 실행
 	Swal.fire({
 		  title: '일괄승인',
@@ -314,29 +307,39 @@ function comebackAllAccept(){
 		  cancelButtonText: '취소'
 	}).then((result) => {
 	  if (result.isConfirmed) {
-		comebackForm.submit();
-		
-		Swal.fire({
-		  title: '일괄승인 완료',
-		  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
-		  icon: 'success',
-		  showCancelButton: true,
-		  confirmButtonColor: '#3085d6',
-		  confirmButtonText: '확인',
-		  cancelButtonText: '취소'
-		}).then((result) => {
-		  if (result.isConfirmed) {
-			sendKakao();
-			return;
-		  }
-		  else{
-			home();
-		  }
-		});
-	  }else{
+			$.ajax({
+			   url: '/emp/comebackAllAccept', //요청경로
+			    type: 'post',
+			    data:{'stuNos':stuNos, 'applyNos':applyNos}, //필요한 데이터
+			    success: function(result) {
+					Swal.fire({
+					  title: '일괄승인 완료',
+					  text: "일괄승인이 완료 되었습니다. 카카오톡 메세지를 전송하시겠습니까?",
+					  icon: 'success',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  confirmButtonText: '확인',
+					  cancelButtonText: '취소'
+					}).then((result) => {
+					  if (result.isConfirmed) {
+						sendKakao();
+						return;
+					  }
+					  else{
+						home();
+					  }
+					});
+			    },
+			    error: function(){
+			       alert('실패');
+			    }
+			});
+			}else{
 		home();
 	   }
 	});
+
+	  
 }
 //by수경 다시 현재 화면으로 이동하는 함수
 function home(){
