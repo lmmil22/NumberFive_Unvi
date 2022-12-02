@@ -48,6 +48,13 @@
 		<result column="NOW_NUM" property="nowNum"/>
 		<result column="SEM_NO" property="semNo"/>
 		<result column="LEC_STATUS" property="lecStatus"/>
+		
+		<!-- by 유빈 : 시간표불러오기 추가함. /////////////////////////-->
+		<result column="START_ROW_NUM" property="startRowNum"/>
+		<result column="END_ROW_NUM" property="endRowNum"/>
+		<result column="LEC_DAY" property="lecDay"/>
+		<!-- ////////////////////////////////////////////////////////// -->		
+		
 		<association property="lecturePdfVO" resultMap="lecturePdf"/>
 		<association property="lectureTimeVO" resultMap="lectureTime"/>
 		<association property="stuGradeVO" resultMap="stuGrade"/>
@@ -95,6 +102,29 @@
 		<result column="SEM_NO" 	property="semNo"/>
 		<association property="lectureVO" resultMap="lecture"/>
 	</resultMap>
+
+<!-- by 유빈 : 시간표 불러오기 -->
+<!-- ////////////////////////////////////////////////////////////////////////////// -->
+	<select id="loadTimeTable" resultMap="lecture">
+		SELECT 
+		    REGEXP_SUBSTR(LEC_DAY,'[^,]+', 1, LEVEL) AS LEC_DAY
+		    , LT.LEC_NO
+		    , LEC_NAME
+		    , TO_NUMBER( SUBSTR(FIRST_TIME, 1, INSTR(FIRST_TIME, ':') -1) )-9 AS START_ROW_NUM
+		    , TO_NUMBER( SUBSTR(LAST_TIME, 1, INSTR(LAST_TIME, ':') -1) )-9 AS END_ROW_NUM
+		    , (SELECT MEM_NAME
+		        FROM MEMBER
+		        WHERE MEM_NO = (SELECT MEM_NO
+		                        FROM EMP
+		                        WHERE EMP_NO = (SELECT EMP_NO 
+		                                        FROM LECTURE
+		                                        WHERE LEC_NO = LE.LEC_NO))) AS EMP_NO     
+		FROM LECTURE_TIME LT, LECTURE LE
+		WHERE LT.LEC_NO =LE.LEC_NO
+		CONNECT BY REGEXP_SUBSTR(LEC_DAY, '[^,]+', 1, LEVEL) IS NOT NULL
+	</select>
+<!-- ////////////////////////////////////////////////////////////////////////////// -->
+
 
 <!-- 다음 강의에서 사용되는 No -->
 	<select id="getNextLecNo" resultType="String">

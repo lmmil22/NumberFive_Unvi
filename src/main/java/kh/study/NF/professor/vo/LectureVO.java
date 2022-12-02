@@ -24,7 +24,11 @@ public class LectureVO {
 	private String lecDay;
 	private String firstTime;
 	private String lastTime;
-	
+	//[ by 유빈 : 수강신청완료된 시간표 불러오기]
+	//------------------------------------------//
+	private String startRowNum;
+	private String endRowNum;
+	//------------------------------------------//
 	private LecturePdfVO lecturePdfVO;
 	private LectureTimeVO lectureTimeVO;
 	private StuGradeVO stuGradeVO;

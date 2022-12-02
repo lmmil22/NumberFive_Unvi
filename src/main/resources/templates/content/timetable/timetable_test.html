@@ -9,6 +9,16 @@
 </th:block>
 
 <div layout:fragment="content">
+<!-- <th:block>
+	<style>
+		.lecTime{
+			height: 3rem;
+		}
+	</style>
+</th:block> -->
+
+
+
 	<!-- 제목줄 -->
 	<div class="row mt-3">
 		<div class="col">
@@ -23,7 +33,7 @@
     <!-- 학생시간표 로그인 시 -->
     <div class="col" align="center" sec:authorize="isAuthenticated()">
     <!-- 해당 학생 학번영역 -->
-    <div> [[${#authentication.authorities}]] 의 시간표입니다. </div>
+    <div class="col text-start"> ※ [ <span sec:authentication="name"></span> ] 님의 시간표입니다. </div>
     
     <!-- 타임테이블 영역 -->
 	<table class="table mt-5">
@@ -46,88 +56,92 @@
 	    </tr>
 	  </thead>
 	  <tbody class="table-group-divider">
-	    <tr>
+	    <tr class="lecTime">
 	      <th scope="row">9:00</th>
-	      <td>Mark</td>
-	      <td>Otto</td>
-	      <td>@mdo</td>
-	      <td>@mdo</td>
-	      <td>@mdo</td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
 	    </tr>
-	    <tr>
+	    <tr class="lecTime">
 	      <th scope="row">10:00</th>
-	      <td>Jacob</td>
-	      <td>Thornton</td>
-	      <td>@fat</td>
-	      <td>@mdo</td>
-	      <td>@mdo</td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
 	    </tr>
-	    <tr>
+	    <tr class="lecTime">
 	      <th scope="row">11:00</th>
-	      <td>Jacob</td>
-	      <td>Thornton</td>
-	      <td>@fat</td>
-	      <td>@mdo</td>
-	      <td>@mdo</td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
 	    </tr>
-	    <tr>
+	    <tr class="lecTime">
 	      <th scope="row">12:00</th>
-	      <td>Jacob</td>
-	      <td>Thornton</td>
-	      <td>@fat</td>
-	      <td>@mdo</td>
-	      <td>@mdo</td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
 	    </tr>
-	    <tr>
+	    <tr class="lecTime">
 	      <th scope="row">13:00</th>
-	     <td>Jacob</td>
-	      <td>Thornton</td>
-	      <td>@fat</td>
-	      <td>@mdo</td>
-	      <td>@mdo</td>
+	     <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
 	    </tr>
-	    <tr>
+	    <tr class="lecTime">
 	      <th scope="row">14:00</th>
-	      <td>Jacob</td>
-	      <td>Thornton</td>
-	      <td>@fat</td>
-	      <td>@mdo</td>
-	      <td>@mdo</td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
 	    </tr>
-	    <tr>
+	    <tr class="lecTime">
 	      <th scope="row">15:00</th>
-	      <td>Jacob</td>
-	      <td>Thornton</td>
-	      <td>@fat</td>
-	      <td>@mdo</td>
-	      <td>@mdo</td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
 	    </tr>
-	    <tr>
+	    <tr class="lecTime">
 	      <th scope="row">16:00</th>
-	      <td>Jacob</td>
-	      <td>Thornton</td>
-	      <td>@fat</td>
-	      <td>@mdo</td>
-	      <td>@mdo</td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
 	    </tr>
-	    <tr>
+	    <tr class="lecTime">
 	      <th scope="row">17:00</th>
-	     <td>Jacob</td>
-	      <td>Thornton</td>
-	      <td>@fat</td>
-	      <td>@mdo</td>
-	      <td>@mdo</td>
+	     <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
 	    </tr>
-	    <tr>
+	    <tr class="lecTime">
 	      <th scope="row">18:00</th>
-	      <td>Jacob</td>
-	      <td>Thornton</td>
-	      <td>@fat</td>
-	      <td>@mdo</td>
-	      <td>@mdo</td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
+	      <td></td>
 	    </tr>
 	  </tbody>
 	</table>
 	</div>
+	<!-- //////////////////////// -->
+	
+<script type="text/javascript" th:src="@{/js/timetable/timetable.js}"></script>
+	
 </div>
 </html>
