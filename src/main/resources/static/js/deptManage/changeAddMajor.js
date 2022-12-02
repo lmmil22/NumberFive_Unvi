@@ -11,6 +11,12 @@ function showChangeMajorApply(stuNo, applyNo, processStatus){
 	      	//학생의 데이터 
 			document.querySelector('#changeMajorModal_status').innerText = result.studentVO.stuStatus;
 			document.querySelector('#changeMajorModal_name').innerText = result.studentVO.memberVO.memName;
+			alert(('/images/' + result.studentVO.memberVO.memImage));
+			
+			document.querySelector('#changeMajorModal_image').src = ('/images/' + result.studentVO.memberVO.memImage);
+			
+			//$(`#changeMajorModal_image`).attr({ src: ('/images/' + result.studentVO.memberVO.memImage) });
+			
 			document.querySelector('#changeMajorModal_no').innerText = result.stuNo;
 			document.querySelector('#changeMajorModal_birth').innerText = result.studentVO.memberVO.memBirth;
 			document.querySelector('#changeMajorModal_tell').innerText = result.studentVO.memberVO.memTell;
@@ -64,6 +70,9 @@ function showDoubleMajorApply(stuNo, applyNo,processStatus){
 			document.querySelector('#doubleMajorModal_no').innerText = result.stuNo;
 			document.querySelector('#doubleMajorModal_birth').innerText = result.studentVO.memberVO.memBirth;
 			document.querySelector('#doubleMajorModal_tell').innerText = result.studentVO.memberVO.memTell;
+			//alert(('/images/' + result.studentVO.memberVO.memImage)); 회원등록시 삽입한 이미지 데이터 가져오기
+			document.querySelector('#doubleMajorModal_image').src = ('/images/' + result.studentVO.memberVO.memImage);
+			
 			document.querySelector('#doubleMajorModal_addr').innerText = result.studentVO.memberVO.memAddr;
 			document.querySelector('#doubleMajorModal_dept').innerText = result.studentVO.deptNo;
 			document.querySelector('#doubleMajorModal_fromColl').innerText = result.fromColl;

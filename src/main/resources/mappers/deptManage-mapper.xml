@@ -321,6 +321,10 @@ SELECT 'APPLY_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(APPLY_NO,7))), 0)+1, 3, 0) FROM 
 		 												FROM STU 
 		 												WHERE STU_NO = D.STU_NO)) AS MEM_GENDER
 		 												
+		 , (SELECT MEM_IMAGE FROM MEMBER WHERE MEM_NO = (SELECT MEM_NO 
+		 												FROM STU 
+		 												WHERE STU_NO = D.STU_NO)) AS MEM_IMAGE
+		 												
 		 , (SELECT TO_CHAR(MEM_BIRTH, 'YYYY"년"MM"월"DD"일"') FROM MEMBER WHERE MEM_NO = (SELECT MEM_NO 
 		 												FROM STU 
 		 												WHERE STU_NO = D.STU_NO)) AS MEM_BIRTH
@@ -366,6 +370,10 @@ SELECT 'APPLY_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(APPLY_NO,7))), 0)+1, 3, 0) FROM 
 		 												 FROM STU 
 		 												 WHERE STU_NO = D.STU_NO)) AS MEM_GENDER
 		 												
+ 		 , (SELECT MEM_IMAGE FROM MEMBER WHERE MEM_NO = (SELECT MEM_NO 
+		 												FROM STU 
+		 												WHERE STU_NO = D.STU_NO)) AS MEM_IMAGE
+		 
 		 , (SELECT TO_CHAR(MEM_BIRTH, 'YYYY"년"MM"월"DD"일"') FROM MEMBER WHERE MEM_NO = (SELECT MEM_NO 
 										 												 FROM STU 
 										 												 WHERE STU_NO = D.STU_NO)) AS MEM_BIRTH

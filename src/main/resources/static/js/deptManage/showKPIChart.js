@@ -29,7 +29,7 @@ function drawChart(KPIchartDataMap){
 			data: KPIchartDataMap.approvalDateNoList1,
 		}],
 		chart: {
-			height: 430,
+			height: 420,
 			type: 'line',
 		},
 		stroke: {
@@ -37,10 +37,16 @@ function drawChart(KPIchartDataMap){
 		},
 		title: {
 			text: '2022년 학적신청내역 대비 승인내역 KPI',
+			align: 'left',
+			   offsetX: 50,
+          	
 			style: {
-	            fontSize: '22px',
+	            fontSize: '20px',
           	}
 		},
+		 colors: ['#33b2df', '#546E7A'
+          
+        ],
 		dataLabels: {
 			enabled: true,
 			enabledOnSeries: [1]
@@ -50,21 +56,21 @@ function drawChart(KPIchartDataMap){
 			type: 'String',
 		},
 		yaxis: [{
-			title: {
+			/*title: {
 				text: '신청 내역',
 				style: {
 	            	fontSize: '18px',
           		}
-			},
+			},*/
 
 		}, {
 			opposite: true,
-			title: {
+			/*title: {
 				text: '승인 내역',
 				style: {
 	            	fontSize: '18px',
           		}
-			}
+			}*/
 		}]
 	};
 
@@ -100,7 +106,7 @@ function drawProbationChart(probationStuOutChartMap){
         }],
           chart: {
           type: 'bar',
-          height: 430
+          height: 420
         },
         plotOptions: {
           bar: {
@@ -125,10 +131,14 @@ function drawProbationChart(probationStuOutChartMap){
         },
    		  title: {
         text: '2022년 2학기 학사경고 및 제적 건수',
+        align: 'left',
+		offsetX: 50,
         style: {
-	         fontSize: '22px',
+	         fontSize: '20px',
         }
         },
+         colors: ['#90ee7e','#69d2e7'
+        ], 
         tooltip: {
           shared: true,
           intersect: false
@@ -136,19 +146,19 @@ function drawProbationChart(probationStuOutChartMap){
         xaxis: {
           categories: probationStuOutChartMap.dateList1,
         },yaxis: [{
-			title: {
+			/*title: {
 				text: '학사경고',
 				style: {
 	            	fontSize: '18px',
           		}
-			},}, {
+			},*/}, {
 			opposite: true,
-			title: {
+			/*title: {
 				text: '제적',
 				style: {
 	            	fontSize: '18px',
           		}
-			}
+			}*/
 		}]
 	 };
 

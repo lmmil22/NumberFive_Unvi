@@ -117,39 +117,31 @@
 			<!--by 유빈  탑에 넣은 숏버전 이미지 삽입할 때 <img width="30%" height="30%" src="/images/LFU logo short ver.png " /> -->
 				<ul class="nav topNav">
 				    <li>
-						 <a href="#">대학/대학원</a>
+						 <a href="#">내정보관리</a>
 						<div class="nav-column topNav_column">
 							<ul>
-							    <li><a href="#">대학/학부</a></li>
-							    <li><a href="#">예술대학</a></li>
-							    <li><a href="#">패션디자인학과</a></li>
+							    <li><a href="#">내정보조회</a></li>
+							    <li><a href="#">학적신청현황조회</a></li>
+							    <li><a href="timetable/load">시간표조회</a></li>
 							</ul>
 						</div>
 				    </li>
 				    <li>
-						<a href="/board/list" class="nav-link">입학/취업</a>
+						<a href="#" class="nav-link">학적관리</a>
 						<div class="nav-column topNav_column">
 							 <ul>
-							     <li><a href="#">Pampers Diapers</a></li>
-							     <li><a href="#">Huggies Diapers</a></li>
-							     <li><a href="#">Seventh Generation</a></li>
+							     <li><a href="#">휴학신청</a></li>
+							     <li><a href="#">복학신청</a></li>
+							     <li><a href="#">전과신청</a></li>
+							     <li><a href="#">복수전공신청</a></li>
 							 </ul>
 						</div>
 				    </li>
-				    <li>
-				        <a href="#">연구/산학</a>
-				        <div class="nav-column topNav_column">
-							 <ul>
-							     <li><a href="/board/list">공통 게시판</a></li>
-							     <li><a href="#">Huggies Diapers</a></li>
-							     <li><a href="#">Seventh Generation</a></li>
-							 </ul>
-						</div>
-				    </li>
-				    <li><a href="#">대학생활</a></li>
+				    <li><a href="#">수강신청</a></li>
+				    <li><a href="/board/list">게시판</a></li>
 				    <li><a href="#">국제교류</a></li>
-				    <li><a href="#">공지/참여</a></li>
-				    <li><a href="#">홍보센터</a></li>
+				    <li><a href="#">캘린더</a></li>
+				    <li><a href="#">입학/취업</a></li>
 				    <li><a href="#">Chatting</a></li>
 				    
 				</ul>
@@ -159,38 +151,37 @@
 	    <header sec:authorize="hasRole('ROLE_ADMIN')">
 			<ul class="nav topNav">
 			    <li>
-					 <a href="#">대학/대학원</a>
+					 <a href="#">학적신청현황</a>
 					<div class="nav-column topNav_column">
 						<ul>
-						    <li><a href="#">대학/학부</a></li>
-						    <li><a href="#">예술대학</a></li>
-						    <li><a href="#">패션디자인학과</a></li>
+						    <li><a href="#">실적현황</a></li>
+						    <li><a href="#">복학/휴학신청내역</a></li>
+						    <li><a href="#">전과/복전신청내역</a></li>
 						</ul>
 					</div>
 			    </li>
 			    <li>
-					<a href="/board/list" class="nav-link">입학/취업</a>
+					<a href="#" class="nav-link">학사경고/제적</a>
 					<div class="nav-column topNav_column">
 						 <ul>
-						     <li><a href="#">Pampers Diapers</a></li>
-						     <li><a href="#">Huggies Diapers</a></li>
-						     <li><a href="#">Seventh Generation</a></li>
+						     <li><a href="#">학사경고</a></li>
+						     <li><a href="#">제적</a></li>
 						 </ul>
 					</div>
 			    </li>
 			    <li>
-			        <a href="#">연구/산학</a>
+			        <a href="/board/list">게시판</a>
 			        <div class="nav-column topNav_column">
 						 <ul>
-						     <li><a href="/board/list">공통 게시판</a></li>
-						     <li><a href="#">Huggies Diapers</a></li>
-						     <li><a href="#">Seventh Generation</a></li>
+						     <li><a href="#">카테고리등록</a></li>
+						     <li><a href="/board/list">게시판</a></li>
+					
 						 </ul>
 					</div>
 			    </li>
-			    <li><a href="#">대학생활</a></li>
+			    <li><a href="#">캘린더</a></li>
+			    <li><a href="#">입학/취업</a></li>
 			    <li><a href="#">국제교류</a></li>
-			    <li><a href="#">공지/참여</a></li>
 			    <li><a href="#">홍보센터</a></li>
 			    <li><a href="#">Chatting</a></li>
 			    
@@ -200,40 +191,13 @@
 	    <!-- 교수님의 경우 top 메뉴바 -->
 	    <header sec:authorize="hasRole('ROLE_PROFESSOR')">
 			<ul class="nav topNav">
-			    <li>
-					 <a href="#">대학/대학원</a>
-					<div class="nav-column topNav_column">
-						<ul>
-						    <li><a href="#">대학/학부</a></li>
-						    <li><a href="#">예술대학</a></li>
-						    <li><a href="#">패션디자인학과</a></li>
-						</ul>
-					</div>
-			    </li>
-			    <li>
-					<a href="/board/list" class="nav-link">입학/취업</a>
-					<div class="nav-column topNav_column">
-						 <ul>
-						     <li><a href="#">Pampers Diapers</a></li>
-						     <li><a href="#">Huggies Diapers</a></li>
-						     <li><a href="#">Seventh Generation</a></li>
-						 </ul>
-					</div>
-			    </li>
-			    <li>
-			        <a href="#">연구/산학</a>
-			        <div class="nav-column topNav_column">
-						 <ul>
-						     <li><a href="/board/list">공통 게시판</a></li>
-						     <li><a href="#">Huggies Diapers</a></li>
-						     <li><a href="#">Seventh Generation</a></li>
-						 </ul>
-					</div>
-			    </li>
-			    <li><a href="#">대학생활</a></li>
+			    <li><a href="#">강의등록</a></li>
+			    <li><a href="timetable/load" class="nav-link">강의시간표</a></li>
+			    <li><a href="#">성적등록</a></li>
+			    <li><a href="/board/list">게시판</a></li>
+			    <li><a href="#">캘린더</a></li>
 			    <li><a href="#">국제교류</a></li>
-			    <li><a href="#">공지/참여</a></li>
-			    <li><a href="#">홍보센터</a></li>
+			    <li><a href="#">연구산학</a></li>
 			    <li><a href="#">Chatting</a></li>
 			</ul>
 	    </header>

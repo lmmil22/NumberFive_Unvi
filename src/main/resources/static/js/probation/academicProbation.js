@@ -82,7 +82,7 @@ function stuInfo(stuNo){
 		     	str += '</tr>';
 			}
 			//메일 보내기 체크박스 그려준다
-			str += `<tr><td colspan="6"><span><input type="checkbox" id = "probationMailChkBox"></span> 학사경고 알림 메일 발송하기<td></tr>`
+			str += `<tr><td colspan="6"><span><input class="form-check-input" type="checkbox" id = "probationMailChkBox"></span> 학사경고 알림 메일 발송하기<td></tr>`
 			//해당 클래스 뒤에 데이터를 넣어준다.
 			$('.probationTb').append(str);
 			
