@@ -80,8 +80,9 @@ public class ProfessorController {
 	//강의등록페이지에서 강의등록을 눌렀을 때 //by지아
 	//벨리데이션 수정중!!
 	@PostMapping("/regProfLecForm")
-	public String regProfLecForm(LecturePdfVO lecturePdfVO,
-			LectureTimeVO lectureTimeVO ,LectureVO lectureVO ,MultipartFile PdfName , Model model ) {
+	public String regProfLecForm(LecturePdfVO lecturePdfVO
+			 ,LectureVO lectureVO, @Valid LectureTimeVO lectureTimeVO
+			, BindingResult bindingResult ,MultipartFile PdfName , Model model ) {
 		String nextLecNo = professorService.getNextLecNo();
 		lectureVO.setLecNo(nextLecNo);
 		
@@ -93,11 +94,11 @@ public class ProfessorController {
 		lectureTimeVO.setLecNo(nextLecNo);
 		
 		//validation 체크
-		//if(bindingResult.hasErrors()) {
-		//System.out.println("!!!error!!!");
+		if(bindingResult.hasErrors()) {
+		System.out.println("!!!error!!!");
 		//model로 필요한 자료를 보냄
-		//return "content/professor/regProfLec";
-		//}
+		return "content/professor/regProfLec";
+		}
 //		 if(bindingResult.hasErrors()) {
 //	            StringBuilder sb = new StringBuilder();
 //	            bindingResult.getAllErrors().forEach(objectError -> {

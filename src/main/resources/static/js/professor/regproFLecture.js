@@ -57,11 +57,11 @@ function time(){
 		 success: function(result) {
 			//강의 등록 불가 시 //숫자가 1이나오면 그시간에 강의가 있는것
 			if(result != 0){
-				Swal.fire('등록 불가', '등록 노노', 'warning'); 
+				Swal.fire('등록 불가', '해당 시간이 이미 등록되어있습니다', 'warning'); 
 				document.querySelector('#regLectureTimeBtn').disabled = true; //등록하기 버튼이 눌리지 않음
 			}
 			else{ //숫자가 0이니 그시간의 강의가 없다 
-				Swal.fire('등록!!', '등록!!!', 'success');
+				Swal.fire('시간 체크', '등록 가능한 시간입니다 ', 'success');
 				document.querySelector('#regLectureTimeBtn').disabled = false; //등록하기 버튼이 활성화 된다 
 				
 			}

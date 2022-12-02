@@ -26,7 +26,7 @@ div {
 	<h4 style="text-align: left;">강의 등록</h4>
 
 	<div class="row">
-		<form th:action="@{/proF/regProfLecForm}" method="post" enctype="multipart/form-data">
+		<form th:action="@{/proF/regProfLecForm}" method="post" enctype="multipart/form-data" >
 			<div class="col">
 				<div class="row">
 
@@ -97,7 +97,7 @@ div {
 					<div class="mb-3 row">
 						<label for="maxNum" class="col-sm-4 col-form-label">최대 수강신청 인원</label>
 						<div class="col-sm-5">
-							<input type="number" class="form-control" id="maxNum" name="maxNum" max="20">
+							<input type="number" class="form-control" id="maxNum" name="maxNum" max="50">
 						</div>
 					</div>
 					<!-- <div class="mb-3 row">
