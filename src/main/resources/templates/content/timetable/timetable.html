@@ -1,79 +1,146 @@
-<!-- by 유빈 -->
+<!-- by 유빈 : 시간표 불러오기 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
 	layout:decorate="~{layout/base_layout}">
 	
 <th:block layout:fragment="css">
-	<link rel="stylesheet" th:href="@{}">
+	<link rel="stylesheet" th:href="@{/css/timetable.css}">
 </th:block>
 
 <div layout:fragment="content">
-
-<!-- 시간표 html 가져온 소스 -->
-<div class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
-  <div class="cd-schedule__timeline">
-    <ul>
-      <li><span>09:00</span></li>
-      <li><span>09:30</span></li>
-      <!-- additional elements here -->
-    </ul>
-  </div> <!-- .cd-schedule__timeline -->
-
-  <div class="cd-schedule__events">
-    <ul>
-      <li class="cd-schedule__group">
-        <div class="cd-schedule__top-info"><span>Monday</span></div>
-
-        <ul>
-          <li class="cd-schedule__event">
-            <a data-start="09:30" data-end="10:30" data-content="event-abs-circuit" data-event="event-1" href="#0">
-              <em class="cd-schedule__name">Abs Circuit</em>
-            </a>
-          </li>
-
-          <!-- other events here --> 
-        </ul>
-      </li>
-
-      <li class="cd-schedule__group">
-        <div class="cd-schedule__top-info"><span>Tuesday</span></div>
-
-        <ul>
-          <!-- events here --> 
-        </ul>
-      </li>
-
-      <!-- additional li.cd-schedule__group here --> 
-    </ul>
-  </div>
-
-  <div class="cd-schedule-modal">
-    <header class="cd-schedule-modal__header">
-      <div class="cd-schedule-modal__content">
-        <span class="cd-schedule-modal__date"></span>
-        <h3 class="cd-schedule-modal__name"></h3>
-      </div>
-
-      <div class="cd-schedule-modal__header-bg"></div>
-    </header>
-
-    <div class="cd-schedule-modal__body">
-      <div class="cd-schedule-modal__event-info"></div>
-      <div class="cd-schedule-modal__body-bg"></div>
+	<!-- 제목줄 -->
+	<div align="center"  class="row mt-3">
+		<div class="col">
+		    <h1>Student Timetable</h1>
+		</div>
+	</div>
+    
+    <!-- //// 미로그인 시/////   -->
+	<div class="row mt-5 " sec:authorize="isAnonymous()">
+	    <div  class="col"   style="height:3.0em; background-color: #F7F7F7; text-align: center; padding-top: 1.1rem;"> 로그인 후 조회가능합니다. </div>
+	</div>
+	
+	<!-- ///// 로그인 시////// -->
+    
+     <!-- 로그인 시 1)교수 권한  -->
+    <div class="col mt-5" align="center"  sec:authorize="hasRole('ROLE_PROFESSOR')">
+    	<div  class="col "   style="height:3.0em; background-color: #F7F7F7; text-align: center; padding-top: 1.1rem;"> 교수님 시간표만 조회가능합니다. </div>
     </div>
-
-    <a href="#0" class="cd-schedule-modal__close text-replace">Close</a>
-  </div>
-</div> 
-<!-- .cd-schedule -->
-
-<!-- js 부분 -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- 주소 API  -->
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script type="text/javascript" th:src="@{/js/common/timetable.js}"></script>
-<!-- js 부분 -->
-
+    
+    <!-- 로그인 시 2)학생 혹은 관리자 권한  -->
+    <div class="col mt-5" align="center"  sec:authorize="hasRole('ROLE_STUDENT') OR hasRole('ROLE_ADMIN')">
+	    <!-- 타임테이블 영역 -->
+	    <div style="width: 80%;">
+	    	<!-- 해당 학생 학번영역 -->
+	   	 	<div class="col mt-5 text-start" > ※ [[${memberVO.memName}]] (<span sec:authentication="name"></span>)님의 시간표입니다. </div>
+			<table class="table ">
+				<colgroup>
+					<col width="*%">
+					<col width="18%">
+					<col width="18%">
+					<col width="18%">
+					<col width="18%">
+					<col width="18%" >
+				</colgroup>
+			  <thead ><!-- 요일 영역 -->
+			    <tr align="center" >
+			      <th scope="col"></th>
+			      <th scope="col">월</th>
+			      <th scope="col">화</th>
+			      <th scope="col">수</th>
+			      <th scope="col">목</th>
+			      <th scope="col">금</th>
+			    </tr>
+			  </thead>
+			  <tbody class="table-group-divider">
+			    <tr height="80" class="lecTime">
+			      <th  scope="row">9:00</th>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			    </tr>
+			    <tr height="80" class="lecTime">
+			      <th scope="row">10:00</th>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			    </tr>
+			    <tr height="80" class="lecTime">
+			      <th scope="row">11:00</th>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			    </tr>
+			    <tr height="80" class="lecTime">
+			      <th scope="row">12:00</th>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			    </tr>
+			    <tr height="80" class="lecTime">
+			      <th scope="row">13:00</th>
+			     <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			    </tr>
+			    <tr height="80" class="lecTime">
+			      <th scope="row">14:00</th>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			    </tr>
+			    <tr height="80" class="lecTime">
+			      <th scope="row">15:00</th>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			    </tr>
+			    <tr height="80" class="lecTime">
+			      <th scope="row">16:00</th>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			    </tr>
+			    <tr height="80" class="lecTime">
+			      <th scope="row">17:00</th>
+			     <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			    </tr>
+			    <tr height="80" class="lecTime">
+			      <th scope="row">18:00</th>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			      <td></td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+	</div>
+	<!-- //////////////////////// -->
+	
+<script type="text/javascript" th:src="@{/js/timetable/timetable.js}"></script>
+	
 </div>
 </html>

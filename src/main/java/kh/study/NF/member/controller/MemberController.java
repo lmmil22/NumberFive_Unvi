@@ -171,9 +171,9 @@ public class MemberController {
       System.out.println("_______________로그인 성공시 false!!! -->" + isLoginFail);
       model.addAttribute("isLoginFail",isLoginFail);
       
-      return "content/common/home_Login";
+      return "content/common/after_Login";
    }
-   //로그인 후 첫 화면
+   // 미사용 //로그인 후 첫 화면 > 다시 홈화면
    @GetMapping("/afterLogin")
    public String afterLogin(boolean isLoginFail, Model model) {
       //-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
@@ -183,7 +183,7 @@ public class MemberController {
       return "content/common/after_Login";
    }
 //----------------------------------------------------------------------------------------------//   
-   // 관리자 로그인 후 페이지 이동
+   // 미사용// 관리자 로그인 후 페이지 이동
    @GetMapping("/adminLogin")
    public String adminLogin(boolean isLoginFail) {
       //-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
@@ -193,7 +193,7 @@ public class MemberController {
    }
 //-------------------------------------------------------------------------------------------///   
    
-   //로그인
+   // 미사용 //로그인
    @PostMapping("/stuLogin")
    public String afterLogin2(boolean isLoginFail, Model model) {
       //-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
@@ -251,17 +251,20 @@ public class MemberController {
                   System.out.println(e.getDefaultMessage());
              }
       }
-      //memberVO.setMemRole(MemRole.STUDENT.toString());
-      
       //암호화 작업2 -주석풀기 
       memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
       
       //회원가입 
       memberService.join(memberVO);
       
-      return "redirect:/member/afterLogin";
+      return "redirect:/member/afterRegMem";
    }   
-   
+   // 미사용 //로그인 후 첫 화면 > 다시 홈화면
+   @GetMapping("/afterRegMem")
+   public String afterRegMem(boolean isLoginFail, Model model) {
+      
+      return "content/common/after_Reg_Mem";
+   }
 //-------------------------------------------------------------------------------------------//
    @GetMapping("/intro")
    public String intro() {
