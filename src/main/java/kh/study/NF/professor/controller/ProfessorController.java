@@ -55,7 +55,7 @@ public class ProfessorController {
 	
 	//강의 등록 페이지로 이동 
 	@GetMapping("/regProfLec")
-	public String regProfLecture(Model model) {
+	public String regProfLecture(Model model , LectureVO lectureVO ) {
 		//by지아
 		
 		 model.addAttribute("deptList",deptService.selectDeptList());
@@ -80,9 +80,17 @@ public class ProfessorController {
 	//강의등록페이지에서 강의등록을 눌렀을 때 //by지아
 	//벨리데이션 수정중!!
 	@PostMapping("/regProfLecForm")
-	public String regProfLecForm(LecturePdfVO lecturePdfVO
-			 ,LectureVO lectureVO, @Valid LectureTimeVO lectureTimeVO
-			, BindingResult bindingResult ,MultipartFile PdfName , Model model ) {
+	public String regProfLecForm( @Valid LectureVO lectureVO
+			, BindingResult bindingResult , LecturePdfVO lecturePdfVO ,LectureTimeVO lectureTimeVO
+			 ,MultipartFile PdfName , Model model ) {
+		
+		//validation 체크
+		if(bindingResult.hasErrors()) {
+			System.out.println("!!!error!!!");
+			//model로 필요한 자료를 보냄
+			return "content/professor/regProfLec";
+		}
+
 		String nextLecNo = professorService.getNextLecNo();
 		lectureVO.setLecNo(nextLecNo);
 		
@@ -93,26 +101,7 @@ public class ProfessorController {
 		lecturePdfVO.setLecNo(nextLecNo);
 		lectureTimeVO.setLecNo(nextLecNo);
 		
-		//validation 체크
-		if(bindingResult.hasErrors()) {
-		System.out.println("!!!error!!!");
-		//model로 필요한 자료를 보냄
-		return "content/professor/regProfLec";
-		}
-//		 if(bindingResult.hasErrors()) {
-//	            StringBuilder sb = new StringBuilder();
-//	            bindingResult.getAllErrors().forEach(objectError -> {
-//	                FieldError field = (FieldError) objectError;
-//	                String message = objectError.getDefaultMessage();
-//
-//	                System.out.println("field : "+field.getField());
-//	                System.out.println(message);
-//
-//	                sb.append("field : "+field.getField());
-//	                sb.append("message : "+message);
-//	            });
-//		 }
-		
+	
 		
 		
 		professorService.insertLecture(lectureVO, lecturePdfVO, lectureTimeVO);
@@ -348,6 +337,8 @@ public class ProfessorController {
 	}
 	
 	//by 지아 중복 시간 조회 시 진행
+	//강의 등록페이지에 처음 뜨고 아무것도 입력안하고 시간체크를 넘어가면 널값이 넘어가기 때문에 ajax 오류가 난다
+	//널 값이 들어갈때 리턴처리를 해주었다 js에서
 	@ResponseBody
 	@PostMapping("/timeAjax")
 	public int timeAjax(LectureTimeVO lectureTimeVO, Authentication authentication) {

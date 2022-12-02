@@ -48,6 +48,22 @@ function time(){
 	const lecDay = document.querySelector("#lecDay").value;
 	const firstTime = document.querySelector("#firstTime").value;
 	const lastTime =  document.querySelector("#lastTime").value;
+	
+	//처음 페이지가 열리고 아무것도 입력안하고 시간 체크를 누른다면 널값이 넘어가기 때문에 처리해준다
+	if(lecDay == ''){
+		document.querySelector("#lecDay").insertAdjacentHTML('afterend', '<div style="color:red; font-size:0.7rem;">필수입력이에요!</div>');
+		return ; 
+	}
+	
+	if(firstTime == ''){
+		document.querySelector("#firstTime").insertAdjacentHTML('afterend', '<div style="color:red; font-size:0.7rem;">필수입력이에요!</div>');
+		return ; 
+	}
+	
+	if(lastTime == ''){
+		document.querySelector("#lastTime").insertAdjacentHTML('afterend', '<div style="color:red; font-size:0.7rem;">필수입력이에요!</div>');
+		return ; 
+	}
 
 		 //ajax start
 	 $.ajax({

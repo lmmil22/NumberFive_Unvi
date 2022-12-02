@@ -26,7 +26,7 @@ div {
 	<h4 style="text-align: left;">강의 등록</h4>
 
 	<div class="row">
-		<form th:action="@{/proF/regProfLecForm}" method="post" enctype="multipart/form-data" >
+		<form th:action="@{/proF/regProfLecForm}" method="post" enctype="multipart/form-data" th:object="${lectureVO}" >
 			<div class="col">
 				<div class="row">
 
@@ -122,22 +122,24 @@ div {
 				<div class="mb-5 row">
 					<label for="lecDay" class="col-sm-4 col-form-label">강의 날짜 </label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" id="lecDay" name="lecDay" onkeyup="setDisable();">
-						<!-- 아직 오브젝트 사용을 안해서 수정필요!!!! -->
+						<input type="text" class="form-control" th:field="*{lecDay}" onkeyup="setDisable();">
+						 <div class="hasError" th:if="${#fields.hasErrors('lecDay')}" th:errors="*{lecDay}"></div> 
+						
 					</div>
 				</div>
 				<div class="mb-5 row">
 					<label for="firstTime" class="col-sm-4 col-form-label">강의 시작시간</label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" id="firstTime" name="firstTime" onkeyup="setDisable();">
-						<!-- <div th:if="${#fields.hasErrors('lecDay')}" th:errors="*{lecDay}"></div> -->
+						<input type="text" class="form-control" th:field="*{firstTime}"  onkeyup="setDisable();">
+						 <div class="hasError" th:if="${#fields.hasErrors('firstTime')}" th:errors="*{firstTime}"></div> 
 					</div>
 				</div>
 				<div class="mb-5 row">
 					<label for="lastTime" class="col-sm-4 col-form-label">강의
 						마치는 시간 </label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" id="lastTime" name="lastTime" onkeyup="setDisable();"> <!-- 키보드 입력시도시 등록버튼이 다시 잠긴다 -->
+						<input type="text" class="form-control" th:field="*{lastTime}" onkeyup="setDisable();"> <!-- 키보드 입력시도시 등록버튼이 다시 잠긴다 -->
+						 <div class="hasError" th:if="${#fields.hasErrors('lastTime')}" th:errors="*{lastTime}"></div> 
 					</div>
 				</div>
 			</div>
