@@ -101,7 +101,6 @@
 	       MEM_NO
 	      ,MEM_PW
 	      ,MEM_NAME
-	      <!-- ,MEM_ADDR||''||MEM_ADDR_DETAIL as MEM_ADDR -->
 	      ,MEM_ADDR
 	      ,MEM_ADDR_DETAIL
 	      ,MEM_EMAIL

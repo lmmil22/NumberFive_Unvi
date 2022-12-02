@@ -1,5 +1,5 @@
 package kh.study.NF.timeTable.service;
-
+//by 유빈: 시간표기능구현
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
