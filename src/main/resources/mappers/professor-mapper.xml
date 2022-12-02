@@ -310,7 +310,7 @@
 	
 	
 	
-		<!-- 등록된 강의 수강신청시 조회  -->
+		<!-- 등록된 강의 수강신청시 조회 1번 -->
 	<select id="selectLecLIstEnroll"  resultMap="lecture">
 	 	SELECT
 			L.LEC_NO
@@ -339,7 +339,7 @@
 			, ATTACHED_PDF_NAME
 			, CASE 
                 WHEN MAX_NUM - NOW_NUM > 0 THEN 'Y'
-                ELSE 'N' END AS LEC_STATUS
+                ELSE 'N' END AS LEC_STATUS <!-- 맥스에서 나우를 뺀게 0보다 크면 등록가능 수강 -->
 		FROM LECTURE L, LECTURE_PDF LP, LECTURE_TIME LT
 		WHERE  L.LEC_NO = LP.LEC_NO AND L.LEC_NO = LT.LEC_NO
 	<!-- 	AND COLL_NO = #{}
@@ -367,6 +367,7 @@
 	 	ORDER BY LEC_NO DESC
 	</select>
 	
+	<!-- 학생이 이미 수강신청한 lec_no 목록 조회 -->
 	<select id="selectEnrollmentLecNoList" resultType="String">
 		SELECT LEC_NO
 		FROM ENROLLMENT
@@ -391,7 +392,7 @@
 	 SET NOW_NUM = NOW_NUM+1 WHERE LEC_NO = #{lecNo}
 	</update>
 
-	<!-- 학생이 신청한 수강목록  -->
+	<!-- 학생이 신청한 수강목록 2번 -->
 	<select id="selectStuLecture" resultMap="enrollment">
 	<!-- 	SELECT 
 			ENROLLMENT_NO
