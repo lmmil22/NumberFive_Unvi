@@ -36,10 +36,8 @@ public class MemberController {
    private MemberService memberService;
    @Resource(name = "boardService")
    private BoardService boardService;
-   
    @Autowired
    private MailService mailService;
-   
    //암호화 작업 1-주석풀기 
    @Autowired
    private PasswordEncoder encoder;
@@ -139,7 +137,7 @@ public class MemberController {
           // 아래처럼 암호화된 비밀번호를 넣어서 업데이트해야한다.
          //memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 
-          return "content/common/update_pw";
+          return "redirect:/member/homeLogin";//이메일로 임시비밀번호받고 다시 재로그인해야함
       } 
       System.out.println("  ________________  현재 로그인 상태는?  ___________________   " + loginInfo);//null
       
@@ -152,8 +150,12 @@ public class MemberController {
 	   return "content/common/update_pw";
    }    
    @PostMapping("/updatePw")
-   public String updatePw() {
+   public String updatePw(MemberVO memberVO) {
 	   System.out.println("이메일로 발급된 임시비밀번호에서 다시 비밀번호수정해서 변경시키면 form태그로 넘어오기 성공!!!!");
+	   //가져온 비밀번호 암호화시켜서 업데이트하기.
+	   memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+	   System.out.println("__암호화시켜서 비밀번호 업데이트되었는지 확인------->"+ encoder.encode(memberVO.getMemPw()));
+	   
 	   return "redirect:/member/homeLogin";
    }    
 //-------------------------------------------------------------------------------------------///   

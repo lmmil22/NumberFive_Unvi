@@ -25,16 +25,17 @@
 		 	<div class="row justify-center-center" style="padding-left : 30%; padding-right: 30%;">    
 			  <div class="col-12">
 			    <label for="inputPassword4" class="form-label">비밀번호</label>
-			    <span style="color: red; font-size: 0.7rem;"> ※ 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하 </span>
-			    <input type="password" class="form-control is-invalid" id="memPw1"  placeholder="비밀번호를 입력하세요." aria-describedby="validationServer05Feedback" required>
+			    <div style="color: red; font-size: 0.7rem;"> ※ 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하 </div>
+			    <input type="password" class="form-control is-invalid" id="password" name="memPw" placeholder="비밀번호를 입력하세요." aria-describedby="validationServer05Feedback" required>
 			  </div>
-			  <div class="col-12">
+			  <div class="col-12 mt-3">
 			    <label for="inputPassword4" class="form-label">비밀번호 재입력</label>
-			    <input type="password" class="form-control" id="memPw2"  placeholder="비밀번호를 재입력하세요." required>
+			     <div style="color: red; font-size: 0.7rem;"> 위와 동일한 비밀번호를 한번 더 입력하세요 </div>
+			    <input type="password" class="form-control" id="confirm_password"  placeholder="비밀번호를 재입력하세요." required>
 			  </div>
 			  <div align="center" class="col-12 mt-3">
-			    <button type="submit" class="btn btn-primary" >변경 완료</button>
-			  </div>
+			    <button type="submit"  id="checkBtn" class="btn btn-primary" >변경 완료</button>
+<!-- 			    <button type="submit" onclick="checkValidPw();"  class="btn btn-primary" >변경 완료</button>-->			  </div>
 		 	</div>
 		</form>
 	
