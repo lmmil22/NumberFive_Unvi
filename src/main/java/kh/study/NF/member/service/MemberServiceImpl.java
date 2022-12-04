@@ -48,8 +48,8 @@ public class MemberServiceImpl implements MemberService{
 	// 이메일 및 학번/교번 유효성 검사
 	@Override
 	public String selectIsValidMem(MemberVO memberVO) {
-		String ss = sqlSession.selectOne("memberMapper.selectIsValidMem",memberVO);
+		String loginInfo = sqlSession.selectOne("memberMapper.selectIsValidMem",memberVO);
 		
-		return ss;
+		return loginInfo;//존재하면 null값이 아님
 	}
 }

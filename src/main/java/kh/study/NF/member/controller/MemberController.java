@@ -17,6 +17,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.NF.board.service.BoardService;
 import kh.study.NF.board.vo.BoardVO;
@@ -113,37 +114,34 @@ public class MemberController {
    // 이메일로 비밀번호 찾기 (ajax.ver) -> 모달 ajax사용 (ajaxlogin이라는 버튼을 클릭시)
    //@ResponseBody //ajax사용할때(단,리턴값은 필요한 데이터만! html페이지가 아님!)
    @PostMapping("/checkAndSendEmail")
-   public String ajaxLogin( MemberVO memberVO,String memEmail) {
+   public String ajaxLogin( MemberVO memberVO ,String memEmail) {
       //비밀번호 찾기 쿼리문이용해서 회원존재확인하기.
-      MemberVO loginInfo = memberService.findPw(memberVO);
-      
-      
+      String loginInfo = memberService.selectIsValidMem(memberVO);
       System.out.println(loginInfo+"_________________<----- 로그인정보__________________");
-      
       // 로그인 정보 시큐리티로(암호화) 이용
       if(loginInfo != null) {
-         System.out.println("____________현재 로그인 상태는?______________ "+ loginInfo);
+         System.out.println("____________현재 조회된 정보가 있나?______________ "+ loginInfo);
          
          // 수신 대상을 담을 arrayList 생성
           ArrayList<String> toUerList = new ArrayList<>();
           //수신 대상 추가
           toUerList.add(memEmail);
-          //메일 발송
+          //메일 발송:비밀번호암호화까지 o
           mailService.sendMdail(memEmail,memberVO);
-          
           System.out.println("________________ 이메일 발송 성공_________________");
           
-          //주석풀기
-          // 아래처럼 암호화된 비밀번호를 넣어서 업데이트해야한다.
-         //memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
-
           return "redirect:/member/homeLogin";//이메일로 임시비밀번호받고 다시 재로그인해야함
       } 
-      System.out.println("  ________________  현재 로그인 상태는?  ___________________   " + loginInfo);//null
-      
+      System.out.println("  ________________  현재 조회된 정보가 있나?__________   " + loginInfo);//null
       return "redirect:/member/homeLogin";//login상태가 null일때, alert으로 올바르지않은 이메일과 학번/교번이라 뜨면서 다시 입력하세요라고한다ㅏ
    }
- //-------------------------------------------------------------------------------------------///   
+//-------------------------------------------------------------------------------------------///   
+
+   
+   
+   
+   
+//-------------------------------------------------------------------------------------------///   
    @GetMapping("/updatePw")
    public String updatePwForm() {
 	   System.out.println("비밀번호변경 페이지 이동 성공!!!!");
@@ -154,7 +152,7 @@ public class MemberController {
 	   System.out.println("이메일로 발급된 임시비밀번호에서 다시 비밀번호수정해서 변경시키면 form태그로 넘어오기 성공!!!!");
 	   //가져온 비밀번호 암호화시켜서 업데이트하기.
 	   memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
-	   System.out.println("__암호화시켜서 비밀번호 업데이트되었는지 확인------->"+ encoder.encode(memberVO.getMemPw()));
+	   System.out.println("<><><><><>암호화시켜서 비밀번호 업데이트되었는지 확인------->"+ encoder.encode(memberVO.getMemPw()));
 	   
 	   return "redirect:/member/homeLogin";
    }    

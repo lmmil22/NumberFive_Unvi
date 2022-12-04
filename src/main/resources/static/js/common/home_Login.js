@@ -70,43 +70,7 @@ function sendEmail(loginInfo) {
                 }
             }
         })
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		//ajax start
-		//$을 사용하려면, 제이쿼리 문법이기때문에 자스보다 먼저 로딩해야한다
-		/*$.ajax({
-			url: '/member/ajaxLogin', //요청경로
-			type: 'post',
-			data: { 'memNo':member_no ,'memName' :member_name ,'memEmail' :member_email,'loginInfo' : loginInfo }, //필요한 데이터
-			success: function(result) {
-				alert(result);
-				if(result) {/*loginInfo 값이 null아니면(false)
-					alert('로그인 성공!!!');
-					location.href='/member/homeLogin';
-				}
-				else{
-					alert('로그인 실패!!!');
-				}
-			},
-			error: function() {
-				alert('로그인 실패');
-			}
-		});*/
-		//ajax end
 }
-
 //----------------------------- 이벤트 정의 -----------------------------------//
 
 //// 로그인 실패여부로 모달창을 띄워주는 기능
@@ -152,52 +116,7 @@ join_modal.addEventListener('hidden.bs.modal', function(event) {//모달이 완�
 
 
 
-/////////////////////////////////////////////////////////////////////////
-// 내가 갖고온 소스 (스프링부트로 이메일로 임시비밀번호 찾기 )
-/*$('.modal').on('hidden.bs.modal', function (e) {
-        console.log('modal close');
-        $(this).find('form')[0].reset()
-    });
 
-    $("#checkEmail").click(function () {
-	alert('이메일을 발송했습니다. 확인해주세요.');
-	
-	
-        let userEmail = $("#userEmail").val();
-        let userName = $("#userName").val();
-
-        $.ajax({
-            type: "GET",
-            url: "/mail/check/findPw",
-            data: {
-                "userEmail": userEmail,
-                "userName": userName
-            },
-            success: function (res) {
-                if (res['check']) {
-                    swal("발송 완료!", "입력하신 이메일로 임시비밀번호가 발송되었습니다.", "success").then((OK) => {
-                        if(OK) {
-                            $.ajax({
-                                type: "POST",
-                                url: "/mail/check/findPw/sendEmail",
-                                data: {
-                                    "userEmail": userEmail,
-                                    "userName": userName
-                                }
-                            })
-                            window.location = "/login";
-                        }
-
-
-                    }
-                )
-                    $('#checkMsg').html('<p style="color:darkblue"></p>');
-                } else {
-                    $('#checkMsg').html('<p style="color:red">일치하는 정보가 없습니다.</p>');
-                }
-            }
-        })
-    })*/
     
     
 

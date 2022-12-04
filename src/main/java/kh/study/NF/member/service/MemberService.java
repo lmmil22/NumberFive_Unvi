@@ -10,7 +10,7 @@ public interface MemberService {
 	//로그인
 	MemberVO login(MemberVO memberVO);
 	
-	//비밀번호찾기
+	// 비밀번호찾기
 	MemberVO findPw(MemberVO memberVO);
 	
 	//목록조회
