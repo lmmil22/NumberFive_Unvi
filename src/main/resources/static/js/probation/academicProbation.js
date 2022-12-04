@@ -128,8 +128,10 @@ function stuOut(stuNo){
 		    document.querySelector('#stuOut_birth').innerText = result.studentVO.memberVO.memBirth;
 		    document.querySelector('#stuOut_tell').innerText = result.studentVO.memberVO.memTell;
 		    document.querySelector('#stuOut_addr').innerText = result.studentVO.memberVO.memAddr;
+		    document.querySelector('#stuOut_memEmail').value = result.studentVO.memberVO.memEmail;
+		    //alert(document.querySelector('#stuOut_memEmail').value);
 		    //alert(('/images/'+ result.studentVO.memberVO.memImage));
-		    document.querySelector('#stuOut_image').scr = ('/images/'+ result.studentVO.memberVO.memImage);
+		    document.querySelector('#stuOut_image').src = ('/images/'+ result.studentVO.memberVO.memImage);
 		    document.querySelector('#stuOut_no').innerText = result.studentVO.stuNo;
 		    document.querySelector('#stuOut_grade').innerText = result.studentVO.stuYear;
 		    document.querySelector('#stuOut_status').innerText = result.studentVO.stuStatus;
@@ -152,6 +154,9 @@ function stuOut(stuNo){
 		     	str += '</td>';
 		     	str += '</tr>';
 			}
+			
+			//메일 보내기 체크박스 그려준다
+			str += `<tr><td colspan="6"><span><input class="form-check-input" type="checkbox" id = "stuOutMailChkBox"></span> 제적 안내 메일 발송하기<td></tr>`
 			
 			//해당 클래스 뒤에 데이터를 넣어준다.
 			$('.stuOutTb').append(str);
@@ -197,7 +202,7 @@ function acceptProbation(){
 					}).then((result) => {
 					  if (result.isConfirmed) {
 						//학사 경고 메일 보내기 함수 실행
-						sendMail();
+						sendProbationMail();
 					  }
 					})
 			    },
@@ -212,7 +217,7 @@ function acceptProbation(){
 }
 
 //학생에게 학사경고 안내 메일 전송하기
-function sendMail(){
+function sendProbationMail(){
 	
 	//메일보내기 체크박스 버튼이 체크 되어 있다면 메일 발송되도록 구현
 	const probationMailChkBox = document.querySelector('#probationMailChkBox');
@@ -307,7 +312,7 @@ function acceptStuOut(){
 				
 				Swal.fire({
 				  title: '제적처리 완료',
-				  text: "해당 학생을 제적처리하였습니다. 카카오톡으로 발송하시겠습니까?",
+				  text: "해당 학생을 제적처리하였습니다.",
 				  icon: 'success',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
@@ -315,7 +320,8 @@ function acceptStuOut(){
 				  cancelButtonText: '취소'
 				}).then((result) => {
 				  if (result.isConfirmed) {
-				    sendKakao();
+				    //sendKakao();
+				    sendStuOutMail();
 				   
 				  }else{
 					home();
@@ -333,15 +339,71 @@ function acceptStuOut(){
 	
 }
 
-//by수경 카카오톡 메시지 공유하기
-function sendKakao(){
+//학생에게 제적 안내 메일 전송하기
+function sendStuOutMail(){
+	
+	//메일보내기 체크박스 버튼이 체크 되어 있다면 메일 발송되도록 구현
+	const stuOutMailChkBox = document.querySelector('#stuOutMailChkBox');
+	const isChecked = stuOutMailChkBox.checked;
+	
+	//메일전송 시 컨텐츠 영역에 넣을 데이터 
+	const memName = document.querySelector('#stuOut_name').innerText;
+	const memEmail = document.querySelector('#stuOut_memEmail').value;
+	const stuNo = document.querySelector('#stuOut_no').innerText;
+	
+	if(isChecked){
 		
-	Kakao.Share.sendCustom({
-	  templateId: 86136,
-	  templateArgs: {
-	    title: '제목 영역입니다.',
-	    description: '설명 영역입니다.',
-	  },
-	});
-	 home();
+		//메일 보내기 로딩 화면				
+		let timerInterval
+		Swal.fire({
+		  title: '처리중입니다.',
+		  html: '메일 전송 완료까지 <b></b> 남았습니다.',
+		  timer: 3030,
+		  timerProgressBar: true,
+		  didOpen: () => {
+		    Swal.showLoading()
+		    const b = Swal.getHtmlContainer().querySelector('b')
+		    timerInterval = setInterval(() => {
+		      b.textContent = Swal.getTimerLeft()
+		    }, 100)
+		  },
+		  willClose: () => {
+		    clearInterval(timerInterval)
+		  }
+		});		
+		
+		//alert(memEmail);
+		//ajax 시작
+		$.ajax({
+		   url: '/mail/sendStuOutMailAjax', //요청경로
+		    type: 'post',
+		    data:{	'memEmail': memEmail
+		    		, 'memName': memName,
+		    	  'stuNo':stuNo}, //필요한 데이터
+		    	  
+		    success: function(result) {
+				Swal.fire({
+				  title: '메일 전송 완료',
+				  text: "메일 전송이 완료 되었습니다.",
+				  icon: 'success',
+				  confirmButtonColor: '#3085d6',
+				  confirmButtonText: '확인'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					home();
+				  }
+				})
+		    },
+		    error: function(){
+		      alert('실패');
+		    }
+		});
+		
+		return;
+	}
+	//체크박스에 체크가 되어 있지 않다면 다시 원래 페이지로 돌아간다.
+	else{
+		home();
+	}
+
 }

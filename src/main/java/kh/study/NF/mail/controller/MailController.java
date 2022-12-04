@@ -2,8 +2,10 @@ package kh.study.NF.mail.controller;
 // 미사용? 파일
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kh.study.NF.emp.service.EmpService;
+import kh.study.NF.emp.vo.AcademicProbationVO;
+import kh.study.NF.emp.vo.StuinfoAndProbationListVO;
 import kh.study.NF.mail.service.MailService;
 import kh.study.NF.mail.service.ProbationMailService;
+import kh.study.NF.mail.service.StuOutMailService;
 import kh.study.NF.member.vo.MemberVO;
 // by 유빈 : 이메일 기능 
 @Controller
@@ -28,6 +34,15 @@ public class MailController {
 	//by수경 학사경고 메일을 보내기 위하여 사용
 	@Autowired
 	private ProbationMailService probationMailService;
+	
+	//by수경 학사경고내역 목록 쿼리 가져오기 위하여 사용
+	@Resource(name = "empService")
+	private EmpService empService;
+	
+	//by수경 학생에게 제적 메일을 보내기 위하여 사용
+	@Autowired
+	private StuOutMailService stuOutMailService;
+	
 //------------------------------------------------------------------------//
 
 	// 이메일 인증 
@@ -68,6 +83,15 @@ public class MailController {
 	public void sendProbationMailAjax(MemberVO memberVO, String probReason) throws MessagingException, IOException{
 		probationMailService.sendMailWithFiles(memberVO, probReason);
 	}
+
+	//by수경 학생에게 제적 안내 메일 보내기 위하여 사용
+	@ResponseBody
+	@PostMapping("/sendStuOutMailAjax")
+	public void sendStuOutMailAjax(MemberVO memberVO, String stuNo) throws MessagingException, IOException{
+		//제적된 학생이 받았던 학사경고 내역 목록 쿼리
+		List<AcademicProbationVO> probationList = empService.probationReason(stuNo);
 		
+		stuOutMailService.sendStuOutMail(memberVO, probationList);
+	}
 	
 }

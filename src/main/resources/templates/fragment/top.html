@@ -73,36 +73,9 @@
 			<!-- 인증과 권한이 없는 누구에게나 표시되는 탑 메뉴바 -->
 			<header sec:authorize="isAnonymous()" >
 				<ul class="nav topNav">
-				    <li>
-						 <a href="#">대학/대학원</a>
-						<div class="nav-column topNav_column">
-							<ul>
-							    <li><a href="#">대학/학부</a></li>
-							    <li><a href="#">예술대학</a></li>
-							    <li><a href="#">패션디자인학과</a></li>
-							</ul>
-						</div>
-				    </li>
-				    <li>
-						<a href="/board/list" class="nav-link">입학/취업</a>
-						<div class="nav-column topNav_column">
-							 <ul>
-							     <li><a href="#">Pampers Diapers</a></li>
-							     <li><a href="#">Huggies Diapers</a></li>
-							     <li><a href="#">Seventh Generation</a></li>
-							 </ul>
-						</div>
-				    </li>
-				    <li>
-				        <a href="#">연구/산학</a>
-				        <div class="nav-column topNav_column">
-							 <ul>
-							     <li><a href="/board/list">공통 게시판</a></li>
-							     <li><a href="#">Huggies Diapers</a></li>
-							     <li><a href="#">Seventh Generation</a></li>
-							 </ul>
-						</div>
-				    </li>
+				    <li><a href="#">대학/대학원</a></li>
+				    <li><a href="#" class="nav-link">입학/취업</a></li>
+				    <li><a href="/board/list">게시판</a></li>
 				    <li><a href="#">대학생활</a></li>
 				    <li><a href="#">국제교류</a></li>
 				    <li><a href="#">공지/참여</a></li>
@@ -121,19 +94,20 @@
 						<div class="nav-column topNav_column">
 							<ul>
 							    <li><a href="#">내정보조회</a></li>
-							    <li><a href="#">학적신청현황조회</a></li>
-							    <li><a href="timetable/load">시간표조회</a></li>
+							    <li><a href="#">내정보수정</a></li>
+							    <li><a href="/timetable/load">시간표조회</a></li>
 							</ul>
 						</div>
 				    </li>
 				    <li>
-						<a href="#" class="nav-link">학적관리</a>
+						<a href="/stu/takeOffUniv" class="nav-link">학적관리</a>
 						<div class="nav-column topNav_column">
 							 <ul>
-							     <li><a href="#">휴학신청</a></li>
-							     <li><a href="#">복학신청</a></li>
-							     <li><a href="#">전과신청</a></li>
-							     <li><a href="#">복수전공신청</a></li>
+							     <li><a href="/stu/takeOffUniv">휴학신청</a></li>
+							     <li><a href="/stu/returnUniv">복학신청</a></li>
+							     <li><a href="/stu/changeMajor">전과신청</a></li>
+							     <li><a href="/stu/addMajor">복수전공신청</a></li>
+							     <li><a href="/stu/stuApplyList">학적신청현황조회</a></li>
 							 </ul>
 						</div>
 				    </li>
@@ -150,22 +124,23 @@
 		<!-- 교직원(관리자)경우 top 메뉴바 -->
 	    <header sec:authorize="hasRole('ROLE_ADMIN')">
 			<ul class="nav topNav">
+				<li><a href="/member/regMemForm">회원등록</a></li>
 			    <li>
-					 <a href="#">학적신청현황</a>
+					 <a href="#">학적변동승인</a>
 					<div class="nav-column topNav_column">
 						<ul>
-						    <li><a href="#">실적현황</a></li>
-						    <li><a href="#">복학/휴학신청내역</a></li>
-						    <li><a href="#">전과/복전신청내역</a></li>
+						    <li><a href="/emp/takeOffReturnUniv">복학/휴학</a></li>
+						    <li><a href="/emp/changeAddMajor">전과/복수전공</a></li>
+						    <li><a href="/emp/showKPI">실적현황</a></li>
 						</ul>
 					</div>
 			    </li>
 			    <li>
-					<a href="#" class="nav-link">학사경고/제적</a>
+					<a href="/emp/probation">학사경고/제적</a>
 					<div class="nav-column topNav_column">
 						 <ul>
-						     <li><a href="#">학사경고</a></li>
-						     <li><a href="#">제적</a></li>
+						     <li><a href="/emp/probation">학사경고</a></li>
+						     <li><a href="/emp/stuOut">제적</a></li>
 						 </ul>
 					</div>
 			    </li>
@@ -181,7 +156,6 @@
 			    </li>
 			    <li><a href="#">캘린더</a></li>
 			    <li><a href="#">입학/취업</a></li>
-			    <li><a href="#">국제교류</a></li>
 			    <li><a href="#">홍보센터</a></li>
 			    <li><a href="#">Chatting</a></li>
 			    
@@ -192,7 +166,7 @@
 	    <header sec:authorize="hasRole('ROLE_PROFESSOR')">
 			<ul class="nav topNav">
 			    <li><a href="#">강의등록</a></li>
-			    <li><a href="timetable/load" class="nav-link">강의시간표</a></li>
+			    <li><a href="/timetable/load">강의시간표</a></li>
 			    <li><a href="#">성적등록</a></li>
 			    <li><a href="/board/list">게시판</a></li>
 			    <li><a href="#">캘린더</a></li>

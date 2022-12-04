@@ -37,6 +37,7 @@ public class ProbationMailHandler {
 	}
 	
 	public void setTo(String email) throws MessagingException{
+		
 		mimeMessageHelper.setTo(email);
 	}
 	//메일 제목 부분

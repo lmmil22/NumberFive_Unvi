@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +36,12 @@ public class StudentController {
 	
 	//by수경 학생이 전공학과를 변경(전과)하는 페이지로 이동 메소드
 	@GetMapping("/changeMajor")
-	public String changeMajor(Model model, DeptManageVO deptManageVO, String stuNo) {
+	public String changeMajor(Model model, Authentication authentication) {
+		//security를 사용하여 로그인한 정보 가져오는 방법
+		User user = (User) authentication.getPrincipal();
+		//memNO와 stuNO 동일하기 때문에 학번을 stuNo로 담아 쿼리 매개변수로 넣어 준다
+		String stuNo = user.getUsername();
+		
 		//by수경 학생정보 쿼리문
 		model.addAttribute("stuInfo", studentService.studentInfo(stuNo));
 		
@@ -47,7 +54,13 @@ public class StudentController {
 	
 	//by수경 학생이 복수전공 신청하는 페이지로 이동 메소드
 	@GetMapping("/addMajor")
-	public String addMajor(Model model, DeptManageVO deptManageVO, String stuNo) {
+	public String addMajor(Model model, Authentication authentication) {
+		
+		//security를 사용하여 로그인한 정보 가져오는 방법
+		User user = (User) authentication.getPrincipal();
+		//memNO와 stuNO 동일하기 때문에 학번을 stuNo로 담아 쿼리 매개변수로 넣어 준다
+		String stuNo = user.getUsername();
+		
 		//by수경 학생정보 쿼리문
 		model.addAttribute("stuInfo", studentService.studentInfo(stuNo));
 		
@@ -69,22 +82,35 @@ public class StudentController {
 	
 	//by수경 학생이 학교를 휴학신청하는 페이지로 이동
 	@GetMapping("/takeOffUniv")
-	public String takeOffUniv(Model model, DeptManageVO deptManageVO, String stuNo) {
+	public String takeOffUniv(Model model, Authentication authentication) {
+		
+		//security를 사용하여 로그인한 정보 가져오는 방법
+		User user = (User) authentication.getPrincipal();
+		//memNO와 stuNO 동일하기 때문에 학번을 stuNo로 담아 쿼리 매개변수로 넣어 준다
+		String stuNo = user.getUsername();
+		
 		//by수경 학생정보 쿼리문
 		model.addAttribute("stuInfo", studentService.studentInfo(stuNo));
+		
 		return  "content/student/takeOffUniv";
 	}
 	
 	//by수경 학생이 학교를 복학신청하는 페이지로 이동
 	@GetMapping("/returnUniv")
-	public String returnUniv(Model model, DeptManageVO deptManageVO, String stuNo) {
+	public String returnUniv(Model model, Authentication authentication) {
+		
+		//security를 사용하여 로그인한 정보 가져오는 방법
+		User user = (User) authentication.getPrincipal();
+		//memNO와 stuNO 동일하기 때문에 학번을 stuNo로 담아 쿼리 매개변수로 넣어 준다
+		String stuNo = user.getUsername();
+		
 		//by수경 학생정보 쿼리문
 		model.addAttribute("stuInfo", studentService.studentInfo(stuNo));
 		
 		return  "content/student/returnUniv";
 	}
 	
-	//by수경 학생이 학교를 복학 신청버튼 클릭 시 실행되는 메소드
+	//by수경 학생이 복학 신청버튼 클릭 시 실행되는 메소드
 	@ResponseBody
 	@PostMapping("/applyReturnUnivAjax")
 	public void applyReturnUniv(Model model, DeptManageVO deptManageVO) {
@@ -133,7 +159,12 @@ public class StudentController {
 	
 	//by수경 학생의 전공학과 변경(전과), 휴학신청, 복학신청, 복수전공 신청 현황
 	@GetMapping("/stuApplyList")
-	public String stuApplyList(Model model, String stuNo) {
+	public String stuApplyList(Model model, Authentication authentication) {
+		
+		//security를 사용하여 로그인한 정보 가져오는 방법
+		User user = (User) authentication.getPrincipal();
+		//memNO와 stuNO 동일하기 때문에 학번을 stuNo로 담아 쿼리 매개변수로 넣어 준다
+		String stuNo = user.getUsername();
 		
 		//신청 내역 목록
 		List<DeptManageVO> applyList =  studentService.stuApplyList(stuNo);
@@ -189,9 +220,4 @@ public class StudentController {
 		return  "content/student/stuApplyList";
 	}
 	
-	
-	@GetMapping("/main")
-	public String mainTest() {
-		return "content/common/main_test";
-	}
 }
