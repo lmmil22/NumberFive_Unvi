@@ -2,113 +2,113 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/base_layout}">
+   xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
+   layout:decorate="~{layout/base_layout}">
 <th:block layout:fragment="css">
-	<link rel="stylesheet" th:href="@{}">
+   <link rel="stylesheet" th:href="@{}">
 </th:block>
 
 <div layout:fragment="content">
 
 <div class="row  justify-content-center" style="padding:1%;" >
-	<div class="col-12">
-	
-	<!-- 제목줄 -->
-	<div class="row mb-5">
-		<div class="col">
-			<div align="center">
-			 <h1>회원 정보 등록 </h1>
-			</div>
-		 </div>
-	</div>
-	
-	<!-- 회원정보 양식 영역 -->
-	<div class="col-12-mb">
-	  	<form id="joinFormTag" class="row g-3" th:action="@{/member/regMem}" method="post" th:object="${memberVO}">
-		  <div class="col-12">
-		    <label for="memNo" class="form-label">학번 및 교번</label>
-		    <input type="text" class="form-control memNo" th:field="*{memNo}" placeholder="본인의 학번 및 교번을 입력하세요"  required>
+   <div class="col-12">
+   
+   <!-- 제목줄 -->
+   <div class="row mb-5">
+      <div class="col">
+         <div align="center">
+          <h1>회원 정보 등록 </h1>
+         </div>
+       </div>
+   </div>
+   
+   <!-- 회원정보 양식 영역 -->
+   <div class="col-12-mb">
+        <form id="joinFormTag" class="row g-3" th:action="@{/member/regMem}" method="post" th:object="${memberVO}">
+        <div class="col-12">
+          <label for="memNo" class="form-label">학번 및 교번</label>
+          <input type="text" class="form-control memNo" th:field="*{memNo}" placeholder="본인의 학번 및 교번을 입력하세요"  required>
 <!-- 주석처리는 MemberVO에서 어노테이션으로 각변수마다 validation 처리를 해줬을 때 사용가능한 것들 (내가한 것은 js에서 처리하도록구현) -->
-<!-- 			<div class="hasError" th:if="${#fields.hasErrors('memNo')}" th:errors="*{memNo}"></div>
- -->		  </div>
+<!--          <div class="hasError" th:if="${#fields.hasErrors('memNo')}" th:errors="*{memNo}"></div>
+ -->        </div>
 
-		  <div class="col-12">
-		    <label for="memPw" class="form-label">비 밀 번 호</label>
-		    <div style="color: red; font-size: 13px;"> ※ 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하</div>
-		    <input type="password" class="form-control memPw"  th:field="*{memPw}"  placeholder="비밀번호를 입력하세요." required>
-		  </div>
+        <div class="col-12">
+          <label for="memPw" class="form-label">비 밀 번 호</label>
+          <div style="color: red; font-size: 13px;"> ※ 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하</div>
+          <input type="password" class="form-control memPw"  th:field="*{memPw}"  placeholder="비밀번호를 입력하세요." required>
+        </div>
 
-		  <div class="col-12">
-		    <label for="memName" class="form-label"> 이 름</label>
-		    <input type="text"   class="form-control"  th:field="*{memName}" placeholder="이름 입력은 필수입니다." required>
- 		  </div>
+        <div class="col-12">
+          <label for="memName" class="form-label"> 이 름</label>
+          <input type="text"   class="form-control"  th:field="*{memName}" placeholder="이름 입력은 필수입니다." required>
+         </div>
 
-		  <div class="col-9">
-		    <label for="memAddr" class="form-label"> 주 소 </label>
-		    <input type="text" class="form-control" th:field="*{memAddr}" placeholder="주소 입력은 필수입니다."  readonly onclick="searchAddr();"><!-- 값변경못하도록 읽기전용속성값부여하기 ( 데이터넘기기 가능) -->
-		  </div>
-		  <div class="col-3" >
-		    <label for="memAddrDetail" class="form-label">&nbsp;</label>
-			<input type="button" class="btn btn-secondary form-control" onclick="searchAddr();" value="검색" >
-		  </div>
-		  <div class="col-12" >
-		    <input type="text" class="form-control" th:field="*{memAddrDetail}" placeholder="상세주소 입력은 필수입니다.">
-		  </div>
-		 
-		  <div class="col-12">
-		    <label for="memEmail" class="form-label">이메일</label>
-		    <input type="text" class="form-control" th:field="*{memEmail}"  placeholder="이메일 입력은 필수입니다." >
-	  </div>
+        <div class="col-9">
+          <label for="memAddr" class="form-label"> 주 소 </label>
+          <input type="text" class="form-control" th:field="*{memAddr}" placeholder="주소 입력은 필수입니다."  readonly onclick="searchAddr();"><!-- 값변경못하도록 읽기전용속성값부여하기 ( 데이터넘기기 가능) -->
+        </div>
+        <div class="col-3" >
+          <label for="memAddrDetail" class="form-label">&nbsp;</label>
+         <input type="button" class="btn btn-secondary form-control" onclick="searchAddr();" value="검색" >
+        </div>
+        <div class="col-12" >
+          <input type="text" class="form-control" th:field="*{memAddrDetail}" placeholder="상세주소 입력은 필수입니다.">
+        </div>
+       
+        <div class="col-12">
+          <label for="memEmail" class="form-label">이메일</label>
+          <input type="text" class="form-control" th:field="*{memEmail}"  placeholder="이메일 입력은 필수입니다." >
+     </div>
  
-		  <div class="col-12">
-		    <label for="memTell" class="form-label">연락처(선택)</label>
-		    <input type="text" class="form-control" th:field="*{memTell}"  placeholder="연락처 입력은 선택입니다." >
-	  </div>
+        <div class="col-12">
+          <label for="memTell" class="form-label">연락처(선택)</label>
+          <input type="text" class="form-control" th:field="*{memTell}"  placeholder="연락처 입력은 선택입니다." >
+     </div>
  
-		  <div class="col-12 ">
-		     <label for="memRole" class="form-label ">권한(필수)</label>
-			 <div class="form-check form-check-inline" >
-			  <input class="form-check-input" type="radio"  name="memRole" id="memRole" value="STUDENT" checked>
-			  <label class="form-check-label" for="inlineRadio1">학생 </label>
-			</div>
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="radio"  name="memRole" id="memRole" value="PROFESSOR" >
-			  <label class="form-check-label" for="inlineRadio2">교수</label>
-			</div>
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="radio"  name="memRole" id="memRole" value="ADMIN">
-			  <label class="form-check-label" for="inlineRadio3">교직원</label>
-			</div>
-		</div>
+        <div class="col-12 ">
+           <label for="memRole" class="form-label ">권한(필수)</label>
+          <div class="form-check form-check-inline" >
+           <input class="form-check-input" type="radio"  name="memRole" id="memRole" value="STUDENT" checked>
+           <label class="form-check-label" for="inlineRadio1">학생 </label>
+         </div>
+         <div class="form-check form-check-inline">
+           <input class="form-check-input" type="radio"  name="memRole" id="memRole" value="PROFESSOR" >
+           <label class="form-check-label" for="inlineRadio2">교수</label>
+         </div>
+         <div class="form-check form-check-inline">
+           <input class="form-check-input" type="radio"  name="memRole" id="memRole" value="ADMIN">
+           <label class="form-check-label" for="inlineRadio3">교직원</label>
+         </div>
+      </div>
  
-		  <div class="col-12">
-		    <label for="memBirth" class="form-label">생년월일(선택)</label>
-		    <input type="date" class="form-control" th:field="*{memBirth}"  placeholder="생년월일 입력은 선택입니다." >
-			</div>
-		  
-		  <div class="col-12">
-		    <label for="memGender" class="form-label">성별(선택)</label>
-			  <div class="form-check form-check-inline" >
-			  <input class="form-check-input" type="radio"  name="memGender" id="inlineRadio1" value="Male"  checked>
-			  <label class="form-check-label" for="inlineRadio1">남</label>
-			</div>
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="radio"  name="memGender" id="inlineRadio2" value="Female">
-			  <label class="form-check-label" for="inlineRadio2">여</label>
-			</div>
-		</div>
-		
-		
-		  <div class="col-12">
-		    <label for="memImage" class="form-label">이미지 등록(선택)</label>
- 		    <input type="file" class="form-control"   th:field="*{memImage}"  placeholder="이메일을 입력하세요." >
- 		  </div>
-		  
-		  <div class="d-grid gap-2 col-12 " >
-		    <button type="button" class="btn btn-primary" onclick="checkValid();">회원 등록</button>
-		  </div>
-		</form>
-	</div>
+        <div class="col-12">
+          <label for="memBirth" class="form-label">생년월일(선택)</label>
+          <input type="date" class="form-control" th:field="*{memBirth}"  placeholder="생년월일 입력은 선택입니다." >
+         </div>
+        
+        <div class="col-12">
+          <label for="memGender" class="form-label">성별(선택)</label>
+           <div class="form-check form-check-inline" >
+           <input class="form-check-input" type="radio"  name="memGender" id="inlineRadio1" value="Male"  checked>
+           <label class="form-check-label" for="inlineRadio1">남</label>
+         </div>
+         <div class="form-check form-check-inline">
+           <input class="form-check-input" type="radio"  name="memGender" id="inlineRadio2" value="Female">
+           <label class="form-check-label" for="inlineRadio2">여</label>
+         </div>
+      </div>
+      
+      
+        <div class="col-12">
+          <label for="memImage" class="form-label">이미지 등록(선택)</label>
+           <input type="file" class="form-control"   th:field="*{memImage}"  placeholder="이메일을 입력하세요." >
+         </div>
+        
+        <div class="d-grid gap-2 col-12 " >
+          <button type="button" class="btn btn-primary" onclick="checkValid();">회원 등록</button>
+        </div>
+      </form>
+   </div>
 </div>
 </div>
 

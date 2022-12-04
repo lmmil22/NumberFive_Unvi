@@ -12,13 +12,13 @@
 <body>
 
 <div layout:fragment ="content">
-	<div class="row mt-3 mb-4">
+	<div class="row mt-3 mb-4 me-2 g-3">
 		<div class="col mt-4 mb-4" >
 			<div class="col mt-4 mb-4" style="font-weight: bold; font-size: 22px;">
 				제적 학생조회
 			</div>
 			<form th:action="@{/emp/stuOut}" method="post">
-				<table class="table align-middle text-center">
+				<table class="table align-middle text-center table-bordered">
 					<tr>
 						<td>소속대학</td>
 						<td> 
@@ -55,29 +55,75 @@
 				</table>
 			</form>	
 		</div>
-		<div class="row">
-			<div class="col mb-4 mt-4" style="font-weight: bold; font-size: 22px;">
-				학생목록
-			</div>
-				<table class="table align-middle text-center">
-					<tr>
-						<td>학번</td>
-						<td>이름</td>
-						<td>소속대학</td>
-						<td>소속학과</td>
-						<td>학적</td>
-						<td>제적일자</td>
-						<td>제적사유</td>
-					</tr>
-					<tr th:each="stuOut:${stuOutList}">
-						<td th:text="${stuOut.stuNo}" data-bs-toggle="modal" data-bs-target="#stuOutModal" th:onclick="stuInfo([[${stuOut.stuNo}]]);"></td>
-						<td th:text="${stuOut.memberVO.memName}"></td>
-						<td th:text="${stuOut.collVO.collName}"></td>
-						<td th:text="${stuOut.deptVO.deptName}"></td>
-						<td th:text="${stuOut.stuStatus}"></td>
-						<td th:text="${stuOut.statusInfoVO.stuOutVO.stuOutDate}"></td>
-						<td th:text="${stuOut.statusInfoVO.stuOutVO.stuOutReason}"></td>
-					</tr>
+	</div>
+	
+	<div class="row text-center" style="margin-top:-1.5rem; margin-bottom: 1rem;">
+		<div class="col" style="font: 10px; font-weight: bold;">
+			<div>총 <span th:text="${#lists.size(stuOutList)}" style="color: blue;"></span>명의 학생이 검색되었습니다. </div>
+		</div>
+	</div>	
+		
+		
+		
+	<div class="row mt-4 g-3">
+		<div class="col-12 mb-3">
+			<div>
+				<div class="col-12 mb-3">
+					<table class="table text-center table-bordered" style="margin-bottom: -2rem; width: 1280px">
+						<colgroup>
+							<col width="12%">
+							<col width="13%">
+							<col width="15%">
+							<col width="18%">
+							<col width="9%">
+							<col width="15%">
+							<col width="21%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th>이름</th>
+								<th>학번</th>
+								<th>소속대학</th>
+								<th>소속학과</th>
+								<th>학적</th>
+								<th>제적일자</th>
+								<th>제적사유</th>
+							</tr>
+						</thead>
+					</table>
+				</div>	
+			</div>	
+		</div>
+	</div>	
+	
+	<div class="row mb-4" style="height: 250px; overflow-y: scroll; padding-left: 0px; padding-right: 0px;">
+		<div class="col-12 mb-3" >
+			<table class="table table-hover text-center table-bordered" style="width: 1280px;">
+				<colgroup>
+					<col width="12%">
+					<col width="13%">
+					<col width="15%">
+					<col width="18%">
+					<col width="9%">
+					<col width="15%">
+					<col width="23%">
+				</colgroup>
+				<tbody>
+					<th:block th:if="${#lists.size(stuOutList) == 0}">
+						<tr>
+							<td colspan="7"> 해당 내역이 없습니다.</td>
+						</tr>						
+					</th:block>
+						<tr th:each="stuOut:${stuOutList}">
+							<td th:text="${stuOut.memberVO.memName}"></td>
+							<td th:text="${stuOut.stuNo}" data-bs-toggle="modal" data-bs-target="#stuOutModal" th:onclick="stuInfo([[${stuOut.stuNo}]]);"></td>
+							<td th:text="${stuOut.collVO.collName}"></td>
+							<td th:text="${stuOut.deptVO.deptName}"></td>
+							<td th:text="${stuOut.stuStatus}"></td>
+							<td th:text="${stuOut.statusInfoVO.stuOutVO.stuOutDate}"></td>
+							<td th:text="${stuOut.statusInfoVO.stuOutVO.stuOutReason}"></td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>
@@ -101,7 +147,7 @@
 						    	<span id="stuOutModal_birth"></span>)
 						    </td>
 					        <td rowspan="3" colspan="2">
-					        	<img src="/images/학생2.jpg" width="200px;" height="200px;">
+					        	<img width="200px;" height="200px;" id="stuOutModal_image">
 					        </td>
 						</tr>
 						<tr>

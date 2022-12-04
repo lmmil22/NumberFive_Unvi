@@ -23,7 +23,6 @@
 <!--관리자는 승인대기 버튼 클릭 시 해당 학생의 신청내역을 볼 수 있고
 승인버튼 클릭 시 승인대기 ->승인완료 변경되도록 구현, 체크박스를 통한 일괄 승인 구현-->
 <div layout:fragment ="content">
-<div class="row justify-content-center">
 
 <!--by수경 조건 검색에 사용할 form -->
 <form th:action="@{/emp/changeAddMajor}" method="post" id="searchForm">
@@ -38,8 +37,8 @@
 
 
 <!--by수경 전과신청 현황 테이블  -->
-		<div class="row mt-3">	
-			<div class="col mb-2" style="font-weight: bold; font-size: 22px;">
+		<div class="row mt-4 g-3">	
+			<div class="col mb-4" style="font-weight: bold; font-size: 22px;">
 			 1. 전과신청 접수현황
 			</div>
 		</div>
@@ -85,69 +84,113 @@
 		         </table>
 	         </div>
          </div>
+         <!-- 조건검색 끝 테이블 시작 -->
 		<div class="row">
-			<div class="col mb-5">
-				<table class="table table-bordered text-center">
-				   <tr>
-				   	  <th> <input class="form-check-input" type="checkbox" id="allChk1"></th>
-					  <th>No</th>
-					  <th>이 름</th>
-					  <th>학 번</th>
-					  <th>학 년</th>
-					  <th>전공대학</th>
-					  <th>전공학과</th>
-					  <th>변경전공대학</th>
-					  <th>변경전공학과</th>
-					  <th>신청일</th>
-					  <th>승인여부</th>
-					  <th>SNS</th>
-				    </tr>
-				   <th:block th:if="${#lists.size(changeMajorList) == 0}">
-					    <tr>
-					      <td colspan="12">
-					      	<span>접수된 내역이 없습니다.</span>
-					      </td>
-					    </tr>  
-					</th:block>
-					<th:block th:if="${#lists.size(changeMajorList) != 0}">
-						<tr th:each="changeMajor, status : ${changeMajorList}" >
-					      <td><input type="checkbox" class="check1" th:value="${changeMajor.applyNo}" th:data-stu-no="${changeMajor.stuNo}"></td>
-					      <td th:text="${#lists.size(changeMajorList) - status.index}"></td>
-					      <td th:text="${changeMajor.memName}"></td>
-					      <td th:text ="${changeMajor.stuNo}"></td>
-					      <td th:text="${changeMajor.stuYear}"></td>
-					      <td th:text="${changeMajor.fromColl}"></td>
-					      <td th:text="${changeMajor.fromDept}"></td>
-					      <td th:text="${changeMajor.toColl}"></td>
-					      <td th:text="${changeMajor.toDept}"></td>
-					      <td th:text="${changeMajor.applyDate}"></td>
-					      <td th:onclick="showChangeMajorApply([[${changeMajor.stuNo}]], [[${changeMajor.applyNo}]],[[${changeMajor.processStatus}]]);" 
-					      data-bs-toggle="modal" data-bs-target="#changeMajorModal">
-					      	<th:block th:if="${changeMajor.processStatus eq 'waiting'}">
-					      		<button type="button" class="btn btn-primary">승인</button>
-					      	</th:block>
-					      	<th:block th:unless="${changeMajor.processStatus eq 'waiting'}" th:value="${changeMajor.applyNo}" >
-					      		<button type="button" class="btn btn-primary" disabled>완료</button>
-					      	</th:block>
-					      </td>
-					      <td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
-						</tr>
-					</th:block>
-				</table>
-				<div class="row mt-5">
-					<div class="col text-center">
-						<form th:action="@{/emp/changeAllAccept}" method="post" id="changeForm">
-							<input type="button" value="일괄승인" th:onclick="changeAllAccept();" class="btn btn-primary">
-							<input type="hidden" name="applyNos" value="" id="changeInput1">
-							<input type="hidden" name="stuNos" value="" id="changeInput2">
-						</form>
-					</div>
+			<div class="col mb-3">
+				<div>
+					<div class="col-12 mb-3">
+						<table class="table table-bordered text-center align-middle" style="margin-bottom: -2rem; width: 1280px">
+							<colgroup>
+								<col width="3%">
+								<col width="4%">
+								<col width="6%">
+								<col width="9%">
+								<col width="9.5%">
+								<col width="9%">
+								<col width="12.5%">
+								<col width="9.5%">
+								<col width="12.5%">
+								<col width="12.5%">
+								<col width="7%">
+								<col width="6%">
+							</colgroup>
+						   <thead>
+							   <tr>
+							   	  <th> <input class="form-check-input" type="checkbox" id="allChk1"></th>
+								  <th>No</th>
+								  <th>이 름</th>
+								  <th>학 번</th>
+								  <th>학 년</th>
+								  <th>전공대학</th>
+								  <th>전공학과</th>
+								  <th>변경전공대학</th>
+								  <th>변경전공학과</th>
+								  <th>신청일</th>
+								  <th>승인여부</th>
+								  <th>SNS</th>
+							    </tr>
+						   </thead>
+						</table>
+					</div>	
 				</div>
-			</div>		
+			</div>	
 		</div>
+		
+		<div class="row mb-4" style="height: 200px; overflow-y: scroll; padding-right: 0px;">
+			<div class="col-12 mb-3" >
+			<table class="table table-hover text-center table-bordered" style="width: 1280px;">
+				<colgroup>
+					<col width="3%">
+					<col width="4%">
+					<col width="6%">
+					<col width="9%">
+					<col width="9.5%">
+					<col width="9%">
+					<col width="12.5%">
+					<col width="9.5%">
+					<col width="12.5%">
+					<col width="12.5%">
+					<col width="7%">
+					<col width="6%">
+				</colgroup>
+			
+				<th:block th:if="${#lists.size(changeMajorList) == 0}">
+					<tr>
+					    <td colspan="12">
+					      	<span>접수된 내역이 없습니다.</span>
+					     </td>
+					</tr>  
+				</th:block>
+				<th:block th:if="${#lists.size(changeMajorList) != 0}">
+					<tr th:each="changeMajor, status : ${changeMajorList}" >
+				      <td><input type="checkbox" class="check1 form-check-input" th:value="${changeMajor.applyNo}" th:data-stu-no="${changeMajor.stuNo}"></td>
+				      <td th:text="${#lists.size(changeMajorList) - status.index}"></td>
+				      <td th:text="${changeMajor.memName}"></td>
+				      <td th:text ="${changeMajor.stuNo}"></td>
+				      <td th:text="${changeMajor.stuYear}"></td>
+				      <td th:text="${changeMajor.fromColl}"></td>
+				      <td th:text="${changeMajor.fromDept}"></td>
+				      <td th:text="${changeMajor.toColl}"></td>
+				      <td th:text="${changeMajor.toDept}"></td>
+				      <td th:text="${changeMajor.applyDate}"></td>
+				      <td th:onclick="showChangeMajorApply([[${changeMajor.stuNo}]], [[${changeMajor.applyNo}]],[[${changeMajor.processStatus}]]);" 
+				      data-bs-toggle="modal" data-bs-target="#changeMajorModal">
+				      	<th:block th:if="${changeMajor.processStatus eq 'waiting'}">
+				      		<button type="button" class="btn btn-primary">승인</button>
+				      	</th:block>
+				      	<th:block th:unless="${changeMajor.processStatus eq 'waiting'}" th:value="${changeMajor.applyNo}" >
+				      		<button type="button" class="btn btn-primary" disabled>완료</button>
+				      	</th:block>
+				      </td>
+				      <td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
+					</tr>
+				</th:block>
+				</table>
+			</div>
+		</div>
+		
+			<div class="row mt-2 mb-4">
+				<div class="col text-center">
+					<form th:action="@{/emp/changeAllAccept}" method="post" id="changeForm">
+						<input type="button" value="일괄승인" th:onclick="changeAllAccept();" class="btn btn-primary">
+						<input type="hidden" name="applyNos" value="" id="changeInput1">
+						<input type="hidden" name="stuNos" value="" id="changeInput2">
+					</form>
+				</div>
+			</div>
 <!--by수경 복수전공신청 현황 테이블-->		
-		<div class="row mt-3">	
-			<div class="col mb-2" style="font-weight: bold; font-size: 22px;">
+		<div class="row mt-4 g-3">	
+			<div class="col mb-4" style="font-weight: bold; font-size: 22px;">
 			 2. 복수전공신청 접수현황
 			</div>
 		</div>
@@ -193,68 +236,109 @@
 		         </table>
 	         </div>
          </div>
+	<!-- 조건검색 끝 테이블시작	-->
 		<div class="row">
-			<div class="col mb-5">
-				<table class="table table-bordered text-center">
-				   <tr>
-				   	  <th><input class="form-check-input" type="checkbox" id="allChk2"></th>
-					  <th>No</th>
-					  <th>이 름</th>
-					  <th>학 번</th>
-					  <th>학 년</th>
-					  <th>전공대학</th>
-					  <th>전공학과</th>
-					  <th>복수전공대학</th>
-					  <th>복수전공학과</th>
-					  <th>신청일</th>
-					  <th>승인여부</th>
-					  <th>SNS</th>
-				    </tr>
-				    
-				    <th:block th:if="${#lists.size(doubleMajorList) == 0}">
-				    <tr>
-				      <td colspan="12">
-				      	<span>접수된 내역이 없습니다.</span>
-				      </td>
-				    </tr>  
-					</th:block>
-				    <th:block th:if="${#lists.size(doubleMajorList) != 0}">
-					<tr th:each="doubleMajor, status: ${doubleMajorList}">
-					  <td><input type="checkbox" class="check2" th:value="${doubleMajor.applyNo}" th:data-stu-no ="${doubleMajor.stuNo}"></td>
-				      <td th:text="${#lists.size(doubleMajorList) - status.index}"></td>
-				      <td th:text="${doubleMajor.memName}"></td>
-				      <td th:text="${doubleMajor.stuNo}"></td>
-				      <td th:text="${doubleMajor.stuYear}"></td>
-				      <td th:text="${doubleMajor.fromColl}"></td>
-				      <td th:text="${doubleMajor.fromDept}"></td>
-				      <td th:text="${doubleMajor.doubleMajorColl}"></td>
-				      <td th:text="${doubleMajor.doubleMajorDept}"></td>
-				      <td th:text="${doubleMajor.applyDate}"></td>
-				      <td th:onclick="showDoubleMajorApply([[${doubleMajor.stuNo}]], [[${doubleMajor.applyNo}]],[[${doubleMajor.processStatus}]]);" data-bs-toggle="modal" data-bs-target="#doubleMajorModal">
-				      		<th:block th:if="${doubleMajor.processStatus eq 'waiting'}">
-					      		<button type="button" class="btn btn-primary">승인</button>
-					      	</th:block>
-					      	<th:block th:unless="${doubleMajor.processStatus eq 'waiting'}">
-					      		<button type="button" class="btn btn-primary" disabled>완료</button>
-					      	</th:block>
-				      </td>
-				      <td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
-					</tr>
-					</th:block>
-				</table>
-				<div class="row mt-5">
-					<div class="col text-center">
-						<form th:action="@{/emp/doubleAllAccept}"method="post" id="doubleForm">
-							<input type="button" value="일괄승인" th:onclick="doubleAllAccept();"  class="btn btn-primary">
-							<input type="hidden" name="applyNos" value="" id="doubleInput1">
-							<input type="hidden" name="stuNos" value="" id="doubleInput2">
-						</form>
-					</div>
+			<div class="col mb-3">
+				<div>
+					<div class="col-12 mb-3">
+						<table class="table table-bordered text-center align-middle" style="margin-bottom: -2rem; width: 1280px">
+							<colgroup>
+								<col width="3%">
+								<col width="4%">
+								<col width="6%">
+								<col width="9%">
+								<col width="9.5%">
+								<col width="9%">
+								<col width="12.5%">
+								<col width="9.5%">
+								<col width="12.5%">
+								<col width="12.5%">
+								<col width="7%">
+								<col width="6%">
+							</colgroup>
+						<thead>
+						   <tr>
+						   	  <th><input class="form-check-input" type="checkbox" id="allChk2"></th>
+							  <th>No</th>
+							  <th>이 름</th>
+							  <th>학 번</th>
+							  <th>학 년</th>
+							  <th>전공대학</th>
+							  <th>전공학과</th>
+							  <th>복수전공대학</th>
+							  <th>복수전공학과</th>
+							  <th>신청일</th>
+							  <th>승인여부</th>
+							  <th>SNS</th>
+						    </tr>
+						</thead> 
+					</table>    
+				</div>	    
+			</div>	
+		</div>		
+	</div>		
+		
+		<div class="row mb-4" style="height: 200px; overflow-y: scroll; padding-right: 0px;">
+			<div class="col-12 mb-3" >
+				<table class="table table-hover text-center table-bordered" style="width: 1280px;">
+						<colgroup>
+							<col width="3%">
+							<col width="4%">
+							<col width="6%">
+							<col width="9%">
+							<col width="9.5%">
+							<col width="9%">
+							<col width="12.5%">
+							<col width="9.5%">
+							<col width="12.5%">
+							<col width="12.5%">
+							<col width="7%">
+							<col width="6%">
+						</colgroup>
+					    <th:block th:if="${#lists.size(doubleMajorList) == 0}">
+					    <tr>
+					      <td colspan="12">
+					      	<span>접수된 내역이 없습니다.</span>
+					      </td>
+					    </tr>  
+						</th:block>
+					    <th:block th:if="${#lists.size(doubleMajorList) != 0}">
+						<tr th:each="doubleMajor, status: ${doubleMajorList}">
+						  <td><input type="checkbox" class="check2 form-check-input" th:value="${doubleMajor.applyNo}" th:data-stu-no ="${doubleMajor.stuNo}"></td>
+					      <td th:text="${#lists.size(doubleMajorList) - status.index}"></td>
+					      <td th:text="${doubleMajor.memName}"></td>
+					      <td th:text="${doubleMajor.stuNo}"></td>
+					      <td th:text="${doubleMajor.stuYear}"></td>
+					      <td th:text="${doubleMajor.fromColl}"></td>
+					      <td th:text="${doubleMajor.fromDept}"></td>
+					      <td th:text="${doubleMajor.doubleMajorColl}"></td>
+					      <td th:text="${doubleMajor.doubleMajorDept}"></td>
+					      <td th:text="${doubleMajor.applyDate}"></td>
+					      <td th:onclick="showDoubleMajorApply([[${doubleMajor.stuNo}]], [[${doubleMajor.applyNo}]],[[${doubleMajor.processStatus}]]);" data-bs-toggle="modal" data-bs-target="#doubleMajorModal">
+					      		<th:block th:if="${doubleMajor.processStatus eq 'waiting'}">
+						      		<button type="button" class="btn btn-primary">승인</button>
+						      	</th:block>
+						      	<th:block th:unless="${doubleMajor.processStatus eq 'waiting'}">
+						      		<button type="button" class="btn btn-primary" disabled>완료</button>
+						      	</th:block>
+					      </td>
+					      <td th:onclick="sendKakao();"><img src="/images/kakao.png"></td>
+						</tr>
+						</th:block>
+					</table>
+				</div>	
+			</div>	
+				
+			<div class="row mt-2 mb-4">
+				<div class="col text-center">
+					<form th:action="@{/emp/doubleAllAccept}"method="post" id="doubleForm">
+						<input type="button" value="일괄승인" th:onclick="doubleAllAccept();"  class="btn btn-primary">
+						<input type="hidden" name="applyNos" value="" id="doubleInput1">
+						<input type="hidden" name="stuNos" value="" id="doubleInput2">
+					</form>
 				</div>
 			</div>		
-		</div>		
-	</div>
-	
+
 	
 	
 	<!--by수경 전과 신청 현황에서 승인대기 클릭 시 뜨는 전과 신청서 -->

@@ -49,8 +49,6 @@ function stuInfo(stuNo){
 	    type: 'post',
 	    data:{'stuNo':stuNo}, //필요한 데이터
 	    success: function(result) {
-			//학사경고 사유/날짜 부분의 데이터를 지운다
-			$('.probationTb').empty();
 		
 			document.querySelector('#probationModal_name').innerText = result.studentVO.memberVO.memName;
 		    document.querySelector('#probationModal_birth').innerText = result.studentVO.memberVO.memBirth;
@@ -62,9 +60,14 @@ function stuInfo(stuNo){
 		    document.querySelector('#probationModal_coll').innerText = result.studentVO.collNo;
 		    document.querySelector('#probationModal_dept').innerText = result.studentVO.deptNo;
 		    document.querySelector('#probationModal_memNo').value = result.studentVO.memNo;
+		    //alert(('/images/' + result.studentVO.memberVO.memImage));
+		    document.querySelector('#probationModal_memImage').src = ('/images/' + result.studentVO.memberVO.memImage);
 		    //이메일 보내기를 위하여 히든으로 가져갈 데이터 
 		    document.querySelector('#probationModal_memEmail').value = result.studentVO.memberVO.memEmail;
 			
+			//학사경고 사유/날짜 부분의 데이터를 지운다
+			$('.probationTb').empty();
+					
 	     	let str ='';
 	     	str += '<tr>';
 	     	str += '<td colspan="6">누적 경고 내역</td>';
@@ -125,6 +128,8 @@ function stuOut(stuNo){
 		    document.querySelector('#stuOut_birth').innerText = result.studentVO.memberVO.memBirth;
 		    document.querySelector('#stuOut_tell').innerText = result.studentVO.memberVO.memTell;
 		    document.querySelector('#stuOut_addr').innerText = result.studentVO.memberVO.memAddr;
+		    //alert(('/images/'+ result.studentVO.memberVO.memImage));
+		    document.querySelector('#stuOut_image').scr = ('/images/'+ result.studentVO.memberVO.memImage);
 		    document.querySelector('#stuOut_no').innerText = result.studentVO.stuNo;
 		    document.querySelector('#stuOut_grade').innerText = result.studentVO.stuYear;
 		    document.querySelector('#stuOut_status').innerText = result.studentVO.stuStatus;
@@ -166,7 +171,6 @@ function acceptProbation(){
 	const probReason = document.querySelector('#probReason').value;
 	const semNo = document.querySelector('#semNo').value;
 	const memNo = document.querySelector('#probationModal_memNo').value;
-	
 
 	Swal.fire({
 		  title: '학사경고',

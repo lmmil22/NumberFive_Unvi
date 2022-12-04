@@ -54,6 +54,7 @@ function stuInfo(stuNo){
 		    document.querySelector('#stuOutModal_birth').innerText = result.studentVO.memberVO.memBirth;
 		    document.querySelector('#stuOutModal_tell').innerText = result.studentVO.memberVO.memTell;
 		    document.querySelector('#stuOutModal_addr').innerText = result.studentVO.memberVO.memAddr;
+		    document.querySelector('#stuOutModal_image').src = ('/images/'+ result.studentVO.memberVO.memImage);
 		    document.querySelector('#stuOutModal_no').innerText = result.studentVO.stuNo;
 		    document.querySelector('#stuOutModal_grade').innerText = result.studentVO.stuYear;
 		    document.querySelector('#stuOutModal_status').innerText = result.studentVO.stuStatus;
