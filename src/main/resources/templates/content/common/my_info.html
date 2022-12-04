@@ -22,6 +22,7 @@
 	
 	<!-- 부트스트랩-폼태그 -->
 	<form id="updateMemInfoForm"  th:action="@{/member/updateMemInfo}" method="post" object="">
+	<input type="hidden" th:name="${#authentication.name}">
 	 <div class="row justify-center-center" style="padding-left : 30%; padding-right: 30%;">    
 		  <div class="col-md-6">
 		    <label for="inputEmail4" class="form-label"> 학번/교번 </label>
@@ -88,105 +89,6 @@
 		  
 		 </div>
 		</form>
-	
-	
-	
-	<!-- 다른 form태그 부트스트랩에서 가져온것 필요할 때 복붙하여 사용하려고 나둠  -->
-	<!-- <form id="updateMemInfoForm" >
-	  <div class="row justify-center-center" style="padding-left : 30%; padding-right: 30%;"  > 
-	  <div class="col-md">
-	    <label for="validationServer01" class="form-label"> 학번/교번</label>
-	    <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required>
-	    <div class="valid-feedback">
-	      Looks good!
-	    </div>
-	  </div>
-	 
-	  <div>
-		  <div class="col-md">
-		    <label for="validationServer02" class="form-label">비밀번호</label>
-		    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
-		    <div class="valid-feedback">
-		      Looks good!
-		    </div>
-		  </div>
-	  </div>
-	  
-	  <div>
-		  <div class="col-md">
-		    <label for="validationServer02" class="form-label">이름</label>
-		    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
-		    <div class="valid-feedback">
-		      Looks good!
-		    </div>
-		  </div>
-	  </div>
-	  
-	  <div>
-		  <div class="col-md">
-		    <label for="validationServer02" class="form-label">이메일</label>
-		    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
-		    <div class="valid-feedback">
-		      Looks good!
-		    </div>
-		  </div>
-	  </div>
-	  
-	  <div>
-		  <div class="col-md">
-		    <label for="validationServer02" class="form-label">주소</label>
-		    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
-		    <div class="valid-feedback">
-		      Looks good!
-		    </div>
-		  </div>
-	  </div>
-	  <div>
-		  <div class="col-md">
-		    <label for="validationServer02" class="form-label">연락처</label>
-		    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
-		    <div class="valid-feedback">
-		      선택사항입니다.
-		    </div>
-		  </div>
-	  </div>
-	  
-	  <div class="col-md">
-	    <label for="validationServer04" class="form-label">성별</label>
-	    <select class="form-select is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
-	      <option selected disabled value="">남</option>
-	      <option>여</option>
-	    </select>
-	    <div id="validationServer04Feedback" class="invalid-feedback">
-	      선택사항입니다.
-	    </div>
-	  </div>
-	  
-	  <div>
-		  <div class="col-md">
-		    <label for="validationServer02" class="form-label">생년월일</label>
-		    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
-		    <div class="valid-feedback">
-		      선택사항입니다.
-		    </div>
-		  </div>
-	  </div>
-	  
-	  <div class="col-md">
-	    <label for="validationServer05" class="form-label">이미지 첨부</label>
-	    <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
-	    <div id="validationServer05Feedback" class="invalid-feedback">
-	      선택사항입니다. 본인증명사진을 업로드하세요.
-	    </div>
-	  </div>
-	  
-	  <div align="center" class="col-12">
-	    <button class="btn btn-primary" type="submit">Submit form</button>
-	  </div>
-	  
-	 </div>
-	</form> -->
-		
 	
 	</div>
 </div>

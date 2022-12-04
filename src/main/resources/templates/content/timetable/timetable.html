@@ -34,13 +34,13 @@
 	    <div class="row" style="width: 60%;">
 	    <!-- 부제목줄 영억 (학번소개 + 다운로드 버튼)-->
 	    	<!-- 해당 학생 학번영역 -->
-	   	 	<div class="col-6 mt-5 text-start" style="padding-top: 5px;" > 
-	   	 		※ [[${memberVO.memName}]] (<span sec:authentication="name"></span>)님의 시간표입니다. 
+	   	 	<div class="col-8 mt-5 text-start" style="padding-top: 5px;" > 
+	   	 		※ [[${memberVO.memName}]] (<span sec:authentication="name"></span>)님의 수업시간표입니다. 
 	   	 	</div>
 	   	 	<!-- 다운로드 버튼 영역 -->
-	   	 	<div class="col-6 mt-5 text-end" > 
+	   	 	<div class="col-4 mt-5 text-end" > 
 	   	 		<button type="button" class="btn btn-light" onclick="/timetable/download">PDF 다운로드</button>
-	   	 		<a th:href="@{/proF/download(lecNo = ${enroll.lecNo})}" >PDF 다운로드</a> <!-- 수강신청후 강의자료 다운 -->
+	   	 		<a href="/download/myFile.pdf">파일 다운로드</a><!-- 구글링소스 -->
 	   	 	 </div>
 	   	 	<!-- 테이블 영역 --> 
 			<table class="col-12 table mt-5 ">
@@ -150,7 +150,7 @@
 	</div>
 	<!-- //////////////////////// -->
 	
-<script type="text/javascript" th:src="@{/js/timetable/timetable.js}"></script>
-	
+<!-- <script type="text/javascript" th:src="@{/js/timetable/timetable.js}"></script>
+	 -->
 </div>
 </html>

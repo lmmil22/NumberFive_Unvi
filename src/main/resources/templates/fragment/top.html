@@ -44,6 +44,10 @@
 				    <label for="memberPw" class="form-label">PASSWORD</label>
 				    <input type="password" class="form-control" name="password"  id="memPw" placeholder="비밀번호를 입력하세요.">
 				  </div>
+				  <!-- 비밀번호 이메일로 찾기 :임시비밀번호발급 -->
+				  <div class="mb-3">
+				 		<a data-bs-toggle="modal" data-bs-target="#myModal" style="color: #3D8361; font-weight: bold;">비밀번호찾기</a>
+				  </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 			        <button type="submit" class="btn btn-primary">Login</button> <!-- 버튼클릭하면 404에러뜸. 페이지못찾음-> 시큐리티config에서 설정??? -->
@@ -178,7 +182,58 @@
 	    </div>
 	  </div> 
 	</div> 
+	
+<!--  ////////////////////////////////////////////////  모달 영역 //////////////////////////////////////////////// - ->
+		<!--  스프링부트로 이메일 비밀번호찾기 -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content -->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4>
+							<span class="glyphicon glyphicon-lock"></span> [이메일로 비밀번호 찾기]
+						</h4>
+					</div>
+					<div class="modal-body" style="padding: 30px 40px;">
+						<div style="color: #ac2925">
+							<center>입력된 정보로 임시 비밀번호가 전송됩니다.</center>
+						</div>
+						<hr>
+						<form role="form" th:action="@{/member/checkAndSendEmail}"
+							method="post">
+							<div class="form-group">
+								<label for="userEmail"><span
+									class="glyphicon glyphicon-user"></span>이메일</label> <input
+									name="memEmail" type="text" class="form-control" id="userEmail"
+									placeholder="가입시 등록한 이메일을 입력하세요.">
+							</div>
+							<div class="form-group">
+								<label for="userName"><span
+									class="glyphicon glyphicon-eye-open"></span> 학번/교번</label> <input
+									name="memNo" type="text" class="form-control" id="userName"
+									placeholder="학번 및 교번을 입력하세요.">
+							</div>
+							<div align="center" style="margin-top: 15px;">
+								<button type="submit" class="btn btn-success btn-block"
+									id="checkEmail">전송</button>
+							</div>
+						</form>
+						<hr>
+						<div class="text-center small mt-2" id="checkMsg"
+							style="color: red"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
+		
+<script type="text/javascript" th:src="@{/js/common/home_Login.js}"></script>
+		
+<!-- 모달영역 끝////////////////////////////////////////////////////////////////////////////  -->
 <!-- 별도 파일 불러오는 영역 -->
 <script type="text/javascript" th:src="@{/js/common/top.js}"></script>
 

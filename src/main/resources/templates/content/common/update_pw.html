@@ -1,0 +1,49 @@
+<!-- by  유빈 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/base_layout}">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{}">
+</th:block>
+<div layout:fragment="content">
+
+<div class="row justify-content-center" style="padding:1%;" >
+	<div class="col-12">
+	
+		<!-- 제목줄 -->
+		<div class="row mb-5">
+			<div class="col">
+				<div align="center">
+				 <h1> [ 임시비밀번호 변경 ]</h1>
+				</div>
+			 </div>
+		</div>
+		
+		<!-- 부트스트랩-폼태그 -->
+		<form id="checkPwFormTag"  th:action="@{/member/updatePw}" method="post" object="">
+		 	<div class="row justify-center-center" style="padding-left : 30%; padding-right: 30%;">    
+			  <div class="col-12">
+			    <label for="inputPassword4" class="form-label">비밀번호</label>
+			    <span style="color: red; font-size: 0.7rem;"> ※ 영문 및 숫자 조합 8자리 이상 ~ 15자리 이하 </span>
+			    <input type="password" class="form-control is-invalid" id="memPw1"  placeholder="비밀번호를 입력하세요." aria-describedby="validationServer05Feedback" required>
+			  </div>
+			  <div class="col-12">
+			    <label for="inputPassword4" class="form-label">비밀번호 재입력</label>
+			    <input type="password" class="form-control" id="memPw2"  placeholder="비밀번호를 재입력하세요." required>
+			  </div>
+			  <div align="center" class="col-12 mt-3">
+			    <button type="submit" class="btn btn-primary" >변경 완료</button>
+			  </div>
+		 	</div>
+		</form>
+	
+	
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>	
+<script type="text/javascript" th:src="@{/js/common/update_pw.js}"></script>	 
+
+</div>
+</html>

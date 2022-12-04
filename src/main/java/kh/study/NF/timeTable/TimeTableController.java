@@ -47,8 +47,6 @@ public class TimeTableController {
 		memNo = user.getUsername();
 		model.addAttribute("memberVO",memberService.selectMemberDetail(memNo));
 		
-		
-		
 		return "content/timetable/timetable";
 	}
 	
@@ -60,32 +58,6 @@ public class TimeTableController {
 	}
 	
 	// 강의시간표 pdf 버튼클릭시 다운로드
-	@GetMapping("/download")
-	public ResponseEntity<Object> download(String lecNo) {
-		LecturePdfVO attachedInfo = professorService.selectLecPdf(lecNo);
-		// (유빈 경로)
-		String path = "C:\\workSpaceSTS_TEAM\\NumberFive_Unvi\\src\\main\\resources\\static\\pdf\\" + attachedInfo.getAttachedPdfName();
-		
-		try {
-			Path filePath = Paths.get(path);
-			org.springframework.core.io.Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
-			
-			File file = new File(path);
-			
-			HttpHeaders headers = new HttpHeaders();
-			
-			System.out.println(attachedInfo.getOriginPdfName()+"!!!!!!");
-			
-			String downloadName =  new String(attachedInfo.getOriginPdfName().getBytes("UTF-8"), "ISO-8859-1");
-			
-			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(downloadName).build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
-			
-			return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
-		} catch(Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
-		}
-	}
 	
 	
 }

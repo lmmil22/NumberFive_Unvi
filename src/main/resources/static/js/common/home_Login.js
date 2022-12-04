@@ -34,19 +34,65 @@ function searchAddr() {
 //로그인 기능 함수(ajax로 로그인실행시 진행) 
 function sendEmail(loginInfo) {
 	//[[${sessionScope.loginInfo}]] js에서 데이터가져오는 방법
-	const member_no = login_modal_home.querySelector('#memNo').value;
-	const member_name = login_modal_home.querySelector('#memName').value;
-	const member_email = login_modal_home.querySelector('#memEmail').value;
+	const findPwNo = login_modal_home.querySelector('#findPwNo').value;
+	const findPwEmail = login_modal_home.querySelector('#findPwEmail').value;
+	
+	
+	
+	$.ajax({
+            type: "GET",
+            url: "/mail/check/findPw",
+            data: {
+                "findPwNo": findPwNo,
+                "findPwEmail": findPwEmail
+            },
+            success: function (res) {
+                if (res['check']) {
+                    swal("발송 완료!", "입력하신 이메일로 임시비밀번호가 발송되었습니다.", "success").then((OK) => {
+                        if(OK) {
+                            $.ajax({
+                                type: "POST",
+                                url: "/mail/check/findPw/sendEmail",
+                                data: {
+                                    "userEmail": userEmail,
+                                    "userName": userName
+                                }
+                            })
+                            window.location = "/login";
+                        }
+
+
+                    }
+                )
+                    $('#checkMsg').html('<p style="color:darkblue"></p>');
+                } else {
+                    $('#checkMsg').html('<p style="color:red">일치하는 정보가 없습니다.</p>');
+                }
+            }
+        })
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 		//ajax start
 		//$을 사용하려면, 제이쿼리 문법이기때문에 자스보다 먼저 로딩해야한다
-		$.ajax({
+		/*$.ajax({
 			url: '/member/ajaxLogin', //요청경로
 			type: 'post',
 			data: { 'memNo':member_no ,'memName' :member_name ,'memEmail' :member_email,'loginInfo' : loginInfo }, //필요한 데이터
 			success: function(result) {
 				alert(result);
-				if(result) {/*loginInfo 값이 null아니면(false)*/
+				if(result) {/*loginInfo 값이 null아니면(false)
 					alert('로그인 성공!!!');
 					location.href='/member/homeLogin';
 				}
@@ -57,7 +103,7 @@ function sendEmail(loginInfo) {
 			error: function() {
 				alert('로그인 실패');
 			}
-		});
+		});*/
 		//ajax end
 }
 

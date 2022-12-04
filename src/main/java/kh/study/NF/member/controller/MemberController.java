@@ -110,6 +110,7 @@ public class MemberController {
       System.out.println("로그인 결과");
       return "content/common/login_result";
    }   
+  
 //-------------------------------------------------------------------------------------------///   
    // 이메일로 비밀번호 찾기 (ajax.ver) -> 모달 ajax사용 (ajaxlogin이라는 버튼을 클릭시)
    //@ResponseBody //ajax사용할때(단,리턴값은 필요한 데이터만! html페이지가 아님!)
@@ -119,21 +120,14 @@ public class MemberController {
       MemberVO loginInfo = memberService.findPw(memberVO);
       
       
-      System.out.println(loginInfo+"___________________________________");
-      System.out.println(loginInfo+"___________________________________");
-      System.out.println(loginInfo+"___________________________________");
-      System.out.println(loginInfo+"___________________________________");
+      System.out.println(loginInfo+"_________________<----- 로그인정보__________________");
       
       // 로그인 정보 시큐리티로(암호화) 이용
       if(loginInfo != null) {
          System.out.println("____________현재 로그인 상태는?______________ "+ loginInfo);
          
-         // ----------------------------세션으로 로그인 일때 ,session.setAttribute("loginInfo", loginInfo);
-         // 시큐리티로 로그인 일때,
-         // 이메일로 임시비밀번호 전송하기.
          // 수신 대상을 담을 arrayList 생성
           ArrayList<String> toUerList = new ArrayList<>();
-          
           //수신 대상 추가
           toUerList.add(memEmail);
           //메일 발송
@@ -141,26 +135,27 @@ public class MemberController {
           
           System.out.println("________________ 이메일 발송 성공_________________");
           
-          //문제점발생
-          // 여기서부터 프로젝트 다시 시작하면된다. 현재상태 : 업데이트쿼리문이 실행되지 않는 상태이다...
-          // 그러면 회원가입을 진행하고 시큐리티 암호화작업들어가면서 비밀번호 생성해보자. 
-          
           //주석풀기
           // 아래처럼 암호화된 비밀번호를 넣어서 업데이트해야한다.
          //memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 
-          // 임시발급비밀번호로 업데이트하기
-          //memberService.updatePw(memberVO);
-          
-          return "content/common/home_Login";
-         
+          return "content/common/update_pw";
       } 
       System.out.println("  ________________  현재 로그인 상태는?  ___________________   " + loginInfo);//null
       
-      // 바로 loginInfo를 주지않고 삼항연산자 사용한다
-      //return loginInfo == null? false :true;//자료형 boolean
-      return "redirect:/member/homeLogin";//login상태가 null일때
+      return "redirect:/member/homeLogin";//login상태가 null일때, alert으로 올바르지않은 이메일과 학번/교번이라 뜨면서 다시 입력하세요라고한다ㅏ
    }
+ //-------------------------------------------------------------------------------------------///   
+   @GetMapping("/updatePw")
+   public String updatePwForm() {
+	   System.out.println("비밀번호변경 페이지 이동 성공!!!!");
+	   return "content/common/update_pw";
+   }    
+   @PostMapping("/updatePw")
+   public String updatePw() {
+	   System.out.println("이메일로 발급된 임시비밀번호에서 다시 비밀번호수정해서 변경시키면 form태그로 넘어오기 성공!!!!");
+	   return "redirect:/member/homeLogin";
+   }    
 //-------------------------------------------------------------------------------------------///   
    
    // ajax로 이메일 임시비밀번호 발급 후 이동 페이지 
@@ -173,6 +168,8 @@ public class MemberController {
       
       return "content/common/after_Login";
    }
+//-------------------------------------------------------------------------------------------///   
+
    // 미사용 //로그인 후 첫 화면 > 다시 홈화면
    @GetMapping("/afterLogin")
    public String afterLogin(boolean isLoginFail, Model model) {

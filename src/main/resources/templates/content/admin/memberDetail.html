@@ -11,19 +11,21 @@
 <!-- by지아 학생의 상세 정보 -->
 
 <div layout:fragment="content"> 
-<style>
-  table, th, td {
-    border: 1px solid #bcbcbc;
-  }
-  table {
-    width: 700px;
-    height: 200px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 4px solid #bcbcbc;
-    border-collapse: collapse;
-  }
-</style>
+<th:block>
+	<style>
+	  table, th, td {
+	    border: 1px solid #bcbcbc;
+	  }
+	  table {
+	    width: 700px;
+	    height: 200px;
+	    margin-left: auto;
+	    margin-right: auto;
+	    border: 4px solid #bcbcbc;
+	    border-collapse: collapse;
+	  }
+	</style>
+</th:block> 
 	<div>
 		<form th:action="@{/admin/updateForm}" method="post" id="memInfoForm">
 		
