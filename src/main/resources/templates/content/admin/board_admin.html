@@ -13,7 +13,7 @@
 	<div class="row justify-center-center mt-3 mb-3" style="width: 80%;">
 		<div class="col">
 			<!-- 제목줄 -->
-			<h3> 카테고리등록 </h3>
+			<h3> [ 관리자 게시판 ]</h3>
 			<!-- 등록 줄 -->
 			<form th:action="@{/board/regCate}" method="post" th:object="${boardCategoryVO}">
 			<input type="hidden" th:field="*{cateNo}">
@@ -63,14 +63,16 @@
 							<colgroup>
 								<col width="*%">
 								<col width="10%">
-								<col width="45%">
-								<col width="35%">
+								<col width="20%">
+								<col width="40%">
+								<col width="30%">
 							</colgroup>
 							<tr>
 								<th><input type="checkbox" id="checkAll" checked="checked"></th>
 								<th>No.</th>
-								<th align="center">게시판 카테고리명</th>
-								<th>사용여부</th>
+								<th>카테고리번호</th>
+								<th>게시판 카테고리명</th>
+								<th style="text-align: center;">사용여부</th>
 							</tr>
 							 <tbody>
 								<th:block th:if="${#lists.size(cateList) != 0}">
@@ -79,6 +81,7 @@
 										<td>
 								      		<span th:text="${status.index+1}"></span>
 								      	</td>
+										<td th:text="${cate.cateNo}" ></td>
 										<td th:text="${cate.cateName}"></td>
 										<!-- <td th:text="${cate.isUse}"></td> -->
 										<td id="isUseId">
@@ -98,7 +101,7 @@
 									</tr>
 								</th:block>
 								<th:block th:unless="${#lists.size(cateList) != 0}">
-										<td colspan="4" align="center">조회된 카테고리 목록이 없습니다.</td>
+										<td colspan="5" align="center">조회된 카테고리 목록이 없습니다.</td>
 								</th:block>
 							</tbody> 
 						</table>
@@ -138,28 +141,9 @@
     </div>
   </div>
 </div>
-
-
-	<!-- <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-body">
-	       <div class="row mb-3">
-	       		<div class="col">
-			        카테고리의 사용여부를 변경했습니다.
-	       		</div>
-	       </div>
-	       <div class="row">
-	       		<div class="col text-end">
-			         <button type="button" class="btn btn-primary  btn-sm" data-bs-dismiss="modal" 
-			         		style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 1.5rem; --bs-btn-font-size: 1rem;" >확인</button>
-	       		</div>
-	       </div>
-	      </div>
-	    </div>
-	  </div>
-	</div> -->
 <!-- //////////////////////////////////////////// < 끝 >  //////////////////////////////////////////// -->	
+
+
 <script type="text/javascript" th:src="@{/js/admin/board_admin.js}"></script>
 
 </div>

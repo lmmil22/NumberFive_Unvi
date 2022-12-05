@@ -8,23 +8,21 @@
 </th:block>
 
 <div layout:fragment="content">
-<!-- board 게시판 제목줄 -->
-	<div align="center" class="row">
-		<div class="col">
-			<h1>B O A R D</h1>
+	<div align="center" class="row" >
+		<!-- board 게시판 제목줄 -->
+		<div class="col-12">
+			<h1>TOTAL BOARD </h1>
 		</div>
-	</div>
-	
-<!-- 제목/내용 셀렉트박스 선택  + 키워드검색 -->
+	<!-- 제목/내용 셀렉트박스 선택  + 키워드검색 -->
 	<!--  부트스트랩 검색기능 -->
-	<div class="row mt-5 mb-3">
+	<div class="row mt-5 mb-5">
 		<div class="col">
 		<form th:action="@{/board/list}" method="post">
 			<div align="center" id="search-container">
 				<nav class="row navbar bg-light">
 				<div class="col-1 container-fluid "></div><!--열맞추기용 -->
 				<div class="col-3 container-fluid ">
-					<select name="searchKeyword" class="form-select" aria-label="Default select example">
+					<select  name="searchKeyword" class="form-select " aria-label="Default select example">
 						  <!-- value값을 두개가져오니까 split을 사용해서 배열을 for문으로 돌려서 데이터 추출? -->
 						  <option value="ALL" th:selected="${boardVO.searchKeyword == 'ALL'}">전체</option>
 						  <option value="BOARD_TITLE" 	th:selected="${boardVO.searchKeyword == 'BOARD_TITLE'}">제목</option>
@@ -32,92 +30,26 @@
 						  <option value="BOARD_WRITER"  th:selected="${boardVO.searchKeyword == 'BOARD_WRITER'}">작성자</option>
 					</select>
 				</div>
-				<div class="col-3 container-fluid">
-				      <input name="searchValue"  th:value="${boardVO.searchValue}" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+				<div class="col-4 container-fluid">
+				      <input id="searchKeywordTag" name="searchValue"  th:value="${boardVO.searchValue}" class="form-control me-2" type="search" placeholder="검색하실 키워드를 입력하세요." aria-label="Search">
 				</div>
 		    	 <!-- 검색 버튼 영역 -->
 			    <div class="col-2 container-fluid">
-					 <button class="btn btn-outline-success" type="submit">검색</button>
+					 <button id="searchBtn" class="btn btn-outline-success" type="submit">검색</button>
 			    </div>
-				<div class="col-1 container-fluid"></div> <!--열맞추기용 -->
+				<!-- <div class="col-1 container-fluid"></div> --> <!--열맞추기용 -->
 			     <!-- 글쓰기 등록 버튼 영역 -->
 			    <div class="col-2 container-fluid">
-				     <button  sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-success" th:onclick="@{location.href='/board/reg';}">글쓰기</button>
+				     <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-success" th:onclick="@{location.href='/board/reg';}">글쓰기</button>
 			    </div>
 				</nav>
 			</div>
 		</form>
 		</div>
 	</div>
-
-<!-- 부산대학교 학생지원시스템 레퍼런스 : 게시판 종류별 메뉴클릭 탭 바 (카테고리별) -->
-	<div class="row">
-	<div class="col-xl-7 order-xl-last">
-		<section class="sec-1 sec-smart-board">
-			<!-- 탭 -->
-			<ul class="nav nav-tabs" id="tablist">
-				<li class="nav-item">
-					<a class="nav-link active" id="board-tab-1" data-toggle="tab" href="#board-tabpanel-1" data-selected="true" data-lang="" title="선택됨" >학생지원시스템공지</a>
-					<div class="tab-content">
-						<!-- '학생지원' 탭 패널 -->
-					</div>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="board-tab-2" data-toggle="tab" href="#board-tabpanel-2" data-selected="false" onclick="f_pnuNotice('10');return false;" onkeypress="this.onclick;" data-lang="">대학공지</a>
-					<div class="tab-content">
-						<!-- '대학공지' 탭 패널 -->
-						<div class="tab-pane fade" id="board-tabpanel-2" aria-labelledby="board-tab-2">
-							<p class="non-info mb" data-lang="">조회된 게시물이 없습니다.</p>
-							
-						</div>
-					</div>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="board-tab-3" data-toggle="tab" href="#board-tabpanel-3" data-selected="false" onclick="f_getDepartConfig('10');return false;" onkeypress="this.onclick;" data-lang="">학과공지</a>
-					<div class="tab-content">
-						<!-- '학과공지' 탭 패널 -->
-						<div class="tab-pane fade" id="board-tabpanel-3" aria-labelledby="board-tab-3">
-							<!-- <a class="more-link" href="#none" aria-label="더보기" title="더보기"></a> -->
-							<p class="non-info mb" data-lang="">로그인이 필요한 서비스 입니다.</p>
-						</div>
-					</div>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="board-tab-4" data-toggle="tab" href="#board-tabpanel-4" data-selected="false" onclick="f_mainBbsList('4','000000000000062','10');return false;" onkeypress="this.onclick;" data-lang="">장학공지</a>
-					<div class="tab-content">
-						<!-- '장학공지' 탭 패널 -->
-						<div class="tab-pane fade" id="board-tabpanel-4" aria-labelledby="board-tab-4">
-							<p class="non-info mb" data-lang="">조회된 게시물이 없습니다.</p>
-						</div>
-					</div>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="board-tab-5" data-toggle="tab" href="#board-tabpanel-5" data-selected="false" onclick="f_mainBbsList('5','000000000000384','10');return false;" onkeypress="this.onclick;">Q&amp;A</a>
-					<div class="tab-content">
-						<!-- 'Q&A' 탭 패널 -->
-						
-						<div class="tab-pane fade" id="board-tabpanel-5" aria-labelledby="board-tab-5">
-							<p class="non-info mb" data-lang="">조회된 게시물이 없습니다.</p>
-						</div>	
-					</div>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="board-tab-6" data-toggle="tab" href="#board-tabpanel-6" data-selected="false" onclick="f_mainBbsList('6','000000000000385','10');return false;" onkeypress="this.onclick;">FAQ</a>
-					<div class="tab-content">
-						<!-- 'FAQ' 탭 패널 -->
-						<div class="tab-pane fade" id="board-tabpanel-6" aria-labelledby="board-tab-6">
-							<p class="non-info mb" data-lang="">조회된 게시물이 없습니다.</p>
-						</div>
-					</div>
-				</li>
-			</ul>
-		</section>
-				
-	</div>
-	</div>
-<!--  end -->
-
-<!-- 게시판 글머리 영역 -->
+	<!-- 게시글 갯수 영역 -->
+	<div  class="col text-start" style="padding-top :5px; color: gray;"> ※ 총 <span th:text="${#lists.size(boardList)}"></span>개의 게시글이 조회되었습니다. </div>
+	<!-- 게시판 글머리 영역 -->
 	<div class="row">
 		<div class="col">
 		<table class="table table-hover ">
@@ -218,9 +150,9 @@
 		
 		<!-- 부트스트랩 페이징처리 -->
 		<!-- 문제 발생 예상? : 공지글 추가하거나 변경시, 과연 페이징처리 잘 구현되나...?저번에 안됐는디..;;; -->
-		 <div class="row" >						
+		 <div class="row mt-3" >						
 			<!-- <div class="col-5" ></div> -->
-			<div class="offset-5" > 
+			<div class="col-12" > 
 				<nav  aria-label="Page navigation example" >
 				  <ul class="pagination " >
 				   <th:block th:if="${boardVO.prev}">
@@ -244,6 +176,7 @@
 		</div> 
 			<!-- <div class="col-5" ></div>  -->
 		<!-- 부트스트랩 끝 -->
+		</div>
 	</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

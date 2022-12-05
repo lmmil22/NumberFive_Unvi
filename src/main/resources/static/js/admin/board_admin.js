@@ -146,7 +146,7 @@ function validatecateName(){
     cateNameId.setCustomValidity(''); 
     // 등록 버튼클릭시, 이벤트 실행
     document.getElementById("regBtn").onclick = function(){
-		Swal.fire({
+		Swal.fire({/* 문제발생! 스왈의 확인버튼을 클릭하지않아도 자동으로 넘어간다.. 밑에 함수가 바로 실행되는듯하다...그럼??? */
 			title: '[ 게시판 카테고리 등록 ]',
 			text: "입력하신 카테고리명으로 게시판등록이 완료되었습니다.",
 			icon: 'success',

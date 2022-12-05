@@ -57,6 +57,28 @@ public class BoardController {
 		return "content/common/board/board_list";
 	}
 	
+	//공지사항 게시판목록조회
+	@RequestMapping("/notice")
+	public String notice(Model model,BoardVO boardVO,String boardNo) {
+		boardVO.setPageInfo();
+		//차이점 - 카테고리별로 목록조회한다.
+		model.addAttribute("noticeList",boardService.selectNotice(boardVO));
+		System.out.println(" 공지사항 목록조회 >>>>>>> " + boardService.selectNotice(boardVO));
+		return "content/common/board/notice";
+	}	
+	
+	//Q&A 게시판목록조회
+	@RequestMapping("/qna")
+	public String qna(Model model,BoardVO boardVO,String boardNo) {
+		boardVO.setPageInfo();
+		model.addAttribute("qnaList",boardService.selectQnA(boardVO));
+		
+		return "content/common/board/qna";
+	}	
+	
+	
+	
+//----------------------------------------------------------------------------------------//	
 	// 글쓰러가기-양식페이지로이동
 	@GetMapping("/reg")
 	public String reg(@Valid BoardVO boardVO, BindingResult bindingResult, Model model
@@ -65,6 +87,7 @@ public class BoardController {
 		model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
 		return"content/common/board/reg_board";
 	}
+//----------------------------------------------------------------------------------------//	
 	
 	// 실제 게시글 등록
 	// -> shop - admincontroller - /regItem 경로 소스참고
@@ -102,7 +125,7 @@ public class BoardController {
 			//주의!!! 컨트롤러(redirect)가 아닌 html페이지로 가야 데이터가 남아있는다
 			return"content/common/board/reg_board";
 		}
-		return "content/common/board/reg_result";
+		return "redirect:/board/list";
 	}
 
 	//게시글(+이미지) 상세조회

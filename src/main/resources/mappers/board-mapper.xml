@@ -31,7 +31,6 @@
 		<id column="CATE_NO" property="cateNo"/>
 		<result column="CATE_NAME" property="cateName"/>
 		<result column="IS_USE" property="isUse"/>
-		<!-- <association property="boardCategoryVO" resultMap="cate" />  -->
 	</resultMap> 
 	
 	<!-- 상품상태 여부 변경 -->
@@ -42,7 +41,6 @@
 		WHERE CATE_NO = #{cateNo}
 	</update>
 	
-	
 	<!-- 게시판카테고리 선택삭제 -->
 	<delete id="deleteCates">
 		DELETE BOARD_CATEGORY
@@ -51,7 +49,6 @@
 	 		#{cateNo}
 		</foreach>
 	</delete>
-	
 	
 	<!-- 게시글등록 -->	
 	 <insert id="insertBoard">
@@ -76,6 +73,37 @@
 			, #{isNotice}
 			)
 	</insert> 
+	
+	<!-- 공지사항 게시판 목록조회 -->
+	<select id="selectNotice" resultMap="board">
+			SELECT
+			     BOARD_NO
+			    , BOARD_TITLE
+			    , BOARD_WRITER
+			    , BOARD_CREATE_DATE
+			    , IS_SECRERT
+				, IS_NOTICE
+				,CATE_NO
+				,BOARD_READ_CNT
+				,REPLY_CNT
+			FROM BOARD
+			WHERE CATE_NO='CATE007'
+	</select>
+	
+	<!-- QnA 게시판 목록조회 -->
+	<select id="selectQnA" resultMap="board">
+			SELECT  BOARD_NO
+			    , BOARD_TITLE
+			    , BOARD_WRITER
+			    , BOARD_CREATE_DATE
+			    , IS_SECRERT
+				, IS_NOTICE
+				,CATE_NO
+				,BOARD_READ_CNT
+				,REPLY_CNT
+			FROM BOARD
+			WHERE CATE_NO='CATE005'
+	</select>
 
 <!-- 키워드검색기능 + 게시판목록조회 + 공지사항은 고정(union all사용)-->
 	<!-- Board 게시판 소스 참고  -->

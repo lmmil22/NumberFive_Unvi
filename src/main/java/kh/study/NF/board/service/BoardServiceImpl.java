@@ -67,7 +67,16 @@ public class BoardServiceImpl implements BoardService{
 	public String getNextBoardNo() {
 		return sqlSession.selectOne("boardMapper.getNextBoardNo");
 	}
-	
+	// 공지사항 게시글 목록조회
+	@Override
+	public List<BoardVO> selectNotice(BoardVO boardVO) {
+		return  sqlSession.selectList("boardMapper.selectNotice",boardVO);
+	}
+	//QnA 게시글 목록조회
+	@Override
+	public List<BoardVO> selectQnA(BoardVO boardVO) {
+		return  sqlSession.selectList("boardMapper.selectQnA",boardVO);
+	}
 	
 //--------------- [ 게시판 댓글  ] -----------------------------//
 	//댓글등록
@@ -133,6 +142,8 @@ public class BoardServiceImpl implements BoardService{
 	public void updateStautus(BoardCategoryVO boardCategoryVO) {
 		sqlSession.update("boardMapper.updateStautus",boardCategoryVO);
 	}
+
+	
 
 	
 	

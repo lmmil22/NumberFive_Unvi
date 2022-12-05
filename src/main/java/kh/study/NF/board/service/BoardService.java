@@ -15,6 +15,10 @@ public interface BoardService {
 	void insertBoard(BoardVO boardVO);
 	// 게시글목록조회(Board 소스)
 	List<BoardVO> selectBoardList(BoardVO boardVO);
+	//<!-- 공지사항 게시판 목록조회 -->
+	List<BoardVO> selectNotice(BoardVO boardVO);
+	//<!-- qna 게시판 목록조회 -->
+	List<BoardVO> selectQnA(BoardVO boardVO);
 	// 상세조회
 	BoardVO selectDetailBoard(String boardNo);
 	//조회수증가
@@ -27,7 +31,6 @@ public interface BoardService {
 	int selectBoardCnt(SearchVO searchVO);
 	// 다음 boardNo 조회
 	String getNextBoardNo();
-	//이미지등록서비스는 별도 생성 x -> 글등록에서 같이 실행
 
 //--------------- [ 관리자 모드 게시판 ] -----------------------------//
 	//카테고리목록조회

@@ -123,6 +123,11 @@
 		            	<div id="subImgsDiv" >
 		            		 <input type="file" name="subImgs" style="visibility: hidden;" value=""> 
 		            	</div>
+		            	<!-- 추가버튼클릭시 js에서 보여지도록 하는 영역 -->
+		                <!-- <div id="subImgsDiv" style="color: red; font-size: 0.9rem;">
+							 ※ 2개이상 이미지 파일 선택하여 첨부 가능합니다.
+						 	<input class="form-control" type="file" name="subImgs" multiple>           
+						</div>  -->
 					</div>
 		             <div class="col-3"></div> <!-- 빈문자 -->
 				</div>
@@ -130,11 +135,16 @@
 				
 				<!-- 글등록 버튼 -->
 				<div align="center">
-					<button id="regBtn"   class="btn btn-light" type="submit" th:onclick="@{location.href='/board/reg';}">글등록</button>
+					<button class="btn btn-light" type="submit" th:onclick="@{location.href='/board/reg';}">글등록</button>
 				</div>
 			</form>
 		</div>
 	</div>
+<!-- 테스트영역 -->	
+
+<!-- 테스트영역 -->
+
+
 
 	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
