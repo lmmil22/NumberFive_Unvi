@@ -97,27 +97,41 @@ function deleteCate(selectedTag){
 	//action값 바꾸기
 	if(selectedTag.innerText == '선택삭제'){
 		deleteForm.action = '/board/deleteCate?cateNos='+ catetNosInput;
-		
+		deleteForm.submit();
+	
+		Swal.fire({
+			title: '[ 삭제 완료 ]',
+			text: "선택된 게시판의 카테고리이 삭제되었습니다.",
+			icon: 'success',
+			showCancelButton: false, 
+			confirmButtonColor: '#3085d6',
+			confirmButtonText: '확인',
+			cancelButtonText: '취소'
+			}).then((result) => {
+			if (result.isConfirmed) {
+			location.href=`/board/boardAdmin`;
+			}
+		})
 	}
 	else{
 		deleteForm.action = '/board/boardAdmin'
+		deleteForm.submit();
+		
+		Swal.fire({
+			title: '[ 삭제 실패 ]',
+			text: "실패되었습니다.",
+			icon: 'warning',
+			showCancelButton: false, 
+			confirmButtonColor: '#3085d6',
+			confirmButtonText: '확인',
+			cancelButtonText: '취소'
+			}).then((result) => {
+			if (result.isConfirmed) {
+			location.href=`/board/boardAdmin`;
+			}
+		})
 	}
 	
-	deleteForm.submit();
-	document.getElementById("deleteBtn").onclick = function(){
-	Swal.fire({
-				title: '[ 삭제 완료 ]',
-				text: "선택된 게시판의 카테고리이 삭제되었습니다.",
-				icon: 'success',
-				showCancelButton: false, 
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인',
-				cancelButtonText: '취소'
-				}).then((result) => {
-				if (result.isConfirmed) {
-				location.href=`/board/boardAdmin`;
-				}
-			})
-	}
+	
 
 }
