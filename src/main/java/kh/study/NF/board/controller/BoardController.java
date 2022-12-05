@@ -195,6 +195,13 @@ public class BoardController {
 		return"redirect:/board/boardAdmin";
 	}
 	
+	//(ajax) 카테고리 사용여부 변경
+	@ResponseBody
+	@PostMapping("/changeisUse")
+	public void changeisUse(BoardCategoryVO boardCategoryVO) {
+		boardService.updateStautus(boardCategoryVO);
+	}
+	
 	//카테고리목록조회
 	@GetMapping("/cateList")
 	public String cateList(Model model) {

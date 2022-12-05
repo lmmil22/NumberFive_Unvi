@@ -34,6 +34,14 @@
 		<!-- <association property="boardCategoryVO" resultMap="cate" />  -->
 	</resultMap> 
 	
+	<!-- 상품상태 여부 변경 -->
+	<update id="updateStautus" >
+		UPDATE BOARD_CATEGORY 
+		SET
+		IS_USE = #{isUse}	
+		WHERE CATE_NO = #{cateNo}
+	</update>
+	
 	
 	<!-- 게시판카테고리 선택삭제 -->
 	<delete id="deleteCates">

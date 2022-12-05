@@ -128,6 +128,11 @@ public class BoardServiceImpl implements BoardService{
 	public void deleteCates(BoardCategoryVO boardCategoryVO ) {
 		sqlSession.delete("boardMapper.deleteCates",boardCategoryVO); 
 	}
+	// 카테고리 사용여부변경
+	@Override
+	public void updateStautus(BoardCategoryVO boardCategoryVO) {
+		sqlSession.update("boardMapper.updateStautus",boardCategoryVO);
+	}
 
 	
 	

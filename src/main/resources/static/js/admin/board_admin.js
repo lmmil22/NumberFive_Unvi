@@ -1,4 +1,4 @@
-/*by 유빈*/
+/*by 유빈  : 관리자 게시판 기능 구현 */
 //---------------- 스크립트 실행과 동시에 필요한 변수 생성 ---------------------//
 //제목줄 체크박스
 const checkAll = document.querySelector('#checkAll');
@@ -167,4 +167,33 @@ function validatecateName(){
 // 함수실행
 cateNameId.onchange = validatecateName;
 
-
+//////////////////////////////////////////////////////////////////////////////////////
+//---------- [ 카테고리 미사용 여부 라디오 버튼 클릭시 진행되는 함수 ] -------------------//
+function changeisUse(cateNo, isUse){
+	  $.ajax({
+	     url: '/board/changeisUse', //요청경로
+	     type: 'post',
+	     data: {'isUse':isUse,'cateNo':cateNo}, //필요한 데이터
+	     success: function(result) {
+			const modal = new bootstrap.Modal('#updateStatusModal');
+			modal.show();
+			
+			
+	     },
+	     error: function() {
+	        Swal.fire({
+			title: '[ 사용여부 변경 실패 ]',
+			text: "선택하신 카테고리의 사용여부 변경이 실패되었습니다.",
+			icon: 'warning',
+			showCancelButton: false, 
+			confirmButtonColor: '#3085d6',
+			confirmButtonText: '확인',
+			cancelButtonText: '취소'
+			}).then((result) => {
+				if (result.isConfirmed) {
+				location.href=`/board/boardAdmin`;
+			}
+		})
+	     }
+  });
+}

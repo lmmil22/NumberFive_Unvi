@@ -38,6 +38,8 @@ public interface BoardService {
 	void insertBoardCate(BoardCategoryVO boardCategoryVO);
 	// 카테고리삭제
 	void deleteCates ( BoardCategoryVO boardCategoryVO );
+	// 카테고리 사용여부변경
+	void updateStautus(BoardCategoryVO boardCategoryVO);
 //--------------- [ 게시판 댓글  ] -----------------------------//
 	//댓글 등록(int 대신 void 사용)
 	void insertReply(ReplyVO replyVO);
