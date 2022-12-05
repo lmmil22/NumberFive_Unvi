@@ -148,6 +148,11 @@ public class ProfessorServiceImpl implements ProfessorService{
 	public List<LectureTimeVO> selectTime(LectureTimeVO lectureTimeVO) {
 		return sqlSession.selectList("professorMapper.selectTime",lectureTimeVO);
 	}
+	//학생이 자기가 수강한강의 점수 확인
+	@Override
+	public List<StuGradeVO> selectStuGrade(String stuNo) {
+		return sqlSession.selectList("professorMapper.selectStuGrade",stuNo);
+	}
 	
 	
 	

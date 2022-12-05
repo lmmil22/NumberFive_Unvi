@@ -71,4 +71,8 @@ public interface ProfessorService {
 
 	 //중복체크를 위한 시간 검색
 	List<LectureTimeVO> selectTime(LectureTimeVO lectureTimeVO); 
+	
+	//학생이 본인 점수 조회
+	List<StuGradeVO> selectStuGrade(String stuNo);
+	
 }
