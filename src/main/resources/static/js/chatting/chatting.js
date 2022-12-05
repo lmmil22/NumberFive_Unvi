@@ -19,7 +19,20 @@ $("#button-send").on("click", (e) => {
 });
 
 
-const username = document.querySelector('#memberId').innerText;
+//익명자 숫자 랜덤지정
+function randomNum(min, max){
+    var randNum = Math.floor(Math.random()*(max-min+1)) + min;
+    return randNum;
+}
+
+
+
+const username = '익명'+randomNum(1,999999);
+
+
+//const username = //document.querySelector('#memberId').innerText; //익명톡을 위한 변경
+
+
 const websocket = new WebSocket("ws://localhost:8081/ws/chat");
 websocket.onmessage = onMessage;
 websocket.onopen = onOpen;
@@ -75,7 +88,7 @@ function onMessage(msg) {
         str += "<div class=row>"
         str += "<div class=col-6></div><div class=col-6>";
         str += `<div class='text-end'>${sessionId}</div>`
-        str += "<div class='alert alert-secondary text-start'>";
+        str += "<div class='alert alert-success text-start'>";
         str += "<b>" + message + "</b>";
         str += "</div></div></div></div>";
         $("#msgArea").append(str);
@@ -86,7 +99,7 @@ function onMessage(msg) {
        var scrollHeight = $(view).prop('scrollHeight');
         var str = "<div class='col-6'>";
         str += `<div class='text-start'>${sessionId}</div>`
-        str += "<div class='alert alert-warning text-start'>";
+        str += "<div class='alert alert-secondary text-start'>";
         str += "<b>" + message + "</b>";
         str += "</div></div>";
         $("#msgArea").append(str);
