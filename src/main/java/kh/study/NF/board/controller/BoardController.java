@@ -1,6 +1,7 @@
 // by 유빈
 package kh.study.NF.board.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -180,6 +181,19 @@ public class BoardController {
 		boardService.insertBoardCate(boardCategoryVO);
 		return"redirect:/board/boardAdmin";
 	}
+	//카테고리 삭제
+	@PostMapping("/deleteCate")
+	public String deleteCarts(String cateNos) {//"cart_001,cart_002,cart_003"
+		System.out.println("!!!!!!!!!!!!" + cateNos +"!!!!!!!!!!!!!!!!!!!!!!!");
+		String[] cateNoArr = cateNos.split(",");// 위처럼 넘어오는 cartCodes를 쉼표',' 로 분리한다. 그럼 문자열이 여러개나와서 배열로 받아야한다.
+		List<String> cateNoList= Arrays.asList(cateNoArr);
+		BoardCategoryVO boardCategoryVO = new BoardCategoryVO();//커맨드객체로 넘겨주려면 미리 cartVO에 cartCodes가 있으면 가능하다
+		boardCategoryVO.setCateNoList(cateNoList);
+		
+		boardService.deleteCates(boardCategoryVO);
+		
+		return"redirect:/board/boardAdmin";
+	}
 	
 	//카테고리목록조회
 	@GetMapping("/cateList")
@@ -188,6 +202,9 @@ public class BoardController {
 		model.addAttribute("cateList", boardService.selectBoardCate());
 		return "content/admin/board_admin";
 	}
+	
+	
+	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //-----------------------------------------[게시판 댓글 영역]------------------------------------------------------//
 	//댓글 등록

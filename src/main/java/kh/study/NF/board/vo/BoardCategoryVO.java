@@ -1,5 +1,7 @@
 package kh.study.NF.board.vo;
 
+import java.util.List;
+
 import groovy.transform.ToString;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,5 +17,7 @@ public class BoardCategoryVO {
 	private String cateNo;
 	private String cateName;
 	private String isUse;
+	
+	private List<String> cateNoList;
 	
 }

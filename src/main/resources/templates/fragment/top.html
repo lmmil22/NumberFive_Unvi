@@ -79,7 +79,14 @@
 				<ul class="nav topNav">
 				    <li><a href="#">대학/대학원</a></li>
 				    <li><a href="#" class="nav-link">입학/취업</a></li>
-				    <li><a href="/board/list">게시판</a></li>
+				    <li>
+				    	<a href="/board/list">게시판</a>
+				    	<div class="nav-column topNav_column">
+							<ul th:each="cate : ${cateUsedList}"> <!-- cateNo 를 forech로 하나씩 뽑겠다. -->
+							    <li><a href="#" th:text="${cate.cateName}" th:value="${cate.cateNo}"></a></li>
+							</ul>
+						</div>
+				    </li>
 				    <li><a href="#">대학생활</a></li>
 				    <li><a href="#">국제교류</a></li>
 				    <li><a href="#">공지/참여</a></li>
@@ -91,7 +98,6 @@
 
 		<!-- 학생의 경우 top 메뉴바 -->
 	    <header sec:authorize="hasRole('ROLE_STUDENT')">
-			<!--by 유빈  탑에 넣은 숏버전 이미지 삽입할 때 <img width="30%" height="30%" src="/images/LFU logo short ver.png " /> -->
 				<ul class="nav topNav">
 				    <li>
 						 <a href="#">내정보관리</a>
@@ -99,6 +105,7 @@
 							<ul>
 							    <li><a href="#">내정보조회</a></li>
 							    <li><a href="#">내정보수정</a></li>
+							    <li><a href="/member/updatePw">비밀번호 변경</a></li>
 							    <li><a href="/timetable/load">시간표조회</a></li>
 							</ul>
 						</div>
@@ -116,7 +123,17 @@
 						</div>
 				    </li>
 				    <li><a href="#">수강신청</a></li>
-				    <li><a href="/board/list">게시판</a></li>
+				    <li>
+				    	<a href="/board/list">게시판</a>
+				    	<div class="nav-column topNav_column">
+							<ul>
+							    <li><a href="#">내정보조회</a></li>
+							    <li><a href="#">내정보수정</a></li>
+							    <li><a href="/member/updatePw">비밀번호 변경</a></li>
+							    <li><a href="/timetable/load">시간표조회</a></li>
+							</ul>
+						</div>
+				    </li>
 				    <li><a href="#">국제교류</a></li>
 				    <li><a href="#">캘린더</a></li>
 				    <li><a href="#">입학/취업</a></li>
@@ -152,7 +169,7 @@
 			        <a href="/board/list">게시판</a>
 			        <div class="nav-column topNav_column">
 						 <ul>
-						     <li><a href="#">카테고리등록</a></li>
+						     <li><a href="/board/boardAdmin">카테고리등록</a></li>
 						     <li><a href="/board/list">게시판</a></li>
 					
 						 </ul>

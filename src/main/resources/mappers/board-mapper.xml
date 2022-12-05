@@ -31,7 +31,19 @@
 		<id column="CATE_NO" property="cateNo"/>
 		<result column="CATE_NAME" property="cateName"/>
 		<result column="IS_USE" property="isUse"/>
+		<!-- <association property="boardCategoryVO" resultMap="cate" />  -->
 	</resultMap> 
+	
+	
+	<!-- 게시판카테고리 선택삭제 -->
+	<delete id="deleteCates">
+		DELETE BOARD_CATEGORY
+		WHERE CATE_NO IN  
+		<foreach collection="cateNoList" item="cateNo" open="(" close=")" separator=",">
+	 		#{cateNo}
+		</foreach>
+	</delete>
+	
 	
 	<!-- 게시글등록 -->	
 	 <insert id="insertBoard">

@@ -1,3 +1,4 @@
+// by 유빈
 package kh.study.NF.board.service;
 
 import java.util.List;
@@ -121,6 +122,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardCategoryVO> selectBoardCateUse() {
 		return sqlSession.selectList("boardMapper.selectBoardCateUse");
+	}
+	//카테고리 삭제
+	@Override
+	public void deleteCates(BoardCategoryVO boardCategoryVO ) {
+		sqlSession.delete("boardMapper.deleteCates",boardCategoryVO); 
 	}
 
 	

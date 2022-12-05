@@ -2,6 +2,7 @@
 package kh.study.NF.board.service;
 import java.util.List;
 
+import groovy.lang.Category;
 import kh.study.NF.board.vo.BoardCategoryVO;
 import kh.study.NF.board.vo.BoardVO;
 import kh.study.NF.board.vo.ReplyVO;
@@ -35,6 +36,8 @@ public interface BoardService {
 	List<BoardCategoryVO> selectBoardCateUse();
 	//카테고리등록
 	void insertBoardCate(BoardCategoryVO boardCategoryVO);
+	// 카테고리삭제
+	void deleteCates ( BoardCategoryVO boardCategoryVO );
 //--------------- [ 게시판 댓글  ] -----------------------------//
 	//댓글 등록(int 대신 void 사용)
 	void insertReply(ReplyVO replyVO);
