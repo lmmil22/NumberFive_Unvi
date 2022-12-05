@@ -63,13 +63,26 @@ function changeLecDetail(lecNo) {
 function updateLecInfo(){
 	//ajax start
 	 $.ajax({
-		 url: '/proF/updateLec', //요청경로
+		 url: '/proF/updateLecAjax', //요청경로
 		 type: 'post',
 		 //제이쿼리 문법으로 form 모든 내용을 한꺼번에 데이터로 ajax로 보냄
 		 data: $('#updateDataForm').serialize(), 
 		 success: function(result) {
 			$('#changeLecModal').modal('hide'); //수정하기 눌러주면 모달을 닫고
-			Swal.fire('강의 수정', '수정이 완료되었습니다', 'success'); 
+			
+			Swal.fire({
+				title: '강의 수정',
+				text: '수정이 완료되었습니다',
+				icon: 'success',
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '확인',
+				reverseButtons: true,
+			}).then(result => {
+				if (result.isConfirmed) { //강의 수정이 진행된후
+				location.href = '/proF/viewLecList';
+		   }
+		});
+			
 		 },
 		 error: function() {
 			 alert('실패');

@@ -139,7 +139,7 @@ public class ProfessorController {
 	
 	//강의 수정 모달창에서 수정하기 버튼 클릭 시
 	@ResponseBody
-	@PostMapping("/updateLec")
+	@PostMapping("/updateLecAjax")
 	public void updateLec(LectureVO lectureVO , LectureTimeVO lectureTimeVO) {
 		System.out.println("!!!!!" + lectureVO);
 		System.out.println("!!!!!" + lectureTimeVO);

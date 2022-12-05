@@ -70,7 +70,7 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">강의 수정</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form th:action="@{/proF/updateLec}"  method="post" id="updateDataForm">
+      <form th:action="@{/proF/updateLecAjax}"  method="post" id="updateDataForm">
       <input type="hidden" name="lecNo" id="changeLecModal_lecNo" value=""> 
       <div class="modal-body">
        <table >
