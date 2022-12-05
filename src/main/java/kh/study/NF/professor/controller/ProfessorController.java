@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kh.study.NF.admin.service.AdminService;
 import kh.study.NF.config.UploadFileUtil;
 import kh.study.NF.dept.service.DeptService;
 import kh.study.NF.dept.vo.DeptVO;
@@ -51,6 +52,11 @@ public class ProfessorController {
 	
 	@Resource(name = "professorService")
 	private ProfessorService professorService;
+	
+
+	@Resource(name = "adminService")
+	private AdminService adminService;
+	
 	
 	
 	//강의 등록 페이지로 이동 
@@ -354,7 +360,18 @@ public class ProfessorController {
 		return LectureTimeList.size(); //개수를 보낸다 숫자니까 int로 // 숫자가 있다면 그날의 시간표가 있는것
 	}
 	
-	
+	//학생이 자기 점수목록 조회
+	@GetMapping("/stuGradeList")
+	public String stuGradeList(Model model , Authentication authentication ,String stuNo) {
+		User user = (User)authentication.getPrincipal();
+		stuNo = user.getUsername();
+		
+		model.addAttribute("stuGradeList", professorService.selectStuGrade(stuNo));
+		model.addAttribute("member",adminService.selectMemDetail(stuNo));
+		//System.out.println(adminService.selectMemDetail(stuNo));
+		return "content/admin/stuGradeList";
+		
+	}
 	
 	
 	

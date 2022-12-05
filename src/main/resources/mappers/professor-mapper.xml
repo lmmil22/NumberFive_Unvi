@@ -27,11 +27,13 @@
 		<id column="STU_GRADE_NO" property="stuGradeNo"/>
 		<result column="LEC_NO" property="lecNo"/>	
 		<result column="STU_NO" property="stuNo"/>	
-		<result column="STU_NO" property="grade"/>	
+		<result column="GRADE" property="grade"/>	
 		<result column="SEM_NO" property="semNo"/>	
 		<result column="LEC_NAME" property="lecName"/>	
 		<association  property="gradeVO" resultMap="grade"/>	
 		<association  property="studentVO" resultMap="studentMapper.student"/>	
+		<association  property="enrollmentVO" resultMap="enrollment"/>	
+		<association  property="lectureVO" resultMap="lecture"/>	
 	</resultMap>
 	
 
@@ -554,6 +556,44 @@
 	WHERE STU_NO = #{stuNo} AND LEC_NO = #{lecNo}
 	<!-- 학생이 선택한 강의만 변경 -->
 	</update>
+
+	<!-- 학생이 듣고있는 강의 성적 조회 -->
+	<select id="selectStuGrade" resultMap="stuGrade">
+<!-- 	SELECT 
+		S.STU_NO 
+		, GRADE 
+		, DEPT_NO
+		, COLL_NO
+		, S.LEC_NO 
+		, (SELECT LEC_NAME FROM STU_GRADE WHERE G.LEC_NO = (SELECT LEC_NO FROM LECTURE WHERE LEC_NO = #{lecNo}))  
+	FROM STU S , ENROLLMENT E , STU_GRADE G 
+	WHERE S.STU_NO = G.STU_NO 
+	AND E.STU_NO = S.STU_NO 
+	AND E.LEC_NO = G.LEC_NO 
+	AND S.STU_NO = #{stuNo} -->
+	SELECT 
+		S.STU_NO 
+		, G.GRADE 
+		, S.DEPT_NO
+		, S.COLL_NO
+		, E.LEC_NO 
+		, LEC_SCORE
+		, LEC_NAME
+		, (SELECT MEM_NAME
+		        FROM MEMBER
+		        WHERE MEM_NO = (SELECT MEM_NO
+                                FROM EMP
+                                WHERE EMP_NO = L.EMP_NO)) AS EMP_NO
+	FROM STU S , ENROLLMENT E , STU_GRADE G , LECTURE L
+	WHERE S.STU_NO = G.STU_NO 
+	AND E.STU_NO = S.STU_NO 
+	AND E.LEC_NO = G.LEC_NO 
+    AND L.LEC_NO = E.LEC_NO
+	AND S.STU_NO = #{stuNo}
+
+
+	
+	</select>
 
 
 

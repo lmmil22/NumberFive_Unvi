@@ -22,5 +22,8 @@ public class StuGradeVO {
 	private GradeVO gradeVO;
 	private StudentVO studentVO;
 	private String lecName;	
+	private EnrollmentVO enrollmentVO;
+	private LectureVO lectureVO;
+	
 	
 }
