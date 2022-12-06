@@ -37,7 +37,7 @@ public class LectureVO {
 	//------------------------------------------//
 	private LecturePdfVO lecturePdfVO;
 	private LectureTimeVO lectureTimeVO;
-	private StuGradeVO stuGradeVO;
+	//private StuGradeVO stuGradeVO;
 	
 	
 	

@@ -23,7 +23,7 @@ public class StuGradeVO {
 	private StudentVO studentVO;
 	private String lecName;	
 	private EnrollmentVO enrollmentVO;
-	private LectureVO lectureVO;
+	//private LectureVO lectureVO;
 	
 	
 }

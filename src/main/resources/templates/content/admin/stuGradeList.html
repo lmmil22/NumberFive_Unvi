@@ -53,8 +53,8 @@
   	<tr align="center" th:each="lec :${stuGradeList}">
       <td>전공</td>
       <td th:text="${lec.lecName}" ></td>
-      <td th:text="${lec.lectureVO.empNo}" ></td>
-      <td th:text="${lec.lectureVO.lecScore}" ></td>
+      <td th:text="${lec.enrollmentVO.lectureVO.empNo}" ></td>
+      <td th:text="${lec.enrollmentVO.lectureVO.lecScore}" ></td>
       <td th:text="${lec.grade}" ></td>
       <td > 참여</td>
       <!-- <td > <input type="button" value="성적이의신청"> </td> -->

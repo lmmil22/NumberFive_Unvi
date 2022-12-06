@@ -33,7 +33,7 @@
 		<association  property="gradeVO" resultMap="grade"/>	
 		<association  property="studentVO" resultMap="studentMapper.student"/>	
 		<association  property="enrollmentVO" resultMap="enrollment"/>	
-		<association  property="lectureVO" resultMap="lecture"/>	
+		<!-- <association  property="lectureVO" resultMap="lecture"/>	 -->
 	</resultMap>
 	
 
@@ -59,7 +59,7 @@
 		
 		<association property="lecturePdfVO" resultMap="lecturePdf"/>
 		<association property="lectureTimeVO" resultMap="lectureTime"/>
-		<association property="stuGradeVO" resultMap="stuGrade"/>
+	<!-- 	<association property="stuGradeVO" resultMap="stuGrade"/> -->
 	</resultMap>
 	
 	<!--강의pdf  -->
