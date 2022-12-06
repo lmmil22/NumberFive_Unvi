@@ -26,9 +26,12 @@
 			<div class="row mb-3">
 				<div class="col-12">
 					<!-- 검색 조건 영역 -->
+					<div  style="height: 50px;">
+					<h4>교과목 검색 및 신청</h4>
+					</div> 
 					<form action="/proF/enrollList" method="post">
 						
-						<div class="row">
+						<div class="row"  style="height: 70px;">
 							<div class="col-12">
 								<span>
 									<label for="collNo" >단과대학</label>
@@ -61,6 +64,7 @@
 						</div>
 					</form>
 					<!-- 목록 영역 -->	
+					<h4>수강신청</h4>
 					<div class="row">
 						<div class="col-12">
 							<table class="table table-striped table-hover text-center align-middle enroll-list-table">
@@ -120,6 +124,7 @@
 					</div>
 				</div>
 			</div>
+			<h4>수강 신청 내역</h4>
 			<!-- 학생이 수강신청한 목록  -->
 			<div class="row mt-3 mb-3">
 				<div class="col-12">
@@ -182,7 +187,7 @@
 		
 		</div>
 	</div>
-	
+	<a href="https://www.facebook.com/PusanNationalUniv" target="_blank" title="새창열림" class="face"><span class="blind">부산대학교 페이스븍</span></a>
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script th:src="@{/js/paginator.js}"></script>

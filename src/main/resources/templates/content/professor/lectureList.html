@@ -8,11 +8,12 @@
 <th:block layout:fragment="css">
 </th:block>
 
-<!-- 고정 페이지와 변동페이지는 다르다  -->
 <div layout:fragment="content">
+
+
 	
 <!-- a태그의 경우 경로를 지정할때 한글문서  , pdf든 바로 띄워 줄수 있다 . -->
-	<div>강의 리스트 <!-- <a href="/images/nf Logo.png" target="_blank">123123</a>  --> </div>
+	<div style="height: 50px;"><h5> 강의 리스트</h5> <!-- <a href="/images/nf Logo.png" target="_blank">123123</a>  --> </div>
 	<div id="table_box_bootstrap" style="text-align: center;">
 		<table class="table table-striped table-hover">
 			<thead>
@@ -29,7 +30,7 @@
 					<th scope="col">삭제</th>
 				</tr>
 			</thead>
-			<tbody><!-- 열람안되는거 질문  -->
+			<tbody>
 				<tr th:each="lec : ${lecList}">
 					<th scope="row" th:text="${lec.lecNo}"></th>
 					<td>
@@ -53,8 +54,6 @@
 		</table>
 	</div>
 	
-<button class="custom-btn btn-11">강의수정</button>
-<button type="button" class="btn btn-Secondary" >Secondary</button>
 
 <!--  수정버튼을 누르면 뜨는 모달 -->
 	<!-- Button trigger modal -->
