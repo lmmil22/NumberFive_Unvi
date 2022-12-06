@@ -239,74 +239,75 @@ $("#alertStart").click(function () {
 });
 ////////////////////////////// [ 홈로그인화면_게시판 ] /////////////////////////////////
 //--- by수경 : 메인 페이지 게시글 영역 tab창 클릭 했을 때 다른 게시판으로 넘어가는 이벤트 설정
-
-//학생정보시스템 게시판 tab a태그
-let aTagSystemBoard = document.querySelector('.aTagSystemBoard');
-//학사공지 게시판 tab a태그
-let aTagMainBoard = document.querySelector('.aTagMainBoard');
-//자유게시판 tab a태그
-let aTagFreeBoard = document.querySelector('.aTagFreeBoard');
-
-//학생정보시스템 게시판 테이블 부분
-let systemBoardDiv = document.querySelector('.systemBoardDiv');
-//학사공지 게시판 테이블 부분
-let mainBoardDiv = document.querySelector('.mainBoardDiv');
-//자유게시판 테이블 부분
-let freeBoardDiv = document.querySelector('.freeBoardDiv');
-
-
-//학생정보시스템 게시판 tab 클릭 시 발생할 이벤트
-aTagSystemBoard.addEventListener('click',function(){
+window.onload = function(){
+	//학생정보시스템 게시판 tab a태그
+	let aTagSystemBoard = document.querySelector('.aTagSystemBoard');
+	//학사공지 게시판 tab a태그
+	let aTagMainBoard = document.querySelector('.aTagMainBoard');
+	//자유게시판 tab a태그
+	let aTagFreeBoard = document.querySelector('.aTagFreeBoard');
 	
-	//학생정보시스템 게시판 a태그에만 active 라는 글자 그려주고 그 외에는 없애겠다
-	aTagSystemBoard.classList.toggle('active',true);
-	aTagMainBoard.classList.toggle('active',false);
-	aTagFreeBoard.classList.toggle('active',false);
-	
-	//학생정보시스템 게시판 테이블만 show active 그려주고 그 외에는 없앤다
-	systemBoardDiv.classList.toggle('show',true);
-	mainBoardDiv.classList.toggle('show',false);
-	freeBoardDiv.classList.toggle('show',false);
-	
-	systemBoardDiv.classList.toggle('active',true);
-	mainBoardDiv.classList.toggle('active',false);
-	freeBoardDiv.classList.toggle('active',false);
-	
-});
-
-//학사공지 게시판 tab 클릭 시 발생할 이벤트
-aTagMainBoard.addEventListener('click',function(){
-	//학사공지 게시판 a태그에만 active 라는 글자 그려주고 그 외에는 없애겠다
-	aTagSystemBoard.classList.toggle('active',false);
-	aTagMainBoard.classList.toggle('active',true);
-	aTagFreeBoard.classList.toggle('active',false);
-	
-	//학사공지 게시판 테이블만 show active 그려주고 그 외에는 없앤다
-	systemBoardDiv.classList.toggle('show',false);
-	mainBoardDiv.classList.toggle('show',true);
-	freeBoardDiv.classList.toggle('show',false);
-	
-	systemBoardDiv.classList.toggle('active',false);
-	mainBoardDiv.classList.toggle('active',true);
-	freeBoardDiv.classList.toggle('active',false);
+	//학생정보시스템 게시판 테이블 부분
+	let systemBoardDiv = document.querySelector('.systemBoardDiv');
+	//학사공지 게시판 테이블 부분
+	let mainBoardDiv = document.querySelector('.mainBoardDiv');
+	//자유게시판 테이블 부분
+	let freeBoardDiv = document.querySelector('.freeBoardDiv');
 	
 	
-});
-
-//자유게시판 tab 클릭 시 발생할 이벤트
-aTagFreeBoard.addEventListener('click',function(){
-	//자유게시판 a태그에만 active 라는 글자 그려주고 그 외에는 없애겠다
-	aTagSystemBoard.classList.toggle('active',false);
-	aTagMainBoard.classList.toggle('active',false);
-	aTagFreeBoard.classList.toggle('active',true);
+	//학생정보시스템 게시판 tab 클릭 시 발생할 이벤트
+	aTagSystemBoard.addEventListener('click',function(){
+		
+		//학생정보시스템 게시판 a태그에만 active 라는 글자 그려주고 그 외에는 없애겠다
+		aTagSystemBoard.classList.toggle('active',true);
+		aTagMainBoard.classList.toggle('active',false);
+		aTagFreeBoard.classList.toggle('active',false);
+		
+		//학생정보시스템 게시판 테이블만 show active 그려주고 그 외에는 없앤다
+		systemBoardDiv.classList.toggle('show',true);
+		mainBoardDiv.classList.toggle('show',false);
+		freeBoardDiv.classList.toggle('show',false);
+		
+		systemBoardDiv.classList.toggle('active',true);
+		mainBoardDiv.classList.toggle('active',false);
+		freeBoardDiv.classList.toggle('active',false);
+		
+	})
 	
-	//학사공지 게시판 테이블만 show active 그려주고 그 외에는 없앤다
-	systemBoardDiv.classList.toggle('show',false);
-	mainBoardDiv.classList.toggle('show',false);
-	freeBoardDiv.classList.toggle('show',true);
+	//학사공지 게시판 tab 클릭 시 발생할 이벤트
+	aTagMainBoard.addEventListener('click',function(){
+		//학사공지 게시판 a태그에만 active 라는 글자 그려주고 그 외에는 없애겠다
+		aTagSystemBoard.classList.toggle('active',false);
+		aTagMainBoard.classList.toggle('active',true);
+		aTagFreeBoard.classList.toggle('active',false);
+		
+		//학사공지 게시판 테이블만 show active 그려주고 그 외에는 없앤다
+		systemBoardDiv.classList.toggle('show',false);
+		mainBoardDiv.classList.toggle('show',true);
+		freeBoardDiv.classList.toggle('show',false);
+		
+		systemBoardDiv.classList.toggle('active',false);
+		mainBoardDiv.classList.toggle('active',true);
+		freeBoardDiv.classList.toggle('active',false);
+		
+		
+	})
 	
-	systemBoardDiv.classList.toggle('active',false);
-	mainBoardDiv.classList.toggle('active',false);
-	freeBoardDiv.classList.toggle('active',true);
-	
-});
+	//자유게시판 tab 클릭 시 발생할 이벤트
+	aTagFreeBoard.addEventListener('click',function(){
+		//자유게시판 a태그에만 active 라는 글자 그려주고 그 외에는 없애겠다
+		aTagSystemBoard.classList.toggle('active',false);
+		aTagMainBoard.classList.toggle('active',false);
+		aTagFreeBoard.classList.toggle('active',true);
+		
+		//학사공지 게시판 테이블만 show active 그려주고 그 외에는 없앤다
+		systemBoardDiv.classList.toggle('show',false);
+		mainBoardDiv.classList.toggle('show',false);
+		freeBoardDiv.classList.toggle('show',true);
+		
+		systemBoardDiv.classList.toggle('active',false);
+		mainBoardDiv.classList.toggle('active',false);
+		freeBoardDiv.classList.toggle('active',true);
+		
+	})
+}
