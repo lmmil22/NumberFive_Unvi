@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kh.study.NF.board.service.BoardService;
 import kh.study.NF.board.vo.BoardVO;
+import kh.study.NF.board.vo.ImgVO;
 import kh.study.NF.board.vo.SearchVO;
+import kh.study.NF.config.BoardUploadFileUtil;
 import kh.study.NF.config.MemRole;
 import kh.study.NF.mail.service.MailService;
 import kh.study.NF.member.service.MemberService;
@@ -148,36 +151,40 @@ public class MemberController {
 	   return "content/common/update_pw";
    }    
    @PostMapping("/updatePw")
-   public String updatePw(MemberVO memberVO) {
+   public String updatePw(MemberVO memberVO, Authentication authentication) {
 	   System.out.println("이메일로 발급된 임시비밀번호에서 다시 비밀번호수정해서 변경시키면 form태그로 넘어오기 성공!!!!");
-	   //가져온 비밀번호 암호화시켜서 업데이트하기.
+
+	   User user = (User)authentication.getPrincipal();
+	   memberVO.setMemNo(user.getUsername());
+	   System.out.println("시큐리티 유저 아이디(학번/교번) 불러와서 memNo pk 넣어주기 null오류해결!!");
+	   
 	   memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+	   memberService.updatePw(memberVO);
 	   System.out.println("<><><><><>암호화시켜서 비밀번호 업데이트되었는지 확인------->"+ encoder.encode(memberVO.getMemPw()));
 	   
 	   return "redirect:/member/homeLogin";
    }    
 //-------------------------------------------------------------------------------------------///   
    
-   // ajax로 이메일 임시비밀번호 발급 후 이동 페이지 
-   // 이전 shop에서 이름만->ajaxlogin 메소드 가져온것임.
+   // ajax로 이메일 임시비밀번호 발급 후 이동 페이지 ???
    @PostMapping("/afterLogin")
    public String afterLogin1(boolean isLoginFail, Model model) {
       //-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
       System.out.println("_______________로그인 성공시 false!!! -->" + isLoginFail);
       model.addAttribute("isLoginFail",isLoginFail);
       
-      return "content/common/after_Login";
+      return "redirect:/member/homeLogin";
    }
 //-------------------------------------------------------------------------------------------///   
 
-   // 미사용 //로그인 후 첫 화면 > 다시 홈화면
+   // 로그인 후 첫 화면 > 다시 홈화면
    @GetMapping("/afterLogin")
    public String afterLogin(boolean isLoginFail, Model model) {
       //-----로그인 성공 및 실패 여부를 html에 데이터 전달하기-------//
       System.out.println("_______________로그인 성공시 false!!! -->" + isLoginFail);
       model.addAttribute("isLoginFail",isLoginFail);
       
-      return "content/common/after_Login";
+      return "redirect:/member/homeLogin";
    }
 //----------------------------------------------------------------------------------------------//   
    // 미사용// 관리자 로그인 후 페이지 이동
@@ -234,28 +241,34 @@ public class MemberController {
    }
 //-------------------------------------------------------------------------------------------//
    
-   //[관리자모드] - 회원등록 실제 페이지 이동
+   // [관리자모드] - 회원등록 실제 페이지 이동
    @PostMapping("/regMem")
-   public String regMem(@Valid MemberVO memberVO, BindingResult bindingResult, Model model) {
-      // !! validation 체크 (데이터 유효성 검증)
-      if (bindingResult.hasErrors()) {// 바인딩하는데 오류가 생겼니?: 결과는 true/false
-         model.addAttribute("memberVO", memberVO);//회원가입 실패시 입력 데이터 값 유지.
-         System.out.println("@@@@@@@@@@@@@@@@@@@@ 회원가입 유효성체크 >>> error발생   @@@@@@@@@@@@@@@@@@@");
-         System.out.println("지금 바인딩 오류의 상태는? " + bindingResult.hasErrors());//true
-         //어떤 오류인지 확인
-          List<ObjectError> list =  bindingResult.getAllErrors();
-             for(ObjectError e : list) {
-                  System.out.println(e.getDefaultMessage());
-             }
-      }
+   public String regMem(@Valid MemberVO memberVO, BindingResult bindingResult, Model model ) {
+      
       //암호화 작업2 -주석풀기 
       memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
-      
+     
       //회원가입 
       memberService.join(memberVO);
       
+      // !! validation 체크 (데이터 유효성 검증)
+      if (bindingResult.hasErrors()) {// 바인딩하는데 오류가 생겼니?: 결과는 true/false
+         
+    	 model.addAttribute("memberVO", memberVO);//회원가입 실패시 입력 데이터 값 유지.
+         System.out.println("@@@@@@@@@@@@@@@@@@@@ 회원가입 유효성체크 >>> error발생   @@@@@@@@@@@@@@@@@@@");
+         System.out.println("지금 바인딩 오류의 상태는? " + bindingResult.hasErrors());//true
+          
+          //어떤 오류인지 확인
+          List<ObjectError> list =  bindingResult.getAllErrors();
+             
+          for(ObjectError e : list) {
+              System.out.println(e.getDefaultMessage());
+        	}
+             return"content/admin/reg_mem";
+      }
       return "redirect:/member/afterRegMem";
    }   
+//-------------------------------------------------------------------------------------------//
    // 미사용 //로그인 후 첫 화면 > 다시 홈화면
    @GetMapping("/afterRegMem")
    public String afterRegMem(boolean isLoginFail, Model model) {

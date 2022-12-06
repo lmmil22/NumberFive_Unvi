@@ -323,6 +323,9 @@
 			 , IS_USE
 		FROM BOARD_CATEGORY
 		where IS_USE='Y'
+		<if test="cateNo != null and !cateNo.equals('')">
+		AND CATE_NO= #{cateNo}
+		</if>
 		ORDER BY CATE_NO
 	</select> 
 	
@@ -369,6 +372,142 @@
 			FROM DUAL
 		</foreach>
 	</insert>  
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- 나의 게시글 조회하기 myBoard ( 검색기능 페이징처리까지 포함 ) -->
+<select id="selectMyBoardList" resultMap="board">
+			SELECT ROW_NUM
+			    , BOARD_NO
+			    , BOARD_TITLE
+			    , BOARD_WRITER
+			    , BOARD_CREATE_DATE
+			    , IS_SECRERT
+				, IS_NOTICE
+				,CATE_NO
+				,BOARD_READ_CNT
+				,REPLY_CNT
+			FROM 
+			(
+			    SELECT ROWNUM AS ROW_NUM
+			        , BOARD_NO
+				    , BOARD_TITLE
+				    , BOARD_WRITER
+				    , BOARD_CREATE_DATE
+				    , IS_SECRERT
+					, IS_NOTICE
+					,CATE_NO
+					,BOARD_READ_CNT
+					,REPLY_CNT
+			    FROM
+			    (
+			    	SELECT BOARD_NO 
+							, BOARD_TITLE
+						    , BOARD_WRITER
+						    , TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE			<!--  수정함 11/29 -->
+						    , IS_SECRERT
+							, IS_NOTICE
+							,CATE_NO
+							,BOARD_READ_CNT
+							,(SELECT COUNT(REPLY_NO)
+							  FROM BOARD_REPLY
+							  WHERE BOARD_NO =BOARD.BOARD_NO) AS REPLY_CNT
+					FROM BOARD
+					WHERE IS_NOTICE='Y'
+					AND BOARD_WRITER =#{boardWriter}
+					<if test="searchValue != null and !searchValue.equals('')">
+						<choose>
+							<when test="searchKeyword.equals('ALL')">
+								AND( LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_WRITER) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_CONTENT) LIKE '%'||LOWER(#{searchValue})||'%')
+							</when>
+							<otherwise>
+								AND LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+							</otherwise>
+						</choose>
+					</if>
+					ORDER BY TO_NUMBER(BOARD_NO) DESC
+				)
+			  )
+			
+			WHERE ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
+			
+			UNION ALL  
+			
+			SELECT (SELECT COUNT(*) 
+					FROM BOARD
+					<if test="searchValue != null and !searchValue.equals('')">
+						<choose>
+							<when test="searchKeyword.equals('ALL')">
+								WHERE (LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_WRITER) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_CONTENT) LIKE '%'||LOWER(#{searchValue})||'%')
+							</when>
+							<otherwise>
+								WHERE LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+							</otherwise>
+						</choose>
+					</if>) -ROW_NUM + 1
+					<if test="searchValue == null or searchValue.equals('')">
+					- (SELECT COUNT(*) FROM BOARD WHERE IS_NOTICE = 'Y')
+					</if>
+			    
+			    , BOARD_NO
+			    , BOARD_TITLE
+			    , BOARD_WRITER
+			    , BOARD_CREATE_DATE
+			    , IS_SECRERT
+				, IS_NOTICE
+				,CATE_NO
+				,BOARD_READ_CNT
+				,REPLY_CNT
+			FROM 
+			(
+			    SELECT ROWNUM AS ROW_NUM
+			        , BOARD_NO
+				    , BOARD_TITLE
+				    , BOARD_WRITER
+				    , BOARD_CREATE_DATE
+				    , IS_SECRERT
+					, IS_NOTICE
+					,CATE_NO
+					,BOARD_READ_CNT
+					,REPLY_CNT
+			    FROM
+			    (
+			    	SELECT BOARD_NO 
+							, BOARD_TITLE
+						    , BOARD_WRITER
+						    ,TO_CHAR(BOARD_CREATE_DATE,'YYYY-MM-DD') AS BOARD_CREATE_DATE	<!-- 11/29 수정 -->		
+						    , IS_SECRERT
+							, IS_NOTICE
+							,CATE_NO
+							,BOARD_READ_CNT
+							,(SELECT COUNT(REPLY_NO)
+							  FROM BOARD_REPLY
+							  WHERE BOARD_NO =BOARD.BOARD_NO) AS REPLY_CNT
+					FROM BOARD
+					WHERE IS_NOTICE='N'
+					AND BOARD_WRITER =#{boardWriter}
+					<if test="searchValue != null and !searchValue.equals('')">
+						<choose>
+							<when test="searchKeyword.equals('ALL')">
+								AND (LOWER(BOARD_TITLE) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_WRITER) LIKE '%'||LOWER(#{searchValue})||'%'
+								OR LOWER(BOARD_CONTENT) LIKE '%'||LOWER(#{searchValue})||'%')
+							</when>
+							<otherwise>
+								AND LOWER(${searchKeyword}) LIKE '%'||LOWER(#{searchValue})||'%'
+							</otherwise>
+						</choose>
+					</if>
+					ORDER BY TO_NUMBER(BOARD_NO) DESC
+					 )
+			    
+			)
+			WHERE ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
+			
+		</select>
+	<!-- 끝 -->		
 	
 </mapper> 
 

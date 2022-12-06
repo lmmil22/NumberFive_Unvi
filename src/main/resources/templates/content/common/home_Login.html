@@ -1,4 +1,4 @@
-<!-- by 유빈 : 찐최종 -->
+<!-- by 유빈,수경  -->
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -24,7 +24,7 @@
 	<div class="row" >
 		<div class="col-10 text-center mt-6 mb-3" style="font-weight: bold; font-size: 30px; ">
 			<label class="label">Leap forward, NFU!<p> </label>
-			<label class="label">시대를 열어가는 담대한 지성, NFU<p> </label>
+			<label class="label">시대를 열어가는 담대한 지성, NFU <p> </label>
 		</div>
 	</div>
 
@@ -71,18 +71,19 @@
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
 				<!-- 1. js 바꾸기작업 -> class값에서 active 지우거나 생기게해주기 -->
-					<a class="nav-link active aTagSystemBoard" data-toggle="tab" href="#systemBoard">학생지원시스템</a>
+					<a class="nav-link active aTagSystemBoard" data-toggle="tab" href="#systemBoard">전체게시판</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link aTagMainBoard"  data-toggle="tab" href="#mainBoard">대학공지</a>
+					<a class="nav-link aTagMainBoard"  data-toggle="tab" href="#mainBoard">공지사항</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link aTagFreeBoard" data-toggle="tab" href="#freeSystem">자유게시판</a>
+					<a class="nav-link aTagFreeBoard" data-toggle="tab" href="#freeSystem">Q&A</a>
 				</li>
 			</ul>
-				<!-- by수경 tab 하단에 나올 게시판 (학생지원시스템 게시판) -->	
+				<!-- by수경 tab 하단에 나올 게시판 (전체게시판 게시판) -->	
 				<div class="tab-content">
 					<div class="tab-pane fade show active systemBoardDiv" id="systemBoard">
+					
 					<div class="row">
 						<div class="col mb-3">
 							<!--by수경 스크롤을 위하여 테이블 분리 및 상단 제목줄 삭제 -->
@@ -205,52 +206,11 @@
 	</div>
 </div>
 
+
+
+
+
 	<!--  ////////////////////////////////////////////////  모달 영역 //////////////////////////////////////////////// - ->
-		<!-- 1번) shop 복붙소스- 이메일로 비밀번호 찾기 a태그 클릭시 실행 Modal  -->
-		 <div class="modal fade" id="login_modal_home" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel"
-							style="font-weight: bold;">비밀번호찾기(임시비밀번호발급)</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						 로그인 - 세션이용 데이터 form태그로 보내주기
-		      부트스트랩에서 가져왔기때문에 함부러 수정x 형식에 맞게 해야사용가능하다
-						<form class="row g-3" name="formLogin" method="post"
-							th:action="@{/member/loginProcess}">
-							<div class="mb-3">
-								label은 input태그의 라벨(스티커)이다. 웬만하면, for값과 id값이 같아야한다
-				  html 파일 내에 memberId 라는 id값이 여러개 존재한다.(중복발생)
-								<label for="memNo" class="form-label">학번/교번</label> <input
-									type="text" class="form-control" name="memNo" id="memNo"
-									aria-describedby="emailHelp" placeholder="ex)MEM_001"
-									checked="checked">
-							</div>
-							<div class="mb-3">
-								<label for="memName" class="form-label">이름</label> <input
-									type="text" class="form-control" name="memName" id="memName"
-									placeholder="이름을 입력하세요" checked="checked">
-							</div>
-							<div class="mb-3">
-								<label for="memEmail" class="form-label">이메일</label> <input
-									type="email" class="form-control" name="memEmail" id="memEmail"
-									placeholder="ex)abc123@gmail.com" checked="checked">
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
-									data-bs-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary"
-									onclick="sendEmail();">임시비밀번호발급하러가기=이메일로비밀번호찾기</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<!-- 2번) Modal 구글링해서 가져온 소스 : 스프링부트로 이메일 비밀번호찾기 -->
 		<div class="modal fade" id="myModal" role="dialog">
@@ -299,9 +259,9 @@
 		</div>
 
 
-
+<!-- 회원가입창 모달은 미사용... -->
 		<!-- 회원가입 클릭시 실행 Modal -->
-		<div class="modal fade" id="join_modal" tabindex="-1"
+		<!-- <div class="modal fade" id="join_modal" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 
@@ -314,12 +274,12 @@
 					</div>
 
 					<div class="modal-body">
-						<!-- 너비 조정
-		      col-12 / col-6 :  한 줄 너비 총 크기 12이기때문에 12분등 중 어느만큼 사용하는건지 -->
+						너비 조정
+		      col-12 / col-6 :  한 줄 너비 총 크기 12이기때문에 12분등 중 어느만큼 사용하는건지
 						<form id="joinFormTag" class="row g-3" th:action="@{/member/join}"
 							method="post" th:object="${memberVO}">
-							<!-- class값은 고정 건드리면 안됨. 부트스트랩사용하기위한 의미
-				    for태그와 id태그 이름은 같게 하도록 -->
+							class값은 고정 건드리면 안됨. 부트스트랩사용하기위한 의미
+				    for태그와 id태그 이름은 같게 하도록
 							<div class="col-12">
 								<label for="memNo" class="form-label">학번 및 교번</label> <input
 									type="text" class="form-control" th:field="*{memNo}"
@@ -346,8 +306,8 @@
 									th:errors="*{memName}"></div>
 							</div>
 
-							<!-- 주소(상세주소 + 검색버튼추가)
-				 줄을 맞추기위해 실제내용은 화면에 안보이도록 공백문자사용/ class에 form-control 붙여넣기 -->
+							주소(상세주소 + 검색버튼추가)
+				 줄을 맞추기위해 실제내용은 화면에 안보이도록 공백문자사용/ class에 form-control 붙여넣기
 							<div class="col-9">
 								<label for="memAddr" class="form-label"> 주 소 </label> <input
 									type="text" class="form-control" th:field="*{memAddr}"
@@ -378,7 +338,7 @@
 							</div>
 
 							<div class="d-grid gap-2 col-12">
-								<!--  버튼클릭하나로 모든 데이터 가져가야하므로 무조건 submit!  -->
+								 버튼클릭하나로 모든 데이터 가져가야하므로 무조건 submit! 
 								<button type="submit" class="btn btn-primary">회원가입</button>
 								<button type="button" class="btn btn-primary"
 									onclick="checkValid();">회원가입</button>
@@ -386,8 +346,9 @@
 						</form>
 					</div>
 				</div>
+				
 			</div>
-		</div>
+		</div> -->
 	</div>
 		
 

@@ -22,7 +22,7 @@
 		<div class="col-4 text-end container-fluid">
 			<form th:action="@{/board/notice}" method="post">
 			     <!-- 글쓰기 등록 버튼 영역 -->
-				  <button   sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-success" th:onclick="@{location.href='/board/reg';}">공지사항글쓰기</button>
+				  <button   sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-success" th:onclick="@{location.href='/board/reg?cateNo=CATE007';}">공지사항글쓰기</button>
 			</form>
 		</div>
 	</div>

@@ -37,6 +37,12 @@ public class BoardServiceImpl implements BoardService{
 		return sqlSession.selectList("boardMapper.selectBoardList",boardVO);
 	}
 	
+	// 나의 게시글 목록 조회 + 키워드검색기능 (board 프로젝트 참고)
+	@Override
+	public List<BoardVO> selectMyBoardList(BoardVO boardVO) {
+		return sqlSession.selectList("boardMapper.selectMyBoardList",boardVO);
+	}
+	
 	//게시글상세조회
 	@Override
 	public BoardVO selectDetailBoard(String boardNo) {
@@ -129,8 +135,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 	//사용중인 카테고리 목록조회
 	@Override
-	public List<BoardCategoryVO> selectBoardCateUse() {
-		return sqlSession.selectList("boardMapper.selectBoardCateUse");
+	public List<BoardCategoryVO> selectBoardCateUse(BoardVO boardVO) {
+		return sqlSession.selectList("boardMapper.selectBoardCateUse",boardVO);
 	}
 	//카테고리 삭제
 	@Override

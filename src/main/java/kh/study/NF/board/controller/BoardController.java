@@ -37,7 +37,7 @@ public class BoardController {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 	//--------------------------- [공통 권한 게시판 영역]  --------------------------------------//
 	//게시글 목록페이지
-	@RequestMapping("/list")
+	@RequestMapping("/list")//리퀘스트매핑 해야하는 이유? 검색기능이 있기때문에 post매핑 form있어서
 	public String select(Model model,BoardVO boardVO,String boardNo,SearchVO searchVO) {
 		System.out.println("SearchKeyword=" + boardVO.getSearchKeyword());
 		System.out.println("searchValue=" + boardVO.getSearchValue());
@@ -57,6 +57,20 @@ public class BoardController {
 		return "content/common/board/board_list";
 	}
 	
+	//나의 게시글 목록 조회 페이지
+	@RequestMapping("/Myboard")
+	public String Myboard(Model model,BoardVO boardVO,String boardNo,SearchVO searchVO , Authentication authentication) {
+		User user = (User)authentication.getPrincipal();
+		boardVO.setBoardWriter(user.getUsername());
+		
+		boardVO.setTotalDataCnt(boardService.selectBoardCnt(searchVO));
+		boardVO.setPageInfo();
+		model.addAttribute("boardList",boardService.selectMyBoardList(boardVO));
+
+		return "content/common/board/my_board";
+	}
+		
+		
 	//공지사항 게시판목록조회
 	@RequestMapping("/notice")
 	public String notice(Model model,BoardVO boardVO,String boardNo) {
@@ -84,7 +98,7 @@ public class BoardController {
 	public String reg(@Valid BoardVO boardVO, BindingResult bindingResult, Model model
 						,Authentication authentication,BoardCategoryVO boardCategoryVO) {
 		//카테고리 목록조회(사용중인!)
-		model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
+		model.addAttribute("cateUsedList", boardService.selectBoardCateUse(boardVO));
 		return"content/common/board/reg_board";
 	}
 //----------------------------------------------------------------------------------------//	
@@ -100,7 +114,7 @@ public class BoardController {
 		boardVO.setBoardWriter(user.getUsername());//시큐리티 로그인 아이디(학번,교번)을 작성자로 넣어주기
 		
 		// 단일 이미지 파일 첨부 - mainImg
-		ImgVO  uploadInfo = BoardUploadFileUtil.uploadFile(mainImg);
+		ImgVO uploadInfo = BoardUploadFileUtil.uploadFile(mainImg);
 		// 다중 이미지 파일 첨부 - subImgs
 		List<ImgVO> uploadList = BoardUploadFileUtil.MultiUploadFile(subImgs);
 		//다중서브이미지 리스트에 단일메인이미지까지 넣어준다.
@@ -137,7 +151,7 @@ public class BoardController {
 		model.addAttribute("board", boardService.selectDetailBoard(boardNo));
 		System.out.println("게시판 상세조회 했을 때----"+boardVO);
 		//사용중인 카테고리 목록조회
-		model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
+		model.addAttribute("cateUsedList", boardService.selectBoardCateUse(boardVO));
 		System.out.println("--------------------- 사용중 카테고리 목록 조회완료 -------------------------");
 		//댓글목록조회
 		model.addAttribute("replyList",boardService.selectReplyList(boardNo));
@@ -161,7 +175,7 @@ public class BoardController {
 		boardVO.setBoardCreateDate(result.getBoardCreateDate());
 		boardVO.setBoardWriter(result.getBoardWriter());
 		//사용중인 카테고리 목록조회
-		model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
+		model.addAttribute("cateUsedList", boardService.selectBoardCateUse(boardVO));
 		
 		return "content/common/board/update_board_form";
 	}
@@ -250,10 +264,7 @@ public class BoardController {
 			System.out.println("1111");
 			return "redirect:/board/detail?boardNo=" + replyVO.getBoardNo();
 		}
-		
-		
 		boardService.insertReply(replyVO);
-		
 		System.out.println("댓글등록쿼리실행완료_______________________");
 		
 		return"content/common/board/reply_result";
@@ -269,13 +280,13 @@ public class BoardController {
 	// 댓글수정하러가기(양식페에지이동)
 	@GetMapping("/updateReply")
 	public String updateReply(ReplyVO replyVO,int replyNo,Model model
-							  ,@RequestParam(required = false) String boardNo) {
+							  ,@RequestParam(required = false) String boardNo , BoardVO boardVO) {
 		System.out.println("___________게시판상세조회 댓글수정 양식 페이지로 이동 !!! _______________");
 		//게시글 목록조회
 		model.addAttribute("board", boardService.selectDetailBoard(boardNo));
 		System.out.println("___________게시판 게시글 총 목록조회 쿼리문 완료 _______________");
 		//사용중인 카테고리 목록조회
-		model.addAttribute("cateUsedList", boardService.selectBoardCateUse());
+		model.addAttribute("cateUsedList", boardService.selectBoardCateUse(boardVO));
 		System.out.println("___________사용중 카테고리 목록조회 쿼리문 완료 _______________");
 		//댓글목록조회
 		model.addAttribute("replyList",boardService.selectReplyList(boardNo));

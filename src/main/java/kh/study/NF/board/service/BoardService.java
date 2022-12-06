@@ -31,12 +31,14 @@ public interface BoardService {
 	int selectBoardCnt(SearchVO searchVO);
 	// 다음 boardNo 조회
 	String getNextBoardNo();
+	// 나의 게시글 조회
+	List<BoardVO> selectMyBoardList(BoardVO boardVO);
 
 //--------------- [ 관리자 모드 게시판 ] -----------------------------//
 	//카테고리목록조회
 	List<BoardCategoryVO> selectBoardCate();
 	//카테고리 사용중인 목록조회
-	List<BoardCategoryVO> selectBoardCateUse();
+	List<BoardCategoryVO> selectBoardCateUse(BoardVO boardVO);
 	//카테고리등록
 	void insertBoardCate(BoardCategoryVO boardCategoryVO);
 	// 카테고리삭제

@@ -79,18 +79,18 @@
 				<ul class="nav topNav">
 				    <li><a href="#">대학/대학원</a></li>
 				    <li><a href="#" class="nav-link">입학/취업</a></li>
-				    <li><!-- by 유빈 -->
-				    	<a href="/board/list">게시판</a>
+				    <li><!-- !!!! by 유빈 : 실제사용게시판 드롭다운 메뉴!!!!!-->
+				    	<a href="#">게시판</a>
 				    	<div class="nav-column topNav_column">
-							<ul><!--  부산대 학생지원시스템 게시판 레퍼런스 -->
-							    <li><a href="/board/list">학생지원시스템공지</a></li>
-							    <li><a href="/board/list">대학공지</a></li>
-							    <li><a href="/board/list">학과공지</a></li>
-							    <li><a href="/board/list">장학공지</a></li>
-							    <li><a href="/board/list">QnA</a></li>
+							<ul>
+							    <li><a href="/board/list">전체 게시판</a></li>
+							    <li><a href="/board/notice">학사공지사항</a></li>
+							    <li><a href="/board/qna">QnA</a></li>
+							    <li><a href="/board/reg">게시글쓰기</a></li>
+							    <li><a href="/board/Myboard">나의 게시글 조회</a></li>
 							</ul>
 						</div>
-				    </li>
+				   </li>
 				    <li><a href="#">대학생활</a></li>
 				    <li><a href="#">국제교류</a></li>
 				    <li><a href="#">공지/참여</a></li>
@@ -108,9 +108,8 @@
 						<div class="nav-column topNav_column">
 							<ul>
 							    <li><a href="/admin/memDetail">내정보조회</a></li>
-							  <!--   <li><a href="#">내정보수정</a></li>  조회에서 수정 가능합니다 by지아-->
 							    <li><a href="/member/updatePw">비밀번호 변경</a></li>
-							    <li><a href="/timetable/load">시간표조회</a></li>
+							    <li><a href="/timetable/load">나의 시간표</a></li>
 							</ul>
 						</div>
 				    </li>
@@ -134,23 +133,22 @@
 							</ul>
 						</div>
 				    </li>
-				    <li><!-- by 유빈 -->
-				    	<a href="/board/list">게시판</a>
+				    <li><!-- !!!! by 유빈 : 실제사용게시판 드롭다운 메뉴!!!!!-->
+				    	<a href="#">게시판</a>
 				    	<div class="nav-column topNav_column">
-							<ul><!--  부산대 학생지원시스템 게시판 레퍼런스 -->
-							    <li><a href="/board/list">학생지원시스템공지</a></li>
-							    <li><a href="/board/list">대학공지</a></li>
-							    <li><a href="/board/list">학과공지</a></li>
-							    <li><a href="/board/list">장학공지</a></li>
-							    <li><a href="/board/list">QnA</a></li>
+							<ul>
+							    <li><a href="/board/list">전체 게시판</a></li>
+							    <li><a href="/board/notice">학사공지사항</a></li>
+							    <li><a href="/board/qna">QnA</a></li>
+							    <li><a href="/board/reg">게시글쓰기</a></li>
+							    <li><a href="/board/Myboard">나의 게시글 조회</a></li>
 							</ul>
 						</div>
-				    </li>
+				   </li>
 				    <li><a href="#">국제교류</a></li>
 				    <li><a href="/calendar/cal">캘린더</a></li>
 				    <li><a href="#">입학/취업</a></li>
 				    <li><a href="/chat/stuChat">Chatting</a></li>
-				    
 				</ul>
 	    </header>
 	    
@@ -161,6 +159,7 @@
 					<a href="/member/regMemForm">회원등록</a>
 					<div class="nav-column topNav_column">
 						<ul>
+						    <li><a href="/member/regMemForm">회원등록</a></li>
 						    <li><a href="/member/updatePw">비밀번호변경</a></li>
 						</ul>
 					</div>
@@ -184,23 +183,28 @@
 						 </ul>
 					</div>
 			    </li>
-			    <li><!-- by 유빈 -->
-				    	<a href="/board/boardAdmin">관리자 게시판</a>
-				    	<div class="nav-column topNav_column">
-							<ul><!--  부산대 학생지원시스템 게시판 레퍼런스 -->
-							    <li><a href="/board/boardAdmin">관리자 게시판</a></li>
-							    <li><a href="/board/list">전체 게시판</a></li>
-							    
-							    <li><a href="/board/notice">학사공지사항</a></li>
-							    <li><a href="/board/qna">QnA</a></li>
-							    
-							    <li><a href="/board/reg">게시판 글쓰기</a></li>
-							</ul>
-						</div>
-				    </li>
-			    <li><a href="/calendar/cal">캘린더</a></li>
-			    <li><a href="#">입학/취업</a></li>
+			    <li><!-- !!!! by 유빈 : 실제사용게시판 드롭다운 메뉴!!!!!-->
+			    	<a href="#">게시판</a>
+			    	<div class="nav-column topNav_column">
+						<ul>
+						    <li><a href="/board/list">전체 게시판</a></li>
+						    <li><a href="/board/notice">학사공지사항</a></li>
+						    <li><a href="/board/qna">QnA</a></li>
+						    <li><a href="/board/reg">게시글쓰기</a></li>
+						    <li><a href="/board/Myboard">나의 게시글 조회</a></li>
+						</ul>
+					</div>
+			    </li>
+			    <li>
+			    	<a href="/board/boardAdmin">관리자 게시판</a>
+			    	<div class="nav-column topNav_column">
+						<ul>
+						    <li><a href="/board/boardAdmin">관리자 게시판</a></li>
+						</ul>
+					</div>		    
+			    </li>
 			    <li><a href="#">홍보센터</a></li>
+			    <li><a href="/calendar/cal">캘린더</a></li>
 			    <li><a href="/chat/stuChat">Chatting</a></li>
 			    
 			</ul>
@@ -213,18 +217,18 @@
 			    <li><a href="/timetable/load">강의시간표 조회</a></li>
 			    <li><a href="/proF/viewLecList">강의 리스트</a></li>
 			    <li><a href="/proF/scoreManagement">성적등록</a></li>
-			 	<li><!-- by 유빈 -->
-			    	<a href="/board/list">게시판</a>
+			 	<li><!-- !!!! by 유빈 : 실제사용게시판 드롭다운 메뉴!!!!!-->
+			    	<a href="#">게시판</a>
 			    	<div class="nav-column topNav_column">
-						<ul><!--  부산대 학생지원시스템 게시판 레퍼런스 -->
-						    <li><a href="/board/list">학생지원시스템공지</a></li>
-						    <li><a href="/board/list">대학공지</a></li>
-						    <li><a href="/board/list">학과공지</a></li>
-						    <li><a href="/board/list">장학공지</a></li>
-						    <li><a href="/board/list">QnA</a></li>
+						<ul>
+						    <li><a href="/board/list">전체 게시판</a></li>
+						    <li><a href="/board/notice">학사공지사항</a></li>
+						    <li><a href="/board/qna">QnA</a></li>
+						    <li><a href="/board/reg">게시글쓰기</a></li>
+						    <li><a href="/board/Myboard">나의 게시글 조회</a></li>
 						</ul>
 					</div>
-			    </li>
+			   </li>
 			    <li><a href="/calendar/cal">캘린더</a></li>
 			    <li><a href="#">연구산학</a></li>
 			    <li><a href="/chat/stuChat">Chatting</a></li>
