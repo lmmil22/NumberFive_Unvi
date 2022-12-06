@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 
 <html lang='en' xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	layout:decorate="~{layout/base_layout}">
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   layout:decorate="~{layout/base_layout}">
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <th:block layout:fragment="css">
@@ -12,25 +12,19 @@
 <link href='/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
 
 <div layout:fragment="content">
+   
+      <h1>학사 일정</h1>
+   
+   <div sec:authorize="hasRole('ROLE_ADMIN')">
+   <input type="button" value="학사 일정 등록"  data-bs-toggle="modal"  data-bs-target="#changeLecModal">
+    </div>
 
-	<h1>학사 일정</h1>
-	
-	<!--	<h1>학사 일정</h1>
-	관리자만 일정 등록가능 
-	<div sec:authorize="hasRole('ROLE_ADMIN')">
-	<input type="button" value="학사 일정 등록"  data-bs-toggle="modal"  data-bs-target="#changeLecModal">
- 	<input type="button" value="학사 일정 등록"  th:onclick="insert();"> </div>  -->
-	
-	<!-- 현재는 교수일대만 등록가능하게 만듬 -->
-	<div sec:authorize="hasRole('ROLE_PROFESSOR')">ROLE_PROFESSOR 권한이 있습니다
-	<input type="button" value="학사 일정 등록"  data-bs-toggle="modal"  data-bs-target="#changeLecModal"></div>
-<!-- 	<input type="button" value="학사 일정 등록"  th:onclick="insert();"> -->
-	<div id='calendar'></div>
+   <div id='calendar'></div>
 
-	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-	<script src='/fullcalendar-5.11.3/lib/main.js'></script>
-	<link href='/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
-	<script>
+   <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+   <script src='/fullcalendar-5.11.3/lib/main.js'></script>
+   <link href='/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
+   <script>
     var calendarEl = document.getElementById('calendar');
     var request = $.ajax({
       url: "/calendar/event",
@@ -38,40 +32,40 @@
     });
     request.done(function(data){
       var calendar = new FullCalendar.Calendar(calendarEl, {
-     	    googleCalendarApiKey: '개인 api',
-    	    eventSources: [
-    	    {
-    	          googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
-    	          className: '국가공휴일',
-    	          color: '#be5683', //rgb,#ffffff 등의 형식으로 할 수 있어요.
-    	          //textColor: 'black' 
-    	        },
+            googleCalendarApiKey: '개인 api',
+           eventSources: [
+           {
+                 googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
+                 className: '국가공휴일',
+                 color: '#be5683', //rgb,#ffffff 등의 형식으로 할 수 있어요.
+                 //textColor: 'black' 
+               },
 
 
-    	    ]
-    	  ,initialView: 'dayGridMonth',
-       		 events: data
+           ]
+         ,initialView: 'dayGridMonth',
+              events: data
       });
-      calendar.render();		
+      calendar.render();      
     });
   </script>
-	<style>
+   <style>
 #calendar {
-	width: 80%;
-	margin: 20px auto;
+   width: 80%;
+   margin: 20px auto;
 }
 </style>
-	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+   <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="sweetalert2.all.min.js"></script>
-	<script th:src="@{/js/calendar/calList.js}"></script>
+   <script th:src="@{/js/calendar/calList.js}"></script>
 
 
 
 
 
 <!--  수정버튼을 누르면 뜨는 모달 -->
-<!-- 	Button trigger modal  -->
+<!--    Button trigger modal  -->
 <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"  data-bs-target="#changeLecModal"></button>
  -->
 <!-- Modal -->
@@ -85,14 +79,14 @@
       <form th:action="@{/}"  method="post" >
       <input type="hidden" name="lecNo" id="changeLecModal_lecNo" value=""> 
       <div class="modal-body">
-				
+            
                   <div class="row mb-1">
                      <div class="form-group input-group mb-1">
                         <div class="col-6 col-lg-2 px-0">
                            <span class="input-group-text h-100 rounded-0">일정</span>
                         </div>
                         <div class="col-6 col-lg-10 px-1 rounded-1">
-                           <input class="form-control" type="text" id="title"  name="title" value="" aria-label="readonly input example" readonly>
+                           <input class="form-control" type="text" id="title"  name="title" value="" aria-label="input example">
                            
                         </div>
                      </div>
@@ -105,7 +99,7 @@
                         </div>
                         <div class="col-6 col-lg-10 px-1 rounded-1">
                            <input  class="form-control" type="text" id="enddate" name="enddate"
-										placeholder="0000-00-00" value="" aria-label="readonly input example" readonly>
+                              placeholder="0000-00-00" value="" aria-label="input example">
                         </div>
                      </div>
                   </div>
@@ -117,14 +111,14 @@
                         </div>
                         <div class="col-6 col-lg-10 px-1 rounded-1">
                            <input  class="form-control" type="text" id="startdate" name="startdate"
-										placeholder="0000-00-00" value="" aria-label="readonly input example" readonly>
+                              placeholder="0000-00-00" value="" aria-label="input example">
                         </div>
                      </div>
                   </div>
                   
-						
-						
-					</div>
+                  
+                  
+               </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
         <input type="submit" class="btn btn-primary" value="등록하기" th:onclick="insert();">
@@ -137,4 +131,3 @@
 </div> 
 </div>
 </html>
-

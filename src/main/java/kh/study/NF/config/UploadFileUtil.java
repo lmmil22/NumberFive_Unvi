@@ -7,10 +7,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kh.study.NF.professor.vo.LecturePdfVO;
 
-//by 지아 //11/03
+//by 지아 
+//pdf 파일 업로드시 진행됩니다
 public class UploadFileUtil {
 	private static final String UPLOAD_PATH = "D:\\workspaceSTS\\NumberFive_Unvi\\src\\main\\resources\\static\\pdf\\";
-
+	
 	public static LecturePdfVO uploadFile(MultipartFile PdfName) {
 		System.out.println("!!!!!!!!!!!!!!!");
 		String fileName = null; // 널값으로 초기화 해준다.
