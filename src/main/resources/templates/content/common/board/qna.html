@@ -33,8 +33,8 @@
 		<table class="table table-hover" >
 			<colgroup>
 				<col width="*%">
-				<col width="6%">
-				<col width="53%">
+				<col width="5%">
+				<col width="50%">
 				<col width="20%">
 				<col width="10%">
 				<col width="5%">
@@ -75,9 +75,7 @@
 						<td><!-- 비밀글 및 공지글 여부 -->
 							<!-- 비밀글여부 -->
 							<th:block th:if="${qna.isSecrert eq'Y'}">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
-								  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-								</svg> 
+								<span class="badge rounded-pill text-bg-light"> </span>					
 							</th:block>
 							<th:block th:unless="${qna.isSecrert eq'Y'}">
 							</th:block>
