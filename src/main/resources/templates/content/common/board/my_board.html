@@ -65,7 +65,7 @@
 			</colgroup>
 			<thead class="table-light">
 				<tr>
-					<td>No.</td><!-- pk값이 아닌 행번호(row_no)를 의미함 -->
+					<td>No</td><!-- pk값이 아닌 행번호(row_no)를 의미함 -->
 					<td ><!-- 비밀글여부 -->
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
 						  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
@@ -114,7 +114,7 @@
 							<th:block th:if="${board.isSecrert eq 'Y'}">
 								<th:block th:if="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> 
 									<th:block th:if="${board.isNotice == 'Y'}">
-										<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="|[공지] ${board.boardTitle}|" ></a>
+										<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="|  ${board.boardTitle}|" ></a>
 									</th:block>
 									<th:block th:unless="${board.isNotice == 'Y'}">
 										<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="${board.boardTitle}" ></a>
@@ -122,7 +122,7 @@
 								</th:block >
 								<th:block th:unless="${board.boardWriter == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}"> <!-- 게시글작성자와 로그인한 학번/교번과 일치하면 -->
 									<th:block th:if="${board.isNotice == 'Y'}">
-										<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="|[공지] ${board.boardTitle}|" ></a>
+										<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="|  ${board.boardTitle}|" ></a>
 									</th:block>
 									<th:block th:unless="${board.isNotice == 'Y'}">
 										<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="${board.boardTitle}" ></a>
@@ -132,7 +132,8 @@
 							<!-- 비밀글이 아닐때 -->
 							<th:block th:unless="${board.isSecrert eq 'Y'}">
 								<th:block th:if="${board.isNotice == 'Y'}">
-										<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="|[공지] ${board.boardTitle}|" ></a>
+										
+										<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="| ${board.boardTitle}|" ></a>
 									</th:block>
 									<th:block th:unless="${board.isNotice == 'Y'}">
 										<a th:href="@{/board/detail(boardNo=${board.boardNo})}" th:text="${board.boardTitle}" ></a>
@@ -150,9 +151,7 @@
 		</div>
 		
 		<!-- 부트스트랩 페이징처리 -->
-		<!-- 문제 발생 예상? : 공지글 추가하거나 변경시, 과연 페이징처리 잘 구현되나...?저번에 안됐는디..;;; -->
 		 <div class="row mt-3" >						
-			<!-- <div class="col-5" ></div> -->
 			<div class="col-12" > 
 				<nav  aria-label="Page navigation example" >
 				  <ul class="pagination " >
@@ -175,7 +174,6 @@
 				</nav>
 			 </div>
 		</div> 
-			<!-- <div class="col-5" ></div>  -->
 		<!-- 부트스트랩 끝 -->
 		</div>
 	</div>

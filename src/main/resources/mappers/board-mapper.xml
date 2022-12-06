@@ -10,6 +10,7 @@
 		<result column="BOARD_CREATE_DATE"  property="boardCreateDate"/>
 		<result column="BOARD_READ_CNT"		property="boardReadCnt"/>
 		<result column="CATE_NO" 			property="cateNo"/>
+		<result column="CATE_NO" 			property="cateNo"/>
 		<result column="REPLY_CNT" 			property="replyCnt"/>
 		<result column="IS_SECRERT" 		property="isSecrert"/>
 		<result column="IS_NOTICE" 			property="isNotice"/>
@@ -76,8 +77,7 @@
 	
 	<!-- 공지사항 게시판 목록조회 -->
 	<select id="selectNotice" resultMap="board">
-			SELECT
-			     BOARD_NO
+			SELECT BOARD_NO
 			    , BOARD_TITLE
 			    , BOARD_WRITER
 			    , BOARD_CREATE_DATE
@@ -306,7 +306,7 @@
 
 
 
- <!-- ///////////////////관리자 모드 게시판//////////////////////////////// -->
+ <!-- /////////////////// [ 관리자 모드 게시판 //////////////////////////////// -->
 	<!--카테고리목록조회 -->
 	<select id="selectBoardCate" resultMap="cate">
 		SELECT CATE_NO
