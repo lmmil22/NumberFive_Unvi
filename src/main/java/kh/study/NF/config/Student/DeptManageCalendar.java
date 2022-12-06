@@ -7,13 +7,20 @@ public class DeptManageCalendar {
 
 	//현재 날짜 구하기(승인일자)
 	public static String nowDateToString() {
-      LocalDate date = LocalDate.now();
+		LocalDate date = LocalDate.now();
     
-      int year = date.getYear();
-      int month = date.getMonthValue();
-      int day = date.getDayOfMonth(); 
-    
-      String nowDate = year +"년" + month + "월" + day +"일";
+		int year = date.getYear();
+		int month = date.getMonthValue();
+		int day = date.getDayOfMonth(); 
+  	
+		//1월과 9월에는 01, 02 형식으로 표현하기 위하여 조건 추가 (삼항연산자)
+		String monthStr = month/10 == 0 ? "0" + month : month + "";
+		
+		//1일과 9일에 01, 02 형식으로 표현하기 위해 조건 추가(삼항연산자)
+		String dateStr = day/10 == 0 ? "0" + day : day +"";
+  
+      
+		String nowDate = year +"년" + monthStr + "월" + dateStr +"일";
 			
 		return nowDate;
 	}

@@ -7,6 +7,7 @@ function drawChartAjax(){
 		url: '/emp/showKPIAjax', //요청경로
 		type: 'post',
 		data: {}, //필요한 데이터
+		async: false,
 		success: function(KPIchartDataMap) {
 			drawChart(KPIchartDataMap);
 		},
@@ -26,7 +27,7 @@ function drawChart(KPIchartDataMap){
 		}, {
 			name: '승인 내역',
 			type: 'line',
-			data: KPIchartDataMap.approvalDateNoList1,
+			data: KPIchartDataMap.approvalDateNoList2,
 		}],
 		chart: {
 			height: 420,
@@ -51,7 +52,7 @@ function drawChart(KPIchartDataMap){
 			enabled: true,
 			enabledOnSeries: [1]
 		},
-		labels: KPIchartDataMap.approvalDateList,
+		labels: KPIchartDataMap.applyDateList,
 		xaxis: {
 			type: 'String',
 		},
@@ -85,6 +86,7 @@ function drawProbationChartAjax(){
 		url: '/emp/showProbationStuOutChartAjax', //요청경로
 		type: 'post',
 		data: {}, //필요한 데이터
+		async: false,
 		success: function(probationStuOutChartMap) {
 			console.log(probationStuOutChartMap);
 			drawProbationChart(probationStuOutChartMap);
