@@ -4,15 +4,20 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{layout/base_layout}"> 
 
-<th:block layout:fragment="css"> <!-- css 정의된 부분이 바뀌면서가져올것이다  -->
-<link rel="stylesheet"  th:href="@{}"> <!-- 외부 css 파일 불러오겠다  rel은 고정 -->
+<th:block layout:fragment="css"> 
+<link rel="stylesheet"  th:href="@{}"> 
 </th:block>
 
 <!-- 고정 페이지와 변동페이지는 다르다  -->
 <div layout:fragment="content"> 
-	점수조회 & 등록 페이지 
-	<input type="text" >
-	<input type="button" value="검색"> 
+	<h5>강의 조회</h5>
+	<div style="height: 70px;">
+		<form action="/proF/scoreManagement" method="post"> <!--겟 방식으로 보내면 주소창에 뜬다 -->
+			<input type="text" placeholder="등록한 강의명" name="searchValue" th:value="${searchValue}">
+			<input type="submit" value="검색" > 
+		</form>
+	
+	</div>
 	<div class="row">
 		<div class="col">
 			<div><h5>강의 목록</h5> </div>

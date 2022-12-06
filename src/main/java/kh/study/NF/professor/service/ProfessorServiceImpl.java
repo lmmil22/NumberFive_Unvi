@@ -128,8 +128,8 @@ public class ProfessorServiceImpl implements ProfessorService{
 	}
 	//점수 등록을 위한 교수 강의 조회 
 	@Override
-	public List<LectureVO> selectProFLecList(String empNo) {
-		return sqlSession.selectList("professorMapper.selectProFLecList",empNo);
+	public List<LectureVO> selectProFLecList(LectureVO lectureVO) {
+		return sqlSession.selectList("professorMapper.selectProFLecList",lectureVO);
 	}
 	//점수목록조회
 	@Override

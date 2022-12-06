@@ -295,16 +295,19 @@ public class ProfessorController {
 	}
 	
 	//by 지아 점수 등록 페이지로 이동 
-	@GetMapping("/scoreManagement")
-	public String scoreManagement( Authentication authentication ,Model model ,String empNo) {
+	@RequestMapping("/scoreManagement")
+	public String scoreManagement( Authentication authentication ,Model model ,LectureVO lectureVO) {
 		
 		User user = (User)authentication.getPrincipal();
-		empNo = user.getUsername();
-		System.out.println(empNo);
+		lectureVO.setEmpNo(user.getUsername());
 		//empNo = "EMP_001";
 		//해당 교수가 등록된 것만 보여야한다 ??
 		
-		model.addAttribute("lecList", professorService.selectProFLecList(empNo));
+		model.addAttribute("lecList", professorService.selectProFLecList(lectureVO));
+		
+		//벨류값에 th:value="${searchValue}"를 하기 위해선
+		model.addAttribute("searchValue", lectureVO.getSearchValue());
+		//여기서 searchValue을 보내주기 때문에 검색 input에 남는다
 		
 		
 		return "content/professor/stuRegistrationScore";
@@ -372,7 +375,6 @@ public class ProfessorController {
 		return "content/admin/stuGradeList";
 		
 	}
-	
 	
 	
 	

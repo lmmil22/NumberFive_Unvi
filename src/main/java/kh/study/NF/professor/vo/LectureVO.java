@@ -38,6 +38,8 @@ public class LectureVO {
 	private LecturePdfVO lecturePdfVO;
 	private LectureTimeVO lectureTimeVO;
 	//private StuGradeVO stuGradeVO;
+	//검색을 위한 추가
+	private String searchValue;
 	
 	
 	

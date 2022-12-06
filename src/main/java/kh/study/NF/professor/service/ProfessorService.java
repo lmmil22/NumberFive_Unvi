@@ -61,7 +61,7 @@ public interface ProfessorService {
 	 List<StuGradeVO> selectLecEnrollStuList(String lecNo);
 	 
 	 //교수가 등록한 강의 목록만 조회 
-	 List<LectureVO> selectProFLecList(String empNo);
+	 List<LectureVO> selectProFLecList(LectureVO lectureVO);
 	 
 	 //점수입력을 위한 점수조회
 	 List<GradeVO> selectGrade();

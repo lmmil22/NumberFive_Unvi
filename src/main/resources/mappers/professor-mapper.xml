@@ -506,7 +506,10 @@
 							  FROM LECTURE_TIME WHERE LEC_NO = L.LEC_NO ) AS LEC_DAY
 		FROM LECTURE L, LECTURE_TIME LT
 		WHERE L.LEC_NO = LT.LEC_NO AND 
-		EMP_NO = #{empNo}
+		EMP_NO = #{empNo} 
+		  <if test="searchValue != null and !searchValue.equals('')">
+		AND UPPER(LEC_NAME) LIKE '%'||UPPER(#{searchValue})||'%' 
+		</if> 
 		ORDER BY LEC_NO DESC
 	
 	
