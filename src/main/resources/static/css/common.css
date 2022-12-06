@@ -25,7 +25,7 @@ body{
 
 video {
    position:absolute;
-   width:3200px; 
+   width:3410px; 
    height:550px;
 
    z-index:-100;
@@ -49,6 +49,7 @@ video {
  
 .jb-box {
    height: 300px;
+   margin-top: -25px;
 }
 /* '.push'는 'footer'와 높이가 같아야 한다. */
 a{
@@ -99,23 +100,25 @@ textarea{
     position: relative;
     cursor: default;
     z-index: 500;
+    
 }
  
 .topNav > li {
     display: block;
     float: left;
-
+    width: 150px;
 }
+
 .topNav > li > a {
     position: relative;
     display: block;
     z-index: 510;
     height: 54px;
-    padding: 0 20px;
+    padding: 0 20px 0 20px;
     line-height: 54px;
  
     font-family: 'PuradakGentleGothicR';
-    font-size: 16px;
+    font-size: 17px;
     color: black;
  
     background: rgba( 255, 255, 255, 0.5 );
@@ -130,21 +133,21 @@ textarea{
 }
 
 .topNav > li:first-child > a {
-    border-radius: 3px 0 0 3px;
+    border-radius: 0 0 0 3px;
     border-left: none;
 }
 
 .topNav > li:last-child > a{
-   border-radius: 0 3px 3px 0;
+   border-radius: 0 0 3px 0;
    border-right: none;
 } 
 
 /* top메뉴 안 컨텐츠 영역 */
 .topNav > li > div {
-    position: absolute;
-    display: block;
-   width: 100%;
-    top: 55px;
+    position: relative;
+    display: inline-block;
+   	width: 100%;
+    top: 1px;
     left: 0;
      
     opacity: 0;
@@ -160,26 +163,28 @@ textarea{
     -ms-transition: all .3s ease .15s;
     transition: all .3s ease .15s;
     
-    display: block;
-    line-height: 26px;
-    font-family: 'PuradakGentleGothicR';
-    font-size: 17px;
-    color: black;
-    text-align: left;
-    
 }
 .topNav > li:hover > div {
     opacity: 1;
     visibility: visible;
-    overflow: visible;
+    overflow: hidden;
 }
 
 
-.topNav .topNav-column {
-    float: left;
-    width: 20%;
-    padding: 2.5%;
+.topNav > li > div > ul {
+ 
+ padding: 5px 10px 5px 5px;
+
 }
+
+.topNav > li > div > ul > li {
+	
+   line-height: 26px;
+   font-family: 'PuradakGentleGothicR';
+   font-size: 17px;
+   color: black;
+   text-align: center;
+}	
 
 .topNav .topNav-column li a:hover { color: #666666; }
 
