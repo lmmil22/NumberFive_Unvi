@@ -11,7 +11,7 @@ function showChangeMajorApply(stuNo, applyNo, processStatus){
 	      	//학생의 데이터 
 			document.querySelector('#changeMajorModal_status').innerText = result.studentVO.stuStatus;
 			document.querySelector('#changeMajorModal_name').innerText = result.studentVO.memberVO.memName;
-			alert(('/images/' + result.studentVO.memberVO.memImage));
+			//alert(('/images/' + result.studentVO.memberVO.memImage));
 			
 			document.querySelector('#changeMajorModal_image').src = ('/images/' + result.studentVO.memberVO.memImage);
 			

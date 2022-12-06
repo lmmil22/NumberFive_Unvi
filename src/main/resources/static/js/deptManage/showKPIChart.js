@@ -88,7 +88,7 @@ function drawProbationChartAjax(){
 		data: {}, //필요한 데이터
 		async: false,
 		success: function(probationStuOutChartMap) {
-			console.log(probationStuOutChartMap);
+			//console.log(probationStuOutChartMap);
 			drawProbationChart(probationStuOutChartMap);
 		},
 		error: function() {

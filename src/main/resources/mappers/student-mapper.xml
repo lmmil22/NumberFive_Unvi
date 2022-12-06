@@ -57,8 +57,9 @@
 <select id="studentInfo" resultMap="student">
 	SELECT S.MEM_NO
 		, MEM_NAME
-		, MEM_GENDER
+		, (DECODE(MEM_GENDER,'Female','여','남')) AS MEM_GENDER
 		, TO_CHAR(MEM_BIRTH, 'YYYY"년"MM"월"DD"일"')AS MEM_BIRTH
+		, MEM_IMAGE
 		, STU_NO
 		, (SELECT TO_CHAR(STU_YEAR)||'학년'||' '||TO_CHAR(STU_SEM)||'학기'FROM STU WHERE STU_NO = #{stuNo})AS STU_YEAR 
 		, STU_STATUS

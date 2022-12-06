@@ -19,6 +19,8 @@ function stuInfo(stuNo){
 			document.querySelector('#stuInfoModal_doubleDept').innerText = result.doubleNo;
 			document.querySelector('#stuInfoModal_birth').innerText = result.memberVO.memBirth;
 			document.querySelector('#stuInfoModal_status').innerText = result.stuStatus;
+			//alert('/images/' + result.memberVO.memImage);
+			document.querySelector('#stuInfoModal_image').src = ('/images/' + result.memberVO.memImage);
 		},
 	    error: function(){
 	       alert('실패');
