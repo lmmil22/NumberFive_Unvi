@@ -14,8 +14,8 @@
 <div layout:fragment ="content">
 	<div class="row mt-3 mb-4 me-2 g-3">
 		<div class="col mt-4 mb-4" >
-			<div class="col mt-4 mb-4" style="font-weight: bold; font-size: 22px;">
-				제적 학생조회
+			<div class="col mt-4 mb-4" style="font-weight: bold;">
+				<H4>제적 학생조회</H4>
 			</div>
 			<form th:action="@{/emp/stuOut}" method="post">
 				<table class="table align-middle text-center table-bordered">
@@ -65,7 +65,10 @@
 		
 		
 		
-	<div class="row mt-4 g-3">
+	<div class="row mt-3 g-3">
+		<div class="row" style="font: 10px; font-weight: bold; color: blue;">
+			<div>학생의 학번을 클릭하면 제적 받은 학생의 학사경고 내역을 확인할 수 있습니다.</div>
+		</div>
 		<div class="col-12 mb-3">
 			<div>
 				<div class="col-12 mb-3">

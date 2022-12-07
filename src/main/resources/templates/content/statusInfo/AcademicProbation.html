@@ -16,7 +16,7 @@
 	<div class="row mt-3 mb-4 me-2 g-3">
 		<div class="col mt-4 mb-4">
 			<div class="col mt-4 mb-4" style="font-weight: bold; font-size: 22px;">
-				학사경고 학생조회
+				<H4>학사경고 학생조회</H4>
 			</div>
 			<form th:action="@{/emp/probation}" method="post">
 				<table class="table align-middle text-center table-bordered">
@@ -65,7 +65,11 @@
 	</div>
 	
 			
-		<div class="row mt-4 g-3 ">
+		<div class="row mt-3 g-3 ">
+			<div class="row" style="font: 10px; font-weight: bold; color: blue;">
+				<div class="col">학생의 학번을 클릭하면 학사경고 창이 열립니다.</div>
+				<div class="col text-end">학사경고 3회 시 제적창이 활성화 됩니다.</div>
+			</div>
 			<div class="col-12 mb-3">
 				<div>
 					<div class="col-12 mb-3">

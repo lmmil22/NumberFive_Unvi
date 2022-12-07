@@ -29,6 +29,13 @@ function applyReturnUniv(){
 				})
 				
 				return;
+			}else{
+				
+				//by수경 복학신청 버튼 클릭 시 유의사항 모달창
+				//모달창 소스
+				const modal = new bootstrap.Modal('#returnUnivModal');
+				//모달 보여주기
+				modal.show();
 			}
 		},
 		error: function() {
@@ -36,11 +43,7 @@ function applyReturnUniv(){
 		}
 	});
 
-	//by수경 복학신청 버튼 클릭 시 유의사항 모달창
-	//모달창 소스
-	const modal = new bootstrap.Modal('#returnUnivModal');
-	//모달 보여주기
-	modal.show();
+
 	
 }
 
