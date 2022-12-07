@@ -184,16 +184,15 @@ public class BoardController {
 	@PostMapping("/update")
 	public String update(BoardVO boardVO) {
 		 boardService.update(boardVO);
-		 return "content/common/board/update_result";//수정확인 후,alert창 띄워보기
-//		 return "redirect:/board/detail?boardNum=" + boardVO.getBoardNum();//수정확인 후, 다시 상세보기로
+		 return "redirect:/board/detail?boardNo=" + boardVO.getBoardNo();//수정확인 후, 다시 상세보기로
 	}
 
 	// 글삭제
 	@GetMapping("/delete")
-	public String delete1(String boardNo) {
+	public String delete1(String boardNo, BoardVO boardVO) {
 		boardService.delete(boardNo);
 		System.out.println("___게시글 상세조회 후 삭제버튼 클릭하고 스왈다음 여기로 왔다___");
-		return "redirect:/board/list";
+		 return "";
 	}
 	// 글삭제
 	@ResponseBody
@@ -267,14 +266,18 @@ public class BoardController {
 		boardService.insertReply(replyVO);
 		System.out.println("댓글등록쿼리실행완료_______________________");
 		
-		return"content/common/board/reply_result";
+		return "redirect:/board/detail?boardNo=" + replyVO.getBoardNo();
 	}
+	
 	//댓글 삭제 
 	@GetMapping("/deleteReply")
-	public String deleteReply(int replyNo) {
+	public String deleteReply(int replyNo, String boardNo) {
 		boardService.deleteReply(replyNo);
+		//System.out.println(" boardNo이 null인지 확인하자 >>>> " + boardVO.getBoardNo());//null값 확인
+		//System.out.println(" boardNo이 null인지 확인하자 >>>> " + replyVO.getBoardNo());//null값 확인
 		System.out.println("___게시글 상세조회 후 댓글 삭제버튼 클릭함___");
-		return "redirect:/board/list"; 
+		
+		return "redirect:/board/detail?boardNo=" + boardNo;
 	}
 
 	// 댓글수정하러가기(양식페에지이동)
@@ -301,13 +304,14 @@ public class BoardController {
 	}
 	// 게시글 수정 실제 등록
 	@PostMapping("/updateReply")
-	public String updateReply(ReplyVO replyVO) {
+	public String updateReply(ReplyVO replyVO,BoardVO boardVO) {
 		
+		System.out.println("boardVO" + boardVO.getBoardNo());
 		System.out.println(replyVO.getReplyNo());
 		System.out.println("@@@@@@@@@@@@@@@"+replyVO.getReplyContent());
 
 		boardService.updateReply(replyVO);
 		
-		 return "content/common/board/update_result";//수정확인 후,alert창 띄워보기
+		return "redirect:/board/detail?boardNo=" + replyVO.getBoardNo();
 	}
 }

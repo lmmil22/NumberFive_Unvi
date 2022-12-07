@@ -4,14 +4,8 @@
 	layout:decorate="~{layout/base_layout}">
 	
 <div layout:fragment="content">
-	<form  th:action="@{/board/update}" method="post" th:object="${boardVO}" >
-
-		 <input type="hidden" th:field="*{boardNo}" readonly> 
-		
-		<!-- <div class="mb-3">
-		  <label for="exampleFormControlInput1" class="form-label"> 글번호 </label>
-		[<th:block th:text="*{boardNo}" th:field="*{boardNo}"></th:block>]
-		</div> -->
+	<form id="updateBoardForm" th:action="@{/board/update}" method="post" th:object="${boardVO}" >
+		<input type="hidden" th:field="*{boardNo}" readonly> 
 		
 		<div class="mb-3">
 		  <label for="exampleFormControlInput1" class="form-label"> 작성자 :</label>
@@ -85,9 +79,11 @@
 		  <textarea th:field="*{boardContent}" th:text="${boardContent}" class="form-control" id="exampleFormControlTextarea1" rows="3" ></textarea>
 		</div>
 		<div align="center">
-			<button type="submit" class="btn btn-light">수정확인</button>
+			<button id="updateBoardBtn" type="button" class="btn btn-light" onclick="goUpdateBoard();">수정확인</button>
 		</div>
 	</form>
+	
+<script type="text/javascript" th:src="@{/js/common/update_board_form.js}"></script>
+	
 </div>
-
 </html>

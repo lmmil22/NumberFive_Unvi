@@ -56,7 +56,7 @@ checkAll.addEventListener('click',function(){
 /////////////////////////////////////////////////////////////////////
 /////////-------------선택삭제 버튼 클릭------------///////
 function deleteCate(selectedTag){
-	
+	//체크박스 삭제 폼태그 선택
 	const deleteForm = document.querySelector('#cateForm');
 	//체크한 cartCode 다 들고 온다.(cartCode값은 체크박스안에  value값과 같다)
 	const checkedChks = document.querySelectorAll('.chk:checked');
@@ -65,7 +65,7 @@ function deleteCate(selectedTag){
 		
 		//--선택한 상품이 없을 때--//
 		if(checkedCnt == 0){
-			Swal.fire({
+			Swal.fire({////ok
 				title: '[ 체크박스 선택 필요 ]',
 				text: "선택된 게시판의 카테고리가 없습니다.",
 				icon: 'warning',
@@ -93,9 +93,8 @@ function deleteCate(selectedTag){
 	//action값 바꾸기
 	if(selectedTag.innerText == '선택삭제'){
 		deleteForm.action = '/board/deleteCate?cateNos='+ catetNosInput;
-		deleteForm.submit();
 	
-		Swal.fire({
+		Swal.fire({///ok
 			title: '[ 삭제 완료 ]',
 			text: "선택된 게시판의 카테고리이 삭제되었습니다.",
 			icon: 'success',
@@ -105,15 +104,13 @@ function deleteCate(selectedTag){
 			cancelButtonText: '취소'
 			}).then((result) => {
 			if (result.isConfirmed) {
-			location.href=`/board/boardAdmin`;
+				cateForm.submit();
 			}
 		})
 	}
 	else{
 		deleteForm.action = '/board/boardAdmin'
-		deleteForm.submit();
-		
-		Swal.fire({
+		Swal.fire({///ok
 			title: '[ 삭제 실패 ]',
 			text: "실패되었습니다.",
 			icon: 'warning',
@@ -123,7 +120,7 @@ function deleteCate(selectedTag){
 			cancelButtonText: '취소'
 			}).then((result) => {
 			if (result.isConfirmed) {
-			location.href=`/board/boardAdmin`;
+				deleteForm.submit();
 			}
 		})
 	}
@@ -133,6 +130,7 @@ function deleteCate(selectedTag){
 
 //변수선언
 var cateNameId = document.getElementById("cateNameId");
+var regCateBtn = document.getElementById("regCateBtn");
 
 //함수선언
 function validatecateName(){
@@ -146,9 +144,9 @@ function validatecateName(){
     cateNameId.setCustomValidity(''); 
     // 등록 버튼클릭시, 이벤트 실행
     document.getElementById("regBtn").onclick = function(){
-		Swal.fire({/* 문제발생! 스왈의 확인버튼을 클릭하지않아도 자동으로 넘어간다.. 밑에 함수가 바로 실행되는듯하다...그럼??? */
-			title: '[ 게시판 카테고리 등록 ]',
-			text: "입력하신 카테고리명으로 게시판등록이 완료되었습니다.",
+		Swal.fire({// ok
+			title: '[ 카테고리 등록 완료 ]',
+			text: "입력하신 카테고리명으로 게시판 등록이 완료되었습니다.",
 			icon: 'success',
 			showCancelButton: false, 
 			confirmButtonColor: '#3085d6',
@@ -156,7 +154,7 @@ function validatecateName(){
 			cancelButtonText: '취소'
 			}).then((result) => {
 				if (result.isConfirmed) {
-				location.href=`/board/boardAdmin`;
+					regCateBtn.submit();
 			}
 		})
 	} 
@@ -175,13 +173,42 @@ function changeisUse(cateNo, isUse){
 	     type: 'post',
 	     data: {'isUse':isUse,'cateNo':cateNo}, //필요한 데이터
 	     success: function(result) {
-			const modal = new bootstrap.Modal('#updateStatusModal');
-			modal.show();
+			//(1) 스왈버전
+			Swal.fire({////ok
+			title: '[ 사용여부 변경 성공 ]',
+			text: "선택하신 카테고리의 사용여부 변경 성공했습니다.",
+			icon: 'success',
+			showCancelButton: false, 
+			confirmButtonColor: '#3085d6',
+			confirmButtonText: '확인',
+			}).then((result) => {
+				if (result.isConfirmed) {
+					location.href=`/board/boardAdmin`;
+				}
+				else{
+					Swal.fire({////ok
+					title: '[ 사용여부 변경 실패 ]',
+					text: "선택하신 카테고리의 사용여부 변경이 실패되었습니다.",
+					icon: 'warning',
+					showCancelButton: false, 
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인',
+					cancelButtonText: '취소'
+					}).then((result) => {
+						if (result.isConfirmed) {
+						location.href=`/board/boardAdmin`;
+						}
+					})
+				}
+			})
+			//(2) 모달버전
+			//const modal = new bootstrap.Modal('#updateStatusModal');
+			//modal.show();
 			
 			
 	     },
 	     error: function() {
-	        Swal.fire({
+	        Swal.fire({////ok
 			title: '[ 사용여부 변경 실패 ]',
 			text: "선택하신 카테고리의 사용여부 변경이 실패되었습니다.",
 			icon: 'warning',
@@ -192,8 +219,8 @@ function changeisUse(cateNo, isUse){
 			}).then((result) => {
 				if (result.isConfirmed) {
 				location.href=`/board/boardAdmin`;
-			}
-		})
+				}
+			})
 	     }
   });
 }

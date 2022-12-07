@@ -15,7 +15,7 @@
 			<!-- 제목줄 -->
 			<h3> [ 관리자 게시판 ]</h3>
 			<!-- 등록 줄 -->
-			<form th:action="@{/board/regCate}" method="post" th:object="${boardCategoryVO}">
+			<form id="regCateBtn" th:action="@{/board/regCate}" method="post" th:object="${boardCategoryVO}">
 			<input type="hidden" th:field="*{cateNo}">
 				 <div  class="row justify-center-center" style="width: 80%;">
 					<div class="col-5">
@@ -33,7 +33,7 @@
 						</span>
 					</div>
 					<div class="col-2" style="padding: 20px; padding-top: 30px;" >
-						<button type="submit" id="regBtn" class="btn btn-primary">등록</button>
+						<button type="button" id="regBtn" class="btn btn-primary">등록</button>
 					</div>
 				</div>
 			</form>
@@ -83,21 +83,20 @@
 								      	</td>
 										<td th:text="${cate.cateNo}" ></td>
 										<td th:text="${cate.cateName}"></td>
-										<!-- <td th:text="${cate.isUse}"></td> -->
-										<td id="isUseId">
-									<span class="form-check form-check-inline">
-				                       <input class="form-check-input " type="radio" th:name="|isUse_${status.count}|" 
-				                       	id="isUse" value="Y" th:checked="${cate.isUse eq 'Y'}"
-				                       	th:onclick="changeisUse([[${cate.cateNo}]], 'Y');" >       
-				                       <label class="form-check-label" for="inlineRadio1">사용중</label>
-				                     </span>
-				                     <span class="form-check form-check-inline">
-				                      <input class="form-check-input " type="radio" th:name="|isUse_${status.count}|" 
-				                      	 id="isUnUse" value="N" th:checked="${cate.isUse eq 'N'}"
-        	 				            	th:onclick="changeisUse([[${cate.cateNo}]], 'N');" >       
-				                       <label class="form-check-label" for="inlineRadio2">미사용</label>
-				                     </span>
-								</td>
+											<td id="isUseId">
+										<span class="form-check form-check-inline">
+					                       <input class="form-check-input " type="radio" th:name="|isUse_${status.count}|" 
+					                       	id="isUse" value="Y" th:checked="${cate.isUse eq 'Y'}"
+					                       	th:onclick="changeisUse([[${cate.cateNo}]], 'Y');" >       
+					                       <label class="form-check-label" for="inlineRadio1">사용중</label>
+					                     </span>
+					                     <span class="form-check form-check-inline">
+					                      <input class="form-check-input " type="radio" th:name="|isUse_${status.count}|" 
+					                      	 id="isUnUse" value="N" th:checked="${cate.isUse eq 'N'}"
+	        	 				            	th:onclick="changeisUse([[${cate.cateNo}]], 'N');" >       
+					                       <label class="form-check-label" for="inlineRadio2">미사용</label>
+					                     </span>
+										</td>
 									</tr>
 								</th:block>
 								<th:block th:unless="${#lists.size(cateList) != 0}">
@@ -111,13 +110,7 @@
 		</div>
 	</div>
 <!--//////////////////////////////////////////// < 모달영역 시작 >  ////////////////////////////////////////////  -->	
-<!-- 상품상태 변경 후 실행되는 modal창 -->
-<!-- Vertically centered modal -->
-<!-- Button trigger modal -->
-<!-- <button id="updateStatusModal" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button> -->
-
+<!-- 상품상태 변경 성공 후 실행되는 modal창 -->
 <!-- Modal -->
 <div id="updateStatusModal" class="modal fade"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

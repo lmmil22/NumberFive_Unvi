@@ -22,7 +22,7 @@
 				<nav class="row navbar bg-light">
 				<div class="col-1 container-fluid "></div><!--열맞추기용 -->
 				<div class="col-3 container-fluid ">
-					<select  name="searchKeyword" class="form-select " aria-label="Default select example">
+					<select id="searchKeyword"  name="searchKeyword" class="form-select " aria-label="Default select example">
 						  <!-- value값을 두개가져오니까 split을 사용해서 배열을 for문으로 돌려서 데이터 추출? -->
 						  <option value="ALL" th:selected="${boardVO.searchKeyword == 'ALL'}">전체</option>
 						  <option value="BOARD_TITLE" 	th:selected="${boardVO.searchKeyword == 'BOARD_TITLE'}">제목</option>
@@ -31,11 +31,11 @@
 					</select>
 				</div>
 				<div class="col-4 container-fluid">
-				      <input id="searchKeywordTag" name="searchValue"  th:value="${boardVO.searchValue}" class="form-control me-2" type="search" placeholder="검색하실 키워드를 입력하세요." aria-label="Search">
+				      <input id="searchValue" name="searchValue"  th:value="${boardVO.searchValue}" class="form-control me-2" type="search" placeholder="검색하실 키워드를 입력하세요." aria-label="Search">
 				</div>
 		    	 <!-- 검색 버튼 영역 -->
 			    <div class="col-2 container-fluid">
-					 <button id="searchBtn" class="btn btn-outline-success" type="submit">검색</button>
+					 <button id="searchBtn" class="btn btn-outline-success" type="button">검색</button>
 			    </div>
 			     <!-- 글쓰기 등록 버튼 영역 -->
 			    <div class="col-2 container-fluid" sec:authorize="isAuthenticated()">

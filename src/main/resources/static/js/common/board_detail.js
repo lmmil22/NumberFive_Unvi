@@ -1,19 +1,47 @@
 /*by 유빈*/
-///////////////////////////////////////////////////////////////////////
-//------------[게시글 댓글 등록 버튼 클릭시 진행 함수]----------------//
-function goReg(){
 
-	let replyTextTag = document.querySelector('#replyText').value;//  textarea는 innerText가 아니라 value로 해야함!! 유의!!
-	const regReplyForm = document.querySelector('#regReplyForm');
-	// 확인용 alert(replyTextTag);
-	
+//-------------------[ 변수 선언 ]------------------------------------------//
+let replyTextTag = document.querySelector('#replyText').value;//  textarea는 innerText가 아니라 value로 해야함!! 유의!!
+const regReplyForm = document.querySelector('#regReplyForm');
+const boardNoTag = document.querySelector('#boardNoTag').value;
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+//--------------------[ 함수 선언 ]------------------------------------------//
+
+//[게시글 댓글 등록 버튼 클릭시 진행 함수]
+function goReg(){
+	replyTextTag = document.querySelector('#replyText').value.trim() 
+
 	// 댓글이 빈값일 때 
-	if(replyTextTag == ''){
-		alert('댓글을 작성해주세요.');
-		return;
+	if(replyTextTag == '' || replyTextTag == null ){
+		Swal.fire({//ok
+		   title: '[ 등록 실패 ]',
+		   text: '댓글 등록이 실패되었습니다.',
+		   icon: 'error',
+		   
+		   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+		   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+		   confirmButtonText: '확인',// confirm 버튼 텍스트 지정
+		   reverseButtons: true, // 버튼 순서 거꾸로
+		}).then(result => {
+			location.href=`/board/detail?boardNo=` + boardNoTag;
+		});
 	}
 	else{
-		regReplyForm.submit();
+		Swal.fire({//ok
+		   title: '[ 등록 ]',
+		   text: '댓글 등록이 완료되었습니다.',
+		   icon: 'success',
+		   
+		   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+		   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+		   confirmButtonText: '확인',// confirm 버튼 텍스트 지정
+		   reverseButtons: true, // 버튼 순서 거꾸로
+		}).then(result => {
+			regReplyForm.submit();			
+		});
 	}
 	
 }
@@ -22,6 +50,7 @@ function goReg(){
 //----[ 작성 후 목록조회된 댓글 수정버튼 클릭시 진행 함수]----------------------//
 function goUpdate(btn){
 	const replyContent = btn.closest('div.row').querySelector(".replyContent");
+	//const updateForm = btn.closest('div.row').querySelector(".updateForm");
 	const originalReplyContent = replyContent.innerText;
 
 	//'수정'버튼으로 되어있을 때,
@@ -38,14 +67,22 @@ function goUpdate(btn){
 	
 	//그렇지 않을 때('확인'버튼일 때)
 	else{
-	//test
 		// 댓글 수정할 때 값이 빈값일 때
 		if(replyContent.querySelector("textarea").value == ''){
-			alert('댓글을 작성해주세요.');
-			
-			return ;	
+			Swal.fire({//ok
+			   title: '[ 수정 실패 ]',
+			   text: '수정하실 댓글 내용을 입력하세요.',
+			   icon: 'error',
+			   
+			   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+			   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+			   confirmButtonText: '확인',// confirm 버튼 텍스트 지정
+			   reverseButtons: true, // 버튼 순서 거꾸로
+			}).then(result => {
+				location.href=`/board/detail?boardNo=`+boardNoTag;	
+			});
 		}
-	//test	
+		// 빈값이 아닌 댓글 확인버튼 클릭시,
 		replyContent.closest('form').submit();
 	}
 	
@@ -130,7 +167,7 @@ function checkValid(){
 //----------------------------------------------------------------------------------------------//
 //[게시글 삭제버튼 클릭시 실행되는 함수]
 function goDelete(boardNo){
-   Swal.fire({
+   Swal.fire({//ok
 	   title: '정말로 삭제 하시겠습니까?',
 	   text: '다시 되돌릴 수 없습니다. 신중하세요.',
 	   icon: 'warning',
@@ -143,35 +180,33 @@ function goDelete(boardNo){
 	   reverseButtons: true, // 버튼 순서 거꾸로
    
 	}).then(result => {
-	   // 만약 Promise리턴을 받으면,
 	   if (result.isConfirmed,boardNo) { // 만약 모달창에서 confirm 버튼을 눌렀다면
-		const goDeleteForm = document.querySelector('#goDeleteForm');
-		let board_no = goDeleteForm.querySelector('input[type="hidden"]').value;
+			const goDeleteForm = document.querySelector('#goDeleteForm');
+			let board_no = goDeleteForm.querySelector('input[type="hidden"]').value;
+	   	
 	   	//ajax start
-			$.ajax({
+			$.ajax({//
 				url: '/board/delete', //요청경로
 				type: 'post',
 				data: { 'boardNo':board_no}, //필요한 데이터
 				success: function(result) {
 					
-					Swal.fire({
-					   title: '삭제완료',
+					Swal.fire({//ok
+					   title: '[ 삭제 완료 ]',
 					   text: '삭제가 완료되었습니다.',
 					   icon: 'success',
 					   
 					   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
 					   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
-					   //cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
 					   confirmButtonText: '확인',// confirm 버튼 텍스트 지정
-					  // cancelButtonText: '취소', // cancel 버튼 텍스트 지정
 					   reverseButtons: true, // 버튼 순서 거꾸로
 					}).then(result => {
-						location.href = '/board/list';
+						location.href=`/board/list`;	
 					});
 									
 				},
 				error: function() {
-					Swal.fire({
+					Swal.fire({//ok
 					        icon: 'warning',
 					        title: 'error',
 					        text: '에러발생.',
@@ -187,8 +222,8 @@ function goDelete(boardNo){
 //----------------------------------------------------------------------------------------------//
 //-------------------[ 댓글 삭제 버튼 클릭시 실행되는 함수]-------------------------------------//
 function goReplyDelete(replyNo){
-	Swal.fire({
-		title: '삭제 완료.',
+	Swal.fire({//ok
+		title: '[ 삭제 완료 ]',
 		text: '삭제가 완료되었습니다.',
 		icon: 'success',
 		showCancelButton: false, // cancel버튼 보이지 않도록(false) 보이도록 하고자 한다면 true
@@ -198,7 +233,7 @@ function goReplyDelete(replyNo){
 		
 		}).then((result) => {
 		if (result.isConfirmed) {
-			location.href=`/board/deleteReply?replyNo=${replyNo}`;
+			location.href=`/board/deleteReply?replyNo=${replyNo}&boardNo=${boardNoTag}`;
 		}
 	})
 }

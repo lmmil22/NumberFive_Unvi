@@ -76,7 +76,12 @@ public class TimeTableController {
 		return timetableService.loadTimeTableProf(empNo);
 	}
 	
-	// 강의시간표 pdf 버튼클릭시 다운로드
+//-------[  테스트  ]-------------------------------------------------------------------------------------//
 	
+	// 강의시간표 pdf 버튼클릭시 다운로드
+	@GetMapping("/test")
+	public String test() {
+		return"test";
+	}
 	
 }

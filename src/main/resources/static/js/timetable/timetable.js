@@ -64,4 +64,13 @@ $.ajax({
 });
 //ajax end
 
+////////////////////////////////////////////////////////////////////////
+const tdList = document.querySelectorAll('td');
 
+for(td of tdList){
+	if(td.innerText.length > 6){
+		//6글자 보다 큰 이너텍스트를 가진 td만 색상을 입히자. 
+		
+	}
+		
+};
