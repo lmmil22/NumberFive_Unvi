@@ -10,4 +10,5 @@ import kh.study.NF.student.vo.StudentVO;
 
 public interface TimetableService {
 	List<LectureVO> loadTimeTable();
+	List<LectureVO> loadTimeTableProf(String empNo);
 	}

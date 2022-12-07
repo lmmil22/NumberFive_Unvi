@@ -15,10 +15,18 @@ public class TimetableServiceImpl implements TimetableService {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
+//////////////////////////////////////////////////////////////////
+	
+	//학생 수업 시간표 
 	@Override
 	public List<LectureVO> loadTimeTable() {
 		return sqlSession.selectList("professorMapper.loadTimeTable");
+	}
+	
+	//교수 강의 시간표 
+	@Override
+	public List<LectureVO> loadTimeTableProf(String empNo) {
+		return sqlSession.selectList("professorMapper.loadTimeTableProf",empNo);
 	}
 	
 	

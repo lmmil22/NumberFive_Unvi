@@ -80,14 +80,7 @@
 				<ul class="nav topNav" style="width: 100%;">
 				    <li><a href="#">대학/대학원</a></li>
 				    <li><a href="#" class="nav-link">입학/취업</a></li>
-				    <li><!-- !!!! by 유빈 : 실제사용게시판 드롭다운 메뉴!!!!!-->
-				    	<a href="#">게시판</a>
-				    	<div class="nav-column topNav_column">
-							<ul>
-							   <li><a href="/board/list">전체 게시판</a></li>
-							</ul>
-						</div>
-				   </li>
+				    <li><a href="/board/list">게시판</a></li>
 				    <li><a href="#">대학생활</a></li>
 				    <li><a href="#">국제교류</a></li>
 				    <li><a href="#">공지/참여</a></li>
@@ -105,7 +98,6 @@
 							<ul>
 							    <li><a href="/admin/memDetail">내정보조회</a></li>
 							    <li><a href="/member/updatePw">비밀번호 변경</a></li>
-							    <li><a href="/timetable/load">나의 시간표</a></li>
 							</ul>
 						</div>
 				    </li>
@@ -143,9 +135,30 @@
 							</ul>
 						</div>
 				   </li>
-				    <li><a href="/calendar/cal">캘린더</a></li>
-				    <li><a href="#">입학/취업</a></li>
-				    <li><a href="/chat/stuChat">Chatting</a></li>
+				    <li><!-- by 유빈 -->
+				    	<a href="/timetable/load">수업 시간표</a>
+				    	<div class="nav-column topNav_column">
+							<ul>
+							    <li><a href="/timetable/load"> 시간표 조회 </a></li>
+							</ul>
+						</div>
+				    </li>
+				    <li>
+				    	<a href="/calendar/cal">캘린더</a>
+				    	<div class="nav-column topNav_column">
+							<ul>
+							    <li><a href="/calendar/cal">캘린더</a></li>
+							</ul>
+						</div>
+				    </li>
+				    <li>
+				    	<a href="/chat/stuChat">Chatting</a>
+				    	<div class="nav-column topNav_column">
+							<ul>
+							    <li><a href="/chat/stuChat">Chatting</a></li>
+							</ul>
+						</div>
+				    </li>
 				</ul>
 	    </header>
 	    
@@ -193,10 +206,12 @@
 					</div>
 			    </li>
 			    <li>
-			    	<a href="/board/boardAdmin">관리자 게시판</a>
+			    	<a href="/board/boardAdmin">관리자 </a>
 			    	<div class="nav-column topNav_column">
 						<ul>
-						    <li><a href="/board/boardAdmin">관리자 게시판</a></li>
+						    <li><a href="/board/boardAdmin"> 게시판 등록</a></li>
+						    <!-- <li><a href="/timetable/load"> 학생 시간표 </a></li>
+						    <li><a href="/timetable/loadProf"> 교수 시간표 </a></li> -->
 						</ul>
 					</div>		    
 			    </li>
@@ -210,7 +225,7 @@
 	    <header sec:authorize="hasRole('ROLE_PROFESSOR')" style="width: 1050px;">
 			<ul class="nav topNav" style="width: 100%;">
 			    <li><a href="/proF/regProfLec">강의등록</a></li>
-			    <li><a href="/timetable/load">강의시간표</a></li>
+			    <li><a href="/timetable/loadProf"> 강의 시간표 </a> </li>
 			    <li><a href="/proF/viewLecList">강의 리스트</a></li>
 			    <li><a href="/proF/scoreManagement">성적등록</a></li>
 			 	<li><!-- !!!! by 유빈 : 실제사용게시판 드롭다운 메뉴!!!!!-->

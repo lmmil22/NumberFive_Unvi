@@ -1,5 +1,5 @@
-<!-- by 유빈 : 시간표 불러오기 test 파일임!!! 미사용 -->
-<!-- <!DOCTYPE html>
+<!-- by 유빈 : 시간표 불러오기 -->
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" 
 	layout:decorate="~{layout/base_layout}">
@@ -8,37 +8,34 @@
 	<link rel="stylesheet" th:href="@{/css/timetable.css}">
 </th:block>
 
+
 <div layout:fragment="content">
-	제목줄
-	<div align="center"  class="row mt-3">
+	<!-- 제목줄 -->
+	<div align="center"  class="row ">
 		<div class="col">
-		    <h1>Student Timetable</h1>
+		    <h1>교수 강의 시간표 </h1>
 		</div>
 	</div>
     
-    //// 미로그인 시/////  
-	<div class="row mt-5 " sec:authorize="isAnonymous()">
-	    <div  class="col"   style="height:3.0em; background-color: #F7F7F7; text-align: center; padding-top: 1.1rem;"> 로그인 후 조회가능합니다. </div>
-	</div>
-	
-	///// 로그인 시//////
-	 로그인 시 1)교직원 어드민 권한 
-    <div class="col" align="center"  sec:authorize="hasRole('ROLE_AMDIN')">
-    	<div  class="col"   style="height:3.0em; background-color: #F7F7F7; text-align: center; padding-top: 1.1rem;"> 학생권한만 조회가능합니다. </div>
-    </div>
-    
-     로그인 시 2)교수 권한 
-    <div class="col" align="center"  sec:authorize="hasRole('ROLE_PROFESSOR')">
-    	<div  class="col"   style="height:3.0em; background-color: #F7F7F7; text-align: center; padding-top: 1.1rem;"> 교수님시간표만 조회가능합니다. </div>
-    </div>
-    
-    로그인 시 3)학생 권한 
-    <div class="col" align="center"  sec:authorize="hasRole('ROLE_STUDENT') OR hasRole('ROLE_AMDIN')">
-	    타임테이블 영역
-	    <div style="width: 80%;">
-	    	해당 학생 학번영역
-	   	 	<div class="col mt-5 text-start" > ※ [ <span sec:authentication="name"></span> ] 님의 시간표입니다. </div>
-			<table class="table ">
+    <div class="col mt-5" align="center"  sec:authorize="hasRole('ROLE_PROFESSOR') OR hasRole('ROLE_ADMIN')">
+	    <!-- 타임테이블 영역 -->
+	    <div class="row" style="width: 70%;">
+	    <!-- 부제목줄 영억 (학번소개 + 다운로드 버튼)-->
+	    	<!-- 해당 학생 학번영역 -->
+	   	 	<div class="col-8 text-start" style="padding-top: 5px; font-size: 15px;  color: gray; " > 
+	   	 		<!-- <select style="width: 30%;" class="form-select" aria-label="Default select example">
+ 						<option selected> 1학기 </option>
+		   	 			<option> 2학기 </option>
+	   	 		 </select>  -->
+		   	 	※ [[${memberVO.memName}]] ( <span sec:authentication="name"></span> ) 교수님 강의 시간표입니다. 
+	   	 	</div>
+	   	 	<!-- 다운로드 버튼 영역 -->
+	   	 	<div class="col-4  text-end" > 
+	   	 		<button type="button" class="btn btn-light" onclick="/timetable/download">PDF 다운로드</button>
+	   	 		<!-- <a href="/download/myFile.pdf">구글_파일 다운로드</a> --><!-- 구글링소스 -->
+	   	 	 </div>
+	   	 	<!-- 테이블 영역 --> 
+			<table align="center"  class="col-12 table " style="font-size: 16px;">
 				<colgroup>
 					<col width="*%">
 					<col width="18%">
@@ -47,8 +44,9 @@
 					<col width="18%">
 					<col width="18%" >
 				</colgroup>
-			  <thead >요일 영역
-			    <tr align="center" >
+			  <thead >
+			  	<!-- 요일 영역 -->
+			    <tr align="center"  style="font-size: 20px; padding: 5px;">
 			      <th scope="col"></th>
 			      <th scope="col">월</th>
 			      <th scope="col">화</th>
@@ -57,8 +55,8 @@
 			      <th scope="col">금</th>
 			    </tr>
 			  </thead>
-			  <tbody class="table-group-divider">
-			    <tr height="80" class="lecTime">
+			  <tbody style="text-align: center; "  class="table-group-divider">
+			    <tr height="60" class="lecTime">
 			      <th  scope="row">9:00</th>
 			      <td></td>
 			      <td></td>
@@ -66,7 +64,7 @@
 			      <td></td>
 			      <td></td>
 			    </tr>
-			    <tr height="80" class="lecTime">
+			    <tr height="60" class="lecTime">
 			      <th scope="row">10:00</th>
 			      <td></td>
 			      <td></td>
@@ -74,7 +72,7 @@
 			      <td></td>
 			      <td></td>
 			    </tr>
-			    <tr height="80" class="lecTime">
+			    <tr height="60" class="lecTime">
 			      <th scope="row">11:00</th>
 			      <td></td>
 			      <td></td>
@@ -82,7 +80,7 @@
 			      <td></td>
 			      <td></td>
 			    </tr>
-			    <tr height="80" class="lecTime">
+			    <tr height="60" class="lecTime">
 			      <th scope="row">12:00</th>
 			      <td></td>
 			      <td></td>
@@ -90,7 +88,7 @@
 			      <td></td>
 			      <td></td>
 			    </tr>
-			    <tr height="80" class="lecTime">
+			    <tr height="60" class="lecTime">
 			      <th scope="row">13:00</th>
 			     <td></td>
 			      <td></td>
@@ -98,7 +96,7 @@
 			      <td></td>
 			      <td></td>
 			    </tr>
-			    <tr height="80" class="lecTime">
+			    <tr height="60" class="lecTime">
 			      <th scope="row">14:00</th>
 			      <td></td>
 			      <td></td>
@@ -106,7 +104,7 @@
 			      <td></td>
 			      <td></td>
 			    </tr>
-			    <tr height="80" class="lecTime">
+			    <tr height="60" class="lecTime">
 			      <th scope="row">15:00</th>
 			      <td></td>
 			      <td></td>
@@ -114,7 +112,7 @@
 			      <td></td>
 			      <td></td>
 			    </tr>
-			    <tr height="80" class="lecTime">
+			    <tr height="60" class="lecTime">
 			      <th scope="row">16:00</th>
 			      <td></td>
 			      <td></td>
@@ -122,7 +120,7 @@
 			      <td></td>
 			      <td></td>
 			    </tr>
-			    <tr height="80" class="lecTime">
+			    <tr height="60" class="lecTime">
 			      <th scope="row">17:00</th>
 			     <td></td>
 			      <td></td>
@@ -130,7 +128,7 @@
 			      <td></td>
 			      <td></td>
 			    </tr>
-			    <tr height="80" class="lecTime">
+			    <tr height="60" class="lecTime">
 			      <th scope="row">18:00</th>
 			      <td></td>
 			      <td></td>
@@ -142,9 +140,9 @@
 			</table>
 		</div>
 	</div>
-	////////////////////////
+	<!-- //////////////////////// -->
 	
-<script type="text/javascript" th:src="@{/js/timetable/timetable.js}"></script>
-	
+ <script type="text/javascript" th:src="@{/js/timetable/timetable_prof.js}"></script>
+	 
 </div>
-</html> -->
+</html>

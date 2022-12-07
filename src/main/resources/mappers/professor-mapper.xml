@@ -107,11 +107,13 @@
 
 <!-- by 유빈 : 시간표 불러오기 -->
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
+	<!-- 학생시간표 -->
 	<select id="loadTimeTable" resultMap="lecture">
 		SELECT 
 		    REGEXP_SUBSTR(LEC_DAY,'[^,]+', 1, LEVEL) AS LEC_DAY
 		    , EN.LEC_NO
 		    , LEC_NAME
+		    , LEC_SCORE
 		    , TO_NUMBER( SUBSTR(FIRST_TIME, 1, INSTR(FIRST_TIME, ':') -1) )-9 AS START_ROW_NUM
 		    , TO_NUMBER( SUBSTR(LAST_TIME, 1, INSTR(LAST_TIME, ':') -1) )-9 AS END_ROW_NUM
 		    , (SELECT MEM_NAME
@@ -125,6 +127,40 @@
 		WHERE LT.LEC_NO =LE.LEC_NO
         AND LE.LEC_NO = EN.LEC_NO
 		CONNECT BY REGEXP_SUBSTR(LEC_DAY, '[^,]+', 1, LEVEL) IS NOT NULL
+	</select>
+	
+	
+	<!-- 교수 강의 시간표 : 해당 교수의 강의만 조회되도록 구현-->
+	<select id="loadTimeTableProf" resultMap="lecture">
+		SELECT 
+		    REGEXP_SUBSTR(LEC_DAY,'[^,]+', 1, LEVEL) AS LEC_DAY
+		    
+		    , LT.LEC_NO
+		    , LEC_NAME
+		    
+		    , TO_NUMBER( SUBSTR(FIRST_TIME, 1, INSTR(FIRST_TIME, ':') -1) )-9 AS START_ROW_NUM
+		    , TO_NUMBER( SUBSTR(LAST_TIME, 1, INSTR(LAST_TIME, ':') -1) )-9 AS END_ROW_NUM
+		    , (SELECT MEM_NAME
+		        FROM MEMBER
+		        WHERE MEM_NO = (SELECT MEM_NO
+		                        FROM EMP
+		                        WHERE EMP_NO = (SELECT EMP_NO 
+		                                        FROM LECTURE
+		                                        WHERE LEC_NO = L.LEC_NO))) AS EMP_NO     
+		    
+			, (SELECT COLL_NAME
+			        FROM COLLEAGE
+			        WHERE COLL_NO = L.COLL_NO) AS COLL_NO
+			, (SELECT DEPT_NAME
+		        FROM DEPT
+		        WHERE DEPT_NO = L.DEPT_NO)     AS DEPT_NO
+		        
+		FROM LECTURE_TIME LT, LECTURE L
+		WHERE LT.LEC_NO = L.LEC_NO
+		AND EMP_NO =  #{empNo} 
+		
+		CONNECT BY REGEXP_SUBSTR(LEC_DAY, '[^,]+', 1, LEVEL) IS NOT NULL
+		
 	</select>
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
 
