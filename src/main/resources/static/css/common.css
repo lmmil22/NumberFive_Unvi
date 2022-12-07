@@ -216,7 +216,14 @@ textarea{
   top: 0; 
 }
 
+/*by수경 swal 아이콘 사이즈 줄임 */
+.swal2-icon {
+  font-size: 15px !important;
+}
 
+.swal2-text {
+  max-height: 70px;
+}
 
 /* by 지아 여기서 부터 아래는 페이징 처리입니다 이 위에 스타일 작성부탁드릴게요 */
 .pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}

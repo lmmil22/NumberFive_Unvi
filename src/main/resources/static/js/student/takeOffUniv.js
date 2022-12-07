@@ -22,7 +22,7 @@ function applyTakeOffUniv(){
 				  text: "신청내역 페이지로 이동합니다.",
 				  icon: 'warning',
 				  confirmButtonColor: '#3085d6',
-				  confirmButtonText: '확인'
+				  confirmButtonText: '확인',
 				}).then((result) => {
 				  if (result.isConfirmed) {
 				    location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
