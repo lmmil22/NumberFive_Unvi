@@ -3,24 +3,41 @@
 
 @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
+/* top 글씨,footer글씨체 */
 @font-face {
     font-family: 'SuseongBatang';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/SuseongBatang.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
-
+/* drop다운 글씨체 */
 @font-face {
     font-family: 'PuradakGentleGothicR';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.1/PuradakGentleGothicR.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
-
+/* contents 내용 글씨체 */
+@font-face {
+    font-family: 'LINESeedKR-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+/* 홈화면 타이틀 글씨 */
+#homeTitle{
+	font-family: 'SuseongBatang';
+}
 body{
- font-family: 'SuseongBatang';
+ font-family: 'LINESeedKR-Bd';
  font-size: 18px;
-
+}
+footer{
+ font-family: 'SuseongBatang';
+/*  font-size: 18px; */
+}
+#loginTop,#footerNFU,#loginNFU{
+ font-family: 'SuseongBatang';
 }
 
 video {
@@ -67,6 +84,11 @@ textarea{
 #findPwId:hover{
    color: #1C6758;
 }
+/* by 유빈 [style css 파일 수정 실시] */
+.swal-wide{
+   width:50px;
+}
+
 /*by수경 메인 페이지 게시판 내 스크롤 생성 */
 #scroll{
    overflow-y: scroll; 

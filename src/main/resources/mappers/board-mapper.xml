@@ -34,6 +34,9 @@
 		<result column="IS_USE" property="isUse"/>
 	</resultMap> 
 	
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->	
+
+
 	<!-- 상품상태 여부 변경 -->
 	<update id="updateStautus" >
 		UPDATE BOARD_CATEGORY 
@@ -41,6 +44,8 @@
 		IS_USE = #{isUse}	
 		WHERE CATE_NO = #{cateNo}
 	</update>
+	
+	
 	
 	<!-- 게시판카테고리 선택삭제 -->
 	<delete id="deleteCates">
@@ -51,7 +56,9 @@
 		</foreach>
 	</delete>
 	
-	<!-- 게시글등록 -->	
+	
+	
+	 <!-- 게시글등록 -->	
 	 <insert id="insertBoard">
 		INSERT INTO BOARD 
 			( BOARD_NO 
@@ -75,6 +82,8 @@
 			)
 	</insert> 
 	
+	
+	
 	<!-- 공지사항 게시판 목록조회 -->
 	<select id="selectNotice" resultMap="board">
 			SELECT BOARD_NO
@@ -87,8 +96,10 @@
 				,BOARD_READ_CNT
 				,REPLY_CNT
 			FROM BOARD
-			WHERE CATE_NO='CATE007'
+			WHERE CATE_NO='CATE002'
 	</select>
+	
+	
 	
 	<!-- QnA 게시판 목록조회 -->
 	<select id="selectQnA" resultMap="board">
@@ -102,11 +113,29 @@
 				,BOARD_READ_CNT
 				,REPLY_CNT
 			FROM BOARD
-			WHERE CATE_NO='CATE005'
+			WHERE CATE_NO='CATE003'
 	</select>
-
-<!-- 키워드검색기능 + 게시판목록조회 + 공지사항은 고정(union all사용)-->
-	<!-- Board 게시판 소스 참고  -->
+	
+	
+	<!-- (미사용) 취업/채용정보 게시판 목록조회 -->
+	<!-- <select id="selectJob" resultMap="board">
+			SELECT  BOARD_NO
+			    , BOARD_TITLE
+			    , BOARD_WRITER
+			    , BOARD_CREATE_DATE
+			    , IS_SECRERT
+				, IS_NOTICE
+				,CATE_NO
+				,BOARD_READ_CNT
+				,REPLY_CNT
+			FROM BOARD
+			WHERE CATE_NO='CATE004'
+	</select> -->
+	
+	
+	
+	<!-- TOTAL BOARD 전체 게시판 목록조회  CATE001 번-->
+	<!-- 키워드검색기능 + 게시판목록조회 + 공지사항은 고정(union all사용)-->
 	<select id="selectBoardList" resultMap="board">
 			SELECT ROW_NUM
 			    , BOARD_NO
@@ -372,9 +401,11 @@
 			FROM DUAL
 		</foreach>
 	</insert>  
-<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<!-- 나의 게시글 조회하기 myBoard ( 검색기능 페이징처리까지 포함 ) -->
-<select id="selectMyBoardList" resultMap="board">
+	
+	
+<!-- ////////////////////////////////////[  나의 게시글 목록 조회하기  ] ///////////////////////////////////////////////////////////// -->
+<!--     : myBoard ( 검색기능 페이징처리까지 포함 ) -->
+	<select id="selectMyBoardList" resultMap="board">
 			SELECT ROW_NUM
 			    , BOARD_NO
 			    , BOARD_TITLE
@@ -507,7 +538,7 @@
 			WHERE ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
 			
 		</select>
-	<!-- 끝 -->		
+	<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->		
 	
 </mapper> 
 

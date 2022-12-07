@@ -7,8 +7,8 @@
 <!-- 전체영역 -->
 <div class="container">
 	<!-- 첫번째 상단줄 : 로그인 메뉴바 ( shop 가져온 소스 로그인,로그아웃 표시 영역 ) -->
-    <div class="row sticky" style="background-color: rgba( 255, 255, 255, 0.5 );">
-		<div class="col mt-1 mb-1 text-end" sec:authorize="isAnonymous()" style="font-weight: bold;"> 
+    <div id="loginTop" class="row sticky" style="background-color: rgba( 255, 255, 255, 0.5 );">
+		<div  class="col mt-1 mb-1 text-end" sec:authorize="isAnonymous()" style="font-weight: bold;"> 
 			📢 로그인이 필요합니다.
 			<span data-bs-toggle="modal" data-bs-target="#login_modal" style="color: #3D8361; font-weight: bold;">LOGIN</span>
 			<!-- <button onclick="location.href='/login';"  type="submit"  class="btn btn-light">LOGIN</button> -->
@@ -63,7 +63,7 @@
 
 	<!-- 두번째 상단줄 : 로고 이미지 + 권한별 메뉴바 -> by수경 로고와 대학이름은 고정 권한별 메뉴바만 따로 묶었습니다.-->	
 	<div class="row">
-		<div class="col-2 mb-5">
+		<div class="col-2" id="loginNFU">
 			<a href="/member/homeLogin" class="d-flex align-items-center mb-md-0 me-md-auto text-dark text-decoration-none">
 			<!-- <svg width="40" height="32"><use xlink:href="#bootstrap"></use></svg> -->
 			   <span style="font-size: 32px; font-weight: bold;">
@@ -73,7 +73,7 @@
 			</a>
 		</div>
 
-		<div class="col-10 mb-5 text-center" style="padding-right: 0px; padding-left: 27px;">
+		<div class="col-10  text-center" style="padding-right: 0px; padding-left: 27px;">
 			
 			<!-- 인증과 권한이 없는 누구에게나 표시되는 탑 메뉴바 -->
 			<header sec:authorize="isAnonymous()" style="width: 1050px;">

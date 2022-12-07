@@ -23,8 +23,8 @@ public class SecurityConfig {
                .and()
                   .formLogin()
                   .loginPage("/login")
-                  .defaultSuccessUrl("/member/loginResult")
-                  .failureUrl("/member/loginResult")//로그인실패시
+                  .defaultSuccessUrl("/member/loginResultSuccess")//로그인 성공시
+                  .failureUrl("/member/loginResultFail")//로그인실패시
                   .loginProcessingUrl("/member/homeLogin")// 실제 로그인을 진행할 요청 정보
                .and()
                   .logout()

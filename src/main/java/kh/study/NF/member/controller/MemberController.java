@@ -96,13 +96,20 @@ public class MemberController {
 	 * 파일 만들었어!! }
 	 */
    
-//-------------------------------------------------------------------------------------------///   
-   // 로그인성공시,로그인실패시 -> 로그인페이지로 이동
-   // 스프링 시큐리티 config에서 설정한 경로대로 보내준다.
-   @GetMapping("/loginResult")
-   public String loginResult() {
-      System.out.println("로그인 결과");
-      return "content/common/login_result";
+//----------------[ 시큐리티 로그인 성공 실패 여부 결과 - 페이지이동 ]------------------------------------------///   
+  
+   //--로그인성공시 (시큐리티config 설정한 경로)
+   @GetMapping("/loginResultSuccess")
+   public String loginResultSuccess() {
+      System.out.println("로그인 성공!!!!!!!!!!!!!");
+      return "content/common/login_success";
+   }   
+   
+   //--로그인실패시 (시큐리티config 설정한 경로)
+   @GetMapping("/loginResultFail")
+   public String loginResultFail() {
+	   System.out.println("로그인 실패!!!!!!!!!!!!!!");
+	   return "content/common/login_fail";
    }   
   
 //-------------------------------------------------------------------------------------------///   

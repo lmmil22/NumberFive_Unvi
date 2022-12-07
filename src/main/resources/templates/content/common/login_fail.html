@@ -1,0 +1,37 @@
+<!--by 유빈 :로그인 실패 결과 페이지-->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/base_layout}">
+
+<div layout:fragment="content">
+
+
+	 <!-- <div sec:authorize="isAnonymous()">
+	   <script type="text/javascript" src=“/js/login/fail_login.js”>
+	   // 스왈 swal 문법 사용한다면
+	       /* $(document).on('click', '#error', function(e) {
+	         swal(
+	           'Error!',
+	           'You clicked the <b style="color:red;">error</b> button!',
+	           'error'
+	         )
+	       });  */
+	       
+	      alert('로그인 실패');
+	      location.href='/member/homeLogin?isLoginFail=true';
+	      
+	   </script>
+	</div> -->
+<!-- </body>
+</html>
+ -->
+ 
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script type="text/javascript" src="/js/common/login/login_fail.js"></script>
+	
+</div>
+</html>
+
