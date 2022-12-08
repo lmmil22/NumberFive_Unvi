@@ -75,7 +75,7 @@
 									</span>
 								</span>
 								
-								<input type="text" name="searchValue" placeholder="강의명과 교수명을 입력해주세요" th:value="${paramMap['searchValue']}" style="width: 250px;"> <!-- 여기에 아무것도 입력을 안하고 검색을 해도 서치벨류라는 이름으로 데이터가 넘어가 그러면 넘어가긴한다 빈값으로   -->
+								<input type="text" name="searchValue" placeholder="교과목명과 교수명을 입력해주세요" th:value="${paramMap['searchValue']}" style="width: 300px;"> <!-- 여기에 아무것도 입력을 안하고 검색을 해도 서치벨류라는 이름으로 데이터가 넘어가 그러면 넘어가긴한다 빈값으로   -->
 								<input type="submit" value="Search" class="btn btn-primary">
 							</div>
 						</div>
@@ -100,8 +100,8 @@
 								</colgroup> -->
 								<thead>
 									<tr>
-										<td>#</td>
-										<td>강의명</td>
+										<td>강의코드</td>
+										<td>교과목명</td>
 										<td>학점</td>
 										<td>단과대학</td>
 										<td>학과</td>
@@ -162,7 +162,7 @@
 								<thead>
 									<tr>
 										<td>#</td>
-										<td>강의명</td>
+										<td>교과목명</td>
 										<td>학점</td>
 										<td>단과대학</td>
 										<td>학과</td>

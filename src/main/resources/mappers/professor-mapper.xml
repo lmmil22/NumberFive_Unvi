@@ -254,6 +254,7 @@
 			, ATTACHED_PDF_NAME
 		FROM LECTURE L, LECTURE_PDF LP, LECTURE_TIME LT
 		WHERE  L.LEC_NO = LP.LEC_NO AND L.LEC_NO = LT.LEC_NO 
+		AND EMP_NO = #{empNo}  
 		ORDER BY LEC_NO DESC
 		<!-- 해당 입력한 강의의 교수만 수정? 조회 ?? -->
 		<!-- 강의 날짜벨리데이션 처리?? -->

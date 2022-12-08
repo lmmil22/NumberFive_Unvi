@@ -12,7 +12,7 @@
 	<h5>강의 조회</h5>
 	<div style="height: 70px;">
 		<form action="/proF/scoreManagement" method="post"> <!--겟 방식으로 보내면 주소창에 뜬다 -->
-			<input type="text" placeholder="등록한 강의명" name="searchValue" th:value="${searchValue}">
+			<input type="text" placeholder="등록한 교과목명" name="searchValue" th:value="${searchValue}">
 			<input type="submit"class="btn btn-primary" value="Search" > 
 		</form>
 	
@@ -24,9 +24,9 @@
 			<table class="table table-primary table-hover" style="text-align: center;"  >
 			  <thead>
 			    <tr class="table-light">
-			      <th scope="col">강의명</th>
+			      <th scope="col">교과목명</th>
 			      <th scope="col">강의 학점</th>
-			      <th scope="col">단대</th>
+			      <th scope="col">단과대학</th>
 			      <th scope="col">학과</th>
 			    </tr>
 			  </thead>

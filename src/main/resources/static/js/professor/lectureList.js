@@ -122,8 +122,26 @@ function deleteLec(lecNo) {
 				type: 'post',
 				data: { 'lecNo': lecNo },
 				success: function(result) {
-					alert('aaa');
+				
+				Swal.fire({
+				title: '강의 삭제',
+				text: '강의를 삭제완료되었습니다.',
+				icon: 'success',
+		
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '승인',
+		
+				reverseButtons: true,
+		
+			}).then(result => {
+		
+				if (result.isConfirmed) {
+							
 					location.href = '/proF/viewLecList';
+
+					   }
+		});
 
 				},
 				error: function() {
@@ -132,7 +150,6 @@ function deleteLec(lecNo) {
 			});
 			//ajax end
 			//}
-			Swal.fire('강의 삭제', '삭제가 완료되었습니다', 'success');
    }
 });
 }

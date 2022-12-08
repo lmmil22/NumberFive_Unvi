@@ -17,6 +17,7 @@
 	<style>
 div {
 	text-align: center;
+
 }
 </style>
 
@@ -26,12 +27,12 @@ div {
 	<h4 style="text-align: left;">강의 등록</h4>
 
 	<div class="row">
-		<form th:action="@{/proF/regProfLecForm}" method="post" enctype="multipart/form-data" th:object="${lectureVO}" >
+		<form th:action="@{/proF/regProfLecForm}"  method="post" enctype="multipart/form-data" th:object="${lectureVO}" >
 			<div class="col">
 				<div class="row">
 
 					<div class="mb-3 row">
-						<label for="lecName" class="col-sm-4 col-form-label">강의명</label>
+						<label for="lecName" class="col-sm-4 col-form-label">교과목명</label>
 						<div class="col-sm-5">
 							<input type="text" class="form-control" id="lecName" name="lecName" required
 							>

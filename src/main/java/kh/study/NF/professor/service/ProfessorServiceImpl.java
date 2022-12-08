@@ -50,8 +50,8 @@ public class ProfessorServiceImpl implements ProfessorService{
 	}
 	//등록된 강의 조회 
 	@Override
-	public List<LectureVO> selectLecList() {
-		return sqlSession.selectList("professorMapper.selectLecList");
+	public List<LectureVO> selectLecList(String empNo) {
+		return sqlSession.selectList("professorMapper.selectLecList" , empNo);
 	}
 	//lec 메소드 생성
 	@Override

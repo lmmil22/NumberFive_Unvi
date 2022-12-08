@@ -22,7 +22,7 @@ public interface ProfessorService {
 	String getNextLecNo();
 	
 	//강의 목록 조회
-	List<LectureVO> selectLecList();
+	List<LectureVO> selectLecList(String empNo);
 	
 	//선택한 강의조회
 	 LectureVO selectLecture(String lecNo);
