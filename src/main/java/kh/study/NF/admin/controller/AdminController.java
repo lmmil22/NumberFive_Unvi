@@ -36,7 +36,6 @@ public class AdminController {
 		memNo = user.getUsername();
 		model.addAttribute("member",adminService.selectMemDetail(memNo));
 		
-		//학생 이미지 등록이 된다면 html 고쳐야함!!!!! //수정필요
 		return "content/admin/memberDetail";
 	}
 	
