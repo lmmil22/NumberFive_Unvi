@@ -8,13 +8,12 @@
 <link rel="stylesheet"  th:href="@{}"> 
 </th:block>
 
-<!-- 고정 페이지와 변동페이지는 다르다  -->
 <div layout:fragment="content"> 
 	<h5>강의 조회</h5>
 	<div style="height: 70px;">
 		<form action="/proF/scoreManagement" method="post"> <!--겟 방식으로 보내면 주소창에 뜬다 -->
 			<input type="text" placeholder="등록한 강의명" name="searchValue" th:value="${searchValue}">
-			<input type="submit" value="검색" > 
+			<input type="submit"class="btn btn-primary" value="Search" > 
 		</form>
 	
 	</div>
@@ -62,8 +61,6 @@
 			  </thead>
 			  <tbody>
 			    <tr >
-					<!-- <th scope="row" th:text="${lec.lecNo}">1</th> -->
-
 			  </tbody>
 			</table>
 			

@@ -53,8 +53,8 @@
 								<span>
 									<label for="collNo" >단과대학</label>
 									<span>
-										<select onchange="changeDept();" class="changeDept"
-											name="collNo" id="collNo">
+										<select  onchange="changeDept();" class="changeDept"
+											name="collNo" id="collNo" style="width: 150px;">
 											<option value="" th:selected="${paramMap['collNo'] == null or paramMap['collNo'] == ''}">전체</option>
 	
 											<option th:each="coll: ${collList}" th:value=${coll.collNo}
@@ -66,7 +66,7 @@
 								<span>
 									<label for="deptNo" >소속학과</label>
 									<span>
-										<select class="changeDeptList" name="deptNo" id="deptNo">
+										<select class="changeDeptList" name="deptNo" id="deptNo" style="width: 150px;">
 											<option value="" th:selected="${paramMap['deptNo'] == null or paramMap['deptNo'] == ''}">전체 </option>
 											<option th:each="dept: ${deptList}" th:value=${dept.deptNo}
 											th:selected="${paramMap['deptNo'] == dept.deptNo}"
@@ -75,8 +75,8 @@
 									</span>
 								</span>
 								
-								<input type="text" name="searchValue" placeholder="강의명과 교수명을 입력해주세요" th:value="${paramMap['searchValue']}"> <!-- 여기에 아무것도 입력을 안하고 검색을 해도 서치벨류라는 이름으로 데이터가 넘어가 그러면 넘어가긴한다 빈값으로   -->
-								<input type="submit" value="검색">
+								<input type="text" name="searchValue" placeholder="강의명과 교수명을 입력해주세요" th:value="${paramMap['searchValue']}" style="width: 250px;"> <!-- 여기에 아무것도 입력을 안하고 검색을 해도 서치벨류라는 이름으로 데이터가 넘어가 그러면 넘어가긴한다 빈값으로   -->
+								<input type="submit" value="Search" class="btn btn-primary">
 							</div>
 						</div>
 					</form>
@@ -109,8 +109,8 @@
 										<td>강의 요일/시간</td>
 										<td>최대인원</td>
 										<td>현재인원</td>
-										<td>수강 신청</td>
 										<td>수강 학기</td>
+										<td>수강 신청</td>
 									</tr>
 								</thead>
 								<tbody>
@@ -170,8 +170,8 @@
 										<td>강의 요일/시간</td>
 										<td>최대인원</td>
 										<td>현재인원</td>
-										<td>수강 신청</td>
 										<td>수강 학기</td>
+										<td>수강 신청</td>
 									</tr>
 								</thead>
 								<tbody>

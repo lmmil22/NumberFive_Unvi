@@ -45,9 +45,9 @@
 					<td th:text="${lec.empNo}"></td>
 					<td th:text="${lec.lectureTimeVO.lecDay}"></td>
 					<td th:text="${lec.lectureTimeVO.lastTime}"></td>
-					 <td><input type="button" value="강의 상태 수정"	th:onclick="changeLecDetail([[${lec.lecNo}]]);"></td>
+					 <td><input type="button" class="btn btn-primary" value="강의 상태 수정"	th:onclick="changeLecDetail([[${lec.lecNo}]]);"></td>
 					<!-- <td><input type="button" value="강의 상태 수정"	data-bs-toggle="modal"  data-bs-target="#changeLecModal"></td> -->
-					<td><input type="button" value="강의 삭제" th:onclick="deleteLec([[${lec.lecNo}]]);"></td>
+					<td><input type="button" class="btn btn-primary" value="강의 삭제" th:onclick="deleteLec([[${lec.lecNo}]]);"></td>
 
 				</tr>
 			</tbody>

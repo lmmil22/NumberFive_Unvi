@@ -16,7 +16,7 @@
       <h1>학사 일정</h1>
    
    <div sec:authorize="hasRole('ROLE_ADMIN')">
-   <input type="button" value="학사 일정 등록"  data-bs-toggle="modal"  data-bs-target="#changeLecModal">
+   <input class="btn btn-primary" type="button" value="학사 일정 등록"   data-bs-toggle="modal"  data-bs-target="#changeLecModal">
     </div>
 
    <div id='calendar'></div>
@@ -64,10 +64,6 @@
 
 
 
-<!--  수정버튼을 누르면 뜨는 모달 -->
-<!--    Button trigger modal  -->
-<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"  data-bs-target="#changeLecModal"></button>
- -->
 <!-- Modal -->
 <div class="modal fade" id="changeLecModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

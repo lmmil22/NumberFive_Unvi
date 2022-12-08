@@ -22,7 +22,7 @@ function selectLecStu(lecNo){
 			str += `<a onclick="gradeDetail(${stu.stuNo},'${stu.lecNo}',this);">${stu.studentVO.memNo}</a>`;
 			str += `</td>`;
 			str += `<td >${stu.gradeVO.grade}</td>`;
-			str += `<td><input  class="gradeBtn" type="button" value="변경" onclick="gradeDetail('${stu.stuNo}','${stu.lecNo}',this)">               </td>`; //매개변수는 여러개 넘어가는게 가능 무한대, 해당 강의의 점수가 update되야하기 때문에 lecNo가 필요하다
+			str += `<td><input  class="gradeBtn btn btn-primary" type="button" value="변경" onclick="gradeDetail('${stu.stuNo}','${stu.lecNo}',this)">               </td>`; //매개변수는 여러개 넘어가는게 가능 무한대, 해당 강의의 점수가 update되야하기 때문에 lecNo가 필요하다
 			str += '</tr>'; //js 문자열을 인식시켜주기 위해서는 홀따옴표안에 감싸야한다 
 			}
 			str += '</tbody>';
