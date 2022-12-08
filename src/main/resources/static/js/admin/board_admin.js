@@ -127,26 +127,25 @@ function deleteCate(selectedTag){
 }
 ///////////////////////////////////////////////////////////////////////////////
 //------------[ 카테고리명 빈값 유효성 검사  ]--------------//
-
+//함수선언
+function validatecateName(){
 //변수선언
 var cateNameId = document.getElementById("cateNameId");
 var regCateBtn = document.getElementById("regCateBtn");
 
-//함수선언
-function validatecateName(){
-  if(cateNameId.value == '') { // 만일 두 인풋 필드값이 같지 않을 경우
-    cateNameId.setCustomValidity("카테고리명을 입력해주세요."); 
-    
+  if(cateNameId.value.trim() == '') { 
+			Swal.fire({// ok
+			title: '[ 입력 필수 ]',
+			text: "카테고리명 입력은 필수입니다.",
+			icon: 'info'
+		})
   } 
-  else { // 만일 두 인풋 필드값이 같을 경우
-    // 오류가 없으면 메시지를 빈 문자열로 설정해야한다. 오류 메시지가 비어 있지 않은 한 양식은 유효성 검사를 통과하지 않고 제출되지 않는다.
-    // 따라서 빈값을 주어 submit 처리되게 한다
+  else {
     cateNameId.setCustomValidity(''); 
     // 등록 버튼클릭시, 이벤트 실행
-    document.getElementById("regBtn").onclick = function(){
 		Swal.fire({// ok
 			title: '[ 카테고리 등록 완료 ]',
-			text: "입력하신 카테고리명으로 게시판 등록이 완료되었습니다.",
+			text: "입력하신 카테고리명으로 게시판 등록되었습니다.",
 			icon: 'success',
 			showCancelButton: false, 
 			confirmButtonColor: '#3085d6',
@@ -157,13 +156,10 @@ function validatecateName(){
 					regCateBtn.submit();
 			}
 		})
-	} 
   }
   
 }
 
-// 함수실행
-cateNameId.onchange = validatecateName;
 
 //////////////////////////////////////////////////////////////////////////////////////
 //---------- [ 카테고리 미사용 여부 라디오 버튼 클릭시 진행되는 함수 ] -------------------//

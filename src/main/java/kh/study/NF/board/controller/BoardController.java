@@ -104,7 +104,6 @@ public class BoardController {
 //----------------------------------------------------------------------------------------//	
 	
 	// 실제 게시글 등록
-	// -> shop - admincontroller - /regItem 경로 소스참고
 	@PostMapping("/reg")
 	public String reg(@Valid BoardVO boardVO, BindingResult bindingResult, Model model,Authentication authentication
 						,ImgVO imgVO, MultipartFile mainImg ,List<MultipartFile> subImgs){// 서브파일은 여러 파일이 들어가있으니 리스트!

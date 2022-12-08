@@ -84,12 +84,12 @@
 							<div class="row" style="height: 345px; overflow-y: scroll;">
 							<table class="table">
 								<tbody>
-								  <th:block th:if="${#lists.size(boardList) == 0}"> 
+								 <th:block th:if="${#lists.size(boardList) == 0}">
 								<tr>
-									<td align="center" colspan="7"> 게시된 등록글이 없습니다.<s/td>
+									<td align="center" colspan="7"> 게시된 등록글이 없습니다.</td>
 								</tr>
 								</th:block>
-								  <th:block th:unless="${#lists.size(boardList) == 0}" > 
+								 <th:block th:unless="${#lists.size(boardList) == 0}" >
 								<tr th:each="board : ${boardList}">
 									<td>
 										<th:block th:if="${board.isNotice eq'Y'}">

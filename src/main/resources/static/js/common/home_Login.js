@@ -31,13 +31,11 @@ function searchAddr() {
 	}).open();
 }
 
-//로그인 기능 함수(ajax로 로그인실행시 진행) 
+//(미사용함수)로그인 기능 함수(ajax로 로그인실행시 진행) 
 function sendEmail(loginInfo) {
 	//[[${sessionScope.loginInfo}]] js에서 데이터가져오는 방법
 	const findPwNo = login_modal_home.querySelector('#findPwNo').value;
 	const findPwEmail = login_modal_home.querySelector('#findPwEmail').value;
-	
-	
 	
 	$.ajax({
             type: "GET",
@@ -72,9 +70,37 @@ function sendEmail(loginInfo) {
         })
 }
 //----------------------------- 이벤트 정의 -----------------------------------//
+//--[ 이메일로 비밀번호찾기에서 전송버튼 클릭시 진행되는 함수]
+//스왈띄우려햇는데 안됨...;;
+/*function goSend(){
+	const sendEmailForm = document.querySelector('#sendEmailForm');
+	const sendBtn = document.querySelector('#sendBtn');
+	const userName = document.querySelector('#userName');
+	const userEmail = document.querySelector('#userEmail');
+	
+	//유효성검사
+	if(userName.value == ''|| userEmail.value == '') {
+		
+		Swal.fire({ 
+		        icon: 'error',
+		        title: '입력 필수',
+		        text: '학번/교번 과 이메일은 필수입력입니다.',
+	    });
+	}
+}
+
+
+*/
+
+
+
+
+
+
+
 
 //// 로그인 실패여부로 모달창을 띄워주는 기능
-function isLoginFail(){
+/*function isLoginFail(){
 	const isLoginFail = document.querySelector('#isLoginFail').value;
 
 	if(isLoginFail == 'true'){
@@ -85,7 +111,7 @@ function isLoginFail(){
 // 확인) 로그인 실패여부를 js에 데이터 불러오기
 const a = `[[${isLoginFail}]]`;
 alert(a);
-}
+}*/
 //----------------------------- 이벤트 정의 ---------------------------------//
 //////////////////회원가입 모달이 닫히면 실행되는 이벤트(함수 매개변수 event)///////////////
 //join_modal.addEventListener('hidden.bs.modal', function(event) {//모달이 완전히 닫혔을 때 실행
@@ -121,8 +147,8 @@ alert(a);
     
 
 ////////////////////////////////////////////////////////////////////////////////////
-//----------[ 회원가입 모달 유효성 검사 함수 ]------------------------------------//
-function checkValid(){
+//----------[ 회원 가입모달??  유효성 검사 함수 ]------------------------------------//
+/*function checkValid(){
 // ----------------------------변수선언-------------------------------------------//	
 	let str ='';//validation 처리 표시 문자열
 
@@ -220,7 +246,7 @@ function checkValid(){
 	//폼태그 서브밋주기
 	document.querySelector('#joinFormTag').submit();
 }	
-
+*/
 //-----------------------------------------------------------------------------------------------------------------//	
 // < SWAL TEST > :  클릭했을 때 실행되는 SWAL
 //로그인 버튼클릭시 진행되는 함수

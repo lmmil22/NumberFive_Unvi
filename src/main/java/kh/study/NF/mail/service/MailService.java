@@ -89,12 +89,8 @@ public class MailService {
 								+ "<p>"+ "문의사항은 학과 사무실을 통해 문의주시기 바랍니다." 
 								+ " 감사합니다." 
 								+ "<p>"
-								+ "<p>"
-								+ "<p>"
-							    + " ※ 아래 이미지 클릭시, 해당 홈페이지 로그인화면으로 바로 이동가능합니다." 
-								+ " <a href=\"http://localhost:8081/member/homeLogin\"> "
-								+	 " <img src='https://i.pinimg.com/236x/7b/3a/30/7b3a3087a011521a8cc9db303613c3f1.jpg' >"
-								+ " </a>  "
+							    + " ※ 상단의 이미지 클릭시, 해당 홈페이지 로그인화면으로 바로 이동가능합니다." 
+							    +"<p>"+ "<a href=\"http://localhost:8081/member/homeLogin\"><img src=\"https://i.ibb.co/2sgGf4Z/NFU-resize.png\" alt=\"NFU-resize\" border=\"0\"></a>"
 								, true);
 			
 			mailHandler.send();
