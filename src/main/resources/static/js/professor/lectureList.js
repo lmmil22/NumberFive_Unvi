@@ -128,10 +128,8 @@ function deleteLec(lecNo) {
 				text: '강의를 삭제완료되었습니다.',
 				icon: 'success',
 		
-				showCancelButton: true,
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: '승인',
-		
 				reverseButtons: true,
 		
 			}).then(result => {

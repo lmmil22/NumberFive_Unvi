@@ -341,7 +341,7 @@
         WHERE LEC_NO = LECTURE_TIME.LEC_NO) = #{empNo}
 	AND (
 		<foreach collection="dayList" item="lecDay" separator="OR LEC_DAY LIKE" open="LEC_DAY LIKE">
-			TRIM(#{lecDay})
+			'%'||TRIM(#{lecDay})||'%'
 		</foreach>
 	)
 	AND (FIRST_TIME &gt;= #{firstTime} OR LAST_TIME &gt;= #{firstTime}) 

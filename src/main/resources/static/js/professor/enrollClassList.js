@@ -30,10 +30,8 @@ function selectLecEnroll(lecNo) {
 						title: '수강신청완료',
 						text: "수강신청 되었습니다. ",
 						icon: 'success',
-						showCancelButton: true,
 						confirmButtonColor: '#3085d6',
 						confirmButtonText: '확인',
-						cancelButtonText: '취소'
 					}).then(result => {
 						// 만약 Promise리턴을 받으면,
 						if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
@@ -89,10 +87,8 @@ function deleteLecEnroll(stuNo, lecNo) {
 						title: '수강 취소완료',
 						text: "수강 취소가 완료되었습니다. ",
 						icon: 'success',
-						showCancelButton: true,
 						confirmButtonColor: '#3085d6',
 						confirmButtonText: '확인',
-						cancelButtonText: '취소'
 					}).then(result => {
 						// 만약 Promise리턴을 받으면,
 						if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
