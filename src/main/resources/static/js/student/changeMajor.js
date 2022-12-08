@@ -68,62 +68,59 @@ function applyChangeMajor(){
 				})
 				
 				return;
+			}else{
+				//by수경 전공대학과 전공학과를 선택하지 않았다면
+				const coll = document.querySelector('#coll').value;
+				if(coll == ''){
+					$().ready(function () {
+			            Swal.fire({
+			                icon: 'warning',
+			                title: '전공대학/전공학과 선택',
+			                text: '변경할 전공대학과 학과를 선택하여 주십시오.',
+			             });
+				    });
+					return;
+				}
+				
+				const dept = document.querySelector('#dept').value;
+				if(dept == ''){
+					$().ready(function () {
+			            Swal.fire({
+			                icon: 'warning',
+			                title: '전공대학/전공학과 선택',
+			                text: '변경할 전공대학과 학과를 선택하여 주십시오.',
+			             });
+				    });
+					return;
+				}
+				
+				//by수경 전과사유 공백 및 빈칸 방지
+				const textArea = document.querySelector('textarea').value;
+				//alert(textArea);
+			
+				if(textArea.replace(/\s| /gi, "").length == 0){
+					
+					$().ready(function () {
+			            Swal.fire({
+			                icon: 'warning',
+			                title: '전과 사유는 필수 입력사항',
+			                text: '전과 사유를 작성하여 주십시오.',
+			             });
+			        });     
+					return;
+				}else{
+					//by수경 모든 정보가 입력되었을 때 전과 유의사항 모달창
+					//모달창 소스
+					const modal = new bootstrap.Modal('#changeMajorModal');
+					//모달 보여주기
+					modal.show();
+				}
 			}
 		},
 		error: function() {
 			alert('실패');
 		}
 	});
-	
-	//by수경 전공대학과 전공학과를 선택하지 않았다면
-	const coll = document.querySelector('#coll').value;
-	if(coll == ''){
-		$().ready(function () {
-            Swal.fire({
-                icon: 'warning',
-                title: '전공대학/전공학과 선택',
-                text: '변경할 전공대학과 학과를 선택하여 주십시오.',
-             });
-	    });
-		return;
-	}
-	
-	const dept = document.querySelector('#dept').value;
-	if(dept == ''){
-		$().ready(function () {
-            Swal.fire({
-                icon: 'warning',
-                title: '전공대학/전공학과 선택',
-                text: '변경할 전공대학과 학과를 선택하여 주십시오.',
-             });
-	    });
-		return;
-	}
-	
-	
-	//by수경 전과사유 공백 및 빈칸 방지
-	const textArea = document.querySelector('textarea').value;
-	//alert(textArea);
-
-	if(textArea.replace(/\s| /gi, "").length == 0){
-		
-		$().ready(function () {
-            Swal.fire({
-                icon: 'warning',
-                title: '전과 사유는 필수 입력사항',
-                text: '전과 사유를 작성하여 주십시오.',
-             });
-        });     
-		return;
-	}
-	
-
-	//by수경 모든 정보가 입력되었을 때 전과 유의사항 모달창
-	//모달창 소스
-	const modal = new bootstrap.Modal('#changeMajorModal');
-	//모달 보여주기
-	modal.show();
-
 }
 
 //by수경 신청 쿼리 실행

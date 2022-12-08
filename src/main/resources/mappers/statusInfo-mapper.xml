@@ -62,7 +62,7 @@
 	<if test="memName != null and !memName.equals('')">
 		AND (SELECT UPPER(MEM_NAME) FROM MEMBER WHERE MEM_NO = S.MEM_NO) LIKE UPPER('%'||#{memName}||'%')
 	</if>
-	ORDER BY STU_NO DESC
+	ORDER BY PROB_NO DESC
 </select>
 
 <!--by수경 학사경고/제적 모달창 학생 기본정보 데이터 출력 -->

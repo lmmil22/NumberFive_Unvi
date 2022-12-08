@@ -45,4 +45,5 @@ public interface StudentService {
 	
 	//by수경 복수전공 단일신청승인(단일승인/일괄승인) 후 학생테이블에 doubleNo 데이터 넣기
 	void updateDoubleMajor(String stuNo);
+	
 }

@@ -28,36 +28,36 @@ function applyTakeOffUniv(){
 				    location.href=`/stu/stuApplyList?stuNo=${stuNo}`;
 				  }
 				})
-				
 				return;
+				
+			}else{
+				//by수경 휴학사유 입력칸 공백 및 빈칸 방지
+				const textArea = document.querySelector('textarea').value;
+				//alert(textArea);
+				
+				if(textArea.replace(/\s| /gi, "").length == 0){
+					$().ready(function () {
+			            Swal.fire({
+			                icon: 'warning',
+			                title: '휴학 사유는 필수 입력사항',
+			                text: '휴학 사유를 작성하여 주십시오.',
+			             });
+				    });
+					return;
+				}else{
+					//by수경 모든 정보가 입력되었을 때 휴학 유의사항 모달창
+					//모달창 소스
+					const modal = new bootstrap.Modal('#takeOffUnivModal');
+					//모달 보여주기
+					modal.show();
+				}
 			}
+			
 		},
 		error: function() {
 			alert('실패');
 		}
 	});
-
-	//by수경 휴학사유 입력칸 공백 및 빈칸 방지
-	const textArea = document.querySelector('textarea').value;
-	//alert(textArea);
-
-	if(textArea.replace(/\s| /gi, "").length == 0){
-		
-		$().ready(function () {
-            Swal.fire({
-                icon: 'warning',
-                title: '휴학 사유는 필수 입력사항',
-                text: '휴학 사유를 작성하여 주십시오.',
-             });
-	    });
-		return;
-	}
-	
-	//by수경 모든 정보가 입력되었을 때 휴학 유의사항 모달창
-	//모달창 소스
-	const modal = new bootstrap.Modal('#takeOffUnivModal');
-	//모달 보여주기
-	modal.show();
 
 }
 

@@ -26,7 +26,7 @@ public class ProbationMailService {
 							+"<p>"+"<b>"+" NumberFive University 학사지원팀입니다."+"<b>"+"<p>"+" 학사경고 처리되었음을 알려드리고자 메일을 송부합니다."
 							+"<p style='color:blue; font-size:24px; font-weight:700;'>"+ "학사경고내역 : " + probReason 
 							+"<p>"+"자세한 사항은 첨부파일을 확인하여 주시고, 학과 사무실에 문의하여 주십시오."+"<p>"+" 감사합니다."
-							+"<p>"+ "<a href=\"https://imgbb.com/\"><img src=\"https://i.ibb.co/2sgGf4Z/NFU-resize.png\" alt=\"NFU-resize\" border=\"0\"></a>";
+							+"<p>"+ "<a href=\"http://localhost:8081/member/homeLogin\"><img src=\"https://i.ibb.co/2sgGf4Z/NFU-resize.png\" alt=\"NFU-resize\" border=\"0\"></a>";
 		mailHandler.setText(htmlContent, true);
 		mailHandler.setAttach("학사경고 안내.pdf","static/images/학사경고 안내.pdf" );
 		//mailHandler.setInline("nf logo", "static/images/nf logo.png");

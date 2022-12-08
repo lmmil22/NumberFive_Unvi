@@ -12,10 +12,17 @@
 <body>
 
 <div layout:fragment ="content">
-	<div class="row mt-3 mb-4 me-2 g-3">
+
+	<div class="row">
+		<div class="col mb-4" style="font-weight: bold;">
+			<H1> 제적 현황 </H1>
+		</div>
+	</div>
+	
+	<div class="row mb-4 me-2 g-3">
 		<div class="col mt-4 mb-4" >
-			<div class="col mt-4 mb-4" style="font-weight: bold;">
-				<H4>제적 학생조회</H4>
+			<div class="col mt-4" style="font-weight: bold;">
+				<H4>학생조회</H4>
 			</div>
 			<form th:action="@{/emp/stuOut}" method="post">
 				<table class="table align-middle text-center table-bordered">
@@ -149,8 +156,8 @@
 						    	(<span id="stuOutModal_no"></span> , 
 						    	<span id="stuOutModal_birth"></span>)
 						    </td>
-					        <td rowspan="3" colspan="2">
-					        	<img width="200px;" height="200px;" id="stuOutModal_image">
+					        <td rowspan="4" colspan="3">
+					        	<img width="200px;" height="185px;" id="stuOutModal_image">
 					        </td>
 						</tr>
 						<tr>
@@ -164,6 +171,9 @@
 					        <td colspan="3" align="left">
 					        	<div id="stuOutModal_tell"></div>
 					        </td>
+						</tr>
+						<tr>
+							<td colspan="4"></td>
 						</tr>
 					</table>
 						

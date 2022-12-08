@@ -50,6 +50,7 @@
 						</tr>
 					</th:block>
 				</table>
+				
 			</div>		
 		</div>		
 	
@@ -80,12 +81,12 @@
 				    
 				     <th:block th:if="${#lists.size(comebackList) != 0}">
 					<tr th:each="comeback, status :${comebackList}">
-				      <td th:text="${#lists.size(comebackList) - status.index}"></td>
-				      <td th:text="${comeback.fromColl}"></td>
-				      <td th:text="${comeback.fromDept}"></td>
-				      <td th:text="${comeback.applyDate}"></td>
-				      <td th:text="${comeback.approvalDate}"></td>
-				      <td th:text="${comeback.processStatus}"></td>
+						<td th:text="${#lists.size(comebackList) - status.index}"></td>
+						<td th:text="${comeback.fromColl}"></td>
+						<td th:text="${comeback.fromDept}"></td>
+						<td th:text="${comeback.applyDate}"></td>
+						<td th:text="${comeback.approvalDate}"></td>
+						<td th:text="${comeback.processStatus}"></td>
 					</tr>
 					</th:block>
 				</table>
@@ -102,8 +103,8 @@
 				<table class="table table-bordered text-center">
 				   <tr>
 					  <th>No</th>
-					  <th>소속전공대학</th>
-					  <th>소속전공학과</th>
+					  <th>전공대학</th>
+					  <th>전공학과</th>
 					  <th>변경전공대학</th>
 					  <th>변경전공학과</th>
 					  <th>신청일</th>
@@ -127,9 +128,9 @@
 					      <td th:text="${changeMajor.toDept}"></td>
 					      <td th:text="${changeMajor.applyDate}"></td>
 					      <td th:text="${changeMajor.approvalDate}"></td>
-					      <td th:text="${changeMajor.processStatus}"></td>
+						  <td th:text="${changeMajor.processStatus}"></td>
 						</tr>
-					</th:block>
+					</th:block>	
 				</table>
 			</div>		
 		</div>
@@ -145,8 +146,8 @@
 				<table class="table table-bordered text-center">
 				   <tr>
 					  <th>No</th>
-					  <th>소속전공대학</th>
-					  <th>소속전공학과</th>
+					  <th>전공대학</th>
+					  <th>전공학과</th>
 					  <th>복수전공대학</th>
 					  <th>복수전공학과</th>
 					  <th>신청일</th>
@@ -164,14 +165,14 @@
 				
 				<th:block th:if="${#lists.size(doubleMajorList) != 0}">
 					<tr th:each="doubleMajor, status : ${doubleMajorList}">
-				      <td th:text="${#lists.size(doubleMajorList) - status.index}"></td>
-				      <td th:text="${doubleMajor.fromColl}"></td>
-				      <td th:text="${doubleMajor.fromDept}"></td>
-				      <td th:text="${doubleMajor.doubleMajorColl}"></td>
-				      <td th:text="${doubleMajor.doubleMajorDept}"></td>
-				      <td th:text="${doubleMajor.applyDate}"></td>
-				      <td th:text="${doubleMajor.approvalDate}"></td>
-				      <td th:text="${doubleMajor.processStatus}"></td>
+						<td th:text="${#lists.size(doubleMajorList) - status.index}"></td>
+						<td th:text="${doubleMajor.fromColl}"></td>
+						<td th:text="${doubleMajor.fromDept}"></td>
+						<td th:text="${doubleMajor.doubleMajorColl}"></td>
+						<td th:text="${doubleMajor.doubleMajorDept}"></td>
+						<td th:text="${doubleMajor.applyDate}"></td>
+						<td th:text="${doubleMajor.approvalDate}"></td>
+						<td th:text="${doubleMajor.processStatus}"></td>
 					</tr>
 				</th:block>
 			</table>
