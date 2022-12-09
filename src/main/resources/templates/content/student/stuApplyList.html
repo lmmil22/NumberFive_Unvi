@@ -46,7 +46,13 @@
 					      <td th:text="${takeOff.fromDept}"></td>
 					      <td th:text="${takeOff.applyDate}"></td>
 					      <td th:text="${takeOff.approvalDate}"></td>
-					      <td th:text="${takeOff.processStatus}"></td>
+					      <th:block th:if="${takeOff.processStatus == '접수완료'}">
+					      	<td><input type="button" class="btn btn-primary" value="신청철회" th:onclick="cancelTakeOff();"></td>
+					      	<input type="hidden" th:value="${takeOff.applyCode}" id="takeOff">
+					      </th:block>
+					      <th:block th:unless="${takeOff.processStatus == '접수완료'}">
+					      	<td th:text="${takeOff.processStatus}"></td>
+					      </th:block>
 						</tr>
 					</th:block>
 				</table>
@@ -86,7 +92,13 @@
 						<td th:text="${comeback.fromDept}"></td>
 						<td th:text="${comeback.applyDate}"></td>
 						<td th:text="${comeback.approvalDate}"></td>
-						<td th:text="${comeback.processStatus}"></td>
+						<th:block th:if="${comeback.processStatus == '접수완료'}">
+					    	<td><input type="button" class="btn btn-primary" value="신청철회" th:onclick="cancelReturn();"></td>
+					    	<input type="hidden" th:value="${comeback.applyCode}" id="return">
+					     </th:block>
+					     <th:block th:unless="${comeback.processStatus == '접수완료'}">
+					      	<td th:text="${comeback.processStatus}"></td>
+					     </th:block>
 					</tr>
 					</th:block>
 				</table>
@@ -128,7 +140,13 @@
 					      <td th:text="${changeMajor.toDept}"></td>
 					      <td th:text="${changeMajor.applyDate}"></td>
 					      <td th:text="${changeMajor.approvalDate}"></td>
-						  <td th:text="${changeMajor.processStatus}"></td>
+						 <th:block th:if="${changeMajor.processStatus == '접수완료'}">
+					      	<td><input type="button" class="btn btn-primary" value="신청철회" th:onclick="cancelChangeMajor();"></td>
+					      	<input type="hidden" th:value="${changeMajor.applyCode}" id="change">
+					     </th:block>
+					     <th:block th:unless="${changeMajor.processStatus == '접수완료'}">
+					      	<td th:text="${changeMajor.processStatus}"></td>
+					     </th:block>
 						</tr>
 					</th:block>	
 				</table>
@@ -172,13 +190,21 @@
 						<td th:text="${doubleMajor.doubleMajorDept}"></td>
 						<td th:text="${doubleMajor.applyDate}"></td>
 						<td th:text="${doubleMajor.approvalDate}"></td>
-						<td th:text="${doubleMajor.processStatus}"></td>
+						<th:block th:if="${doubleMajor.processStatus == '접수완료'}">
+					      	<td><input type="button" class="btn btn-primary"  value="신청철회" th:onclick="cancelDoubleMajor();"></td>
+					      	<input type="hidden" th:value="${doubleMajor.applyCode}" id="double">
+					    </th:block>
+					    <th:block th:unless="${doubleMajor.processStatus == '접수완료'}">
+					      	<td th:text="${doubleMajor.processStatus}"></td>
+					    </th:block>
 					</tr>
 				</th:block>
 			</table>
 			</div>		
 		</div>		
 	</div>
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>	
+	<script type="text/javascript" th:src="@{/js/student/stuApplyList.js}"></script>	
 </div>
 
 </body>

@@ -220,4 +220,21 @@ public class StudentController {
 		return  "content/student/stuApplyList";
 	}
 	
+	//by수경 학생이 학적신청(휴학, 복학, 전과, 복수전공) 관리자 승인 전에 신청 철회
+	@ResponseBody
+	@PostMapping("/deleteApplyAjax")
+	public void deleteApplyAjax(Authentication authentication, DeptManageVO deptManageVO, String applyCode) {
+		//security를 사용하여 로그인한 정보 가져오는 방법
+		User user = (User) authentication.getPrincipal();
+		//memNO와 stuNO 동일하기 때문에 학번을 stuNo로 담아 쿼리 매개변수로 넣어 준다
+		String stuNo = user.getUsername();
+		
+		//학번 추가
+		deptManageVO.setStuNo(stuNo);
+		//넘어오는 신청코드 담기
+		deptManageVO.setApplyCode(applyCode);
+		//쿼리 실행
+		studentService.deleteApply(deptManageVO);
+	}
+	
 }

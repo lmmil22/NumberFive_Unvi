@@ -99,5 +99,11 @@ public class StudentServiceImpl implements StudentService {
 		sqlSession.update("studentMapper.updateDoubleMajor", stuNo);
 		
 	}
+	//by수경 학생이 학적신청(휴학, 복학, 전과, 복수전공) 관리자 승인 전에 신청 철회
+	@Override
+	public void deleteApply(DeptManageVO deptManageVO) {
+		sqlSession.delete("studentMapper.deleteApply", deptManageVO);
+		
+	}
 
 }

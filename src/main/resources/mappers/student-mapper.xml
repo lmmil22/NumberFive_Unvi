@@ -150,5 +150,11 @@
 	)
 </insert>
 
+<!-- by수경 학생이 학적신청(휴학, 복학, 전과, 복수전공) 관리자 승인 전에 신청 철회 -->
+<delete id="deleteApply">
+	DELETE DEPT_MANAGE
+	WHERE STU_NO = #{stuNo}
+	AND APPLY_CODE = #{applyCode}
+</delete>
 
 </mapper>

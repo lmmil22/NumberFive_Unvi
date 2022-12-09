@@ -46,4 +46,6 @@ public interface StudentService {
 	//by수경 복수전공 단일신청승인(단일승인/일괄승인) 후 학생테이블에 doubleNo 데이터 넣기
 	void updateDoubleMajor(String stuNo);
 	
+	//by수경 학생이 학적신청(휴학, 복학, 전과, 복수전공) 관리자 승인 전에 신청 철회
+	void deleteApply(DeptManageVO deptManageVO);
 }
