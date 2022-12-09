@@ -56,13 +56,6 @@ public class TimeTableController {
 		memNo = user.getUsername();
 		model.addAttribute("memberVO",memberService.selectMemberDetail(memNo));
 		
-		//가져온소스 미사용시 삭제//////////////////////////////////////
-		//List<LectureVO> list = professorService.selectLecList();
-		//model.addAttribute( "lecList", list);
-		//for(LectureVO vo : list) {
-		//	System.out.println(vo.getLecturePdfVO().getAttachedPdfName());
-		//}
-		//////////////////////////////////////////////////////////////////
 		return "content/timetable/timetable_prof";
 	}
 	

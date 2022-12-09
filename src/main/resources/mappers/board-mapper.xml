@@ -14,10 +14,10 @@
 		<result column="REPLY_CNT" 			property="replyCnt"/>
 		<result column="IS_SECRERT" 		property="isSecrert"/>
 		<result column="IS_NOTICE" 			property="isNotice"/>
-
 		<result column="ROW_NUM" 			property="rowNum"/> 
-		<collection property="imgList" resultMap="img"/>
-		<!-- 추가 비밀글비밀번호설정시,<result column="BOARD_PW" 		property="boardPw"/>  -->
+		
+		<collection property="imgList"  resultMap="img"/>
+		
 	</resultMap>
 	<!-- 이미지 Board_img 테이블 VO -->
 	<resultMap type="kh.study.NF.board.vo.ImgVO" id="img">

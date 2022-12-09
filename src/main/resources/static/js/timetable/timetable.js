@@ -8,11 +8,12 @@ $.ajax({
 	type: 'post',
 	data: {   }, //필요한 데이터
 	success: function(lecList) {
+			console.log(lecList);
 		const trList = document.querySelectorAll('.lecTime'); //강의시간 
 		
 		for (lec of lecList) {
 			console.log(lec);
-
+			
 			switch (lec.lecDay) {
 				case '월':  // if (x === 'value1')
 					for(i = lec.startRowNum; i <= lec.endRowNum; i++ ){
@@ -65,7 +66,7 @@ $.ajax({
 //ajax end
 
 ////////////////////////////////////////////////////////////////////////
-const tdList = document.querySelectorAll('td');
+/*const tdList = document.querySelectorAll('td');
 
 for(td of tdList){
 	if(td.innerText.length > 6){
@@ -73,4 +74,4 @@ for(td of tdList){
 		
 	}
 		
-};
+};*/
