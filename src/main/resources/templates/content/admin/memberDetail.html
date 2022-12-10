@@ -47,7 +47,7 @@
 						<th>이름</th>
 						<td th:text="${member.memberVO.memName}"></td>
 						<th>부전공</th>
-						<td ></td>
+						<td th:text="${member.doubleNo}"></td>
 					</tr>
 	
 					<tr>
@@ -86,7 +86,7 @@
 	
 			</table>
 				<!--  <button  type="button" value="수정하기" th:onclick="updateMemInfo([[${member.memberVO.memNo}]]);"></button> --> 
-				 <input class="d-grid gap-2 col-4 mx-auto btn btn-primary" style="width: 100px;"value="수정하기" type="button" id="updateBtn" th:onclick="updateMemInfo([[${member.memberVO.memNo}]], this);" data-status="1"> 
+				 <input  class="d-grid gap-2 col-4 mx-auto btn btn-primary" style="width: 100px; margin-top: 40px;"value="수정하기" type="button" id="updateBtn" th:onclick="updateMemInfo([[${member.memberVO.memNo}]], this);" data-status="1"> 
 		</form>
 	</div>
 	
