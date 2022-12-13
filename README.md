@@ -8,7 +8,7 @@ Spring Boot 학사 관리 프로그램
 * 22.10.26 - 22.12.09
 
 ### 🎓 팀원 소개
-|<img src="https://user-images.githubusercontent.com/116548583/207240591-8581ba3e-1951-4545-949d-5391a1678a3e.png" width="65" height="55">|<img src="https://user-images.githubusercontent.com/116548583/207242549-9131e051-b994-43e0-b62c-eba2174f8b32.png" width="65" height="55">|사진|
+|<img src="https://user-images.githubusercontent.com/116548583/207240591-8581ba3e-1951-4545-949d-5391a1678a3e.png" width="65" height="55">|<img src="https://user-images.githubusercontent.com/116548583/207242549-9131e051-b994-43e0-b62c-eba2174f8b32.png" width="65" height="55">|<img src="https://user-images.githubusercontent.com/116548583/207245197-c605741b-b776-4ab6-92db-e05b3a31a0a0.png" width="65" height="55">|
 |:---|:---:|:---:|  
 |<a href="https://github.com/lmmil22">신지아</a>|<a href="https://github.com/AmVinch">이유빈</a>| <a href="https://github.com/kskdeveloper">권수경</a>
 
