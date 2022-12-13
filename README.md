@@ -10,9 +10,9 @@ Spring Boot 학사 관리 프로그램
 ### 🎓 팀원 소개
 |팀원|이름|
 |:---|:---:|  
-|조장|신지아|
-|조원|이유빈|
-|조원|권수경|
+|조장|<a href="https://github.com/lmmil22">신지아</a>| 
+|조원|<a href="https://github.com/AmVinch">이유빈</a>|
+|조원|<a href="https://github.com/kskdeveloper">권수경</a>|
 
 
 ## 📌 커밋 메시지
