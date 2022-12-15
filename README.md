@@ -21,7 +21,7 @@ Spring Boot 학사 관리 프로그램
 
 
 ### ⚙ 사용 기술
-<img src="https://user-images.githubusercontent.com/116548583/207210191-7faa86f3-d5aa-472c-9299-65f41a87edc1.png"  width="800" height="370">
+<img src="https://user-images.githubusercontent.com/116548583/207746032-64df5e0c-b39b-4d26-881e-27e767dc657d.png"  width="800" height="370">
 
 
 ## 🛠 주요 기능
