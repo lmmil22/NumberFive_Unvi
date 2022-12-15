@@ -82,17 +82,3 @@ Spring Boot 학사 관리 프로그램
 </div>
 </details>
 
-
-
-## 📸 ScreenShot
-
-
-<details>
-<summary>로그인</summary>
-<div markdown="1">       
-
-스크린 샷
-
-</div>
-</details>
-
